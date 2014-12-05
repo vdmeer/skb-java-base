@@ -1,0 +1,119 @@
+<configuration debug="false">
+	<property name="SKB_DEFAULT_PATTERN" value="%date{ISO8601} %-4relative %-5level [%thread] %class{2} - %msg%n" />
+
+	<appender name="De.Vandermeer" class="ch.qos.logback.core.FileAppender">
+		<file>/logs/skb/skb.log</file>
+		<encoder>
+			<pattern>${SKB_DEFAULT_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="De.Vandermeer.Commons" class="ch.qos.logback.core.FileAppender" append="false">
+		<file>/logs/skb/skb-commons.log</file>
+		<encoder>
+			<pattern>${SKB_DEFAULT_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="De.Vandermeer.Tribe" class="ch.qos.logback.core.FileAppender" append="false">
+		<file>/logs/skb/skb-tribe.log</file>
+		<encoder>
+			<pattern>${SKB_DEFAULT_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="De.Vandermeer.Kb" class="ch.qos.logback.core.FileAppender" append="false">
+		<file>/logs/skb/skb-kb.log</file>
+		<encoder>
+			<pattern>${SKB_DEFAULT_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="De.Vandermeer.Lang.Cola.Proto" class="ch.qos.logback.core.FileAppender" append="false">
+		<file>/logs/skb/skb-lang-cola-proto.log</file>
+		<encoder>
+			<pattern>${SKB_DEFAULT_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="De.Vandermeer.Lang.Pola.Proto" class="ch.qos.logback.core.FileAppender" append="false">
+		<file>/logs/skb/skb-lang-pola-proto.log</file>
+		<encoder>
+			<pattern>${SKB_DEFAULT_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="De.Vandermeer.Lang.Dal" class="ch.qos.logback.core.FileAppender" append="false">
+		<file>/logs/skb/skb-lang-dal.log</file>
+		<encoder>
+			<pattern>${SKB_DEFAULT_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="De.Vandermeer.Lang.Glue.Proto" class="ch.qos.logback.core.FileAppender" append="false">
+		<file>/logs/skb/skb-lang-glue-proto.log</file>
+		<encoder>
+			<pattern>${SKB_DEFAULT_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="SKBLoggerSTDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%msg</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="SKBLoggerSTDERR" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.err</target>
+		<encoder>
+			<pattern>%msg</pattern>
+		</encoder>
+	</appender>
+
+
+
+	<logger name="de.vandeermeer.commons" level="ALL">
+		<appender-ref ref="De.Vandermeer.Commons" />
+	</logger>
+
+	<logger name="de.vandeermeer.tribe" level="TRACE">
+		<appender-ref ref="De.Vandermeer.Tribe" />
+	</logger>
+
+	<logger name="de.vandeermeer.kb" level="TRACE">
+		<appender-ref ref="De.Vandermeer.Kb" />
+	</logger>
+
+	<logger name="de.vandeermeer.lang.cola.proto" level="TRACE">
+		<appender-ref ref="De.Vandermeer.Lang.Cola.Proto" />
+	</logger>
+
+	<logger name="de.vandeermeer.lang.pola.proto" level="TRACE">
+		<appender-ref ref="De.Vandermeer.Lang.Pola.Proto" />
+	</logger>
+
+	<logger name="de.vandeermeer.lang.dal" level="TRACE">
+		<appender-ref ref="De.Vandermeer.Lang.Dal" />
+	</logger>
+
+	<logger name="de.vandeermeer.lang.glue.proto" level="TRACE">
+		<appender-ref ref="De.Vandermeer.Lang.Glue.Proto" />
+	</logger>
+
+
+	<logger name="SKBLoggerInfo" level="ALL">
+		<appender-ref ref="SKBLoggerSTDOUT" />
+	</logger>
+	<logger name="SKBLoggerError" level="ALL">
+		<appender-ref ref="SKBLoggerSTDERR" />
+	</logger>
+	<logger name="SKBLoggerWarning" level="ALL">
+		<appender-ref ref="SKBLoggerSTDOUT" />
+	</logger>
+
+	<root level="ERROR">
+		<appender-ref ref="De.Vandermeer" />
+	</root>
+
+</configuration>
