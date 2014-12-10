@@ -19,7 +19,7 @@ package de.vandermeer.skb.base;
  * A pair of things, with a left and a right hand side (or left and right).
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.2 build 140626 (26-Jun-14) with Java 1.8
+ * @version    v0.0.3-SNAPSHOT build 141210 (10-Dec-14) for Java 1.8
  */
 public interface Skb_Pair<LHS, RHS> {
 
