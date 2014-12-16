@@ -1,0 +1,47 @@
+SKB Base
+--------
+
+Base definitions, some standard classes and services, categories for the SKB, and the base line for composite hierarchies for the SKB.
+
+
+SKB Message
+~~~~~~~~~~~
+This message class contains information following the 5WH news style: 
+
+* Who is it about?
+* What happened?
+* When did it take place?
+* Where did it take place?
+* Why did it happen?
+* How did it happen?
+
+In addition to that, the class also provides for information on the reporter (the object reporting the message) and
+the message type (i.e. an error, a warning or an information).
+
+The class comprises methods to build a message (+add*+, +set*+), methods to access a message (+get*+) and some additional
+methods to process a complete message (+asST+, +render+, +toString+). Additionally, it carries an enumerate +EMessageType+ for typing messages.
+Message properties that have a +set+ method (_reporter_, _type_, _when_, _where_, _who_) can only be set once and are immutable afterwards.
+For message properties that have an +add+ method (_how_, _what_, _why_) information can be appended unlimited, but once added it cannot be removed.
+
+The simplest way to create a message is to use the the builder methods. The following example creates a new message and sets all of its
+properties:
+
+---------------------------------------------------------------
+Message5WH msg=new Message5WH()
+	.setWho("from " + this.getClass().getSimpleName())
+	.addWhat("showing a test message")
+	.setWhen(null)
+	.setWhere("the class API documentation", 0, 0)
+	.addWhy("as a demo")
+	.addHow("added to the class JavaDoc")
+	.setReporter("The Author")
+	.setType(EMessageType.INFO)
+;
+---------------------------------------------------------------
+
+This message will print to the following lines:
+---------------------------------------------------------------
+The Author: info from Message5WHTests in the class API documentation >> showing a test message 
+       ==> as a demo 
+       ==> added to the class JavaDoc
+---------------------------------------------------------------

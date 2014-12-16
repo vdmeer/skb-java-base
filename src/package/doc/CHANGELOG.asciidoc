@@ -1,0 +1,16 @@
+v0.0.3 - feature add - 2014-##-##
+---------------------------------
+* added excludes to logback dependencies
+* fixed msg init error in Skb_BaseException
+* changed default message in Skb_BaseException
+* added WRAP_LINES to Skb_TextUtils (from asciitable)
+
+
+v0.0.2 - feature add - 2014-06-25
+---------------------------------
+* fixed javadoc problems (missing parameters)
+* changed STGroup behaviour in Message5WH: added custom groups and group tests; removed static STGroup member
+
+
+v0.0.1 - initial release - 2014-06-10
+-------------------------------------
