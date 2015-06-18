@@ -22,7 +22,7 @@ import java.net.URL;
  * Some methods to deal with URLs.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.3 build 150618 (18-Jun-15) for Java 1.8
+ * @version    v0.0.4-SNAPSHOT build 150618 (18-Jun-15) for Java 1.8
  */
 public abstract class Skb_UrlUtils {
 
