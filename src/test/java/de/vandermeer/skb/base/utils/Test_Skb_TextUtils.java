@@ -33,7 +33,7 @@ import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
 import de.vandermeer.skb.base.utils.Skb_ObjectUtils;
 import de.vandermeer.skb.base.utils.Skb_TextUtils;
 
-public class Skb_TextUtils_Tests {
+public class Test_Skb_TextUtils {
 
 	private String nullValue="<null>";
 

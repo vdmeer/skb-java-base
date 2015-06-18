@@ -22,7 +22,7 @@ import org.junit.Test;
 
 import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
 
-public class Skb_AntlrUtils_Tests {
+public class Test_Skb_AntlrUtils {
 
 	@Test public void test_Antlr2Line(){
 		CommonToken tk=new CommonToken(0);

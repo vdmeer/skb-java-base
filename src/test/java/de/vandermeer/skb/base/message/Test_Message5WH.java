@@ -44,7 +44,7 @@ import de.vandermeer.skb.base.utils.Skb_STUtils;
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.4-SNAPSHOT build 150618 (18-Jun-15) for Java 1.8
  */
-public class Message5WH_Tests {
+public class Test_Message5WH {
 
 	@Test public void testConstructur(){
 		Message5WH m=new Message5WH();

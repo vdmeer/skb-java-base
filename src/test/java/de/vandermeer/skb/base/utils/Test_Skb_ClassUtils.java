@@ -24,7 +24,7 @@ import org.junit.rules.ExpectedException;
 
 import de.vandermeer.skb.base.utils.Skb_ClassUtils;
 
-public class Skb_ClassUtils_Tests {
+public class Test_Skb_ClassUtils {
 
 	interface intA {}
 	interface intB {}

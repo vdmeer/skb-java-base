@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import de.vandermeer.skb.base.utils.Skb_ObjectUtils;
 
-public class Skb_ObjectUtils_Tests {
+public class Test_Skb_ObjectUtils {
 
 	private String nullValue="<null>";
 
