@@ -38,7 +38,7 @@ import de.vandermeer.skb.base.utils.Skb_STUtils;
  * Tests for STUtils.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.3-SNAPSHOT build 141210 (10-Dec-14) for Java 1.8
+ * @version    v0.0.3 build 150618 (18-Jun-15) for Java 1.8
  */
 public class Skb_STUtils_Tests {
 	public final String stgFileEmpty ="de/vandermeer/skb/base/utils/test-empty.stg";
