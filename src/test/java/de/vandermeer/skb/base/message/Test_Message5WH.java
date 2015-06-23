@@ -42,7 +42,7 @@ import de.vandermeer.skb.base.utils.Skb_STUtils;
  * Tests for the 5WH message class.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.4 build 150619 (19-Jun-15) for Java 1.8
+ * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
  */
 public class Test_Message5WH {
 

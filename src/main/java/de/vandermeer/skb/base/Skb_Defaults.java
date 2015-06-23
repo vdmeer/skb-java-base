@@ -15,12 +15,11 @@
 
 package de.vandermeer.skb.base;
 
-
 /**
  * Some default definitions for the SKB.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.4 build 150619 (19-Jun-15) for Java 1.8
+ * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
  */
 public abstract class Skb_Defaults {
 
@@ -29,4 +28,26 @@ public abstract class Skb_Defaults {
 	public static final String DEFAULT_DESCRIPTION = "##default description##";
 
 	public class DefaultImpl {}
+
+	/**
+	 * An array of SKB jars, used to optimize for speed when searching in all known jars in ExecS.
+	 */
+	public static final String[] jarFilter = new String[]{
+			"skb.asciitable",
+			"skb.base",
+			"skb.categories",
+			"skb.collections",
+			"skb.commons",
+			"skb.composite",
+			"skb.configuration",
+			"skb.dal",
+			"skb.dsl",
+			"skb.tribe"
+	};
+
+	/**
+	 * The main package for all SKB definitions, used to optimize for speed when searching in all known jars in ExecS.
+	 */
+	public static final String pkgFilter = "de.vandermeer.skb.";
+
 }

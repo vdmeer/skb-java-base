@@ -22,7 +22,7 @@ import java.net.URL;
  * Some methods to deal with URLs.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.4 build 150619 (19-Jun-15) for Java 1.8
+ * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
  */
 public abstract class Skb_UrlUtils {
 
@@ -40,6 +40,23 @@ public abstract class Skb_UrlUtils {
 			url = loader.getResource(filename);
 		}
 		return url;
+	}
+
+	/**
+	 * Returns the URL for a given file name.
+	 * @param fn file name to be used for URL generation
+	 * @param obj used to get a class loader
+	 * @return URL for the given file name
+	 */
+	public static URL getUrl(String fn, Object obj){
+		URL ret;
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		ret = cl.getResource(fn);
+		if(ret==null){
+			cl = obj.getClass().getClassLoader();
+			ret = cl.getResource(fn);
+		}
+		return ret;
 	}
 
 	/**

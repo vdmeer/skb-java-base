@@ -12,29 +12,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package de.vandermeer.skb.base.utils;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 /**
- * Utilities to deal with encodings.
+ * Thread utilities.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.4 build 150619 (19-Jun-15) for Java 1.8
+ * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
  */
-public class Skb_EncodingUtils {
+public abstract class Skb_ThreadUtils {
 
 	/**
-	 * Returns the default encoding used at runtime.
-	 * @return string with the encoding
+	 * Puts a process into sleep for some milliseconds.
+	 * @param ms time in milliseconds for the timeout
 	 */
-	public static final String getDefaultEncoding(){
-		byte [] byteArray = {'a'};
-		InputStream inputStream = new ByteArrayInputStream(byteArray);
-		InputStreamReader reader = new InputStreamReader(inputStream);
-		return(reader.getEncoding());
+	public static void sleep(int ms){
+		try {
+			Thread.sleep(ms);
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
-
 }

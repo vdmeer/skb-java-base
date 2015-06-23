@@ -1,3 +1,11 @@
+v0.0.5 - feature add - 2015-06-23
+---------------------------------
+* added console utils
+* moved encoding to console utils
+* added jar and package filters for ExecS usage
+* added net and thread uilities
+
+
 v0.0.4 - maintenance - 2015-06-19
 ---------------------------------
 * fixed artefact name, clean up, test file rename

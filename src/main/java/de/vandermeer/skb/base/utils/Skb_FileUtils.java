@@ -13,10 +13,29 @@
  * limitations under the License.
  */
 
+package de.vandermeer.skb.base.utils;
+
+import java.io.File;
+import java.io.FileFilter;
+
 /**
- * Base definitions and interfaces for the SKB.
+ * File and directory utilities.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
  */
-package de.vandermeer.skb.base;
+public abstract class Skb_FileUtils {
+
+	/**
+	 * A simple filter for directories.
+	 */
+	public final static FileFilter DIRECTORIES_ONLY = new FileFilter(){
+		public boolean accept(File f){
+			if(f.exists() && f.isDirectory()){
+				return true;
+			}
+			return false;
+		}
+	};
+
+}
