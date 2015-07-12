@@ -16,6 +16,7 @@
 package de.vandermeer.skb.base.utils;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.text.StrBuilder;
 
 import de.vandermeer.skb.base.Skb_Transformer;
 
@@ -23,7 +24,8 @@ import de.vandermeer.skb.base.Skb_Transformer;
  * Methods to manipulate arrays.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
+ * @version    v0.0.6 build 150712 (12-Jul-15) for Java 1.8
+ * @since      v0.0.1
  */
 public abstract class Skb_ArrayUtils {
 
@@ -64,15 +66,15 @@ public abstract class Skb_ArrayUtils {
 	}
 
 	/**
-	 * Returns a transformer that normalises string arrays.
+	 * Returns a transformer that normalizes string arrays.
 	 * @param length number of columns in the transformed string array
-	 * @return transformer for normalising string arrays
+	 * @return transformer for normalizing string arrays
 	 */
 	public static final Skb_Transformer<String[][], String[][]> NORMALISE_ARRAY(final int length){
 		return new Skb_Transformer<String[][], String[][]>(){
 			@Override public String[][] transform(String[][] ar){
 				int width = 0;
-				//get the length of the longest array, use that as width in normalisation
+				//get the length of the longest array, use that as width in normalization
 				for(int row=0; row<ar.length; row++){ //TODO not null safe
 					width = Math.max(width, ArrayUtils.getLength(ar[row]));
 				}
@@ -99,6 +101,42 @@ public abstract class Skb_ArrayUtils {
 						if(ar[row].length<width){
 							for(int i=ar[row].length; i<width; i++){
 								ret[row][i] = "";
+							}
+						}
+					}
+				}
+				return ret;
+			}
+		};
+	}
+
+	/**
+	 * Returns a transformer that takes a 2 dimensional array and transforms it into a textual representation, for instance for debug output.
+	 * @param <T> type of the input array
+	 * @return transformer for textual representation of the 2 dimensional array
+	 */
+	public static final <T> Skb_Transformer<T[][], StrBuilder> ARRAY_TO_TEXT(){
+		return new Skb_Transformer<T[][], StrBuilder>(){
+			@Override public StrBuilder transform(T[][] ar){
+				StrBuilder ret = new StrBuilder(50);
+				for(int row=0; row<ar.length; row++){ //TODO not null save
+					if(ar[row]==null){
+						ret.append("[").append(row).appendln("]: null");
+					}
+					else if(ar[row].length==0){
+						ret.append("[").append(row).appendln("]: 0");
+					}
+					else{
+						for(int col=0; col<ar[row].length; col++){
+							ret.append("[").append(row).append("][").append(col).append("]: ");
+							if(ar[row][col]==null){
+								ret.appendln("null");
+							}
+							else if("".equals(ar[row][col])){
+								ret.appendln("0");
+							}
+							else{
+								ret.appendln(ar[row][col]);
 							}
 						}
 					}

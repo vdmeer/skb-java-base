@@ -38,7 +38,7 @@ import de.vandermeer.skb.base.utils.Skb_STUtils;
  * Tests for STUtils.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
+ * @version    v0.0.6 build 150712 (12-Jul-15) for Java 1.8
  */
 public class Test_Skb_STUtils {
 	public final String stgFileEmpty ="de/vandermeer/skb/base/utils/test-empty.stg";
@@ -47,7 +47,7 @@ public class Test_Skb_STUtils {
 	@Test public void testGetStgName(){
 		assertNull(Skb_STUtils.getStgName(null));
 
-		STGroup stg=new STGroupFile(this.stgFileEmpty);
+		STGroup stg = new STGroupFile(this.stgFileEmpty);
 		assertNotNull(stg);
 		assertEquals(StringUtils.substringBeforeLast(this.stgFileEmpty, "."), Skb_STUtils.getStgName(stg));
 	}
@@ -64,18 +64,18 @@ public class Test_Skb_STUtils {
 
 
 		//some vars for further testing
-		ArrayList<String> chunks=new ArrayList<String>();
-		STGroup stg=new STGroupFile(this.stgFileSimple);
+		ArrayList<String> chunks = new ArrayList<String>();
+		STGroup stg = new STGroupFile(this.stgFileSimple);
 		assertNotNull(stg);
 		ST st;
 
 
 		//test an empty template
 		chunks.clear();
-		st=stg.getInstanceOf("noArg");
+		st = stg.getInstanceOf("noArg");
 		assertNotNull(st);
 		assertEquals(0, Skb_STUtils.getMissingSTArguments(st, chunks).size());
-		
+
 		chunks.add("one");
 		assertEquals(1, Skb_STUtils.getMissingSTArguments(st, chunks).size());
 		assertTrue(Skb_STUtils.getMissingSTArguments(st, chunks).contains("one"));
@@ -88,7 +88,7 @@ public class Test_Skb_STUtils {
 
 		//test a template with 1 argument
 		chunks.clear();
-		st=stg.getInstanceOf("oneArg");
+		st = stg.getInstanceOf("oneArg");
 		assertNotNull(st);
 		assertEquals(0, Skb_STUtils.getMissingSTArguments(st, chunks).size());
 
@@ -102,7 +102,7 @@ public class Test_Skb_STUtils {
 
 		//test a template with 2 arguments
 		chunks.clear();
-		st=stg.getInstanceOf("twoArgs");
+		st = stg.getInstanceOf("twoArgs");
 		assertNotNull(st);
 
 		assertEquals(0, Skb_STUtils.getMissingSTArguments(st, chunks).size());
@@ -144,9 +144,9 @@ public class Test_Skb_STUtils {
 
 
 		//some vars for further testing
-		Map<String, List<String>> chunks=new HashMap<String, List<String>>();
-		ArrayList<String> ar=new ArrayList<String>();
-		STGroup stg=new STGroupFile(this.stgFileSimple);
+		Map<String, List<String>> chunks = new HashMap<String, List<String>>();
+		ArrayList<String> ar = new ArrayList<String>();
+		STGroup stg = new STGroupFile(this.stgFileSimple);
 		assertNotNull(stg);
 
 		assertEquals(0, Skb_STUtils.getMissingChunks(stg, chunks).size());

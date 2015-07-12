@@ -23,7 +23,8 @@ import org.apache.commons.lang3.text.StrBuilder;
  * Standard toString style for SKB classes.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
+ * @version    v0.0.6 build 150712 (12-Jul-15) for Java 1.8
+ * @since      v0.0.1
  */
 public abstract class Skb_ToStringStyle {
 

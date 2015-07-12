@@ -41,15 +41,15 @@ public class Test_Skb_TextUtils {
 
 	@SuppressWarnings("unchecked")
 	@Test public void test_Manyobjects2Strbuilder(){
-		Skb_Transformer<Object, String> toText=Skb_Transformer.CHAIN(Skb_Antlr4Utils.ANTLR_TO_TEXT(), Skb_Renderable.OBJECT_TO_RENDERABLE_VALUE(), Skb_TextUtils.TO_STRING());
+		Skb_Transformer<Object, String> toText = Skb_Transformer.CHAIN(Skb_Antlr4Utils.ANTLR_TO_TEXT(), Skb_Renderable.OBJECT_TO_RENDERABLE_VALUE(), Skb_TextUtils.TO_STRING());
 
-		Skb_Transformer<Object, StrBuilder> tf=Skb_TextUtils.MANYOBJECTS_TO_STRBUILDER("++", toText);
-		List<Object> list=new ArrayList<>();
+		Skb_Transformer<Object, StrBuilder> tf = Skb_TextUtils.MANYOBJECTS_TO_STRBUILDER("++", toText);
+		List<Object> list = new ArrayList<>();
 
 		assertEquals("", tf.transform((Iterator<Object>)null).toString());
 		assertEquals("", tf.transform(list.iterator()).toString());
 
-		CommonToken tk=new CommonToken(0);
+		CommonToken tk = new CommonToken(0);
 		tk.setText("token1");
 		list.add(tk);
 		assertEquals("token1", tf.transform(list.iterator()).toString());
@@ -62,14 +62,14 @@ public class Test_Skb_TextUtils {
 
 	@Test public void test_Object2Target_General(){
 		//most other tests are done in Transformations
-		Skb_Transformer<Object, String> toStr=Skb_ObjectUtils.OBJECT_TO_TARGET(String.class, nullValue, falseValue, true);
+		Skb_Transformer<Object, String> toStr = Skb_ObjectUtils.OBJECT_TO_TARGET(String.class, nullValue, falseValue, true);
 
 		//String = ok, <null> (can't be <false>)
 		assertEquals("test string", toStr.transform("test string"));
 		assertEquals(nullValue, toStr.transform(null));
 
 		//try a set with null, then with a string, then with an object
-		Set<Object>set=new HashSet<Object>();
+		Set<Object>set = new HashSet<Object>();
 		assertEquals(nullValue, toStr.transform(set));
 		set.add(null);
 		assertEquals(nullValue, toStr.transform(set));

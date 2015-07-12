@@ -40,7 +40,7 @@ public class Test_Skb_ObjectUtils {
 		assertEquals(nullValue, Skb_ObjectUtils.CONVERT(null, String.class, nullValue, falseValue));
 
 		//try a set with null, then with a string, then with an object
-		Set<Object>set=new HashSet<Object>();
+		Set<Object>set = new HashSet<Object>();
 		assertEquals(nullValue, Skb_ObjectUtils.CONVERT(set, String.class, nullValue, falseValue));
 		set.add(null);
 		assertEquals(nullValue, Skb_ObjectUtils.CONVERT(set, String.class, nullValue, falseValue));
@@ -80,7 +80,7 @@ public class Test_Skb_ObjectUtils {
 		assertTrue(Skb_ObjectUtils.CONVERT(Boolean.TRUE, Boolean.class, null, null));
 		assertFalse(Skb_ObjectUtils.CONVERT(Boolean.FALSE, Boolean.class, null, null));
 
-		Set<Object>set=new HashSet<Object>();
+		Set<Object>set = new HashSet<Object>();
 		set.add(null);
 		assertFalse(Skb_ObjectUtils.CONVERT(set, Boolean.class, false, true));
 		set.add(Boolean.TRUE);

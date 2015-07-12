@@ -16,8 +16,6 @@
 package de.vandermeer.skb.base.utils;
 
 import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeSet;
 
 import org.apache.commons.lang3.text.StrBuilder;
 
@@ -27,92 +25,10 @@ import de.vandermeer.skb.base.Skb_Transformer;
  * Text converters.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
+ * @version    v0.0.6 build 150712 (12-Jul-15) for Java 1.8
+ * @since      v0.0.2
  */
 public abstract class Skb_TextUtils {
-
-	/**
-	 * Returns a transformer that takes a 2 dimensional array and transforms it into a textual representation, for instance for debug output.
-	 * @param <T> type of the input array
-	 * @return transformer for textual representation of the 2 dimensional array
-	 */
-	public static final <T> Skb_Transformer<T[][], StrBuilder> ARRAY_TO_TEXT(){
-		return new Skb_Transformer<T[][], StrBuilder>(){
-			@Override public StrBuilder transform(T[][] ar){
-				StrBuilder ret = new StrBuilder(50);
-				for(int row=0; row<ar.length; row++){ //TODO not null save
-					if(ar[row]==null){
-						ret.append("[").append(row).appendln("]: null");
-					}
-					else if(ar[row].length==0){
-						ret.append("[").append(row).appendln("]: 0");
-					}
-					else{
-						for(int col=0; col<ar[row].length; col++){
-							ret.append("[").append(row).append("][").append(col).append("]: ");
-							if(ar[row][col]==null){
-								ret.appendln("null");
-							}
-							else if("".equals(ar[row][col])){
-								ret.appendln("0");
-							}
-							else{
-								ret.appendln(ar[row][col]);
-							}
-						}
-					}
-				}
-				return ret;
-			}
-		};
-	}
-
-//	/**
-//	 * Returns a transformer that takes a collection and transforms it into a textual representation, for instance for debug output.
-//	 * @return transformer for textual representation of the collection
-//	 */
-//	public static final Transformer<Collection<?>, String> COLLECTION_TO_TEXT(){
-//		return new Transformer<Collection<?>, String>(){
-//			@Override public String transform(Collection<?> coll){
-//				//String template="    <collection:{n | - <n>}; separator=\"\n\">";		//simple string didn't work in tests??? :(
-//				String collG="collection(entries) ::= <<\n    <entries:{n | - <n>}; separator=\"\n\">\n>>";
-//				STGroup stg=new STGroupString(collG);
-//				ST ret=stg.getInstanceOf("collection");
-//				if(coll!=null){
-//					for(Object obj:coll){
-//						ret.add("entries", obj);
-//					}
-//				}
-//				return ret.render();
-//			}
-//		};
-//	}
-
-	/**
-	 * Returns a transformer that takes a map and returns a string representation of its contents.
-	 * @return map to string transformer
-	 */
-	public static final Skb_Transformer<Map<String, ?>, String> MAP_TO_TEXT(){
-		return new Skb_Transformer<Map<String, ?>, String>(){
-			@Override public String transform(Map<String, ?> map){
-				StrBuilder ret = new StrBuilder(map.size()*20);
-				TreeSet<String> keys = new TreeSet<String>(map.keySet());
-				for(String leaf : keys){
-//					int level=StringUtils.countMatches(leaf, builder.getSeparatorAsString());
-//					ret.append('-');
-//					for(int i=0;i<=level;i++){
-//						ret.append("-");
-//					}
-//					ret.append("> ").append(leaf);
-					ret.append("--> ").append(leaf);
-					ret.append(" ::= ");
-					ret.append(map.get(leaf));
-					ret.append('\n');
-				}
-				return ret.toString();
-			}
-		};
-	}
 
 	/**
 	 * Returns a transformer that takes an iterator and returns a String Builder.

@@ -17,12 +17,15 @@ package de.vandermeer.skb.base.utils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /**
  * File and directory utilities.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.5 build 150623 (23-Jun-15) for Java 1.8
+ * @version    v0.0.6 build 150712 (12-Jul-15) for Java 1.8
+ * @since      v0.0.6
  */
 public abstract class Skb_FileUtils {
 
@@ -38,4 +41,36 @@ public abstract class Skb_FileUtils {
 		}
 	};
 
+	/**
+	 * A simple filter for files.
+	 */
+	public final static FileFilter FILES_ONLY = new FileFilter(){
+		public boolean accept(File f){
+			if(f.exists() && f.isFile()){
+				return true;
+			}
+			return false;
+		}
+	};
+
+	/**
+	 * Read an entire file and return the contents as string.
+	 * @param file input file
+	 * @return string with entire file contents, empty on error
+	 */
+	public final static String readFile(File file){
+		String ret = "";
+		Scanner s = null;
+		try{
+			s = new Scanner(file).useDelimiter("\\Z");
+			ret = s.next();
+			s.close();
+		}
+		catch(FileNotFoundException ignore){
+//			if(s!=null){
+//				s.close();
+//			}
+		}
+		return ret;
+	}
 }

@@ -1,3 +1,14 @@
+v0.0.6 - feature add - 2015-07-12
+---------------------------------
+* added Assertions for notNull and stringEmpty
+* updated jar filters in Skb_Defaults
+* added readFile to FileUtils
+* added DirectoryScanner to utils
+* moved standard categories from skb-categories to here
+* moved all composite implementation from skb-composite to here
+* added ReportManager from skb-commons
+
+
 v0.0.5 - feature add - 2015-06-23
 ---------------------------------
 * added console utils

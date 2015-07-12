@@ -25,7 +25,7 @@ import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
 public class Test_Skb_AntlrUtils {
 
 	@Test public void test_Antlr2Line(){
-		CommonToken tk=new CommonToken(0);
+		CommonToken tk = new CommonToken(0);
 		assertEquals(new Integer(-1), Skb_Antlr4Utils.ANTLR_TO_LINE().transform((CommonToken)null));
 		assertEquals(new Integer(0),  Skb_Antlr4Utils.ANTLR_TO_LINE().transform(tk));
 
@@ -37,7 +37,7 @@ public class Test_Skb_AntlrUtils {
 	}
 
 	@Test public void test_Antlr2Column(){
-		CommonToken tk=new CommonToken(0);
+		CommonToken tk = new CommonToken(0);
 		assertEquals(new Integer(-1),  Skb_Antlr4Utils.ANTLR_TO_COLUMN().transform((CommonToken)null));
 		assertEquals(new Integer(-1), Skb_Antlr4Utils.ANTLR_TO_COLUMN().transform(tk));
 
@@ -49,7 +49,7 @@ public class Test_Skb_AntlrUtils {
 	}
 
 	@Test public void testAntlr2Line(){
-		CommonToken tk=new CommonToken(0);
+		CommonToken tk = new CommonToken(0);
 		assertEquals(new Integer(0), Skb_Antlr4Utils.antlr2line(tk));	//default line is 0
 
 		tk.setLine(99);
@@ -63,7 +63,7 @@ public class Test_Skb_AntlrUtils {
 	}
 
 	@Test public void testAntlr2Column(){
-		CommonToken tk=new CommonToken(0);
+		CommonToken tk = new CommonToken(0);
 		assertEquals(new Integer(-1), Skb_Antlr4Utils.antlr2column(tk));	//default column is not set, so -1
 
 		tk.setCharPositionInLine(99);
