@@ -27,10 +27,9 @@ import de.vandermeer.skb.base.info.sources.FileSource;
  * An file loader for a set of Java property files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.7 build 150721 (21-Jul-15) for Java 1.8
+ * @version    v0.0.8-SNAPSHOT build 150721 (21-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
-//public class PropertyArrayLoader {
 public class PropertyArrayLoader extends AbstractLoader implements FileListLoader {
 
 	/** The source file set for the loader. */
@@ -41,7 +40,7 @@ public class PropertyArrayLoader extends AbstractLoader implements FileListLoade
 
 	/**
 	 * Returns a new loader that uses a {@link DirectoryLoader} class to load a file set.
-	 * @param dl dieectory loader for loading files
+	 * @param dl directory loader for loading files
 	 */
 	public PropertyArrayLoader(DirectoryLoader dl){
 		this.dl = dl;

@@ -22,7 +22,7 @@ import de.vandermeer.skb.base.info.InfoValidator;
  * Abstract implementation of a validator as base class for validators.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.7 build 150721 (21-Jul-15) for Java 1.8
+ * @version    v0.0.8-SNAPSHOT build 150721 (21-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public abstract class AbstractValidator implements InfoValidator {

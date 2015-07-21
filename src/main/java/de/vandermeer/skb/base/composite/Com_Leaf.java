@@ -19,7 +19,7 @@ package de.vandermeer.skb.base.composite;
  * Base class for atomic types.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.7 build 150721 (21-Jul-15) for Java 1.8
+ * @version    v0.0.8-SNAPSHOT build 150721 (21-Jul-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
 public interface Com_Leaf extends Com_Top {

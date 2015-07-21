@@ -27,7 +27,7 @@ import de.vandermeer.skb.base.info.ValidationOptions;
  * File source for an information source.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.7 build 150721 (21-Jul-15) for Java 1.8
+ * @version    v0.0.8-SNAPSHOT build 150721 (21-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class FileSource extends AbstractFileInfo implements InfoSource {
