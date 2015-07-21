@@ -31,7 +31,7 @@ import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.composite.coin.CC_Warning;
 import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.Message5WH;
-import de.vandermeer.skb.base.utils.ReportManager;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * Tests for the AtcReportManager.
@@ -67,63 +67,63 @@ public class Test_ReportManager {
 		ReportManager arm;
 
 		//test with default STG in resources
-		arm=new ReportManager("de/vandermeer/skb/base/report-manager.stg", "myTest");
+		arm = new ReportManager("de/vandermeer/skb/base/report-manager.stg", "myTest");
 		this.checkStandardInitialValues(arm, 100);
 		assertNotNull(arm.stg);
 		assertEquals(0, arm.errorList.size());
 		assertTrue(arm.isLoaded());
 
 		//test default with different maxError
-		arm=new ReportManager("de/vandermeer/skb/base/report-manager.stg", 99, "myTest");
+		arm = new ReportManager("de/vandermeer/skb/base/report-manager.stg", 99, "myTest");
 		this.checkStandardInitialValues(arm, 99);
 		assertNotNull(arm.stg);
 		assertEquals(0, arm.errorList.size());
 		assertTrue(arm.isLoaded());
 
-		String stString=
+		String stString = 
 				"report(who, what, when, where, why, how, type, reporter) ::= << \n"+
 				">> \n\n"+
 				"where(location, line, column) ::= << \n"+
 				">> \n\n"+
 				"maxErrors(name, number) ::= << \n"+
 				">> \n\n";
-		STGroup stg=new STGroupString(stString);
+		STGroup stg = new STGroupString(stString);
 
-		arm=new ReportManager(stg, "me test");
+		arm = new ReportManager(stg, "me test");
 		this.checkStandardInitialValues(arm, 100);
 		assertNotNull(arm.stg);
 		assertEquals(0, arm.errorList.size());
 		assertTrue(arm.isLoaded());
 
-		arm=new ReportManager(stg, 49, "me test");
+		arm = new ReportManager(stg, 49, "me test");
 		this.checkStandardInitialValues(arm, 49);
 		assertNotNull(arm.stg);
 		assertEquals(0, arm.errorList.size());
 		assertTrue(arm.isLoaded());
 
-		stString=
+		stString = 
 			"report() ::= << \n"+
 			">> \n\n"+
 			"where(location, line, column) ::= << \n"+
 			">> \n\n"+
 			"maxErrors(name, number) ::= << \n"+
 			">> \n\n";
-		stg=new STGroupString(stString);
+		stg = new STGroupString(stString);
 
-		arm=new ReportManager(stg, "me test");
+		arm = new ReportManager(stg, "me test");
 		assertEquals(0, arm.reportTypes.size());
 		assertNotNull(arm.stg);
 		assertEquals(8, arm.errorList.size());
 		assertFalse(arm.isLoaded());
 
-		stString=
+		stString = 
 			"report() ::= << \n"+
 			">> \n\n"+
 			"maxErrors(name, number) ::= << \n"+
 			">> \n\n";
 		stg=new STGroupString(stString);
 
-		arm=new ReportManager(stg, 29, "me test");
+		arm = new ReportManager(stg, 29, "me test");
 		assertEquals(0, arm.reportTypes.size());
 		assertEquals(29, arm.maxErrors);
 		assertNotNull(arm.stg);
@@ -141,7 +141,7 @@ public class Test_ReportManager {
 		assertEquals(0, arm.getMessageCount(EMessageType.WARNING));
 		assertEquals(0, arm.getMessageCount(EMessageType.INFO));
 
-		EMessageType[] types=EMessageType.values();
+		EMessageType[] types = EMessageType.values();
 		assertEquals(types.length, arm.reportTypes.size());
 		for(EMessageType t:types){
 			assertTrue(arm.reportTypes.contains(t));
@@ -151,7 +151,7 @@ public class Test_ReportManager {
 	}
 
 	@Test public void testConfigureReporting(){
-		ReportManager arm=new ReportManager("de/vandermeer/skb/base/report-manager.stg", "myTest");
+		ReportManager arm = new ReportManager("de/vandermeer/skb/base/report-manager.stg", "myTest");
 
 		arm.configureReporting(Arrays.asList(new EMessageType[]{EMessageType.ERROR}));
 		assertTrue(arm.isEnabledFor(EMessageType.ERROR));
@@ -165,11 +165,11 @@ public class Test_ReportManager {
 	}
 
 	@Test public void testReportDirect(){
-		ReportManager arm=new ReportManager("de/vandermeer/skb/base/report-manager.stg", "myTest");
+		ReportManager arm = new ReportManager("de/vandermeer/skb/base/report-manager.stg", "myTest");
 
-		Message5WH msg=new Message5WH().setReporter("testReportDirect").setWho("junit").addWhat("a test message (ignore)");
+		Message5WH msg = new Message5WH_Builder().setReporter("testReportDirect").setWho("junit").addWhat("a test message (ignore)").build();
 
-		msg.setType(EMessageType.ERROR);
+		msg.changeType(EMessageType.ERROR);
 		assertFalse(arm.report(null));
 		assertEquals(0, arm.getMessageCount(EMessageType.ERROR));
 		assertTrue(arm.report(msg));
@@ -177,7 +177,7 @@ public class Test_ReportManager {
 		assertTrue(arm.report(msg));
 		assertEquals(2, arm.getMessageCount(EMessageType.ERROR));
 
-		msg.setType(EMessageType.WARNING);
+		msg.changeType(EMessageType.WARNING);
 		assertFalse(arm.report(null));
 		assertEquals(0, arm.getMessageCount(EMessageType.WARNING));
 		assertTrue(arm.report(msg));
@@ -185,7 +185,7 @@ public class Test_ReportManager {
 		assertTrue(arm.report(msg));
 		assertEquals(2, arm.getMessageCount(EMessageType.WARNING));
 
-		msg.setType(EMessageType.INFO);
+		msg.changeType(EMessageType.INFO);
 		assertFalse(arm.report(null));
 		assertEquals(0, arm.getMessageCount(EMessageType.INFO));
 		assertTrue(arm.report(msg));
@@ -202,28 +202,28 @@ public class Test_ReportManager {
 	}
 
 	@Test public void testReportPublic(){
-		ReportManager arm=new ReportManager("de/vandermeer/skb/base/report-manager.stg", "myTest");
+		ReportManager arm = new ReportManager("de/vandermeer/skb/base/report-manager.stg", "myTest");
 
-		Message5WH msg=new Message5WH().setReporter("testReportDirect").setWho("junit").addWhat("a test message (ignore)");
+		Message5WH msg = new Message5WH_Builder().setReporter("testReportDirect").setWho("junit").addWhat("a test message (ignore)").build();
 
-		CC_Error err=new CC_Error().add(msg).add(msg);
+		CC_Error err = new CC_Error().add(msg).add(msg);
 		assertTrue(arm.report(err));
 		assertEquals(2, arm.getMessageCount(EMessageType.ERROR));
 
-		CC_Warning warn=new CC_Warning().add(msg).add(msg);
+		CC_Warning warn = new CC_Warning().add(msg).add(msg);
 		assertTrue(arm.report(warn));
 		assertEquals(2, arm.getMessageCount(EMessageType.WARNING));
 
-		msg.setType(null);
+		msg.changeType(null);
 		assertFalse(arm.report(msg));
 
-		msg.setType(EMessageType.INFO);
-		Object[] oarr=new Object[]{msg, msg, msg};
+		msg.changeType(EMessageType.INFO);
+		Object[] oarr = new Object[]{msg, msg, msg};
 		assertTrue(arm.report(oarr));
 		assertEquals(3, arm.getMessageCount(EMessageType.INFO));
 
-		HashSet<Object> set=new HashSet<Object>();
-		msg.setType(EMessageType.WARNING);
+		HashSet<Object> set = new HashSet<Object>();
+		msg.changeType(EMessageType.WARNING);
 		set.add(msg);
 		assertTrue(arm.report(set));
 		assertEquals(3, arm.getMessageCount(EMessageType.WARNING));

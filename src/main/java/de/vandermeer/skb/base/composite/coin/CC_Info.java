@@ -19,7 +19,9 @@ import java.util.List;
 
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 import de.vandermeer.skb.base.message.Message5WH;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * Special object for information.
@@ -48,7 +50,7 @@ public final class CC_Info extends Abstract_CC {
 
 	/**
 	 * Creates a new DefaultInfo with a single information.
-	 * @param info info for initialisation
+	 * @param info info for initialization
 	 */
 	public CC_Info(Message5WH info){
 		super(info);
@@ -57,12 +59,25 @@ public final class CC_Info extends Abstract_CC {
 	/**
 	 * Adds a single info to the information list.
 	 * @param add error to be added, null is ignored
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
 	@Override
 	public CC_Info add(Message5WH add){
 		if(add!=null){
-			super.add(add.setType(EMessageType.INFO));
+			super.add(add.changeType(EMessageType.INFO));
+		}
+		return this;
+	}
+
+	/**
+	 * Adds a new single info using the SLF4J FormattingTuple wrapped in a message.
+	 * @param what the what message with substitutions for objects
+	 * @param obj the object for the substitution
+	 * @return self to allow chaining
+	 */
+	public CC_Info add(String what, Object ... obj){
+		if(what!=null){
+			super.add(new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.INFO).build());
 		}
 		return this;
 	}
@@ -70,7 +85,7 @@ public final class CC_Info extends Abstract_CC {
 	/**
 	 * Adds another information.
 	 * @param add info to be added, null is ignored
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
 	public CC_Info add(CC_Info add){
 		if(add!=null){

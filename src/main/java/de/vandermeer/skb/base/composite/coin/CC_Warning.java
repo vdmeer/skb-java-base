@@ -19,7 +19,9 @@ import java.util.List;
 
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 import de.vandermeer.skb.base.message.Message5WH;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * Special object for a warnings.
@@ -57,12 +59,25 @@ public final class CC_Warning extends Abstract_CC {
 	/**
 	 * Adds a single warning message.
 	 * @param add warning to be added, null is ignored
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
 	@Override
 	public CC_Warning add(Message5WH add){
 		if(add!=null){
-			super.add(add.setType(EMessageType.WARNING));
+			super.add(add.changeType(EMessageType.WARNING));
+		}
+		return this;
+	}
+
+	/**
+	 * Adds a new single warning using the SLF4J FormattingTuple wrapped in a message.
+	 * @param what the what message with substitutions for objects
+	 * @param obj the object for the substitution
+	 * @return self to allow chaining
+	 */
+	public CC_Warning add(String what, Object ... obj){
+		if(what!=null){
+			super.add(new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.WARNING).build());
 		}
 		return this;
 	}
@@ -70,7 +85,7 @@ public final class CC_Warning extends Abstract_CC {
 	/**
 	 * Adds another warning.
 	 * @param add warning to be added, null is ignored
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
 	public CC_Warning add(CC_Warning add){
 		if(add!=null){

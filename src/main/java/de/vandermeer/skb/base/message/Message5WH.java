@@ -15,26 +15,13 @@
 
 package de.vandermeer.skb.base.message;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Token;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.text.StrBuilder;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupString;
 
 import de.vandermeer.skb.base.Skb_Renderable;
 import de.vandermeer.skb.base.Skb_ToStringStyle;
-import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
-import de.vandermeer.skb.base.utils.Skb_STUtils;
 
 /**
  * Standard SKB message.
@@ -61,8 +48,8 @@ import de.vandermeer.skb.base.utils.Skb_STUtils;
  * The simplest way to create a message is to use the the builder methods. The following example creates a new message and sets all of its
  * properties:
  * <pre>
-Message5WH msg=new Message5WH()
-	.setWho("from "+this.getClass().getSimpleName())
+Message5WH msg = new Message5WH_Builder()
+	.setWho("from " + this.getClass().getSimpleName())
 	.addWhat("showing a test message")
 	.setWhen(null)
 	.setWhere("the class API documentation", 0, 0)
@@ -70,6 +57,7 @@ Message5WH msg=new Message5WH()
 	.addHow("added to the class JavaDoc")
 	.setReporter("The Author")
 	.setType(EMessageType.INFO)
+	.build()
 ;
  * </pre>
  *This message will print to the following lines:
@@ -85,44 +73,6 @@ The Author: info from Message5WHTests in the class API documentation &gt;&gt; sh
  */
 public class Message5WH implements Skb_Renderable {
 
-	/** The default STGroup definition for the 5WH message class. */
-	public final static String messageSTGroup=
-			"where(location, line, column) ::= <<\n" +
-			"<location;separator=\".\"><if(line&&column)> <line>:<column><elseif(!line&&!column)><elseif(!line)> -:<column><elseif(!column)> <line>:-<endif>\n"+
-			">>\n\n" +
-			"message5wh(reporter, type, who, when, where, what, why, how) ::= <<\n" +
-			"<if(reporter)><reporter>: <endif><if(type)><type> <endif><if(who)><who> <endif><if(when)>at (<when>) <endif><if(where)>in <where> <endif><if(what)>\\>> <what><endif>" +
-			"<if(why)> \n       ==> <why><endif>\n" +
-			"<if(how)> \n       ==> <how><endif>\n" +
-			">>\n";
-
-	public final static Map<String, List<String>> stChunks = new HashMap<String, List<String>>(){
-			private static final long serialVersionUID = 1L;{
-				put("where", new ArrayList<String>(){
-					private static final long serialVersionUID = 1L;{
-						add("location");
-						add("line");
-						add("column");
-					}}
-				);
-				put("message5wh", new ArrayList<String>(){
-					private static final long serialVersionUID = 1L;{
-						add("reporter");
-						add("type");
-						add("who");
-						add("when");
-						add("where");
-						add("what");
-						add("why");
-						add("how");
-					}}
-				);
-			}};
-	;
-
-	/** Initial capacity for StrBuilder members */
-	protected int initialCapacity;
-
 	/** Who is this message about? */
 	private Object who;
 
@@ -133,7 +83,7 @@ public class Message5WH implements Skb_Renderable {
 	private ST where;
 
 	/** The ST group for the message */
-	STGroup stg;
+	private STGroup stg;
 
 	/** When did take place/happen? */
 	private Object when;
@@ -150,102 +100,16 @@ public class Message5WH implements Skb_Renderable {
 	/** Type of message */
 	private EMessageType type;
 
-	/**
-	 * Simple constructor setting/loading defaults for the object.
-	 * It does not set any implicit defaults for any part of the message (5WH) nor the reporter or the message type.
-	 * All of those members are initialised with the standard object default "null".
-	 * This initial capacity for all StrBuilder parts of the message (what, why and how) is set to 50 (characters).
-	 */
-	public Message5WH(){
-		this.initialCapacity = 50;
-		this.stg = new STGroupString(Message5WH.messageSTGroup);
-	}
-
-	/**
-	 * Builder method: adds to the How? part of the message.
-	 * If the argument is null, no change will be done.
-	 * Otherwise if nothing was set to How? yet, the given argument will be used as initial value.
-	 * If not, then the argument will be appended as is w/o any implicit separators.
-	 * @param how additional information for How?
-	 * @return this to allow concatenation
-	 */
-	public Message5WH addHow(Object ...how){
-		if(this.how==null){
-			this.how = new StrBuilder(50);
-		}
-		this.how.appendAll(how);
-		return this;
-	}
-
-	/**
-	 * Builder method: adds to the What? part of the message.
-	 * If the argument is null, no change will be done.
-	 * Otherwise if nothing was set to What? yet, the given argument will be used as initial value.
-	 * If not, then the argument will be appended as is w/o any implicit separators.
-	 * @param what additional information for What?
-	 * @return this to allow concatenation
-	 */
-	public Message5WH addWhat(Object ...what){
-		if(this.what==null){
-			this.what = new StrBuilder(50);
-		}
-		this.what.appendAll(what);
-		return this;
-	}
-
-	/**
-	 * Builder method: adds to the Why? part of the message.
-	 * If the argument is null, no change will be done.
-	 * Otherwise if nothing was set to Why? yet, the given argument will be used as initial value.
-	 * If not, then the argument will be appended as is w/o any implicit separators.
-	 * @param why additional information for Why?
-	 * @return this to allow concatenation
-	 */
-	public Message5WH addWhy(Object ...why){
-		if(this.why==null){
-			this.why = new StrBuilder(50);
-		}
-		this.why.appendAll(why);
-		return this;
-	}
-
-	/**
-	 * Sets a new STGroup for the message.
-	 * The STGroup contains the two templates used for rendering a message: <code>where</code> and <code>message5wh</code>. The default templates are
-	 * defined in {@link Message5WH#messageSTGroup}. 
-	 * @param stg new STGroup
-	 * @return returns always self, but only sets the new STGroup if it contains the two required functions with all arguments
-	 */
-	public Message5WH setSTG(STGroup stg){
-		if(stg!=null){
-			Map<String, List<String>> actual=Skb_STUtils.getMissingChunks(stg, Message5WH.stChunks);
-			if(actual.size()==0){
-				this.stg = stg;
-			}
-		}
-		return this;
-	}
-
-	/**
-	 * Tests the given STGroup.
-	 * The test basically looks into the STGroup for the two required templates <code>where</code> and <code>message5wh</code> and their required arguments.
-	 * The required arguments are provided by {@link Message5WH#stChunks}.
-	 * @param stg STGroup to test
-	 * @return null if input group was null, a set size 0 of everything was ok, a set size &gt; 0 with detailed error messages otherwise
-	 */
-	public Set<String> testSTG(STGroup stg){
-		if(stg!=null){
-			Map<String, List<String>> actual=Skb_STUtils.getMissingChunks(stg, Message5WH.stChunks);
-			Set<String> errors = Skb_STUtils.getMissingChunksErrorMessages(Skb_STUtils.getStgName(stg), actual);
-			if(errors.size()>0){
-				return errors;
-			}
-			else{
-				this.stg = stg;
-				return new HashSet<String>();
-			}
-		}
-		return null;
+	Message5WH(Object who, StrBuilder what, ST where, STGroup stg, Object when, StrBuilder why, StrBuilder how, Object reporter, EMessageType type){
+		this.who = who;
+		this.what = what;
+		this.where = where;
+		this.stg = stg;
+		this.when = when;
+		this.why = why;
+		this.how = how;
+		this.reporter = reporter;
+		this.type = type;
 	}
 
 	/**
@@ -332,148 +196,13 @@ public class Message5WH implements Skb_Renderable {
 	}
 
 	/**
-	 * Builder method: sets the Reporter of the message.
-	 * Since null is a valid value for this member of the message, no further check is applied to the argument.
-	 * @param reporter new reporter
-	 * @return this to allow concatenation
-	 */
-	public Message5WH setReporter(Object reporter){
-		this.reporter = reporter;
-		return this;
-	}
-
-	/**
-	 * Builder method: sets the type of the message.
+	 * Changes the type of the message.
 	 * Since null is a valid value for this member of the message, no further check is applied to the argument.
 	 * @param type new type
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
-	public Message5WH setType(EMessageType type){
+	public Message5WH changeType(EMessageType type){
 		this.type = type;
-		return this;
-	}
-
-	/**
-	 * Builder method: sets the When? part of the message.
-	 * Since null is a valid value for this part of the message, no further check is applied to the argument.
-	 * @param when new When? part
-	 * @return this to allow concatenation
-	 */
-	public Message5WH setWhen(Object when){
-		this.when = when;
-		return this;
-	}
-
-	/**
-	 * Builder method: sets the Where? part of the message.
-	 * Nothing will be set if the first parameter is null.
-	 * @param where location for Where?
-	 * @param line line for Where?, ignored if &lt;1;
-	 * @param column column for Where?, ignored if &lt;1
-	 * @return this to allow concatenation
-	 */
-	public Message5WH setWhere(Object where, int line, int column){
-		if(where!=null){
-			this.where = this.stg.getInstanceOf("where");
-			this.where.add("location", where);
-			if(line>0){
-				this.where.add("line", line);
-			}
-			if(column>0){
-				this.where.add("column", column);
-			}
-		}
-		return this;
-	}
-
-	/**
-	 * Builder method: sets the Where? part of the message.
-	 * Line and column information are taken from the recognition exception, if they are larger than 0.
-	 * Nothing will be set if the two parameters are null.
-	 * @param where location for Where?
-	 * @param lineAndColumn source for the Where? part
-	 * @return this to allow concatenation
-	 */
-	public Message5WH setWhere(Object where, RecognitionException lineAndColumn){
-		if(where!=null && lineAndColumn!=null){
-			this.setWhere(where, Skb_Antlr4Utils.antlr2line(lineAndColumn), Skb_Antlr4Utils.antlr2column(lineAndColumn));
-		}
-		return this;
-	}
-
-	public Message5WH setWhere(Object where){
-		return this.setWhere(where, 0, 0);
-	}
-
-	/**
-	 * Builder method: sets the Where? part of the message.
-	 * Line and column information are taken from the token, if they are larger than 0.
-	 * Nothing will be set if the two parameters are null.
-	 * @param where location for Where?
-	 * @param lineAndColumn source for the Where? part
-	 * @return this to allow concatenation
-	 */
-	public Message5WH setWhere(Object where, Token lineAndColumn){
-		if(where!=null && lineAndColumn!=null){
-			this.setWhere(where, Skb_Antlr4Utils.antlr2line(lineAndColumn), Skb_Antlr4Utils.antlr2column(lineAndColumn));
-		}
-		return this;
-	}
-
-	/**
-	 * Builder method: sets the Where? part of the message.
-	 * Line and column information are taken from the tree, if they are larger than 0.
-	 * Nothing will be set if the two parameters are null.
-	 * @param where location for Where?
-	 * @param lineAndColumn source for the Where? part
-	 * @return this to allow concatenation
-	 */
-	public Message5WH setWhere(Object where, ParserRuleContext lineAndColumn){
-		if(where!=null && lineAndColumn!=null){
-			this.setWhere(where, Skb_Antlr4Utils.antlr2line(lineAndColumn), Skb_Antlr4Utils.antlr2column(lineAndColumn));
-		}
-		return this;
-	}
-
-	/**
-	 * Builder method: sets the Where? part of the message.
-	 * Three values are taken from the stack trace: class name and method name for the location of Where?
-	 * and line number for the the line. If the stack trace is null or class name and method are empty, nothing will be
-	 * set. A line number of 0 will be ignored.
-	 * @param ste source for the Where? part
-	 * @return this to allow concatenation
-	 */
-	public Message5WH setWhere(StackTraceElement ste){
-		if(ste!=null){
-			String cn = ste.getClassName();
-			String mn = ste.getMethodName();
-			int line = ste.getLineNumber();
-			//StackTraceElement requires Class and Method set to !null but allows for "", we cope with null but not "" in ST4
-			if(!"".equals(cn) || !"".equals(mn)){
-				this.where = this.stg.getInstanceOf("where");
-				if(!"".equals(cn)){
-					this.where.add("location", ste.getClassName());
-				}
-				if(!"".equals(mn)){
-					this.where.add("location", ste.getMethodName());
-				}
-				if(line>0){
-					this.where.add("line", ste.getLineNumber());
-				}
-				//no column information in a stack trace
-			}
-		}
-		return this;
-	}
-
-	/**
-	 * Builder method: sets the Who? part of the message.
-	 * Since null is a valid value for this part of the message, no further check is applied to the argument.
-	 * @param who new Who? part
-	 * @return this to allow concatenation
-	 */
-	public Message5WH setWho(Object who){
-		this.who = who;
 		return this;
 	}
 

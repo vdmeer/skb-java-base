@@ -63,7 +63,7 @@ public interface Skb_Pair<LHS, RHS> {
 	 * @return new pair
 	 */
 	static <LHS, RHS> Skb_Pair<LHS, RHS> create(LHS lhs, RHS rhs){
-		return Skb_Pair.create(lhs, rhs, "abstract IsPath implementation");
+		return Skb_Pair.create(lhs, rhs, "abstract Skb_Pair implementation");
 	}
 
 	/**

@@ -13,15 +13,16 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.utils;
+package de.vandermeer.skb.base.info.loaders;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang3.text.StrBuilder;
+
+import de.vandermeer.skb.base.info.sources.DirectorySource;
+import de.vandermeer.skb.base.info.sources.FileListSource;
 
 /**
  * Scans a directory and returns a complete list of files found.
@@ -30,16 +31,10 @@ import org.apache.commons.lang3.text.StrBuilder;
  * @version    v0.0.6 build 150712 (12-Jul-15) for Java 1.8
  * @since      v0.0.6
  */
-public class DirectoryScanner {
+public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryLoader {
 
-	/** List of errors collected during a scan. */
-	final List<String> errors;
-
-	/** List of warnings collected during a scan. */
-	final List<String> warnings;
-
-	/** List of infos collected during a scan. */
-	final List<String> infos;
+	/** The source for the scanner, a root directory. */
+	final DirectorySource source;
 
 	/** Number of directories scanned. */
 	int scDir;
@@ -53,11 +48,20 @@ public class DirectoryScanner {
 	/** Number of unreadable files found. */
 	int scFilesUnreadable;
 
+	/** List of warnings collected during a scan. */
+	final List<String> warnings;
+
+	/** List of information collected during a scan. */
+	final List<String> infos;
+
 	/**
-	 * Returns a new directory scanner
+	 * Returns a new directory scanner for a given source.
+	 * @param source the source for the scanner
 	 */
-	public DirectoryScanner(){
-		this.errors = new ArrayList<>();
+	public SimpleDirectoryScanner(DirectorySource source){
+		this.source = source;
+		this.validateSource();
+
 		this.warnings = new ArrayList<>();
 		this.infos = new ArrayList<>();
 	}
@@ -67,8 +71,10 @@ public class DirectoryScanner {
 	 */
 	public void clear(){
 		this.errors.clear();
+
 		this.warnings.clear();
 		this.infos.clear();
+
 		this.scDir = 0;
 		this.scDirUnreadable = 0;
 		this.scFiles = 0;
@@ -79,41 +85,12 @@ public class DirectoryScanner {
 	 * Returns a set of files found in the given directory.
 	 * A scan will go recursively through all readable sub directories and collect all readable files.
 	 * Hidden files and directories will be ignored (not scanned, found or counted)
-	 * @param directory name of the directory to scan
 	 * @return a set of readable files found in the directory, empty set of none found, errors and warnings are collected per scan
 	 */
-	public Set<File> getFiles(String directory){
+	protected List<File> getFiles(){
 		this.clear();
-		if(directory==null){
-			this.errors.add("input directory was null");
-			return null;
-		}
-		File fDir = null;
-		try{
-			fDir = new File(directory);
-			if(!fDir.exists()){
-				this.errors.add("input directory <" + directory + "> does not exist");
-				return null;
-			}
-			if(fDir.isHidden()){
-				this.errors.add("input directory <" + directory + "> is a hidden directory");
-				return null;
-			}
-			if(!fDir.isDirectory()){
-				this.errors.add("input directory <" + directory + "> is not a directory");
-				return null;
-			}
-			if(!fDir.canRead()){
-				this.errors.add("cannot read input directory <" + directory + ">");
-				return null;
-			}
-		}
-		catch(Exception ex){
-			this.errors.add("problem with input directory <" + directory + "> with exception <" + ex.getMessage());
-			return null;
-		}
-
-		Set<File> ret = this.doScan(fDir);
+		File f = new File(this.source.getSource());
+		List<File> ret = this.doScan(f);
 		this.doInfo();
 		return ret;
 	}
@@ -134,8 +111,8 @@ public class DirectoryScanner {
 	 * @param fDir starting directory
 	 * @return set of found and readable files, empty set of none found
 	 */
-	Set<File> doScan(File fDir){
-		Set<File> ret = new HashSet<>();
+	protected List<File> doScan(File fDir){
+		List<File> ret = new ArrayList<>();
 		if(fDir!=null && fDir.exists() && !fDir.isHidden()){
 			for(final File entry : fDir.listFiles()) {
 				if(entry.isHidden()){
@@ -175,16 +152,8 @@ public class DirectoryScanner {
 	}
 
 	/**
-	 * Returns collected errors from a scan.
-	 * @return a list with errors, empty list of none occurred
-	 */
-	public List<String> lastErrors(){
-		return this.errors;
-	}
-
-	/**
-	 * Returns collected infos from a scan.
-	 * @return a list with infos, empty list of none occurred
+	 * Returns collected information from a scan.
+	 * @return a list with information, empty list of none occurred
 	 */
 	public List<String> lastInfos(){
 		return this.infos;
@@ -211,10 +180,25 @@ public class DirectoryScanner {
 		ret.append("errors: ").append(this.infos.size());
 		if(this.errors.size()>0){
 			ret.appendNewLine().append("  - ");
-			ret.appendWithSeparators(this.errors, "\n  - ");
+			ret.append(this.errors.render());
+			//TODO not nice format anymore
+			//ret.appendWithSeparators(this.errors, "\n  - ");
 		}
 		ret.appendNewLine();
 
 		return ret.toString();
+	}
+
+	@Override
+	public DirectorySource getSource() {
+		return this.source;
+	}
+
+	@Override
+	public FileListSource load() {
+		if(this.getSource().isValid()){
+			return new FileListSource(this.getFiles());
+		}
+		return null;
 	}
 }

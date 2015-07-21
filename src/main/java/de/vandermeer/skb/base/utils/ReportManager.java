@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
@@ -33,8 +32,10 @@ import de.vandermeer.skb.base.Skb_ToStringStyle;
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.composite.coin.CC_Warning;
+import de.vandermeer.skb.base.info.validators.STGroupValidator;
 import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.Message5WH;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * The SKB Report Manager.
@@ -181,11 +182,12 @@ public class ReportManager {
 		}
 		catch(Exception e){
 			this.errorList.add(
-					new Message5WH()
+					new Message5WH_Builder()
 					.addWhat("could not load STGroup from resource/file <", filename, ">")
 					.setReporter(reporter)
 					.setWhere(this.getClass().getSimpleName())
 					.addWhy(e.getMessage())
+					.build()
 			);
 		}
 		this.init(maxErrors, reporter);
@@ -244,7 +246,7 @@ public class ReportManager {
 	}
 
 	/**
-	 * Initialise the report manager.
+	 * Initialize the report manager.
 	 * @param maxErrors maximum errors
 	 * @param reporter reporting object or application
 	 */
@@ -254,20 +256,30 @@ public class ReportManager {
 		this.reportTypes = new ArrayList<EMessageType>(3);
 
 		if(this.stg!=null){
-			Set<String> messages = Skb_STUtils.getMissingChunksErrorMessages(Skb_STUtils.getStgName(this.stg), Skb_STUtils.getMissingChunks(this.stg, ReportManager.stgChunks));
-			if(messages.size()>0){
-				for(String s : messages){
-					this.errorList.add(new Message5WH().addWhat(s).setReporter(reporter).setWhere(this.getClass().getSimpleName()));
+			STGroupValidator stgv = new STGroupValidator(this.stg, ReportManager.stgChunks);
+			if(!stgv.isValid()){
+				for(Message5WH msg : stgv.getValidationErrors().getList()){
+					this.errorList.add(new Message5WH_Builder().addWhat(msg.getWhat()).setReporter(reporter).setWhere(this.getClass().getSimpleName()).build());
 				}
 			}
 			else{
 				this.reportTypes.addAll(Arrays.asList(EMessageType.values()));	//only activate reporting if stg was ok
 			}
+
+//			Set<String> messages = Skb_STUtils.getMissingChunksErrorMessages(Skb_STUtils.getStgName(this.stg), Skb_STUtils.getMissingChunks(this.stg, ReportManager.stgChunks));
+//			if(messages.size()>0){
+//				for(String s : messages){
+//					this.errorList.add(new Message5WH().addWhat(s).setReporter(reporter).setWhere(this.getClass().getSimpleName()));
+//				}
+//			}
+//			else{
+//				this.reportTypes.addAll(Arrays.asList(EMessageType.values()));	//only activate reporting if stg was ok
+//			}
 		}
 	}
 
 	/**
-	 * Returns the list of errors, which contains all problems that might have occurred during initialisation.
+	 * Returns the list of errors, which contains all problems that might have occurred during initialization.
 	 * @return error list
 	 */
 	public CC_Error getInitErrors(){

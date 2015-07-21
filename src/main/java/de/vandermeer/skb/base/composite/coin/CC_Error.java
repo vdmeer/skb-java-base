@@ -19,7 +19,9 @@ import java.util.List;
 
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 import de.vandermeer.skb.base.message.Message5WH;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * Special object for errors.
@@ -49,7 +51,7 @@ public final class CC_Error extends Abstract_CC {
 
 	/**
 	 * Creates a newError with a single error.
-	 * @param err error for initialisation
+	 * @param err error for initialization
 	 */
 	public CC_Error(Message5WH err){
 		super(err);
@@ -58,12 +60,25 @@ public final class CC_Error extends Abstract_CC {
 	/**
 	 * Adds a single error to the error list.
 	 * @param add error to be added, null is ignored
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
 	@Override
 	public CC_Error add(Message5WH add){
 		if(add!=null){
-			super.add(add.setType(EMessageType.ERROR));
+			super.add(add.changeType(EMessageType.ERROR));
+		}
+		return this;
+	}
+
+	/**
+	 * Adds a new single error using the SLF4J FormattingTuple wrapped in a message.
+	 * @param what the what message with substitutions for objects
+	 * @param obj the object for the substitution
+	 * @return self to allow chaining
+	 */
+	public CC_Error add(String what, Object ... obj){
+		if(what!=null){
+			super.add(new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.ERROR).build());
 		}
 		return this;
 	}
@@ -71,7 +86,7 @@ public final class CC_Error extends Abstract_CC {
 	/**
 	 * Adds another error.
 	 * @param add error to be added, null is ignored
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
 	public CC_Error add(CC_Error add){
 		if(add!=null){

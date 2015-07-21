@@ -61,7 +61,7 @@ public abstract class Abstract_CC implements Com_Coin {
 
 	/**
 	 * Creates a new object with a single information.
-	 * @param info error for initialisation
+	 * @param info error for initialization
 	 */
 	public Abstract_CC(Message5WH info){
 		this.msglist = new ArrayList<Message5WH>(1);
@@ -71,7 +71,7 @@ public abstract class Abstract_CC implements Com_Coin {
 	/**
 	 * Adds a single information to the information list.
 	 * @param add error to be added, null is ignored
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
 	public Abstract_CC add(Message5WH add){
 		if(add!=null){
@@ -83,7 +83,7 @@ public abstract class Abstract_CC implements Com_Coin {
 	/**
 	 * Adds another information.
 	 * @param add information to be added, null is ignored
-	 * @return this to allow concatenation
+	 * @return self to allow chaining
 	 */
 	public Abstract_CC add(Abstract_CC add){
 		if(add!=null){

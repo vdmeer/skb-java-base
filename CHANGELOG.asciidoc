@@ -1,3 +1,25 @@
+v0.0.7 - feature add - 2015-##-##
+---------------------------------
+* added package info with source, loader, target, writer and validator interfaces and classes
+* removed utils/Skb_PropertyUtils - now in the property loaders in the info package
+* changes to Skb_UrlUtils
+	** removed Skb_UrlUtils#getUrlFromResource(String filename), now handled by FileSource
+	** removed Skb_UrlUtils#getUrl(Object filename), now handled by FileSource
+* changes to Skb_STUtils
+	** removed Skb_STUtils#getMissingChunks(...), now handled by STGroupValidator
+	** removed Skb_STUtils#getMissingSTArguments(...), now handled by STValidator
+	** moved related tests from Test_Skb_STUtils to Test_STValidator and Test_STValidator
+	** removed Test_Skb_STUtils then
+	** adapted Message5WH and Test_Message5WH accordingly
+	** adapted ReportManager accordingly
+* changes to the message package
+	** created a builder for Message5WH and moved all build methods into that builder
+	** cleaned tests and created separate classes for tests
+	** added a wrapper for SLF4J FormattingTuple objects (toString needs to do a getMessage for the message object)
+	** added new add() methods to the CC_* coin objects to use the new FormattingTuple wrapper
+
+
+
 v0.0.6 - feature add - 2015-07-12
 ---------------------------------
 * added Assertions for notNull and stringEmpty
@@ -7,6 +29,13 @@ v0.0.6 - feature add - 2015-07-12
 * moved standard categories from skb-categories to here
 * moved all composite implementation from skb-composite to here
 * added ReportManager from skb-commons
+* added skb-collections as pacakge de.vandermeer.skb.base.utils.collections
+  ** cleanup some of the utility classes
+  ** created factory, transformation, filter classes
+  ** moved Skb_CollectionUtils to the new package
+  ** added all skb.collections classes as @since v0.0.5
+* removed duplicated from Skb_TextUtils (now in new collections pacakge)
+* moved ARRAY_TO_TEXT() from Skb_TextUtils to Skb_ArrayUtils
 
 
 v0.0.5 - feature add - 2015-06-23

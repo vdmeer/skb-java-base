@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0">
-<title>v0.0.6 - feature add - 2015-07-12</title>
+<title>v0.0.7 - feature add - 2015--</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -414,6 +414,78 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
+<h2 id="_v0_0_7_feature_add_2015_mark_mark">v0.0.7 - feature add - 2015-<mark>-</mark></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>added package info with source, loader, target, writer and validator interfaces and classes</p>
+</li>
+<li>
+<p>removed utils/Skb_PropertyUtils - now in the property loaders in the info package</p>
+</li>
+<li>
+<p>changes to Skb_UrlUtils</p>
+<div class="ulist">
+<ul>
+<li>
+<p>removed Skb_UrlUtils#getUrlFromResource(String filename), now handled by FileSource</p>
+</li>
+<li>
+<p>removed Skb_UrlUtils#getUrl(Object filename), now handled by FileSource</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>changes to Skb_STUtils</p>
+<div class="ulist">
+<ul>
+<li>
+<p>removed Skb_STUtils#getMissingChunks(&#8230;&#8203;), now handled by STGroupValidator</p>
+</li>
+<li>
+<p>removed Skb_STUtils#getMissingSTArguments(&#8230;&#8203;), now handled by STValidator</p>
+</li>
+<li>
+<p>moved related tests from Test_Skb_STUtils to Test_STValidator and Test_STValidator</p>
+</li>
+<li>
+<p>removed Test_Skb_STUtils then</p>
+</li>
+<li>
+<p>adapted Message5WH and Test_Message5WH accordingly</p>
+</li>
+<li>
+<p>adapted ReportManager accordingly</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>changes to the message package</p>
+<div class="ulist">
+<ul>
+<li>
+<p>created a builder for Message5WH and moved all build methods into that builder</p>
+</li>
+<li>
+<p>cleaned tests and created separate classes for tests</p>
+</li>
+<li>
+<p>added a wrapper for SLF4J FormattingTuple objects (toString needs to do a getMessage for the message object)</p>
+</li>
+<li>
+<p>added new add() methods to the CC_* coin objects to use the new FormattingTuple wrapper</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_v0_0_6_feature_add_2015_07_12">v0.0.6 - feature add - 2015-07-12</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -438,6 +510,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>added ReportManager from skb-commons</p>
+</li>
+<li>
+<p>added skb-collections as pacakge de.vandermeer.skb.base.utils.collections</p>
+<div class="ulist">
+<ul>
+<li>
+<p>cleanup some of the utility classes</p>
+</li>
+<li>
+<p>created factory, transformation, filter classes</p>
+</li>
+<li>
+<p>moved Skb_CollectionUtils to the new package</p>
+</li>
+<li>
+<p>added all skb.collections classes as @since v0.0.5</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>removed duplicated from Skb_TextUtils (now in new collections pacakge)</p>
+</li>
+<li>
+<p>moved ARRAY_TO_TEXT() from Skb_TextUtils to Skb_ArrayUtils</p>
 </li>
 </ul>
 </div>
@@ -521,7 +618,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-12 11:43:44 IST
+Last updated 2015-07-21 12:17:38 IST
 </div>
 </div>
 </body>

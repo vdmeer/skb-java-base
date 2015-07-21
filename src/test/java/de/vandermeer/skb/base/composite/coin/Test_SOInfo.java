@@ -24,9 +24,9 @@ import de.vandermeer.skb.base.composite.Com_Coin;
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.composite.Com_Leaf;
 import de.vandermeer.skb.base.composite.Com_Node;
-import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.Message5WH;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * Tests for SOInfo.
@@ -38,7 +38,7 @@ import de.vandermeer.skb.base.message.Message5WH;
 public class Test_SOInfo {
 
 	@Test public void testInit(){
-		CC_Info info=new CC_Info();
+		CC_Info info = new CC_Info();
 
 		assertTrue(info instanceof Com_Coin);
 		assertTrue(info instanceof Com_Leaf);
@@ -49,19 +49,18 @@ public class Test_SOInfo {
 	}
 
 	@Test public void testAdd(){
-		CC_Info info=new CC_Info();
+		CC_Info info = new CC_Info();
 
-		Message5WH m=new Message5WH();
-		m.setType(EMessageType.ERROR);
+		Message5WH m = new Message5WH_Builder().setType(EMessageType.ERROR).build();
 
 		info.add(m);
 		assertEquals(EMessageType.INFO, info.getList().get(0).getType());	//type automatically changed to warning
 
-		info=new CC_Info(m);
+		info = new CC_Info(m);
 		assertEquals(EMessageType.INFO, info.getList().get(0).getType());	//type automatically changed to warning
 
-		m.setType(EMessageType.INFO);
-		info=new CC_Info(m);
+		m.changeType(EMessageType.INFO);
+		info = new CC_Info(m);
 		assertEquals(EMessageType.INFO, info.getList().get(0).getType());	//type not changed
 
 		assertEquals(1, info.getList().size());		//size 1

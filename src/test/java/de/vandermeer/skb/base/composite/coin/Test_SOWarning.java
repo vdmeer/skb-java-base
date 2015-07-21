@@ -27,6 +27,7 @@ import de.vandermeer.skb.base.composite.Com_Node;
 import de.vandermeer.skb.base.composite.coin.CC_Warning;
 import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.Message5WH;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * Tests for SOWarning.
@@ -38,7 +39,7 @@ import de.vandermeer.skb.base.message.Message5WH;
 public class Test_SOWarning {
 
 	@Test public void testInit(){
-		CC_Warning warn=new CC_Warning();
+		CC_Warning warn = new CC_Warning();
 
 		assertTrue(warn instanceof Com_Coin);
 		assertTrue(warn instanceof Com_Leaf);
@@ -49,18 +50,17 @@ public class Test_SOWarning {
 	}
 
 	@Test public void testAdd(){
-		CC_Warning warn=new CC_Warning();
+		CC_Warning warn = new CC_Warning();
 
-		Message5WH m=new Message5WH();
-		m.setType(EMessageType.ERROR);
+		Message5WH m = new Message5WH_Builder().setType(EMessageType.ERROR).build();
 
 		warn.add(m);
 		assertEquals(EMessageType.WARNING, warn.getList().get(0).getType());	//type automatically changed to warning
 
-		warn=new CC_Warning(m);
+		warn = new CC_Warning(m);
 		assertEquals(EMessageType.WARNING, warn.getList().get(0).getType());	//type automatically changed to warning
 
-		m.setType(EMessageType.WARNING);
+		m.changeType(EMessageType.WARNING);
 		warn=new CC_Warning(m);
 		assertEquals(EMessageType.WARNING, warn.getList().get(0).getType());	//type not changed
 
