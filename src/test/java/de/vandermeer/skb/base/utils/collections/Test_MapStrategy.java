@@ -30,7 +30,7 @@ import de.vandermeer.skb.base.utils.collections.MapStrategy;
  * Tests for map strategy.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.6 build 150712 (12-Jul-15) for Java 1.8
+ * @version    v0.0.7 build 150721 (21-Jul-15) for Java 1.8
  */
 public class Test_MapStrategy {
 

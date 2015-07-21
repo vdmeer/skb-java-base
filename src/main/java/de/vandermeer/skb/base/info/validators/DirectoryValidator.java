@@ -25,7 +25,7 @@ import de.vandermeer.skb.base.info.ValidationOptions;
  * An validator for a directory or path.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.7 build 150712 (12-Jul-15) for Java 1.8
+ * @version    v0.0.7 build 150721 (21-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class DirectoryValidator extends AbstractValidator {

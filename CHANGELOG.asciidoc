@@ -1,4 +1,4 @@
-v0.0.7 - feature add - 2015-##-##
+v0.0.7 - feature add - 2015-07-21
 ---------------------------------
 * added package info with source, loader, target, writer and validator interfaces and classes
 * removed utils/Skb_PropertyUtils - now in the property loaders in the info package
@@ -36,6 +36,8 @@ v0.0.6 - feature add - 2015-07-12
   ** added all skb.collections classes as @since v0.0.5
 * removed duplicated from Skb_TextUtils (now in new collections pacakge)
 * moved ARRAY_TO_TEXT() from Skb_TextUtils to Skb_ArrayUtils
+* changed to commons-lang3 version 3.4
+* added commons-io dependency for file handling
 
 
 v0.0.5 - feature add - 2015-06-23
