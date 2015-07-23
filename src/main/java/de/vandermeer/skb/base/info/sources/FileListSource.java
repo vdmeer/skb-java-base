@@ -77,4 +77,17 @@ public class FileListSource extends AbstractSource {
 		}
 		return ret;
 	}
+
+	/**
+	 * Returns file list as a list of {@link FileSource} objects.
+	 * @param setRoot a directory set-as-root for the file source
+	 * @return a list of FileSource objects
+	 */
+	public List<FileSource> getSourceAsFileSourceList(String setRoot){
+		List<FileSource> ret = new ArrayList<>();
+		for(File f : this.getSource()){
+			ret.add(new FileSource(f, setRoot));
+		}
+		return ret;
+	}
 }

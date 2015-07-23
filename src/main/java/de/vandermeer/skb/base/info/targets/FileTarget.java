@@ -19,7 +19,7 @@ import java.io.File;
 
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.info.AbstractFileInfo;
-import de.vandermeer.skb.base.info.FileLocationOptions;
+import de.vandermeer.skb.base.info.InfoLocationOptions;
 import de.vandermeer.skb.base.info.InfoTarget;
 import de.vandermeer.skb.base.info.ValidationOptions;
 
@@ -52,6 +52,16 @@ public class FileTarget extends AbstractFileInfo implements InfoTarget {
 	}
 
 	/**
+	 * Creates a new file target object from an existing File object with a set-as-root directory.
+	 * The file parameter will not be tested except for null and problems creating a URL.
+	 * @param file existing file object
+	 * @param setRoot set-as-root directory
+	 */
+	public FileTarget(File file, String setRoot){
+		super(file, setRoot);
+	}
+
+	/**
 	 * Creates a new file target from a file name.
 	 * This constructor will try to locate the file as resource first and in the file system next.
 	 * @param fileName name of the file.
@@ -60,7 +70,7 @@ public class FileTarget extends AbstractFileInfo implements InfoTarget {
 	 * 		Path information can be relative to any path in the class path.
 	 */
 	public FileTarget(String fileName){
-		super(fileName, FileLocationOptions.TRY_RESOURCE_THEN_FS);
+		super(fileName, InfoLocationOptions.TRY_RESOURCE_THEN_FS);
 	}
 
 	/**
@@ -71,7 +81,7 @@ public class FileTarget extends AbstractFileInfo implements InfoTarget {
 	 * 		Path information can be relative to any path in the class path.
 	 * @param option an option on how to locate the file
 	 */
-	public FileTarget(String fileName, FileLocationOptions option){
+	public FileTarget(String fileName, InfoLocationOptions option){
 		super(fileName, option);
 	}
 
@@ -82,7 +92,7 @@ public class FileTarget extends AbstractFileInfo implements InfoTarget {
 	 * @param fileName the file name to locate
 	 */
 	public FileTarget(String directory, String fileName){
-		super(directory, fileName, FileLocationOptions.TRY_RESOURCE_THEN_FS);
+		super(directory, fileName, InfoLocationOptions.TRY_RESOURCE_THEN_FS);
 	}
 
 	/**
@@ -91,7 +101,7 @@ public class FileTarget extends AbstractFileInfo implements InfoTarget {
 	 * @param fileName the file name to locate
 	 * @param option an option on how to locate the file
 	 */
-	public FileTarget(String directory, String fileName, FileLocationOptions option){
+	public FileTarget(String directory, String fileName, InfoLocationOptions option){
 		super(directory, fileName, option);
 	}
 

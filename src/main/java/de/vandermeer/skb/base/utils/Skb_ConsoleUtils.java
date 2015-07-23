@@ -263,19 +263,21 @@ public abstract class Skb_ConsoleUtils {
 	/**
 	 * Returns a new callable for reading strings from a reader with a set timeout of 200ms.
 	 * @param reader input stream to read from
+	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not requried
 	 * @return null if input stream is null, results of read on input stream otherwise
 	 */
-	public static Callable<String> getCallWTimeout(BufferedReader reader){
-		return Skb_ConsoleUtils.getCallWTimeout(reader, 200);
+	public static Callable<String> getCallWTimeout(BufferedReader reader, String emptyPrint){
+		return Skb_ConsoleUtils.getCallWTimeout(reader, 200, emptyPrint);
 	}
 
 	/**
 	 * Returns a new callable for reading strings from a reader with a given timeout.
 	 * @param reader input stream to read from
 	 * @param timeout read timeout in milliseconds, very low numbers and 0 are accepted but might result in strange behavior
+	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not requried
 	 * @return null if input stream is null, results of read on input stream otherwise
 	 */
-	public static Callable<String> getCallWTimeout(BufferedReader reader, int timeout){
+	public static Callable<String> getCallWTimeout(BufferedReader reader, int timeout, String emptyPrint){
 		return new Callable<String>() {
 			@Override
 			public String call() throws IOException {
@@ -286,6 +288,9 @@ public abstract class Skb_ConsoleUtils {
 							Thread.sleep(timeout);
 						}
 						ret = reader.readLine();
+						if("".equals(ret) && emptyPrint!=null){
+							System.out.print(emptyPrint);
+						}
 					}
 					catch (InterruptedException e) {
 						return null;
@@ -301,9 +306,10 @@ public abstract class Skb_ConsoleUtils {
 	 * @param reader original reader to extend, use in combination with {@link #getStdIn(String)} for standard in
 	 * @param tries number of tries for read calls, use one as default
 	 * @param timeout milliseconds for read timeout
+	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not requried
 	 * @return new reader with parameterized readline() method
 	 */
-	public static BufferedReader getNbReader(BufferedReader reader, int tries, int timeout){
+	public static BufferedReader getNbReader(BufferedReader reader, int tries, int timeout, String emptyPrint){
 		if(reader==null){
 			return null;
 		}
@@ -314,7 +320,7 @@ public abstract class Skb_ConsoleUtils {
 				String input = null;
 				try {
 					for(int i=0; i<tries; i++) {
-						Future<String> result = ex.submit(Skb_ConsoleUtils.getCallWTimeout(reader));
+						Future<String> result = ex.submit(Skb_ConsoleUtils.getCallWTimeout(reader, emptyPrint));
 						try {
 							input = result.get(timeout, TimeUnit.MILLISECONDS);
 							break;

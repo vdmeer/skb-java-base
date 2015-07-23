@@ -175,31 +175,6 @@ public class Message5WH_Builder {
 		return this;
 	}
 
-//	/**
-//	 * Tests the given STGroup.
-//	 * The test basically looks into the STGroup for the two required templates <code>where</code> and <code>message5wh</code> and their required arguments.
-//	 * The required arguments are provided by {@link Message5WH#stChunks}.
-//	 * @param stg STGroup to test
-//	 * @return null if input group was null, a set size 0 of everything was ok, a set size &gt; 0 with detailed error messages otherwise
-//	 */
-//	public Set<String> testSTG(STGroup stg){
-//		if(stg!=null){
-//			STGroupValidator stgv = new STGroupValidator(stg, Message5WH.stChunks);
-//			if(!stgv.isValid()){
-//				Set<String> ret = new LinkedHashSet<>();
-//				for(FormattingTuple errors : stgv.getValidationErrors()){
-//					ret.add(errors.getMessage());
-//				}
-//				return ret;
-//			}
-//			else{
-//				this.stg = stg;
-//				return new HashSet<String>();
-//			}
-//		}
-//		return null;
-//	}
-
 	/**
 	 * Sets the Reporter of the message.
 	 * Since null is a valid value for this member of the message, no further check is applied to the argument.

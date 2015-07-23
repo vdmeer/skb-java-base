@@ -17,7 +17,7 @@ package de.vandermeer.skb.base.info.sources;
 
 import java.io.File;
 
-import de.vandermeer.skb.base.info.FileLocationOptions;
+import de.vandermeer.skb.base.info.InfoLocationOptions;
 
 /**
  * File source for an STG file, the same as {@link FileSource} plus extension check for "stg" extension.
@@ -67,7 +67,7 @@ public class StgFileSource extends FileSource {
 	 * 		Path information can be relative to any path in the class path.
 	 * @param option an option on how to locate the file
 	 */
-	public StgFileSource(String fileName, FileLocationOptions option){
+	public StgFileSource(String fileName, InfoLocationOptions option){
 		super(fileName, option);
 	}
 
@@ -87,7 +87,7 @@ public class StgFileSource extends FileSource {
 	 * @param fileName the file name to locate
 	 * @param option an option on how to locate the file
 	 */
-	public StgFileSource(String directory, String fileName, FileLocationOptions option){
+	public StgFileSource(String directory, String fileName, InfoLocationOptions option){
 		super(directory, fileName, option);
 	}
 
@@ -98,7 +98,7 @@ public class StgFileSource extends FileSource {
 	 * @param fileName a file name with or without path information
 	 * @param option an option on how to locate the file (not used if parameter file is set)
 	 */
-	protected void init(File file, String directory, String fileName, FileLocationOptions option){
+	protected void init(File file, String directory, String fileName, InfoLocationOptions option){
 		super.init(file, directory, fileName, option);
 		if(this.errors.size()==0){
 			if(!"stg".equals(this.getFileExtension())){

@@ -19,6 +19,7 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
 import de.vandermeer.skb.base.info.sources.FileSource;
+import de.vandermeer.skb.base.info.sources.StgFileSource;
 
 /**
  * An file loader for STG property files.
@@ -30,13 +31,13 @@ import de.vandermeer.skb.base.info.sources.FileSource;
 public class StgFileLoader extends AbstractLoader implements FileLoader {
 
 	/** The source file for the loader. */
-	final FileSource source;
+	final StgFileSource source;
 
 	/**
 	 * Returns a new loader for a file source.
 	 * @param source a file source to load an STG from
 	 */
-	public StgFileLoader(FileSource source){
+	public StgFileLoader(StgFileSource source){
 		this.source = source;
 	}
 
@@ -45,7 +46,7 @@ public class StgFileLoader extends AbstractLoader implements FileLoader {
 	 * @param fileName a file name to load an STG from
 	 */
 	public StgFileLoader(String fileName){
-		this.source = new FileSource(fileName);
+		this.source = new StgFileSource(fileName);
 	}
 
 	@Override

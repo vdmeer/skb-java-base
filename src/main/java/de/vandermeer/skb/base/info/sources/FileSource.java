@@ -19,7 +19,7 @@ import java.io.File;
 
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.info.AbstractFileInfo;
-import de.vandermeer.skb.base.info.FileLocationOptions;
+import de.vandermeer.skb.base.info.InfoLocationOptions;
 import de.vandermeer.skb.base.info.InfoSource;
 import de.vandermeer.skb.base.info.ValidationOptions;
 
@@ -44,6 +44,16 @@ public class FileSource extends AbstractFileInfo implements InfoSource {
 	}
 
 	/**
+	 * Creates a new file source object from an existing File object with a set-as-root directory.
+	 * The file parameter will not be tested except for null and problems creating a URL.
+	 * @param file existing file object
+	 * @param setRoot set-as-root directory
+	 */
+	public FileSource(File file, String setRoot){
+		super(file, setRoot);
+	}
+
+	/**
 	 * Creates a new file source from an existing File object.
 	 * @param file existing file object
 	 */
@@ -60,7 +70,7 @@ public class FileSource extends AbstractFileInfo implements InfoSource {
 	 * 		Path information can be relative to any path in the class path.
 	 */
 	public FileSource(String fileName){
-		super(fileName, FileLocationOptions.TRY_RESOURCE_THEN_FS);
+		super(fileName, InfoLocationOptions.TRY_RESOURCE_THEN_FS);
 	}
 
 	/**
@@ -71,7 +81,7 @@ public class FileSource extends AbstractFileInfo implements InfoSource {
 	 * 		Path information can be relative to any path in the class path.
 	 * @param option an option on how to locate the file
 	 */
-	public FileSource(String fileName, FileLocationOptions option){
+	public FileSource(String fileName, InfoLocationOptions option){
 		super(fileName, option);
 	}
 
@@ -82,7 +92,7 @@ public class FileSource extends AbstractFileInfo implements InfoSource {
 	 * @param fileName the file name to locate
 	 */
 	public FileSource(String directory, String fileName){
-		super(directory, fileName, FileLocationOptions.TRY_RESOURCE_THEN_FS);
+		super(directory, fileName, InfoLocationOptions.TRY_RESOURCE_THEN_FS);
 	}
 
 	/**
@@ -91,7 +101,7 @@ public class FileSource extends AbstractFileInfo implements InfoSource {
 	 * @param fileName the file name to locate
 	 * @param option an option on how to locate the file
 	 */
-	public FileSource(String directory, String fileName, FileLocationOptions option){
+	public FileSource(String directory, String fileName, InfoLocationOptions option){
 		super(directory, fileName, option);
 	}
 

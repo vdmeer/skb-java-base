@@ -15,8 +15,11 @@
 
 package de.vandermeer.skb.base.info.sources;
 
+import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.base.info.AbstractDirectoryInfo;
+import de.vandermeer.skb.base.info.InfoLocationOptions;
+import de.vandermeer.skb.base.info.InfoSource;
 import de.vandermeer.skb.base.info.ValidationOptions;
-import de.vandermeer.skb.base.info.validators.DirectoryValidator;
 
 /**
  * A source object for a directory.
@@ -25,29 +28,41 @@ import de.vandermeer.skb.base.info.validators.DirectoryValidator;
  * @version    v0.0.8-SNAPSHOT build 150721 (21-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
-public class DirectorySource extends AbstractSource {
-
-	/** The root of a directory structure. */
-	final String root;
+public class DirectorySource extends AbstractDirectoryInfo implements InfoSource {
 
 	/**
-	 * Returns a new directory source.
-	 * @param root root path, must be an existing, readable directory.
+	 * Creates a new directory source object from a directory name.
+	 * This constructor will try to locate the directory as resource first and in the file system next.
+	 * @param directory name of the directory.
+	 * 		Path information can be relative to any path in the class path.
 	 */
-	public DirectorySource(String root){
-		DirectoryValidator dv = new DirectoryValidator(root, ValidationOptions.AS_SOURCE);
-		this.errors.add(dv.getValidationErrors());
+	public DirectorySource(String directory){
+		super(directory, InfoLocationOptions.TRY_CLASSPATH_THEN_FS);
+	}
 
-		if(this.isValid()){
-			this.root = root;
-		}
-		else{
-			this.root = null;
-		}
+	/**
+	 * Creates a new directory source object from a directory name with options.
+	 * @param directory name of the directory.
+	 * 		Path information can be relative to any path in the class path.
+	 * @param option an option on how to locate the directory
+	 */
+	public DirectorySource(String directory, InfoLocationOptions option){
+		super(directory, option);
 	}
 
 	@Override
-	public String getSource(){
-		return this.root;
+	public Object getSource() {
+		return (this.file!=null)?this.file:this.url;
 	}
+
+	@Override
+	public CC_Error getInitError() {
+		return this.errors;
+	}
+
+	@Override
+	protected ValidationOptions valOption() {
+		return ValidationOptions.AS_SOURCE;
+	}
+
 }

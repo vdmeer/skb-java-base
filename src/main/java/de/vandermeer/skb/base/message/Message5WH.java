@@ -22,6 +22,7 @@ import org.stringtemplate.v4.STGroup;
 
 import de.vandermeer.skb.base.Skb_Renderable;
 import de.vandermeer.skb.base.Skb_ToStringStyle;
+import de.vandermeer.skb.base.info.validators.STGroupValidator;
 
 /**
  * Standard SKB message.
@@ -82,7 +83,7 @@ public class Message5WH implements Skb_Renderable {
 	/** Where did it happen? */
 	private ST where;
 
-	/** The ST group for the message */
+	/** The ST group for the message. */
 	private STGroup stg;
 
 	/** When did take place/happen? */
@@ -97,7 +98,7 @@ public class Message5WH implements Skb_Renderable {
 	/** Who reports it? */
 	private Object reporter;
 
-	/** Type of message */
+	/** Type of message. */
 	private EMessageType type;
 
 	Message5WH(Object who, StrBuilder what, ST where, STGroup stg, Object when, StrBuilder why, StrBuilder how, Object reporter, EMessageType type){
@@ -129,6 +130,33 @@ public class Message5WH implements Skb_Renderable {
 		ret.add("how",      this.how);
 
 		return ret.render();
+	}
+
+	/**
+	 * Sets the STGroup for the message based on a validator.
+	 * @param stgv the validator, which must have checked the STGroup against the required chunks defined in {@link Message5WH_Builder#stChunks}.
+	 * 		If other chunks where used to validate the STG file, rendering this message might result in runtime errors
+	 * @return true if STG was set, false otherwise
+	 */
+	public boolean setSTG(STGroupValidator stgv){
+		if(stgv!=null && stgv.isValid()){
+			this.stg = stgv.getInfo();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Sets the reporter.
+	 * @param reporter new reporter
+	 * @return true on success (reporter was not null), false otherwise
+	 */
+	public boolean setReporter(Object reporter){
+		if(reporter!=null){
+			this.reporter = reporter;
+			return true;
+		}
+		return false;
 	}
 
 	/**

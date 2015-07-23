@@ -55,7 +55,7 @@ public interface InfoLoader {
 			return false;
 		}
 		if(!this.getSource().isValid()){
-			this.getLoadErrors().add("{} - invalid source <{}> - {}", new Object[]{"loader", this.getSource(), this.getSource().getInitError()});
+			this.getLoadErrors().add("{} - invalid source <{}> - {}", new Object[]{"loader", this.getSource().getSource(), this.getSource().getInitError().render()});
 			return false;
 		}
 		return true;

@@ -13,26 +13,16 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.info;
+package de.vandermeer.skb.base.info.sources;
+
 
 /**
- * Options to locate a file.
+ * Tests for {@link DirectorySource}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.8-SNAPSHOT build 150721 (21-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
-public enum FileLocationOptions {
-	/** Try to locate as resource first, then in the file system. */
-	TRY_RESOURCE_THEN_FS,
+public class Test_DirectorySource {
 
-	/** Try to locate in the file system first, then as resource. */
-	TRY_FS_THEN_RESOURCE,
-
-	/** Try to locate in the file system only. */
-	FILESYSTEM_ONLY,
-
-	/** Try to locate as resource only. */
-	RESOURCE_ONLY,
-	;
 }

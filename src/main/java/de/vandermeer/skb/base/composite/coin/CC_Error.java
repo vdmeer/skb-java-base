@@ -71,6 +71,18 @@ public final class CC_Error extends Abstract_CC {
 	}
 
 	/**
+	 * Adds a new single error using a simple message.
+	 * @param what the what message
+	 * @return self to allow chaining
+	 */
+	public CC_Error add(String what){
+		if(what!=null){
+			super.add(new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, new Object[0])).setType(EMessageType.ERROR).build());
+		}
+		return this;
+	}
+
+	/**
 	 * Adds a new single error using the SLF4J FormattingTuple wrapped in a message.
 	 * @param what the what message with substitutions for objects
 	 * @param obj the object for the substitution

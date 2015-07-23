@@ -22,7 +22,9 @@ import org.apache.commons.lang3.text.StrBuilder;
 
 import de.vandermeer.skb.base.composite.Com_Coin;
 import de.vandermeer.skb.base.composite.Com_CoinType;
+import de.vandermeer.skb.base.info.validators.STGroupValidator;
 import de.vandermeer.skb.base.message.Message5WH;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * Special object for information.
@@ -40,6 +42,9 @@ public abstract class Abstract_CC implements Com_Coin {
 	 * a single method call wants to express a number of information messages.
 	 */
 	protected List<Message5WH> msglist;
+
+	/** The ST group for the CC object. */
+	private STGroupValidator stgv = null;
 
 	/**
 	 * Creates a new object w/o any information.
@@ -76,6 +81,19 @@ public abstract class Abstract_CC implements Com_Coin {
 	public Abstract_CC add(Message5WH add){
 		if(add!=null){
 			this.msglist.add(add);
+		}
+		return this;
+	}
+
+	/**
+	 * Sets an STG for the object, which then will be used to render all messages.
+	 * @param stgv the validator, which must have checked the STGroup against the required chunks defined in {@link Message5WH_Builder#stChunks}.
+	 * 		If other chunks where used to validate the STG file, rendering this message might result in runtime errors
+	 * @return self to allow chaining
+	 */
+	public Abstract_CC setSTG(STGroupValidator stgv){
+		if(stgv!=null && stgv.isValid()){
+			this.stgv = stgv;
 		}
 		return this;
 	}
@@ -143,6 +161,9 @@ public abstract class Abstract_CC implements Com_Coin {
 	public String render(){
 		StrBuilder ret = new StrBuilder(50);
 		for(Message5WH err : this.msglist){
+			if(this.stgv!=null){
+				err.setSTG(this.stgv);
+			}
 			ret.appendln(err.render());
 		}
 		return ret.toString();

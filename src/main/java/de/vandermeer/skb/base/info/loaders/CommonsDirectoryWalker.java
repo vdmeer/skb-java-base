@@ -71,7 +71,7 @@ public class CommonsDirectoryWalker extends DirectoryWalker<File> implements Dir
 			this.errors.clear();
 			List<File> ret = new ArrayList<>();
 			try {
-				File f = new File(this.source.getSource());
+				File f = this.source.asFile();
 				walk(f, ret);
 			}
 			catch (IOException e) {

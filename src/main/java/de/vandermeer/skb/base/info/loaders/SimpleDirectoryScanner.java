@@ -89,7 +89,7 @@ public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryL
 	 */
 	protected List<File> getFiles(){
 		this.clear();
-		File f = new File(this.source.getSource());
+		File f = this.source.asFile();
 		List<File> ret = this.doScan(f);
 		this.doInfo();
 		return ret;

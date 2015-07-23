@@ -35,6 +35,7 @@ import de.vandermeer.skb.base.info.validators.FileValidator;
  * @since      v0.0.7
  */
 public abstract class AbstractFileInfo {
+
 	/** The underlying file object for the file name. */
 	protected File file;
 
@@ -77,6 +78,32 @@ public abstract class AbstractFileInfo {
 	}
 
 	/**
+	 * Creates a new file info object from an existing File object with a set-as-root directory.
+	 * The file parameter will not be tested except for null and problems creating a URL.
+	 * @param file existing file object
+	 * @param setRoot set-as-root directory
+	 */
+	public AbstractFileInfo(File file, String setRoot){
+		if(file==null){
+			this.errors.add("constructor(file, setRoot) - file cannot be null");
+		}
+		else if(setRoot==null){
+			this.errors.add("constructor(file, setRoot) - setRoot cannot be null");
+		}
+		else{
+			try{
+				this.url = file.toURI().toURL();
+				this.file = file;
+				this.fullFileName = FilenameUtils.getName(file.getAbsolutePath());
+				this.setRootPath =setRoot;
+			}
+			catch (MalformedURLException e) {
+				this.errors.add("constructor(file, boolean) - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
+			}
+		}
+	}
+
+	/**
 	 * Creates a new file info object from an existing File object.
 	 * @param file existing file object
 	 */
@@ -98,7 +125,7 @@ public abstract class AbstractFileInfo {
 	 * 		Path information can be relative to any path in the class path.
 	 */
 	public AbstractFileInfo(String fileName){
-		this(fileName, FileLocationOptions.TRY_RESOURCE_THEN_FS);
+		this(fileName, InfoLocationOptions.TRY_RESOURCE_THEN_FS);
 	}
 
 	/**
@@ -109,7 +136,7 @@ public abstract class AbstractFileInfo {
 	 * 		Path information can be relative to any path in the class path.
 	 * @param option an option on how to locate the file
 	 */
-	public AbstractFileInfo(String fileName, FileLocationOptions option){
+	public AbstractFileInfo(String fileName, InfoLocationOptions option){
 		if(fileName==null){
 			this.errors.add("constructor(fileName) - fileName cannot be null");
 		}
@@ -131,7 +158,7 @@ public abstract class AbstractFileInfo {
 	 * @param fileName the file name to locate
 	 */
 	public AbstractFileInfo(String directory, String fileName){
-		this(directory, fileName, FileLocationOptions.TRY_RESOURCE_THEN_FS);
+		this(directory, fileName, InfoLocationOptions.TRY_RESOURCE_THEN_FS);
 	}
 
 	/**
@@ -140,7 +167,7 @@ public abstract class AbstractFileInfo {
 	 * @param fileName the file name to locate
 	 * @param option an option on how to locate the file
 	 */
-	public AbstractFileInfo(String directory, String fileName, FileLocationOptions option){
+	public AbstractFileInfo(String directory, String fileName, InfoLocationOptions option){
 		if(directory==null){
 			this.errors.add("constructor(directory, fileName) - directory cannot be null");
 		}
@@ -177,7 +204,7 @@ public abstract class AbstractFileInfo {
 	 * @param fileName a file name with or without path information
 	 * @param option an option on how to locate the file (not used if parameter file is set)
 	 */
-	protected void init(File file, String directory, String fileName, FileLocationOptions option){
+	protected void init(File file, String directory, String fileName, InfoLocationOptions option){
 		if(this.valOption()==null){
 			this.errors.add("constructor(init) - no validation option set");
 			return;
@@ -243,15 +270,17 @@ public abstract class AbstractFileInfo {
 							}
 						}
 						break;
+					default:
+						this.errors.add("constructor(init) - unknown location option <" + option + "> for files");
 				}
 			}
 			else{
 				this.errors.add("init() - unresolvable problems with input paramters, implementation problem(!)");
 			}
 		}
-		catch (MalformedURLException e) {
-			this.errors.add("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
-		}
+//		catch (MalformedURLException e) {
+//			this.errors.add("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
+//		}
 		catch(Exception ex){
 			this.errors.add("init() - catched unpredicted exception: " + ex.getMessage());
 		}
@@ -321,7 +350,7 @@ public abstract class AbstractFileInfo {
 	/**
 	 * Test a file for several conditions (does exist, is not hidden etc).
 	 * @param file file object to test
-	 * @return true if object points to an existing, non-hidden, readable file, false otherwise
+	 * @return true if object points to an existing, non-hidden, readable/writable (according to options) file, false otherwise
 	 */
 	protected final boolean testFile(File file){
 		FileValidator fv = new FileValidator(file, this.valOption());

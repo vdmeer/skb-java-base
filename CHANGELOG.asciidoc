@@ -1,3 +1,20 @@
+v0.0.8 - feature add - 2015-##-##
+---------------------------------
+* added handling of existing files with rootDir for sources
+	** added new constructor to AbstractFileInfo and sub classes - (File file, String setRoot)
+	** added now method to FileListSource - getSourceAsFileSourceList(String setRoot)
+* added setReporter() and setSTG() to Message5WH
+* added setSTG() to Abstract_CC and changed rendering to pick it up if set
+* added AbstractDirectoryInfo and adapted DirectorySource and DirectoryTarget
+	** added class path lookup
+* renamed FileLocationOptions to InfoLocationOptions
+	** added class path locations for directories
+	** FileSource/Target only accept file locations (FS and Resource)
+	** DirectorySource/Target only accept directory locations (FS and CP)
+* removed Skb_UrlUtils, all those features are now in File/Directory Source/Target
+* added emptyPrint to Skb_ConsoleUtils.getNbReader for prompt printing on empty readline results
+
+
 v0.0.7 - feature add - 2015-07-21
 ---------------------------------
 * added package info with source, loader, target, writer and validator interfaces and classes
