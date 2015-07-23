@@ -1,4 +1,4 @@
-v0.0.8 - feature add - 2015-##-##
+v0.0.8 - feature add - 2015-07-23
 ---------------------------------
 * added handling of existing files with rootDir for sources
 	** added new constructor to AbstractFileInfo and sub classes - (File file, String setRoot)
@@ -13,6 +13,7 @@ v0.0.8 - feature add - 2015-##-##
 	** DirectorySource/Target only accept directory locations (FS and CP)
 * removed Skb_UrlUtils, all those features are now in File/Directory Source/Target
 * added emptyPrint to Skb_ConsoleUtils.getNbReader for prompt printing on empty readline results
+* eventually added the SkbShell with parser and interfaces for arguments/commands and standard types
 
 
 v0.0.7 - feature add - 2015-07-21

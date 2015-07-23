@@ -20,7 +20,7 @@ package de.vandermeer.skb.base.info.sources;
  * Tests for {@link DirectorySource}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8-SNAPSHOT build 150721 (21-Jul-15) for Java 1.8
+ * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_DirectorySource {

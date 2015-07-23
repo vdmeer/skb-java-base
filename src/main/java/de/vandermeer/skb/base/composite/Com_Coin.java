@@ -22,7 +22,7 @@ import de.vandermeer.skb.base.categories.kvt.HasType;
  * This class carries an Enumerate for all defined special objects.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8-SNAPSHOT build 150721 (21-Jul-15) for Java 1.8
+ * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
 public interface Com_Coin extends Com_Leaf, Com_Node, HasType<String> {

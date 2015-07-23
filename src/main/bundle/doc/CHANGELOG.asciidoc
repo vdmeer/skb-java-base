@@ -1,4 +1,4 @@
-v0.0.8 - feature add - 2015-##-##
+v0.0.8 - feature add - 2015-07-23
 ---------------------------------
 * added handling of existing files with rootDir for sources
 	** added new constructor to AbstractFileInfo and sub classes - (File file, String setRoot)
