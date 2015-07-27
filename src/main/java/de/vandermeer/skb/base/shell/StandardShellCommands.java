@@ -19,20 +19,35 @@ package de.vandermeer.skb.base.shell;
  * Standard commands for the {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.8
  */
 public enum StandardShellCommands implements SkbShellCommand {
-	/** Help commands. */
-	HELP(new String[]{"help", "h", "?"}, null, "help"),
+	/** Help command - help. */
+	HELP("help", null, "help"),
+
+	/** Abbreviated help command - h. */
+	HELP_ABBREVIATED("h", null, "help"),
+
+	/** Abbreviated help command - ?. */
+	HELP_QMARK("?", null, "help"),
 
 	/** Quit commands. */
-	QUIT (new String[]{"quit", "exit", "bye"}, null, "exit the shell"),
+	QUIT ("quit", null, "exit the shell"),
+
+	/** Exit commands. */
+	EXIT ("exit", null, "exit the shell"),
+
+	/** Bye commands. */
+	BYE ("bye", null, "exit the shell"),
+
+	/** Wait commands. */
+	WAIT ("wait", null, "shell waits for <n> milliseconds before accepting the next command"),
 
 	;
 
-	/** Commands associated to this command. */
-	String[] commands;
+	/** Shell commands. */
+	String command;
 
 	/** Arguments for the command. */
 	SkbShellArgument[] arguments;
@@ -40,15 +55,21 @@ public enum StandardShellCommands implements SkbShellCommand {
 	/** A description. */
 	String description;
 
-	StandardShellCommands(String[] commands, SkbShellArgument[] arguments, String description){
-		this.commands = commands;
+	/**
+	 * Creates a new standard shell command.
+	 * @param command actual command
+	 * @param arguments command arguments
+	 * @param description a description of the command
+	 */
+	StandardShellCommands(String command, SkbShellArgument[] arguments, String description){
+		this.command = command;
 		this.arguments = arguments;
 		this.description = description;
 	}
 
 	@Override
-	public String[] getCommands() {
-		return this.commands;
+	public String getCommand() {
+		return this.command;
 	}
 
 	@Override

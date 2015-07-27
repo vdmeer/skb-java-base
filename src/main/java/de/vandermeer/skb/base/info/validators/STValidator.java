@@ -15,8 +15,8 @@
 
 package de.vandermeer.skb.base.info.validators;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.stringtemplate.v4.ST;
 
@@ -24,7 +24,7 @@ import org.stringtemplate.v4.ST;
  * An validator for an ST file.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class STValidator extends AbstractValidator {
@@ -33,9 +33,14 @@ public class STValidator extends AbstractValidator {
 	ST info;
 
 	/** The expected chunks of the STG. */
-	List<String> original;
+	Set<String> original;
 
-	public STValidator(ST st, List<String> expectedArguments){
+	/**
+	 * Returns a new ST validator.
+	 * @param st the template to validate
+	 * @param expectedArguments the expected arguments for the template
+	 */
+	public STValidator(ST st, Set<String> expectedArguments){
 		if(st==null){
 			this.errors.add("ST is null");
 		}
@@ -57,7 +62,7 @@ public class STValidator extends AbstractValidator {
 	 * @param st ST object for validation
 	 * @param expectedArguments expected arguments to test for
 	 */
-	protected void validate(ST st, List<String> expectedArguments){
+	protected void validate(ST st, Set<String> expectedArguments){
 		Map<?,?> formalArgs = st.impl.formalArguments;
 		if(formalArgs==null){
 			for(String s : expectedArguments){
@@ -65,9 +70,9 @@ public class STValidator extends AbstractValidator {
 			}
 		}
 		else{
-			for(int i=0; i<expectedArguments.size(); i++){
-				if(!formalArgs.containsKey(expectedArguments.get(i))){
-					this.errors.add("ST <{}> does not define argument <{}>", st.getName(), expectedArguments.get(i));
+			for(String s : expectedArguments){
+				if(!formalArgs.containsKey(s)){
+					this.errors.add("ST <{}> does not define argument <{}>", st.getName(), s);
 				}
 			}
 		}
@@ -79,7 +84,7 @@ public class STValidator extends AbstractValidator {
 	}
 
 	@Override
-	public List<String> getOriginal(){
+	public Set<String> getOriginal(){
 		return this.original;
 	}
 

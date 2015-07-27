@@ -18,8 +18,10 @@ package de.vandermeer.skb.base.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
@@ -41,7 +43,7 @@ import de.vandermeer.skb.base.message.Message5WH_Builder;
  * The SKB Report Manager.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.6 (was in skb-commons before)
  */
 public class ReportManager {
@@ -57,18 +59,40 @@ public class ReportManager {
 	 * 		<li>maxErrors ::= name, number</li>
 	 * </ul>
 	 */
-	public static final Map<String, List<String>> stgChunks = ReportManager.loadChunks();
+	public static final Map<String, Set<String>> stgChunks = ReportManager.loadChunks();
 
 	/**
 	 * Returns a map set with all expected template names and their expected arguments.
 	 * @return template map
 	 */
-	private static final Map<String, List<String>> loadChunks(){
-		Map<String, List<String>> ret = new HashMap<String, List<String>>(4);
-		ret.put("report",   Arrays.asList(new String[]{"who", "what", "when", "where", "why", "how", "type", "reporter"}));
-		ret.put("where",    Arrays.asList(new String[]{"location", "line", "column"}));
-		ret.put("maxErrors", Arrays.asList(new String[]{"name", "number"}));
-		return ret;
+//	private static final Map<String, Set<String>> loadChunks(){
+//		Map<String, Set<String>> ret = new HashMap<String, HashSet<String>>(4);
+//		ret.put("report",   Arrays.asList(new String[]{"who", "what", "when", "where", "why", "how", "type", "reporter"}));
+//		ret.put("where",    Arrays.asList(new String[]{"location", "line", "column"}));
+//		ret.put("maxErrors", Arrays.asList(new String[]{"name", "number"}));
+//		return ret;
+//	}
+
+	public final static Map<String, Set<String>> loadChunks(){
+		return new HashMap<String, Set<String>>(){
+			private static final long serialVersionUID = 1L;{
+				put("report", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("who"); add("what"); add("when"); add("where"); add("why"); add("how"); add("type"); add("reporter");
+					}}
+				);
+				put("where", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("location"); add("line"); add("column");
+					}}
+				);
+				put("maxErrors", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("name"); add("number");
+					}}
+				);
+			}
+		};
 	}
 
 	/** Counters for Info (0), Warnings (1) and Errors (2). */

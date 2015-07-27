@@ -21,7 +21,7 @@ import de.vandermeer.skb.base.categories.kvt.IsType;
  * Types for special objects, including null objects.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
 public enum Com_CoinType implements IsType<String> {
@@ -50,10 +50,16 @@ public enum Com_CoinType implements IsType<String> {
 	UNSET ("type is unset, probably an error in initialisation"),
 	;
 
+	/** The type. */
 	private String type;
 
+	/** A description for the type. */
 	private String description;
 
+	/**
+	 * Creates a new type.
+	 * @param description the type description
+	 */
 	Com_CoinType(String description){
 		this.description = description;
 		this.type = this.name();

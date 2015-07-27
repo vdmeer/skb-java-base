@@ -21,20 +21,28 @@ import de.vandermeer.skb.base.categories.HasDescription;
  * A command for the {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.8
  */
 public interface SkbShellCommand extends HasDescription {
 
 	/**
-	 * Returns the commands associated to this command.
-	 * @return associated commands
+	 * Returns the shell command.
+	 * @return shell commands
 	 */
-	String[] getCommands();
+	String getCommand();
 
 	/**
 	 * Returns the arguments of this command.
 	 * @return command arguments
 	 */
 	SkbShellArgument[] getArguments();
+
+	/**
+	 * Returns additional text for an auto-generated help for the argument.
+	 * @return additional help text, null if none set
+	 */
+	default String addedHelp(){
+		return null;
+	}
 }

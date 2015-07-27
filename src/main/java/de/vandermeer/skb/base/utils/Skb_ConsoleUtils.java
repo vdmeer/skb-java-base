@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Utilities for console input/output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.5
  */
 public abstract class Skb_ConsoleUtils {
@@ -263,10 +263,10 @@ public abstract class Skb_ConsoleUtils {
 	/**
 	 * Returns a new callable for reading strings from a reader with a set timeout of 200ms.
 	 * @param reader input stream to read from
-	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not requried
+	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not required
 	 * @return null if input stream is null, results of read on input stream otherwise
 	 */
-	public static Callable<String> getCallWTimeout(BufferedReader reader, String emptyPrint){
+	public static Callable<String> getCallWTimeout(BufferedReader reader, PromptOnEmpty emptyPrint){
 		return Skb_ConsoleUtils.getCallWTimeout(reader, 200, emptyPrint);
 	}
 
@@ -274,10 +274,10 @@ public abstract class Skb_ConsoleUtils {
 	 * Returns a new callable for reading strings from a reader with a given timeout.
 	 * @param reader input stream to read from
 	 * @param timeout read timeout in milliseconds, very low numbers and 0 are accepted but might result in strange behavior
-	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not requried
+	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not required
 	 * @return null if input stream is null, results of read on input stream otherwise
 	 */
-	public static Callable<String> getCallWTimeout(BufferedReader reader, int timeout, String emptyPrint){
+	public static Callable<String> getCallWTimeout(BufferedReader reader, int timeout, PromptOnEmpty emptyPrint){
 		return new Callable<String>() {
 			@Override
 			public String call() throws IOException {
@@ -289,7 +289,7 @@ public abstract class Skb_ConsoleUtils {
 						}
 						ret = reader.readLine();
 						if("".equals(ret) && emptyPrint!=null){
-							System.out.print(emptyPrint);
+							System.out.print(emptyPrint.prompt());
 						}
 					}
 					catch (InterruptedException e) {
@@ -306,10 +306,10 @@ public abstract class Skb_ConsoleUtils {
 	 * @param reader original reader to extend, use in combination with {@link #getStdIn(String)} for standard in
 	 * @param tries number of tries for read calls, use one as default
 	 * @param timeout milliseconds for read timeout
-	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not requried
+	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not required
 	 * @return new reader with parameterized readline() method
 	 */
-	public static BufferedReader getNbReader(BufferedReader reader, int tries, int timeout, String emptyPrint){
+	public static BufferedReader getNbReader(BufferedReader reader, int tries, int timeout, PromptOnEmpty emptyPrint){
 		if(reader==null){
 			return null;
 		}

@@ -20,7 +20,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.stringtemplate.v4.ST;
@@ -32,7 +33,7 @@ import org.stringtemplate.v4.STGroupFile;
  * Tests for {@link STValidator}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_STValidator {
@@ -46,7 +47,7 @@ public class Test_STValidator {
 		STGroupFile stg = new STGroupFile(stgFileSimple);
 
 		STValidator stv;
-		ArrayList<String> list = new ArrayList<String>();
+		Set<String> list = new HashSet<String>();
 
 		list.clear();
 		stv = new STValidator(stg.getInstanceOf("noArg"), list);
@@ -69,7 +70,7 @@ public class Test_STValidator {
 		STGroupFile stg = new STGroupFile(stgFileSimple);
 
 		STValidator stv;
-		ArrayList<String> list = new ArrayList<String>();
+		Set<String> list = new HashSet<String>();
 
 		list.clear();
 		list.add("one");
@@ -82,7 +83,7 @@ public class Test_STValidator {
 	public void testNull(){
 		STValidator stv;
 
-		stv = new STValidator(null, new ArrayList<String>());
+		stv = new STValidator(null, new HashSet<String>());
 		assertFalse(stv.isValid());
 		assertEquals(1, stv.getValidationErrors().size());
 
@@ -99,7 +100,7 @@ public class Test_STValidator {
 	public void testEmpty(){
 		STValidator stv;
 
-		stv = new STValidator(new ST(""), new ArrayList<String>());
+		stv = new STValidator(new ST(""), new HashSet<String>());
 		assertTrue(stv.isValid());
 		assertEquals(0, stv.getValidationErrors().size());
 	}
@@ -107,7 +108,7 @@ public class Test_STValidator {
 	@Test
 	public void testNoArgST(){
 		STValidator stv;
-		ArrayList<String> chunks = new ArrayList<String>();
+		Set<String> chunks = new HashSet<String>();
 		STGroup stg = new STGroupFile(this.stgFileSimple);
 		assertNotNull(stg);
 		ST st;
@@ -129,7 +130,7 @@ public class Test_STValidator {
 	@Test
 	public void test1ArgST(){
 		STValidator stv;
-		ArrayList<String> chunks = new ArrayList<String>();
+		Set<String> chunks = new HashSet<String>();
 		STGroup stg = new STGroupFile(this.stgFileSimple);
 		assertNotNull(stg);
 		ST st;
@@ -152,7 +153,7 @@ public class Test_STValidator {
 	@Test
 	public void test2ArgST(){
 		STValidator stv;
-		ArrayList<String> chunks = new ArrayList<String>();
+		Set<String> chunks = new HashSet<String>();
 		STGroup stg = new STGroupFile(this.stgFileSimple);
 		assertNotNull(stg);
 		ST st;

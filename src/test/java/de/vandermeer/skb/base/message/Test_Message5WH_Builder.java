@@ -22,8 +22,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.RecognitionException;
@@ -39,7 +41,7 @@ import de.vandermeer.skb.base.info.validators.STGroupValidator;
  * Tests for the {@link Message5WH_Builder} class.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  */
 public class Test_Message5WH_Builder {
 
@@ -126,9 +128,32 @@ public class Test_Message5WH_Builder {
 		assertNotNull(mb.stg);
 
 		//these are the expected chunks for the STG
-		Map<String, List<String>> expectedChunks = new HashMap<String, List<String>>(4);
-		expectedChunks.put("where",      Arrays.asList(new String[]{"location", "line", "column"}));
-		expectedChunks.put("message5wh", Arrays.asList(new String[]{"reporter", "type", "who", "when", "where", "what", "why", "how"}));
+		Map<String, Set<String>> expectedChunks = new HashMap<String, Set<String>>(){
+			private static final long serialVersionUID = 1L;{
+				put("where", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("location");
+						add("line");
+						add("column");
+					}}
+				);
+				put("message5wh", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("reporter");
+						add("type");
+						add("who");
+						add("when");
+						add("where");
+						add("what");
+						add("why");
+						add("how");
+					}}
+				);
+			}
+		};
+//
+//		expectedChunks.put("where",      Arrays.asList(new String[]{"location", "line", "column"}));
+//		expectedChunks.put("message5wh", Arrays.asList(new String[]{"reporter", "type", "who", "when", "where", "what", "why", "how"}));
 
 		//test for the expected chunks, returned list must be size 0
 		STGroupValidator stgv = new STGroupValidator(mb.stg, expectedChunks);

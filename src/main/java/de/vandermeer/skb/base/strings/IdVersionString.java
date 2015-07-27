@@ -13,7 +13,10 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.utils;
+package de.vandermeer.skb.base.strings;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,16 +24,16 @@ import org.apache.commons.lang3.StringUtils;
  * Class handling a string as a combination of an identifier and a version part.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.8
  */
 public class IdVersionString {
 
 	/** Identifier part of the string. */
-	String id;
+	protected String id;
 
 	/* Version part of the string. */
-	VersionString version;
+	protected VersionString version;
 
 	/**
 	 * Returns a new id/version combined string.
@@ -57,7 +60,23 @@ public class IdVersionString {
 	}
 
 	/**
-	 * A private empty constructor to create a NULL string required by some models.
+	 * Returns a new id/version combined string.
+	 * Version must be of format a.b.c with a, b and c being integers.
+	 * In the version, the characters dot, comma, hyphen or blank can be used as separators.
+	 * @param id identifier part of the string
+	 * @param version version part of the string
+	 * @throws IllegalArgumentException if the input string was null, empty or of wrong format
+	 */
+	public IdVersionString(String id, String version){
+		if(StringUtils.isBlank(id)){
+			throw new IllegalArgumentException("id part null or empty");
+		}
+		this.id = id;
+		this.version = new VersionString(version);
+	}
+
+	/**
+	 * A private empty constructor to create a NULL string.
 	 */
 	private IdVersionString(){
 		
@@ -85,6 +104,17 @@ public class IdVersionString {
 	}
 
 	/**
+	 * Returns the string as a map using the key "id" for the identifier part and the key "version" for the version part.
+	 * @return map representation of the string
+	 */
+	public Map<String, String> toMap(){
+		Map<String, String> ret = new HashMap<>();
+		ret.put("id", this.getID());
+		ret.put("version", this.getVersion().toString());
+		return ret;
+	}
+
+	/**
 	 * Tests if the parameter is the same id and version.
 	 * @param obj object to test
 	 * @return true if the parameter is an IdVersionString or a string with the same identifier and the same version, false otherwise
@@ -102,7 +132,7 @@ public class IdVersionString {
 	}
 
 	/**
-	 * A NULL IdVersionString for some models.
+	 * A NULL IdVersionString for exceptional cases.
 	 */
 	public static IdVersionString NULL_STRING = new IdVersionString(){
 		@Override

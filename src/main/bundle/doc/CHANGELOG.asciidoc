@@ -1,3 +1,16 @@
+v0.0.9 - feature add - 2015-##-##
+---------------------------------
+* moved all funky string objects into a string package
+	** added an IdVersionValue string class
+* changes to SkbShell
+	** changed ShellCommand commands from [] to plain string and changed standard commands accordingly
+	** added addedHelp() to commands and arguments
+	** changed help generation, added STG
+* added toMap() to the string package classes
+* changes STG and ST chunks from List to Set in ST/STG validator (changed all impacted code)
+
+
+
 v0.0.8 - feature add - 2015-07-23
 ---------------------------------
 * added handling of existing files with rootDir for sources

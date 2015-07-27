@@ -20,21 +20,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.text.StrBuilder;
+import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupString;
 
+import de.vandermeer.skb.base.composite.coin.CC_Info;
+import de.vandermeer.skb.base.info.validators.STGroupValidator;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
+import de.vandermeer.skb.base.utils.PromptOnEmpty;
 import de.vandermeer.skb.base.utils.Skb_ConsoleUtils;
 
 /**
- * An abstract shell class.
+ * An abstract shell.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.8
  */
-public abstract class SkbShell {
+public abstract class SkbShell implements PromptOnEmpty {
 
+	/** Default shell identifier. */
 	public static String DEFAULT_ID = "skbsh";
 
 	/** Client runtime identifier. */
@@ -43,43 +51,68 @@ public abstract class SkbShell {
 	/** Indicator if the read line loop should be maintained. */
 	protected boolean inLoop = true;
 
-	/** Shell short name. */
-	protected String shortName = "skbsh";
-
-	/** Shell display name. */
-	protected String displayName = "SKB Shell ";
-
-	/** Shell description. */
-	protected String description = "skb standard command shell";
-
 	/** Standard shell commands. */
 	private final Map<String, SkbShellCommand> standardShellCommands;
 
 	/** Additional shell commands. */
 	private final Map<String, SkbShellCommand> addedShellCommands;
 
+	/** An STG for info and other messages, similar to Message5WH but w/o type. */
+	protected STGroup stg = new STGroupString(
+			"where(location, line, column) ::= <<\n" +
+			"<location;separator=\".\"><if(line&&column)> <line>:<column><elseif(!line&&!column)><elseif(!line)> -:<column><elseif(!column)> <line>:-<endif>\n"+
+			">>\n\n" +
+			"message5wh(reporter, type, who, when, where, what, why, how) ::= <<\n" +
+			"<if(reporter)><reporter>: <endif><if(who)><who> <endif><if(when)>at (<when>) <endif><if(where)>in <where> <endif><if(what)>\\>> <what><endif>" +
+			"<if(why)> \n       ==> <why><endif>\n" +
+			"<if(how)> \n       ==> <how><endif>\n" +
+			">>\n"
+	);
+
+	/** An STG for info and other messages, similar to Message5WH but w/o type. */
+	protected STGroupValidator stgv;
+
 	/**
-	 * Returns a new shell with the default identifier.
+	 * Returns a new shell with the default identifier and the default STG.
 	 */
 	public SkbShell(){
-		this(DEFAULT_ID);
+		this(DEFAULT_ID, null);
+	}
+
+	/**
+	 * Returns a new shell with the default identifier and the given STG.
+	 * @param stg an STGroup for help messages
+	 * @throws IllegalArgumentException if the STG did not validate
+	 */
+	public SkbShell(STGroup stg){
+		this(DEFAULT_ID, stg);
 	}
 
 	/**
 	 * Returns a new shell with a given identifier.
 	 * @param id new shell with identifier
+	 * @param stg an STGroup for help messages
+	 * @throws IllegalArgumentException if the STG did not validate
 	 */
-	public SkbShell(String id){
+	public SkbShell(String id, STGroup stg){
 		//activate console output
 		Skb_ConsoleUtils.USE_CONSOLE = true;
+
+		if(stg==null){
+			stg = this.stg;
+		}
+		this.stgv = new STGroupValidator(stg, Message5WH_Builder.stChunks);
+		if(!this.stgv.isValid()){
+			throw new IllegalArgumentException("invalid STG");
+		}
+
 
 		this.id = id;
 
 		this.standardShellCommands = new HashMap<>();
 		for(SkbShellCommand cmd : StandardShellCommands.values()){
-			this._addShellCommand(cmd);
+			this.standardShellCommands.put(cmd.getCommand(), cmd);
 		}
-
 		this.addedShellCommands = new HashMap<>();
 	}
 
@@ -92,38 +125,21 @@ public abstract class SkbShell {
 	}
 
 	/**
-	 * Adds a shell command to the standard list.
-	 * @param cmd new shell command
-	 */
-	private final void _addShellCommand(SkbShellCommand cmd){
-		if(cmd!=null){
-			for(String c : cmd.getCommands()){
-				this.standardShellCommands.put(c, cmd);
-			}
-		}
-	}
-
-	/**
 	 * Adds a shell command to the additional list.
 	 * @param cmd new shell command
 	 */
 	public final void addShellCommand(SkbShellCommand cmd){
 		if(cmd!=null){
-			for(String c : cmd.getCommands()){
-				this.addedShellCommands.put(c, cmd);
-			}
+			this.addedShellCommands.put(cmd.getCommand(), cmd);
 		}
 	}
 
-	/**
-	 * Returns a prompt for the shell.
-	 * @return prompt with connection information, simply saying shell otherwise
-	 */
-	protected StrBuilder prompt(){
+	@Override
+	public StrBuilder prompt(){
 		StrBuilder ret = new StrBuilder(30);
 		ret
 			.append('[')
-			.append(this.shortName)
+			.append(this.getShortName())
 			.append("]> ");
 		;
 		return ret;
@@ -134,9 +150,10 @@ public abstract class SkbShell {
 	 * @param cpl command parser with arguments
 	 */
 	private final void _commandHelp(SkbShellLineParser cpl){
-		StrBuilder help = new StrBuilder(100);
-		help.appendNewLine();
-		help.append(this.displayName).appendln(" command shell");
+		CC_Info info = new CC_Info();
+		info.setSTG(this.stgv);
+		info.add("");
+		info.add("{} {}", this.getDisplayName(), this.getDescription());
 
 		String toHelp = cpl.getArgs();
 		if(toHelp==null){
@@ -144,29 +161,53 @@ public abstract class SkbShell {
 			sc.addAll(this.standardShellCommands.keySet());
 			sc.addAll(this.addedShellCommands.keySet());
 
-			help.append("- Shell commands: ");
-			help.appendWithSeparators(sc, ", ");
-			help.appendNewLine();
-			help.append(this.commandHelp());
-			help.appendNewLine();
-			help.appendln("try: 'help <command>' for more details");
+			info.add("- shell commands: {}", sc);
+			info.add("");
+			if(this.commandHelp()!=null){
+				info.add("  {}", this.commandHelp());
+				info.add("");
+			}
+			info.add("  try: 'help <command>' for more details");
 		}
 		else if(this.standardShellCommands.containsKey(toHelp)){
-			SkbShellCommand sc = this.standardShellCommands.get(toHelp);
-			help.appendWithSeparators(sc.getCommands(), " | ");
-			help.append(' ').appendWithSeparators(sc.getArguments(), ", ").append(' ');
-			help.append("-- ").append(sc.getDescription());
+			this._doCmdHelp(info, toHelp, this.standardShellCommands);
 		}
 		else if(this.addedShellCommands.containsKey(toHelp)){
-			SkbShellCommand sc = this.addedShellCommands.get(toHelp);
-			help.appendWithSeparators(sc.getCommands(), " | ");
-			help.append(' ').appendWithSeparators(sc.getArguments(), ", ").append(' ');
-			help.append("-- ").append(sc.getDescription());
+			this._doCmdHelp(info, toHelp, this.addedShellCommands);
 		}
 		else{
-			help.append(this.commandHelp(toHelp));
+			info.add("{}", this.commandHelp(toHelp));
 		}
-		Skb_ConsoleUtils.conInfo("{}", help);
+		Skb_ConsoleUtils.conInfo(info.render());
+	}
+
+	/**
+	 * Do help for a particular command
+	 * @param info the info object to add help to
+	 * @param toHelp the command to do the help for
+	 * @param cmds list of shell commands to select help from
+	 */
+	private void _doCmdHelp(CC_Info info, String toHelp, Map<String, SkbShellCommand> cmds){
+		SkbShellCommand sc = cmds.get(toHelp);
+		TreeMap<String, SkbShellArgument> args = new TreeMap<>();
+		if(sc.getArguments()!=null){
+			for(SkbShellArgument ssa : sc.getArguments()){
+				args.put(ssa.key(), ssa);
+			}
+		}
+
+		info.add("{} {} -- {}", sc.getCommand(), args.keySet(), sc.getDescription());
+		for(SkbShellArgument ssa : args.values()){
+			if(ssa.addedHelp()!=null){
+				info.add(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp());
+			}
+			else{
+				info.add(" -- <{}> of type {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription());
+			}
+		}
+		if(sc.addedHelp()!=null){
+			info.add("{}", sc.addedHelp());
+		}
 	}
 
 	/**
@@ -241,17 +282,28 @@ public abstract class SkbShell {
 	 */
 	private final boolean _processStandardShellCommand(String command, SkbShellLineParser cpl){
 		boolean ret = true;
-		switch(command){
-			case "bye":
-			case "quit":
-			case "exit":
+
+		StandardShellCommands cmd = null;
+		for(StandardShellCommands sc : StandardShellCommands.values()){
+			if(command.equals(sc.getCommand())){
+				cmd = sc;
+			}
+			if(cmd!=null){
+				break;
+			}
+		}
+
+		switch(cmd){
+			case BYE:
+			case QUIT:
+			case EXIT:
 				ret = false;
 				break;
-			case "wait":
+			case WAIT:
 				ArrayList<String> args = cpl.getArgList();
 				if(args.size()>0){
 					try {
-						Thread.sleep(Integer.parseInt(cpl.getArgList().get(0)));
+						Thread.sleep(Integer.parseInt(args.get(0)));
 					}
 					catch (NumberFormatException e) {
 						Skb_ConsoleUtils.conError("{}: problem with number in wait {}", new Object[]{this.getID(), e.getMessage()});
@@ -264,9 +316,9 @@ public abstract class SkbShell {
 					Skb_ConsoleUtils.conInfo("{}: no time given for wait", getID());
 				}
 				break;
-			case "?":
-			case "h":
-			case "help":
+			case HELP:
+			case HELP_ABBREVIATED:
+			case HELP_QMARK:
 				this._commandHelp(cpl);
 				break;
 
@@ -281,11 +333,9 @@ public abstract class SkbShell {
 	 * @return termination status, 0 on success, -1 on error
 	 */
 	public int runShell(){
-		String printEmpty = (Skb_ConsoleUtils.USE_CONSOLE==true)?this.prompt().toString():null;
-
-		BufferedReader sysin = Skb_ConsoleUtils.getNbReader(Skb_ConsoleUtils.getStdIn(this.getID()), 1, 500, printEmpty);
+		BufferedReader sysin = Skb_ConsoleUtils.getNbReader(Skb_ConsoleUtils.getStdIn(this.getID()), 1, 500, this);
 		if(sysin==null){
-			Skb_ConsoleUtils.conInfo("{}: could not load sysin", this.shortName);
+			Skb_ConsoleUtils.conInfo("{}: could not load standard input device (stdin)", this.getShortName());
 			return -1;
 		}
 
@@ -308,5 +358,29 @@ public abstract class SkbShell {
 			}
 		}
 		return 0;
+	}
+
+	/**
+	 * Returns the display name of the shell.
+	 * @return display name
+	 */
+	public String getDisplayName(){
+		return "SKB Shell";
+	}
+
+	/**
+	 * Returns the short name of the shell.
+	 * @return shell short name
+	 */
+	public String getShortName(){
+		return "skbsh";
+	}
+
+	/**
+	 * Returns the description of the shell.
+	 * @return shell description
+	 */
+	public String getDescription(){
+		return "skb standard command shell";
 	}
 }

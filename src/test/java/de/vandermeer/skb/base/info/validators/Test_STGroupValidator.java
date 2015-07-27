@@ -20,11 +20,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 import org.stringtemplate.v4.STGroup;
@@ -35,7 +34,7 @@ import org.stringtemplate.v4.STGroupFile;
  * Tests for {@link STGroupValidator}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_STGroupValidator {
@@ -49,15 +48,15 @@ public class Test_STGroupValidator {
 		STGroupFile stg = new STGroupFile(stgFileSimple);
 
 		STGroupValidator stgv;
-		Map<String, List<String>> map = new HashMap<>();
+		Map<String, Set<String>> map = new HashMap<>();
 
-		map.put("noArg", new ArrayList<>());
+		map.put("noArg", new HashSet<>());
 
-		List<String> args = new ArrayList<>();
+		Set<String> args = new HashSet<>();
 		args.add("one");
 		map.put("oneArg", args);
 
-		args = new ArrayList<>();
+		args = new HashSet<>();
 		args.add("one");
 		args.add("two");
 		map.put("twoArgs", args);
@@ -71,15 +70,15 @@ public class Test_STGroupValidator {
 		STGroupFile stg = new STGroupFile(stgFileSimple);
 
 		STGroupValidator stgv;
-		Map<String, List<String>> map = new HashMap<>();
+		Map<String, Set<String>> map = new HashMap<>();
 
-		map.put("noArg", new ArrayList<>());
+		map.put("noArg", new HashSet<>());
 
-		List<String> args = new ArrayList<>();
+		Set<String> args = new HashSet<>();
 		args.add("one");
 		map.put("oneArg", args);
 
-		args = new ArrayList<>();
+		args = new HashSet<>();
 		args.add("one");
 		args.add("three");
 		map.put("twoArgs", args);
@@ -94,15 +93,15 @@ public class Test_STGroupValidator {
 		STGroupFile stg = new STGroupFile(stgFileSimple);
 
 		STGroupValidator stgv;
-		Map<String, List<String>> map = new HashMap<>();
+		Map<String, Set<String>> map = new HashMap<>();
 
-		map.put("noArg", new ArrayList<>());
+		map.put("noArg", new HashSet<>());
 
-		List<String> args = new ArrayList<>();
+		Set<String> args = new HashSet<>();
 		args.add("one");
 		map.put("oneArg", args);
 
-		args = new ArrayList<>();
+		args = new HashSet<>();
 		args.add("three");
 		args.add("four");
 		map.put("twoArgs", args);
@@ -116,7 +115,7 @@ public class Test_STGroupValidator {
 	public void testNull(){
 		STGroupValidator stgv;
 
-		stgv = new STGroupValidator(null, new HashMap<String, List<String>>());
+		stgv = new STGroupValidator(null, new HashMap<String, Set<String>>());
 		assertFalse(stgv.isValid());
 		assertEquals(1, stgv.getValidationErrors().size());
 
@@ -133,14 +132,14 @@ public class Test_STGroupValidator {
 	public void testEmpty(){
 		STGroupValidator stgv;
 
-		stgv = new STGroupValidator(new STGroup(), new HashMap<String, List<String>>());
+		stgv = new STGroupValidator(new STGroup(), new HashMap<String, Set<String>>());
 		assertTrue(stgv.isValid());
 		assertEquals(0, stgv.getValidationErrors().size());
 	}
 
 	@Test
 	public void testNoArgSTG(){
-		Map<String, List<String>> chunks = new HashMap<String, List<String>>();
+		Map<String, Set<String>> chunks = new HashMap<String, Set<String>>();
 		STGroup stg = new STGroupFile(this.stgFileSimple);
 		assertNotNull(stg);
 		STGroupValidator stgv;
@@ -156,7 +155,7 @@ public class Test_STGroupValidator {
 		stgv = new STGroupValidator(stg, chunks);
 		assertEquals(0, stgv.getValidationErrors().size());
 
-		chunks.put(null, new ArrayList<String>());
+		chunks.put(null, new HashSet<String>());
 		stgv = new STGroupValidator(stg, chunks);
 		assertEquals(0, stgv.getValidationErrors().size());
 
@@ -164,20 +163,20 @@ public class Test_STGroupValidator {
 		stgv = new STGroupValidator(stg, chunks);
 		assertEquals(1, stgv.getValidationErrors().size());
 
-		chunks.put("noArg", new ArrayList<String>());
+		chunks.put("noArg", new HashSet<String>());
 		stgv = new STGroupValidator(stg, chunks);
 		assertEquals(0, stgv.getValidationErrors().size());
 	}
 
 	@Test
 	public void test1ArgST(){
-		Map<String, List<String>> chunks = new HashMap<String, List<String>>();
-		ArrayList<String> ar = new ArrayList<String>();
+		Map<String, Set<String>> chunks = new HashMap<String, Set<String>>();
+		Set<String> ar = new HashSet<String>();
 		STGroup stg = new STGroupFile(this.stgFileSimple);
 		assertNotNull(stg);
 		STGroupValidator stgv;
 
-		chunks.put("oneArg", new ArrayList<String>());
+		chunks.put("oneArg", new HashSet<String>());
 		stgv = new STGroupValidator(stg, chunks);
 		assertEquals(0, stgv.getValidationErrors().size());
 
@@ -197,22 +196,45 @@ public class Test_STGroupValidator {
 
 	@Test
 	public void test2ArgST(){
-		Map<String, List<String>> chunks = new HashMap<String, List<String>>();
 		STGroup stg = new STGroupFile(this.stgFileSimple);
+		Map<String, Set<String>> chunks;
 		assertNotNull(stg);
 		STGroupValidator stgv;
 
-		chunks.clear();
-		chunks.put("noArg", new ArrayList<String>());
-		chunks.put("oneArg", Arrays.asList(new String[]{"one"}));
-		chunks.put("twoArgs", Arrays.asList(new String[]{"one", "two"}));
+		chunks = new HashMap<String, Set<String>>(){
+			private static final long serialVersionUID = 1L;{
+				put("noArg", new HashSet<String>());
+				put("oneArg", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("one");
+					}}
+				);
+				put("twoArgs", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("one"); add("one");
+					}}
+				);
+			}
+		};
 		stgv = new STGroupValidator(stg, chunks);
 		assertEquals(0, stgv.getValidationErrors().size());
 
-		chunks.clear();
-		chunks.put("noArg", new ArrayList<String>());
-		chunks.put("oneArg", Arrays.asList(new String[]{"three"}));
-		chunks.put("twoArgs", Arrays.asList(new String[]{"four", "five"}));
+		chunks = new HashMap<String, Set<String>>(){
+			private static final long serialVersionUID = 1L;{
+				put("noArg", new HashSet<String>());
+				put("oneArg", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("three");
+					}}
+				);
+				put("twoArgs", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("four"); add("five");
+					}}
+				);
+			}
+		};
+		chunks.put("noArg", new HashSet<String>());
 		stgv = new STGroupValidator(stg, chunks);
 		assertEquals(3, stgv.getValidationErrors().size());
 	}

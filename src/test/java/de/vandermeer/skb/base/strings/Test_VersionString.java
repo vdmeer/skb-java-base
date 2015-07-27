@@ -13,27 +13,33 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.utils;
+package de.vandermeer.skb.base.strings;
+
+import org.junit.Test;
 
 /**
- * Thread utilities.
- *
+ * Tests for the version string.
+ * 
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
- * @since      v0.0.5
+ * @since      v0.0.6
  */
-public abstract class Skb_ThreadUtils {
+public class Test_VersionString {
 
-	/**
-	 * Puts a process into sleep for some milliseconds.
-	 * @param ms time in milliseconds for the timeout
-	 */
-	public static void sleep(int ms){
-		try {
-			Thread.sleep(ms);
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	@Test
+	public void testConstructor(){
+		VersionString vs;
+
+		vs = new VersionString("0.1.2");
+		vs = new VersionString("0-1-2");
+		vs = new VersionString("0,1,2");
+		vs = new VersionString("0 1 2");
+
+		vs = new VersionString("0.1,2");
+		vs = new VersionString("0.1-2");
+		vs = new VersionString("0,1,2");
+		vs = new VersionString("0 1-2");
+
+		System.out.println(vs);
 	}
 }

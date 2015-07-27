@@ -15,31 +15,24 @@
 
 package de.vandermeer.skb.base.utils;
 
-import org.junit.Test;
+import org.apache.commons.lang3.text.StrBuilder;
 
 /**
- * Tests for the version string.
- * 
+ * Callback interface for a prompt to be printed on empty input.
+ *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
- * @since      v0.0.6
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
+ * @since      v0.0.5
  */
-public class Test_VersionString {
+public interface PromptOnEmpty {
 
-	@Test
-	public void testConstructor(){
-		VersionString vs;
-
-		vs = new VersionString("0.1.2");
-		vs = new VersionString("0-1-2");
-		vs = new VersionString("0,1,2");
-		vs = new VersionString("0 1 2");
-
-		vs = new VersionString("0.1,2");
-		vs = new VersionString("0.1-2");
-		vs = new VersionString("0,1,2");
-		vs = new VersionString("0 1-2");
-
-		System.out.println(vs);
+	/**
+	 * Callback for a prompt to print on empty input string.
+	 * @return prompt
+	 */
+	default StrBuilder prompt(){
+		StrBuilder ret = new StrBuilder(30);
+		ret.append('[').append("default").append("]> ");
+		return ret;
 	}
 }

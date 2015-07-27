@@ -25,7 +25,7 @@ import de.vandermeer.skb.base.info.ValidationOptions;
  * An validator for a file.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class FileValidator extends AbstractValidator {
@@ -36,6 +36,11 @@ public class FileValidator extends AbstractValidator {
 	/** The original directory as string if used in a constructor. */
 	String original;
 
+	/**
+	 * Returns a new file validator.
+	 * @param file name of the file to validate
+	 * @param option validation options
+	 */
 	public FileValidator(String file, ValidationOptions option){
 		if(StringUtils.isBlank(file)){
 			this.errors.add("file is null or blank");
@@ -50,6 +55,11 @@ public class FileValidator extends AbstractValidator {
 		}
 	}
 
+	/**
+	 * Returns a new file validator.
+	 * @param file file to validate
+	 * @param option validation options
+	 */
 	public FileValidator(File file, ValidationOptions option){
 		if(file==null){
 			this.errors.add("file is null");
@@ -63,6 +73,11 @@ public class FileValidator extends AbstractValidator {
 		}
 	}
 
+	/**
+	 * Does the actual validation.
+	 * @param file file to validate
+	 * @param option validation options
+	 */
 	protected void validate(File file, ValidationOptions option){
 		if(!file.exists()){
 			this.errors.add("file <{}> does not exist in file system", file.getAbsolutePath());

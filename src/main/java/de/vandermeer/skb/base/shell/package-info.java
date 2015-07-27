@@ -13,27 +13,10 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.utils;
-
 /**
- * Thread utilities.
+ * A shell with an abstract implementation, commands and arguments, and standard commands and arguments.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
- * @since      v0.0.5
  */
-public abstract class Skb_ThreadUtils {
-
-	/**
-	 * Puts a process into sleep for some milliseconds.
-	 * @param ms time in milliseconds for the timeout
-	 */
-	public static void sleep(int ms){
-		try {
-			Thread.sleep(ms);
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-}
+package de.vandermeer.skb.base.shell;

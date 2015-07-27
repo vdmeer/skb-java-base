@@ -15,8 +15,8 @@
 
 package de.vandermeer.skb.base.info.validators;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.stringtemplate.v4.STGroup;
 
@@ -26,7 +26,7 @@ import de.vandermeer.skb.base.utils.Skb_STUtils;
  * An validator for an STGroup file.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class STGroupValidator extends AbstractValidator {
@@ -35,9 +35,14 @@ public class STGroupValidator extends AbstractValidator {
 	STGroup info;
 
 	/** The expected chunks of the STG. */
-	Map<String, List<String>> original;
+	Map<String, Set<String>> original;
 
-	public STGroupValidator(STGroup stg, Map<String, List<String>> expectedChunks){
+	/**
+	 * Returns a new STGroup validator
+	 * @param stg the STGroup to validate
+	 * @param expectedChunks the expected chunks (methods and their arguments) to validate against
+	 */
+	public STGroupValidator(STGroup stg, Map<String, Set<String>> expectedChunks){
 		if(stg==null){
 			this.errors.add("stg is null");
 		}
@@ -54,7 +59,12 @@ public class STGroupValidator extends AbstractValidator {
 		}
 	}
 
-	protected void validate(STGroup stg, Map<String, List<String>> expectedChunks){
+	/**
+	 * Does the actual validation of the STGroup.
+	 * @param stg the STGroup to validate
+	 * @param expectedChunks the expected chunks (methods and their arguments) to validate against
+	 */
+	protected void validate(STGroup stg, Map<String, Set<String>> expectedChunks){
 		for (String s : expectedChunks.keySet()){
 			//null and "" are no valid templates, so we ignore them
 			if(s!=null && !"".equals(s)){
@@ -77,7 +87,7 @@ public class STGroupValidator extends AbstractValidator {
 	}
 
 	@Override
-	public Map<String, List<String>> getOriginal(){
+	public Map<String, Set<String>> getOriginal(){
 		return this.original;
 	}
 

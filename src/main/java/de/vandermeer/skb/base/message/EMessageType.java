@@ -20,7 +20,7 @@ package de.vandermeer.skb.base.message;
  * The logger name can be used in combination with logging frameworks (such as slf4j or log4j), which need to be configured appropriatetly.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.1
  */
 public enum EMessageType {
@@ -40,6 +40,11 @@ public enum EMessageType {
 	/** The logger name of this instance */
 	private String loggerName;
 
+	/**
+	 * Creates a new message type.
+	 * @param number unique number of the type
+	 * @param loggerName name of an associated logger
+	 */
 	private EMessageType(int number, String loggerName){
 		this.number = number;
 		this.loggerName = loggerName;

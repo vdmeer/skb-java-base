@@ -13,7 +13,10 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.utils;
+package de.vandermeer.skb.base.strings;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -22,25 +25,26 @@ import org.apache.commons.lang3.math.NumberUtils;
  * A class for parsing a version string with major, minor and patch elements.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.6
  */
 public class VersionString {
 
 	/** Major part of the version. */
-	int major;
+	protected int major;
 
 	/** Minor part of the version. */
-	int minor;
+	protected int minor;
 
 	/** Patch part of the version. */
-	int patch;
+	protected int patch;
 
 	/** Separator character for toString. */
-	char separator = '.';
+	protected char separator = '.';
 
 	/**
 	 * Creates a new version object from a string.
+	 * The default value for string to integer conversion is -1.
 	 * @param version version string in the format "a.b.c" or "a-b-c" with a, b and c being integers, for instance 0.0.2.
 	 * 		The string will be split, all supported characters are: comma, dot, hyphen and blank; or combinations of them.
 	 * @throws IllegalArgumentException if the version string is null or empty or in the wrong format
@@ -56,11 +60,22 @@ public class VersionString {
 		if(!NumberUtils.isNumber(ar[0]) && !NumberUtils.isNumber(ar[1]) && !NumberUtils.isNumber(ar[2])){
 			throw new IllegalArgumentException("some parts of the version string are not numbers");
 		}
-		this.major = NumberUtils.toInt(ar[0]);
-		this.minor = NumberUtils.toInt(ar[1]);
-		this.patch = NumberUtils.toInt(ar[2]);
+		this.major = NumberUtils.toInt(ar[0], -1);
+		this.minor = NumberUtils.toInt(ar[1], -1);
+		this.patch = NumberUtils.toInt(ar[2], -1);
 	}
 
+	/**
+	 * Creates a new version string from integer values.
+	 * @param major major part of the version
+	 * @param minor minor part of the version
+	 * @param patch patch part of the version
+	 */
+	public VersionString(int major, int minor, int patch){
+		this.major = major;
+		this.minor = minor;
+		this.patch = patch;
+	}
 	/**
 	 * Returns the major part of the version.
 	 * @return major part
@@ -75,6 +90,18 @@ public class VersionString {
 	 */
 	public int getMinor(){
 		return this.minor;
+	}
+
+	/**
+	 * Returns the string as a map using the key "major" for the major part, the key "minor" for the minor part and the key "patch" for the patch part.
+	 * @return map representation of the string
+	 */
+	public Map<String, Integer> toMap(){
+		Map<String, Integer> ret = new HashMap<>();
+		ret.put("major", this.major);
+		ret.put("minor", this.minor);
+		ret.put("patch", this.patch);
+		return ret;
 	}
 
 	/**

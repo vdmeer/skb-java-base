@@ -15,10 +15,10 @@
 
 package de.vandermeer.skb.base.message;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
@@ -35,13 +35,13 @@ import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
  * Builder for a {@link Message5WH} object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.7 (most tests where in the message tests before)
  */
 public class Message5WH_Builder {
 
 	/** The default STGroup definition for the 5WH message class. */
-	public final static String messageSTGroup=
+	public final static String messageSTGroup = 
 			"where(location, line, column) ::= <<\n" +
 			"<location;separator=\".\"><if(line&&column)> <line>:<column><elseif(!line&&!column)><elseif(!line)> -:<column><elseif(!column)> <line>:-<endif>\n"+
 			">>\n\n" +
@@ -49,31 +49,33 @@ public class Message5WH_Builder {
 			"<if(reporter)><reporter>: <endif><if(type)><type> <endif><if(who)><who> <endif><if(when)>at (<when>) <endif><if(where)>in <where> <endif><if(what)>\\>> <what><endif>" +
 			"<if(why)> \n       ==> <why><endif>\n" +
 			"<if(how)> \n       ==> <how><endif>\n" +
-			">>\n";
-
-	public final static Map<String, List<String>> stChunks = new HashMap<String, List<String>>(){
-			private static final long serialVersionUID = 1L;{
-				put("where", new ArrayList<String>(){
-					private static final long serialVersionUID = 1L;{
-						add("location");
-						add("line");
-						add("column");
-					}}
-				);
-				put("message5wh", new ArrayList<String>(){
-					private static final long serialVersionUID = 1L;{
-						add("reporter");
-						add("type");
-						add("who");
-						add("when");
-						add("where");
-						add("what");
-						add("why");
-						add("how");
-					}}
-				);
-			}};
+			">>\n"
 	;
+
+	/** The STGroup chunks for validation of an STGroup for a message. */
+	public final static Map<String, Set<String>> stChunks = new HashMap<String, Set<String>>(){
+		private static final long serialVersionUID = 1L;{
+			put("where", new HashSet<String>(){
+				private static final long serialVersionUID = 1L;{
+					add("location");
+					add("line");
+					add("column");
+				}}
+			);
+			put("message5wh", new HashSet<String>(){
+				private static final long serialVersionUID = 1L;{
+					add("reporter");
+					add("type");
+					add("who");
+					add("when");
+					add("where");
+					add("what");
+					add("why");
+					add("how");
+				}}
+			);
+		}
+	};
 
 	/** Initial capacity for StrBuilder members */
 	protected int initialCapacity;

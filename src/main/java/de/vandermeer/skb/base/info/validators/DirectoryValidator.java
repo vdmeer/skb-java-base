@@ -25,7 +25,7 @@ import de.vandermeer.skb.base.info.ValidationOptions;
  * An validator for a directory or path.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.8 build 150723 (23-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.7
  */
 public class DirectoryValidator extends AbstractValidator {
@@ -36,6 +36,11 @@ public class DirectoryValidator extends AbstractValidator {
 	/** The original directory as string if used in a constructor. */
 	String original;
 
+	/**
+	 * Returns a new directory validator.
+	 * @param directory the directory to validate
+	 * @param option validation options
+	 */
 	public DirectoryValidator(String directory, ValidationOptions option){
 		if(StringUtils.isBlank(directory)){
 			this.errors.add("directory is null or blank");
@@ -50,6 +55,11 @@ public class DirectoryValidator extends AbstractValidator {
 		}
 	}
 
+	/**
+	 * Returns a new directory validator.
+	 * @param directory the directory to validate
+	 * @param option validation options
+	 */
 	public DirectoryValidator(File directory, ValidationOptions option){
 		if(directory==null){
 			this.errors.add("directory is null");
@@ -63,34 +73,39 @@ public class DirectoryValidator extends AbstractValidator {
 		}
 	}
 
-	protected void validate(File dir, ValidationOptions option){
-		if(!dir.exists()){
-			this.errors.add("directory <{}> does not exist in file system", dir.getAbsolutePath());
+	/**
+	 * Does the actual validation
+	 * @param directory the directory to validate
+	 * @param option validation options
+	 */
+	protected void validate(File directory, ValidationOptions option){
+		if(!directory.exists()){
+			this.errors.add("directory <{}> does not exist in file system", directory.getAbsolutePath());
 		}
-		else if(!dir.isDirectory()){
-			this.errors.add("directory <{}> is not a directory", dir.getAbsolutePath());
+		else if(!directory.isDirectory()){
+			this.errors.add("directory <{}> is not a directory", directory.getAbsolutePath());
 		}
-		else if(dir.isHidden()){
-			this.errors.add("directory <{}> is a hidden directory", dir.getAbsolutePath());
+		else if(directory.isHidden()){
+			this.errors.add("directory <{}> is a hidden directory", directory.getAbsolutePath());
 		}
 		else{
 			switch(option){
 				case AS_SOURCE:
-					if(!dir.canRead()){
-						this.errors.add("directory <{}> is not readable", dir.getAbsolutePath());
+					if(!directory.canRead()){
+						this.errors.add("directory <{}> is not readable", directory.getAbsolutePath());
 					}
 					break;
 				case AS_SOURCE_AND_TARGET:
-					if(!dir.canRead()){
-						this.errors.add("directory <{}> is not readable", dir.getAbsolutePath());
+					if(!directory.canRead()){
+						this.errors.add("directory <{}> is not readable", directory.getAbsolutePath());
 					}
-					if(!dir.canWrite()){
-						this.errors.add("directory <{}> is not writable", dir.getAbsolutePath());
+					if(!directory.canWrite()){
+						this.errors.add("directory <{}> is not writable", directory.getAbsolutePath());
 					}
 					break;
 				case AS_TARGET:
-					if(!dir.canWrite()){
-						this.errors.add("directory <{}> is not writable", dir.getAbsolutePath());
+					if(!directory.canWrite()){
+						this.errors.add("directory <{}> is not writable", directory.getAbsolutePath());
 					}
 					break;
 			}
