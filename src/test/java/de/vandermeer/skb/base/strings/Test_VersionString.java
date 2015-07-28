@@ -15,6 +15,8 @@
 
 package de.vandermeer.skb.base.strings;
 
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 /**
@@ -31,15 +33,21 @@ public class Test_VersionString {
 		VersionString vs;
 
 		vs = new VersionString("0.1.2");
+		assertEquals("0.1.2", vs.toString());
 		vs = new VersionString("0-1-2");
+		assertEquals("0.1.2", vs.toString());
 		vs = new VersionString("0,1,2");
+		assertEquals("0.1.2", vs.toString());
 		vs = new VersionString("0 1 2");
+		assertEquals("0.1.2", vs.toString());
 
 		vs = new VersionString("0.1,2");
+		assertEquals("0.1.2", vs.toString());
 		vs = new VersionString("0.1-2");
+		assertEquals("0.1.2", vs.toString());
 		vs = new VersionString("0,1,2");
+		assertEquals("0.1.2", vs.toString());
 		vs = new VersionString("0 1-2");
-
-//		System.out.println(vs);
+		assertEquals("0.1.2", vs.toString());
 	}
 }

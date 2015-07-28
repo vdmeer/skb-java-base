@@ -46,10 +46,10 @@ import de.vandermeer.skb.base.Skb_Transformer;
  */
 public class Test_IsPath {
 
-	IsPath_Tests_Data ptd;
+	Test_IsPath_Data ptd;
 
 	public Test_IsPath(){
-		this.ptd=new IsPath_Tests_Data();
+		this.ptd = new Test_IsPath_Data();
 	}
 
 	@Test public void testNewPath(){
@@ -110,7 +110,7 @@ public class Test_IsPath {
 	}
 
 	@Test public void testPath2Levels(){
-		IsPath_Tests_Data ptd = new IsPath_Tests_Data();
+		Test_IsPath_Data ptd = new Test_IsPath_Data();
 		Skb_Transformer<Object, Integer> slash = IsPath.PATH_TO_LEVELS("/");
 		Skb_Transformer<Object, Integer> hash = IsPath.PATH_TO_LEVELS("#");
 

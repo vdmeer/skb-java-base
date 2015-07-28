@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Test data.
+ * Test data for {@link IsPath} tests.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
-public class IsPath_Tests_Data {
+public class Test_IsPath_Data {
 
 	/** Class for FQPN tuples using path/name combinations */
 	public class FqpnObject{
@@ -62,7 +62,7 @@ public class IsPath_Tests_Data {
 
 	public Map<Integer, FqpnString> forMisc;
 
-	public IsPath_Tests_Data(){
+	public Test_IsPath_Data(){
 		this.fillObjects();
 		this.fillStrings();
 	}
