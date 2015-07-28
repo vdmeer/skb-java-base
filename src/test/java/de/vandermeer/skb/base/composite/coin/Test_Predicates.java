@@ -39,8 +39,8 @@ import de.vandermeer.skb.base.utils.Skb_ClassUtils;
 public class Test_Predicates {
 
 	@Test public void testIsSubClassOf(){
-		CC_Error serr=new CC_Error();
-		CC_Warning swarn=new CC_Warning();
+		CC_Error serr = new CC_Error();
+		CC_Warning swarn = new CC_Warning();
 		assertFalse(Skb_ClassUtils.IS_SUBCLASS_OF(serr).test(swarn));
 		assertTrue(Skb_ClassUtils.IS_SUBCLASS_OF(Com_Coin.class).test(serr));
 		assertTrue(Skb_ClassUtils.IS_SUBCLASS_OF(Com_Coin.class).test(swarn));
@@ -50,8 +50,8 @@ public class Test_Predicates {
 	}
 
 	@Test public void testIsSuperClassOf(){
-		CC_Error serr=new CC_Error();
-		CC_Warning swarn=new CC_Warning();
+		CC_Error serr = new CC_Error();
+		CC_Warning swarn = new CC_Warning();
 		assertFalse(Skb_ClassUtils.IS_SUPERCLASS_OF(serr).test(swarn));
 		assertTrue(Skb_ClassUtils.IS_SUPERCLASS_OF(serr).test(Com_Coin.class));
 		assertTrue(Skb_ClassUtils.IS_SUPERCLASS_OF(swarn).test(Com_Coin.class));

@@ -31,7 +31,7 @@ import org.junit.Test;
 import de.vandermeer.skb.base.utils.collections.ListStrategy;
 
 /**
- * Tests for list strategy.
+ * Tests for {@link ListStrategy}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8

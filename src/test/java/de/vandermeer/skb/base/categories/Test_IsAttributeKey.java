@@ -25,12 +25,19 @@ import de.vandermeer.skb.base.Skb_Defaults;
 import de.vandermeer.skb.base.categories.kvt.IsAttributeKey;
 import de.vandermeer.skb.base.categories.kvt.IsKey_String;
 
+/**
+ * Tests for {@link IsAttributeKey}.
+ *
+ * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
+ * @since      v0.0.6 (was in skb-composite before)
+ */
 public class Test_IsAttributeKey {
 
 	@Test public void testNewAttributeKey(){
 		IsAttributeKey key;
 
-		key=IsAttributeKey.create();
+		key = IsAttributeKey.create();
 		assertNotNull(key);
 		assertTrue(key instanceof IsKey_String);
 		assertTrue(key instanceof IsAttributeKey);
@@ -39,7 +46,7 @@ public class Test_IsAttributeKey {
 		assertEquals(Skb_Defaults.DEFAULT_DESCRIPTION, key.getDescription());
 		assertEquals("IsAttributeKey(DefaultImpl): " + Skb_Defaults.DEFAULT_VALUE, key.toString());
 
-		key=IsAttributeKey.create(null);
+		key = IsAttributeKey.create(null);
 		assertNotNull(key);
 		assertTrue(key instanceof IsKey_String);
 		assertTrue(key instanceof IsAttributeKey);
@@ -48,7 +55,7 @@ public class Test_IsAttributeKey {
 		assertEquals(Skb_Defaults.DEFAULT_DESCRIPTION, key.getDescription());
 		assertEquals("IsAttributeKey(DefaultImpl): " + Skb_Defaults.DEFAULT_VALUE, key.toString());
 
-		key=IsAttributeKey.create("deadbeef");
+		key = IsAttributeKey.create("deadbeef");
 		assertNotNull(key);
 		assertTrue(key instanceof IsKey_String);
 		assertTrue(key instanceof IsAttributeKey);

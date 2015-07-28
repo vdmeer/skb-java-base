@@ -21,6 +21,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Test data.
+ *
+ * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
+ * @since      v0.0.6 (was in skb-composite before)
+ */
 public class IsPath_Tests_Data {
 
 	/** Class for FQPN tuples using path/name combinations */
@@ -30,9 +37,9 @@ public class IsPath_Tests_Data {
 		public String expected;
 
 		public FqpnObject(Object path, Object name, String expected){
-			this.path=path;
-			this.name=name;
-			this.expected=expected;
+			this.path = path;
+			this.name = name;
+			this.expected = expected;
 		}
 	}
 
@@ -43,9 +50,9 @@ public class IsPath_Tests_Data {
 		public int expectedLevel;
 
 		public FqpnString(String fqpn, boolean isvalid, int expectedLevel){
-			this.fqpn=fqpn;
-			this.isvalid=isvalid;
-			this.expectedLevel=expectedLevel;
+			this.fqpn = fqpn;
+			this.isvalid = isvalid;
+			this.expectedLevel = expectedLevel;
 		}
 	}
 

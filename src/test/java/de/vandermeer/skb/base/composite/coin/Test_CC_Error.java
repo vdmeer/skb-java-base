@@ -30,13 +30,13 @@ import de.vandermeer.skb.base.message.Message5WH;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
- * Tests for SOWarning.
+ * Tests for {@link CC_Error}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
-public class Test_SOError {
+public class Test_CC_Error {
 
 	@Test public void testInit(){
 		CC_Error err = new CC_Error();

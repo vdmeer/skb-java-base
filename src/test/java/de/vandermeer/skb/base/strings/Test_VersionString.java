@@ -18,7 +18,7 @@ package de.vandermeer.skb.base.strings;
 import org.junit.Test;
 
 /**
- * Tests for the version string.
+ * Tests for Tests for {@link VersionString}.
  * 
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
@@ -40,6 +40,6 @@ public class Test_VersionString {
 		vs = new VersionString("0,1,2");
 		vs = new VersionString("0 1-2");
 
-		System.out.println(vs);
+//		System.out.println(vs);
 	}
 }

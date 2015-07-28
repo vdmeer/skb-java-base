@@ -38,7 +38,7 @@ import org.stringtemplate.v4.ST.AttributeList;
 import de.vandermeer.skb.base.info.validators.STGroupValidator;
 
 /**
- * Tests for the {@link Message5WH_Builder} class.
+ * Tests for {@link Message5WH_Builder}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
@@ -59,7 +59,7 @@ public class Test_Message5WH_Builder {
 		assertNull(mb.where);
 
 		//initialCapacity should not be lower than 50
-		assertTrue(50>= mb.initialCapacity);
+		assertTrue(50 >= mb.initialCapacity);
 
 		//STGroup should not be null, must have a default initialization
 		assertNotNull(mb.stg);

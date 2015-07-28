@@ -1,4 +1,3 @@
-
 /* Copyright 2014 Sven van der Meer <vdmeer.sven@mykolab.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +29,6 @@ import org.junit.Test;
 import de.vandermeer.skb.base.info.sources.FileListSource;
 import de.vandermeer.skb.base.info.sources.FileSource;
 
-
 /**
  * Tests for {@link CommonsDirectoryWalker}.
  *
@@ -48,7 +46,7 @@ public class Test_CommonsDirectoryWalker {
 		});
 		CommonsDirectoryWalker ldw = new CommonsDirectoryWalker("src/main/java", DirectoryFileFilter.INSTANCE, ff);
 		FileListSource files = ldw.load();
-		int checkSize = 144;
+		int checkSize = 151;
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());

@@ -1,4 +1,3 @@
-
 /* Copyright 2014 Sven van der Meer <vdmeer.sven@mykolab.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,14 +24,22 @@ import org.junit.Test;
 
 import de.vandermeer.skb.base.Skb_Defaults;
 import de.vandermeer.skb.base.Skb_Transformer;
+import de.vandermeer.skb.base.categories.kvt.IsKey;
 import de.vandermeer.skb.base.categories.kvt.IsKey_String;
 
+/**
+ * Tests for {@link IsKey}.
+ *
+ * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
+ * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
+ * @since      v0.0.6 (was in skb-composite before)
+ */
 public class Test_IsKey_String {
 
 	@Test public void testNewKey(){
 		IsKey_String key;
 
-		key=IsKey_String.create();
+		key = IsKey_String.create();
 		assertNotNull(key);
 		assertTrue(key instanceof IsKey_String);
 		assertEquals(Skb_Defaults.DEFAULT_VALUE, key.key());
@@ -40,7 +47,7 @@ public class Test_IsKey_String {
 		assertEquals(Skb_Defaults.DEFAULT_DESCRIPTION, key.getDescription());
 		assertEquals("IsKey_String(DefaultImpl): " + Skb_Defaults.DEFAULT_VALUE, key.toString());
 
-		key=IsKey_String.create(null);
+		key = IsKey_String.create(null);
 		assertNotNull(key);
 		assertTrue(key instanceof IsKey_String);
 		assertEquals(Skb_Defaults.DEFAULT_VALUE, key.key());
@@ -48,7 +55,7 @@ public class Test_IsKey_String {
 		assertEquals(Skb_Defaults.DEFAULT_DESCRIPTION, key.getDescription());
 		assertEquals("IsKey_String(DefaultImpl): " + Skb_Defaults.DEFAULT_VALUE, key.toString());
 
-		key=IsKey_String.create("deadbeef");
+		key = IsKey_String.create("deadbeef");
 		assertNotNull(key);
 		assertTrue(key instanceof IsKey_String);
 		assertEquals("deadbeef", key.key());
