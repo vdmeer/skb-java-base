@@ -80,7 +80,7 @@ public class VersionString {
 	 * Returns the major part of the version.
 	 * @return major part
 	 */
-	public int getMajor(){
+	public Integer getMajor(){
 		return this.major;
 	}
 
@@ -88,7 +88,7 @@ public class VersionString {
 	 * Returns the minor part of the version.
 	 * @return minor part
 	 */
-	public int getMinor(){
+	public Integer getMinor(){
 		return this.minor;
 	}
 
@@ -108,7 +108,7 @@ public class VersionString {
 	 * Returns the patch part of the version.
 	 * @return patch part
 	 */
-	public int getPatch(){
+	public Integer getPatch(){
 		return this.patch;
 	}
 

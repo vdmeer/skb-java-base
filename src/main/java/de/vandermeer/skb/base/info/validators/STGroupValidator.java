@@ -71,8 +71,6 @@ public class STGroupValidator extends AbstractValidator {
 				if(stg.isDefined(s)){
 					STValidator stv = new STValidator(stg.getInstanceOf(s), expectedChunks.get(s));
 					this.errors.add(stv.getValidationErrors());
-//						this.errors.add("STG <{}> with {}", Skb_STUtils.getStgName(stg), errs.getMessage());
-						//TODO better error message here!
 				}
 				else{
 					this.errors.add("STGroup <{}> does not define mandatory template <{}>", Skb_STUtils.getStgName(stg), s);

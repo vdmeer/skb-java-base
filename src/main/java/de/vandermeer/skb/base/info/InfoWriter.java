@@ -15,6 +15,8 @@
 
 package de.vandermeer.skb.base.info;
 
+import de.vandermeer.skb.base.composite.coin.CC_Error;
+
 /**
  * An information writer.
  *
@@ -24,4 +26,40 @@ package de.vandermeer.skb.base.info;
  */
 public interface InfoWriter {
 
+	/**
+	 * Returns the target set for the writer, that is where the writer writes information to.
+	 * @return target set for the writer
+	 */
+	InfoTarget getTarget();
+
+	/**
+	 * Writes information to a target and returns a specific object.
+	 * Errors of the writing process will be collected, use {@link #getWriteErrors()} to retrieve them.
+	 * @param content the content to be written
+	 * @return true on success, false on error
+	 * @throws IllegalArgumentException if the content was not of the right type, depending on the writer implementation
+	 */
+	boolean write(Object content);
+
+	/**
+	 * Returns collected errors from the last invocation of write or other methods.
+	 * @return collected errors, should not be null but can be empty (meaning no errors).
+	 */
+	CC_Error getWriteErrors();
+
+	/**
+	 * Validates the writers target.
+	 * @return true if the source is valid (not null and getSource not null), false otherwise
+	 */
+	default boolean validateTarget(){
+		if(this.getTarget()==null){
+			this.getWriteErrors().add("{} - target is null", "writer");
+			return false;
+		}
+		if(!this.getTarget().isValid()){
+			this.getWriteErrors().add("{} - invalid target <{}> - {}", new Object[]{"writer", this.getTarget().getTarget(), this.getTarget().getInitError().render()});
+			return false;
+		}
+		return true;
+	}
 }

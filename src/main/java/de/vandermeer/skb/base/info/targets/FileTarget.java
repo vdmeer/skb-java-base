@@ -16,6 +16,7 @@
 package de.vandermeer.skb.base.info.targets;
 
 import java.io.File;
+import java.io.IOException;
 
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.info.AbstractFileInfo;
@@ -118,5 +119,21 @@ public class FileTarget extends AbstractFileInfo implements InfoTarget {
 	@Override
 	protected ValidationOptions valOption() {
 		return ValidationOptions.AS_TARGET;
+	}
+
+	/**
+	 * Creates a file for a given absolute file name (absolute path and file name).
+	 * @param fn absolute file name
+	 * @return null on success, error string otherwise
+	 */
+	public static String createFile(String fn){
+		File file = new File(fn);
+		try {
+			file.createNewFile();
+		}
+		catch (IOException e) {
+			return e.getMessage();
+		}
+		return null;
 	}
 }

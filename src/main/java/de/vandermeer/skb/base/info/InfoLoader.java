@@ -46,7 +46,7 @@ public interface InfoLoader {
 	CC_Error getLoadErrors();
 
 	/**
-	 * Validates the loaders source
+	 * Validates the loaders source.
 	 * @return true if the source is valid (not null and getSource not null), false otherwise
 	 */
 	default boolean validateSource(){

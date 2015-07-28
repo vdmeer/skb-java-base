@@ -131,18 +131,20 @@ public class IdVersionString {
 		return false;
 	}
 
+	public static String NULL_STRING_RETURN = "NULL";
+
 	/**
 	 * A NULL IdVersionString for exceptional cases.
 	 */
 	public static IdVersionString NULL_STRING = new IdVersionString(){
 		@Override
 		public String toString(){
-			return "NULL";
+			return NULL_STRING_RETURN;
 		}
 
 		@Override
 		public String getID(){
-			return "NULL";
+			return NULL_STRING_RETURN;
 		}
 
 		@Override
@@ -152,7 +154,7 @@ public class IdVersionString {
 
 		@Override
 		public boolean sameAs(Object obj){
-			if(obj instanceof IdVersionString && ((IdVersionString)obj).getID()=="NULL"){
+			if(obj instanceof IdVersionString && ((IdVersionString)obj).getID()==NULL_STRING_RETURN){
 				return true;
 			}
 			return false;

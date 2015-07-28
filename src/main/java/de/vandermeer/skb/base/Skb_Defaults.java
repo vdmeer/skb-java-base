@@ -30,6 +30,10 @@ public abstract class Skb_Defaults {
 	/** A default description. */
 	public static final String DEFAULT_DESCRIPTION = "##default description##";
 
+	//TODO ???
+	/** Class needed for some category classes. */
+	public class DefaultImpl {}
+
 	/**
 	 * An array of SKB jars, used to optimize for speed when searching in all known jars in ExecS.
 	 */
