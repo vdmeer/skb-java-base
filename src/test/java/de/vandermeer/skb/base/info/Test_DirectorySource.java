@@ -13,10 +13,18 @@
  * limitations under the License.
  */
 
+package de.vandermeer.skb.base.info;
+
+import de.vandermeer.skb.base.info.DirectorySource;
+
+
 /**
- * Standard utilities for the SKB.
+ * Tests for {@link DirectorySource}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
+ * @since      v0.0.7
  */
-package de.vandermeer.skb.base.utils;
+public class Test_DirectorySource {
+
+}

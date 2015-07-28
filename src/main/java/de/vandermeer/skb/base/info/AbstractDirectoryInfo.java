@@ -23,7 +23,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import de.vandermeer.skb.base.composite.coin.CC_Error;
-import de.vandermeer.skb.base.info.validators.DirectoryValidator;
 
 /**
  * An abstract directory info implementation that can be configured for use as source or target.

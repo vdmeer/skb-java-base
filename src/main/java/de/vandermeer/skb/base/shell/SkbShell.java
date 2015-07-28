@@ -27,8 +27,9 @@ import org.apache.commons.lang3.text.StrBuilder;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupString;
 
+import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.composite.coin.CC_Info;
-import de.vandermeer.skb.base.info.validators.STGroupValidator;
+import de.vandermeer.skb.base.info.STGroupValidator;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
 import de.vandermeer.skb.base.utils.PromptOnEmpty;
 import de.vandermeer.skb.base.utils.Skb_ConsoleUtils;
@@ -57,6 +58,12 @@ public abstract class SkbShell implements PromptOnEmpty {
 	/** Additional shell commands. */
 	private final Map<String, SkbShellCommand> addedShellCommands;
 
+	/** Local list of errors collected during process, cleared for every new line parsing. */
+	protected final CC_Error errors = new CC_Error();
+
+	/** Local list of infos collected during process, cleared for every new line parsing. */
+	protected final CC_Info infos = new CC_Info();
+
 	/** An STG for info and other messages, similar to Message5WH but w/o type. */
 	protected STGroup stg = new STGroupString(
 			"where(location, line, column) ::= <<\n" +
@@ -76,7 +83,7 @@ public abstract class SkbShell implements PromptOnEmpty {
 	 * Returns a new shell with the default identifier and the default STG.
 	 */
 	public SkbShell(){
-		this(DEFAULT_ID, null);
+		this(DEFAULT_ID, null, true);
 	}
 
 	/**
@@ -85,7 +92,16 @@ public abstract class SkbShell implements PromptOnEmpty {
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
 	public SkbShell(STGroup stg){
-		this(DEFAULT_ID, stg);
+		this(DEFAULT_ID, stg, true);
+	}
+
+	/**
+	 * Returns a new shell with a given identifier.
+	 * @param id new shell with identifier
+	 * @throws IllegalArgumentException if the STG did not validate
+	 */
+	public SkbShell(String id){
+		this(id, null, true);
 	}
 
 	/**
@@ -95,8 +111,36 @@ public abstract class SkbShell implements PromptOnEmpty {
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
 	public SkbShell(String id, STGroup stg){
+		this(id, stg, true);
+	}
+
+	/**
+	 * Returns a new shell with given identifier and console flag.
+	 * @param id new shell with identifier
+	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
+	 */
+	public SkbShell(String id, boolean useConsole){
+		this(id, null, useConsole);
+	}
+
+	/**
+	 * Returns a new shell with given STG and console flag.
+	 * @param stg an STGroup for help messages
+	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen (except for errors on runShell() and some help commands)
+	 */
+	public SkbShell(STGroup stg, boolean useConsole){
+		this(DEFAULT_ID, stg, useConsole);
+	}
+
+	/**
+	 * Returns a new shell with given identifier and STG.
+	 * @param id new shell with identifier
+	 * @param stg an STGroup for help messages
+	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
+	 */
+	public SkbShell(String id, STGroup stg, boolean useConsole){
 		//activate console output
-		Skb_ConsoleUtils.USE_CONSOLE = true;
+		Skb_ConsoleUtils.USE_CONSOLE = useConsole;
 
 		if(stg==null){
 			stg = this.stg;
@@ -151,12 +195,13 @@ public abstract class SkbShell implements PromptOnEmpty {
 	 */
 	private final void _commandHelp(SkbShellLineParser cpl){
 		CC_Info info = new CC_Info();
-		info.setSTG(this.stgv);
-		info.add("");
-		info.add("{} {}", this.getDisplayName(), this.getDescription());
+		info.setSTG(this.stgv.getInfo());
 
 		String toHelp = cpl.getArgs();
 		if(toHelp==null){
+			info.add("");
+			info.add("{} {}", this.getDisplayName(), this.getDescription());
+			info.add("");
 			TreeSet<String> sc = new TreeSet<String>();
 			sc.addAll(this.standardShellCommands.keySet());
 			sc.addAll(this.addedShellCommands.keySet());
@@ -170,12 +215,15 @@ public abstract class SkbShell implements PromptOnEmpty {
 			info.add("  try: 'help <command>' for more details");
 		}
 		else if(this.standardShellCommands.containsKey(toHelp)){
+			info.add("");
 			this._doCmdHelp(info, toHelp, this.standardShellCommands);
 		}
 		else if(this.addedShellCommands.containsKey(toHelp)){
+			info.add("");
 			this._doCmdHelp(info, toHelp, this.addedShellCommands);
 		}
 		else{
+			info.add("");
 			info.add("{}", this.commandHelp(toHelp));
 		}
 		Skb_ConsoleUtils.conInfo(info.render());
@@ -244,7 +292,7 @@ public abstract class SkbShell implements PromptOnEmpty {
 	 * @param in command line string
 	 * @return true if the input line is null or is empty or starts with a comment, the result of the parsing otherwise
 	 */
-	protected final boolean parseLine(String in){
+	public final boolean parseLine(String in){
 		if(in==null){
 			return true;
 		}
@@ -259,7 +307,10 @@ public abstract class SkbShell implements PromptOnEmpty {
 	 * @param cpl command parser with arguments
 	 * @return false if the command leads to exit or shutdown, true otherwise
 	 */
-	protected final boolean parse(SkbShellLineParser cpl){
+	private final boolean parse(SkbShellLineParser cpl){
+		this.errors.clear();
+		this.infos.clear();
+
 		boolean ret = true;
 		String command = cpl.getToken();
 		if(this.standardShellCommands.containsKey(command)){
@@ -306,14 +357,14 @@ public abstract class SkbShell implements PromptOnEmpty {
 						Thread.sleep(Integer.parseInt(args.get(0)));
 					}
 					catch (NumberFormatException e) {
-						Skb_ConsoleUtils.conError("{}: problem with number in wait {}", new Object[]{this.getID(), e.getMessage()});
+						this.errors.add("{}: problem with number in wait {}", new Object[]{this.getID(), e.getMessage()});
 					}
 					catch (InterruptedException e) {
-						Skb_ConsoleUtils.conError("{}: interrupted in wait {}", new Object[]{getID(), e.getMessage()});
+						this.errors.add("{}: interrupted in wait {}", new Object[]{getID(), e.getMessage()});
 					}
 				}
 				else{
-					Skb_ConsoleUtils.conInfo("{}: no time given for wait", getID());
+					this.errors.add("{}: no time given for wait", getID());
 				}
 				break;
 			case HELP:
@@ -335,7 +386,7 @@ public abstract class SkbShell implements PromptOnEmpty {
 	public int runShell(){
 		BufferedReader sysin = Skb_ConsoleUtils.getNbReader(Skb_ConsoleUtils.getStdIn(this.getID()), 1, 500, this);
 		if(sysin==null){
-			Skb_ConsoleUtils.conInfo("{}: could not load standard input device (stdin)", this.getShortName());
+			Skb_ConsoleUtils.conError("{}: could not load standard input device (stdin)", this.getShortName());
 			return -1;
 		}
 
@@ -383,4 +434,37 @@ public abstract class SkbShell implements PromptOnEmpty {
 	public String getDescription(){
 		return "skb standard command shell";
 	}
+
+	/**
+	 * Returns true if the shell has errors (last errors), false otherwise
+	 * @return true if errors are collected, false otherwise
+	 */
+	public boolean hasErrors(){
+		return (this.errors.size()==0)?false:true;
+	}
+
+	/**
+	 * Returns true if the shell has infos (last infos), false otherwise
+	 * @return true if infos are collected, false otherwise
+	 */
+	public boolean hasInfos(){
+		return (this.infos.size()==0)?false:true;
+	}
+
+	/**
+	 * Returns a list of collected errors from the last parsing process.
+	 * @return collected errors, empty list if none occurred
+	 */
+	public CC_Error getLastErrors(){
+		return this.errors;
+	}
+
+	/**
+	 * Returns a list of collected infos from the last parsing process.
+	 * @return collected infos, empty list if none occurred
+	 */
+	public CC_Info getLastInfos(){
+		return this.infos;
+	}
+
 }

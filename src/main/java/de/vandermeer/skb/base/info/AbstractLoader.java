@@ -13,10 +13,25 @@
  * limitations under the License.
  */
 
+package de.vandermeer.skb.base.info;
+
+import de.vandermeer.skb.base.composite.coin.CC_Error;
+
 /**
- * Standard utilities for the SKB.
+ * Abstract loader implementation.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
+ * @since      v0.0.7
  */
-package de.vandermeer.skb.base.utils;
+public abstract class AbstractLoader implements InfoLoader {
+
+	/** Local list of errors collected during process, cleared for every new validation call. */
+	final CC_Error errors = new CC_Error();
+
+	@Override
+	public CC_Error getLoadErrors() {
+		return this.errors;
+	}
+
+}

@@ -441,6 +441,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>changed help generation, added STG</p>
 </li>
+<li>
+<p>added a few more constructors for the shell</p>
+</li>
+<li>
+<p>added error and info objects collecting all errors/infos, only printed now if useConsole is true (see constructor options)</p>
+</li>
 </ul>
 </div>
 </li>
@@ -452,6 +458,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>added writers to the info package</p>
+</li>
+<li>
+<p>removed Skb_STUtils and moved getStgName() to STGroupValidator GET_STG_NAME()</p>
+</li>
+<li>
+<p>created new package tools and moved ReportManager to it (removed a few tangles)</p>
+</li>
+<li>
+<p>removed tangles by removing STGroupValidator from Abstract_CC, Message5WH and Message5WH_Builder</p>
+<div class="ulist">
+<ul>
+<li>
+<p>validation is now on the caller</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>refactored info package: moved all sub-packages into info (removed tangles)</p>
 </li>
 </ul>
 </div>
@@ -731,7 +756,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-28 15:53:58 IST
+Last updated 2015-07-28 23:14:56 IST
 </div>
 </div>
 </body>

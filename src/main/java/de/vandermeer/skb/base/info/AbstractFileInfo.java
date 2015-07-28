@@ -25,7 +25,6 @@ import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 
 import de.vandermeer.skb.base.composite.coin.CC_Error;
-import de.vandermeer.skb.base.info.validators.FileValidator;
 
 /**
  * An abstract file info implementation that can be configured for use as source or target.

@@ -22,7 +22,6 @@ import org.stringtemplate.v4.STGroup;
 
 import de.vandermeer.skb.base.Skb_Renderable;
 import de.vandermeer.skb.base.Skb_ToStringStyle;
-import de.vandermeer.skb.base.info.validators.STGroupValidator;
 
 /**
  * Standard SKB message.
@@ -134,14 +133,13 @@ public class Message5WH implements Skb_Renderable {
 
 	/**
 	 * Sets the STGroup for the message based on a validator.
-	 * @param stgv the validator, which must have checked the STGroup against the required chunks defined in {@link Message5WH_Builder#stChunks}.
-	 * 		If other chunks where used to validate the STG file, rendering this message might result in runtime errors
+	 * @param stg new STGroup, which must have been checked against the required chunks defined in {@link Message5WH_Builder#stChunks}.
+	 * 		If the group is not valid, rendering this message might result in runtime errors
 	 * @return true if STG was set, false otherwise
 	 */
-	public boolean setSTG(STGroupValidator stgv){
-		if(stgv!=null && stgv.isValid()){
-			this.stg = stgv.getInfo();
-			return true;
+	public boolean setSTG(STGroup stg){
+		if(stg!=null){
+			this.stg = stg;
 		}
 		return false;
 	}

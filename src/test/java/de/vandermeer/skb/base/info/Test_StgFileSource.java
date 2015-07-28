@@ -13,10 +13,35 @@
  * limitations under the License.
  */
 
+package de.vandermeer.skb.base.info;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import de.vandermeer.skb.base.info.StgFileSource;
+
 /**
- * Standard utilities for the SKB.
+ * Tests for {@link StgFileSource}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
+ * @since      v0.0.7
  */
-package de.vandermeer.skb.base.utils;
+public class Test_StgFileSource {
+
+	@Test
+	public void testStg(){
+		StgFileSource fsn;
+
+		//valid file but no stg file extension is an error
+		fsn = new StgFileSource("de/vandermeer/skb/base/info/loaders/test.properties");
+		assertEquals(1, fsn.getInitError().size());
+		assertFalse(fsn.isValid());
+
+		//valid file and valid stg file with valid extension
+		fsn = new StgFileSource("de/vandermeer/skb/base/utils/test-simple.stg");
+		assertEquals(0, fsn.getInitError().size());
+		assertTrue(fsn.isValid());
+	}
+}

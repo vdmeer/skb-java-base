@@ -35,7 +35,7 @@ import org.junit.Test;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.ST.AttributeList;
 
-import de.vandermeer.skb.base.info.validators.STGroupValidator;
+import de.vandermeer.skb.base.info.STGroupValidator;
 
 /**
  * Tests for {@link Message5WH_Builder}.

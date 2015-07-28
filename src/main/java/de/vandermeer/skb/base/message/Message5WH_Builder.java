@@ -28,7 +28,6 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupString;
 
-import de.vandermeer.skb.base.info.validators.STGroupValidator;
 import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
 
 /**
@@ -163,16 +162,14 @@ public class Message5WH_Builder {
 	/**
 	 * Sets a new STGroup for the message.
 	 * The STGroup contains the two templates used for rendering a message: <code>where</code> and <code>message5wh</code>.
-	 * The default templates are defined in {@link Message5WH_Builder#messageSTGroup}. 
+	 * The default templates are defined in {@link Message5WH_Builder#messageSTGroup}.
+	 * If the STGroup is not valid, the build message will not render and rendering might result in runtime errors.
 	 * @param stg new STGroup
 	 * @return self to allow chaining, but only sets the new STGroup if it contains the two required functions with all arguments
 	 */
 	public Message5WH_Builder setSTG(STGroup stg){
 		if(stg!=null){
-			STGroupValidator stgv = new STGroupValidator(stg, Message5WH_Builder.stChunks);
-			if(stgv.isValid()){
 				this.stg = stg;
-			}
 		}
 		return this;
 	}
