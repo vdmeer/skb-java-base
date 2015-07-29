@@ -23,7 +23,7 @@ import org.junit.Test;
  * Tests for {@link Option}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.9-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
+ * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
 public class Test_Option {

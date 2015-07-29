@@ -25,7 +25,7 @@ import org.apache.commons.lang3.text.StrBuilder;
  * Scans a directory and returns a complete list of files found.
  * 
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.9-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
+ * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
  * @since      v0.0.6
  */
 public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryLoader {
