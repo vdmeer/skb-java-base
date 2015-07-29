@@ -30,7 +30,7 @@ import org.junit.Test;
  * Tests for Tests for {@link Skb_ObjectUtils}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.9-SNAPSHOT build 150727 (27-Jul-15) for Java 1.8
+ * @version    v0.0.9-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
  * @since      v0.0.6 (was in skb-commons before)
  */
 public class Test_Skb_ObjectUtils {
