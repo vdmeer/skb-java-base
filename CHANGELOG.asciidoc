@@ -1,4 +1,4 @@
-v0.0.9 - feature add - 2015-##-##
+v0.0.9 - feature add - 2015-07-29
 ---------------------------------
 * moved all funky string objects into a string package
 	** added an IdVersionValue string class
