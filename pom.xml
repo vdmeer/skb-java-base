@@ -3,6 +3,7 @@
 	<groupId>de.vandermeer</groupId>
 	<artifactId>skb-base</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>SKB Base</name>
 	<url>https://github.com/vdmeer/skb-java-base</url>
@@ -16,7 +17,6 @@
 		<project.resources.sourceEncoding>UTF-8</project.resources.sourceEncoding>
 		<encoding>UTF-8</encoding>
 		<file.encoding>UTF-8</file.encoding>
-
 	</properties>
 
 	<licenses>
@@ -259,6 +259,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<packaging>jar</packaging>
+
 
 </project>

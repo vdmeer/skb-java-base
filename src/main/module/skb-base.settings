@@ -1,4 +1,5 @@
 skb.module.version=0.1.0-SNAPSHOT
+skb.module.alias=base
 skb.module.name=SKB Base
 skb.module.url=https://github.com/vdmeer/skb-java-base
 skb.module.description=Base definitions, some standard classes and services, categories for the SKB, and the base line for composite hierarchies for the SKB.
