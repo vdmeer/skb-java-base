@@ -66,6 +66,14 @@ public interface SkbShell extends HasPrompt {
 	boolean setSTGroup(STGroup stg);
 
 	/**
+	 * Clears the list of last messages (infos and errors).
+	 */
+	default void clearLastMessages(){
+		this.getLastErrors().clear();
+		this.getLastInfos().clear();
+	}
+
+	/**
 	 * Adds a new command interpreter to the shell.
 	 * @param interpreter new command interpreter
 	 * @return true on success, false on error (interpreter null, some parameters not set, already set for same command)
@@ -91,7 +99,7 @@ public interface SkbShell extends HasPrompt {
 			return;
 		}
 		for(CommandInterpreter ci : interpreters){
-			if(ci!=null && ci.getCommands()==null){
+			if(ci!=null && ci.getCommands()!=null){
 				for(String cmd : ci.getCommandStrings()){
 					this.getCommandMap().put(cmd, ci);
 				}
@@ -110,7 +118,7 @@ public interface SkbShell extends HasPrompt {
 			return;
 		}
 		for(CommandInterpreter ci : interpreters){
-			if(ci!=null && ci.getCommands()==null){
+			if(ci!=null && ci.getCommands()!=null){
 				for(String cmd : ci.getCommandStrings()){
 					this.getCommandMap().put(cmd, ci);
 				}
@@ -211,8 +219,7 @@ public interface SkbShell extends HasPrompt {
 			return 0;
 		}
 
-		this.getLastErrors().clear();
-		this.getLastInfos().clear();
+		this.clearLastMessages();
 
 		LineParser lp = new LineParser(in);
 		String command = lp.getToken();

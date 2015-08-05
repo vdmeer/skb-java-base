@@ -70,7 +70,7 @@ public class AbstractShell implements SkbShell {
 	/**
 	 * Returns a new shell with the default identifier and the default STG and console activated.
 	 */
-	AbstractShell(){
+	protected AbstractShell(){
 		this(null, null, true);
 	}
 
@@ -79,7 +79,7 @@ public class AbstractShell implements SkbShell {
 	 * @param stg an STGroup for help messages, uses default if given STG is not valid
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
-	AbstractShell(STGroup stg){
+	protected AbstractShell(STGroup stg){
 		this(null, stg, true);
 	}
 
@@ -88,7 +88,7 @@ public class AbstractShell implements SkbShell {
 	 * @param stg an STGroup for help messages, uses default if given STG is not valid
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen (except for errors on runShell() and some help commands)
 	 */
-	AbstractShell(STGroup stg, boolean useConsole){
+	protected AbstractShell(STGroup stg, boolean useConsole){
 		this(null, stg, useConsole);
 	}
 
@@ -97,7 +97,7 @@ public class AbstractShell implements SkbShell {
 	 * @param id new shell with identifier
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
-	AbstractShell(String id){
+	protected AbstractShell(String id){
 		this(id, null, true);
 	}
 
@@ -106,7 +106,7 @@ public class AbstractShell implements SkbShell {
 	 * @param id new shell with identifier
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
 	 */
-	AbstractShell(String id, boolean useConsole){
+	protected AbstractShell(String id, boolean useConsole){
 		this(id, null, useConsole);
 	}
 
@@ -116,7 +116,7 @@ public class AbstractShell implements SkbShell {
 	 * @param stg an STGroup for help messages, uses default if given STG is not valid
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
-	AbstractShell(String id, STGroup stg){
+	protected AbstractShell(String id, STGroup stg){
 		this(id, stg, true);
 	}
 
@@ -126,7 +126,7 @@ public class AbstractShell implements SkbShell {
 	 * @param stg an STGroup for help messages, uses default if given STG is not valid
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
 	 */
-	AbstractShell(String id, STGroup stg, boolean useConsole){
+	protected AbstractShell(String id, STGroup stg, boolean useConsole){
 		//activate console output
 		Skb_Console.USE_CONSOLE = useConsole;
 		this.commandMap = new HashMap<>();
@@ -222,8 +222,18 @@ public class AbstractShell implements SkbShell {
 						System.out.print(this.prompt());
 					}
 				}
+
+				this.clearLastMessages();
 				in = sysin.readLine();
 				this.exitStatus = this.parseLine(in);
+
+				if(this.errors.size()>0){
+					Skb_Console.conError("{}", this.errors.render());
+				}
+				if(this.infos.size()>0){
+					Skb_Console.conInfo("{}", this.infos.render());
+				}
+
 				if(this.exitStatus==-2){
 					this.isRunning = false;
 				}
@@ -233,7 +243,7 @@ public class AbstractShell implements SkbShell {
 				ignore.printStackTrace();
 			}
 			catch(Exception ex){
-			//	TODO
+				//	TODO
 				ex.printStackTrace();
 			}
 		}
@@ -249,7 +259,7 @@ public class AbstractShell implements SkbShell {
 
 	@Override
 	public int runShell(){
-		BufferedReader sysin = NonBlockingReader.getNbReader(this.getID(), 5, 500, this);
+		BufferedReader sysin = NonBlockingReader.getNbReader(this.getID(), 1, 500, this);
 //		BufferedReader sysin = Skb_Console.getStdIn(this.getID());
 		return this.runShell(sysin);
 	}

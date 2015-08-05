@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.StrBuilder;
 
 import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.console.Skb_Console;
@@ -38,9 +39,9 @@ public class HelpInterpreter extends AbstractCommandInterpreter {
 	public HelpInterpreter(){
 		super(
 				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("help", null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help<cmd> for help on a specific command"),
-						SkbShellFactory.newCommand("h",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help<cmd> for help on a specific command"),
-						SkbShellFactory.newCommand("?",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help<cmd> for help on a specific command")
+						SkbShellFactory.newCommand("help", null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command"),
+						SkbShellFactory.newCommand("h",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command"),
+						SkbShellFactory.newCommand("?",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command")
 				}
 		);
 	}
@@ -87,7 +88,6 @@ public class HelpInterpreter extends AbstractCommandInterpreter {
 					catDescr = "standard commands";
 				}
 				info.add("- {}: {}", new Object[]{catDescr, cat2Cmd.get(cat).keySet()});
-				info.add("");
 			}
 			info.add("  try: 'help <command>' for more details");
 		}
@@ -99,11 +99,16 @@ public class HelpInterpreter extends AbstractCommandInterpreter {
 				TreeMap<String, SkbShellArgument> args = new TreeMap<>();
 				if(ssc.getArguments()!=null){
 					for(SkbShellArgument ssa : ssc.getArguments()){
-						args.put(ssa.key(), ssa);
+						if(ssa.isOptional()){
+							args.put("[" + ssa.key() + "]", ssa);
+						}
+						else{
+							args.put("<" + ssa.key() + ">", ssa);
+						}
 					}
 				}
 
-				info.add("{} {} -- {}", ssc.getCommand(), args.keySet(), ssc.getDescription());
+				info.add("{} {} -- {}", ssc.getCommand(), new StrBuilder().appendWithSeparators(args.keySet(), ", "), ssc.getDescription());
 				for(SkbShellArgument ssa : args.values()){
 					if(ssa.addedHelp()!=null){
 						info.add(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp());
