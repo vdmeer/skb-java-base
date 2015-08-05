@@ -1,0 +1,162 @@
+/* Copyright 2014 Sven van der Meer <vdmeer.sven@mykolab.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package de.vandermeer.skb.base.shell;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.stringtemplate.v4.STGroup;
+
+/**
+ * Factory for Skb Shell artifacts.
+ *
+ * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
+ * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
+ * @since      v0.1.0
+ */
+public class SkbShellFactory {
+
+	/**
+	 * Returns a new shell with the default identifier and the default STG and console activated.
+	 * @return new shell
+	 */
+	public static SkbShell newShell(){
+		return SkbShellFactory.newShell(null, null, true);
+	}
+
+	/**
+	 * Returns a new shell with the default identifier and the given STG and console activated.
+	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @return new shell
+	 */
+	public static SkbShell newShell(STGroup stg){
+		return SkbShellFactory.newShell(null, stg, true);
+	}
+
+	/**
+	 * Returns a new shell with given STG and console flag.
+	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen (except for errors on runShell() and some help commands)
+	 * @return new shell
+	 */
+	public static SkbShell newShell(STGroup stg, boolean useConsole){
+		return SkbShellFactory.newShell(null, stg, useConsole);
+	}
+
+	/**
+	 * Returns a new shell with a given identifier, standard STGroup and console activated.
+	 * @param id new shell with identifier
+	 * @return new shell
+	 * 
+	 */
+	public static SkbShell newShell(String id){
+		return SkbShellFactory.newShell(id, null, true);
+	}
+
+	/**
+	 * Returns a new shell with given identifier and console flag with standard STGroup.
+	 * @param id new shell with identifier, uses default if given STG is not valid
+	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
+	 * @return new shell
+	 */
+	public static SkbShell newShell(String id, boolean useConsole){
+		return SkbShellFactory.newShell(id, null, useConsole);
+	}
+
+	/**
+	 * Returns a new shell with a given identifier and STGroup plus console activated.
+	 * @param id new shell with identifier
+	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @return new shell
+	 */
+	public static SkbShell newShell(String id, STGroup stg){
+		return SkbShellFactory.newShell(id, stg, true);
+	}
+
+	/**
+	 * Returns a new shell with given identifier and console flag.
+	 * @param id new shell with identifier
+	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
+	 * @return new shell
+	 */
+	public static SkbShell newShell(String id, STGroup stg, boolean useConsole){
+		return new AbstractShell(id, stg, useConsole);
+	}
+
+	/**
+	 * Returns a new shell command, use the factory to create one.
+	 * @param command the actual command
+	 * @param arguments the command's arguments, can be null
+	 * @param category the command's category, can be null
+	 * @param description the command's description
+	 * @return new shell command
+	 * @throws IllegalArgumentException if command or description was null
+	 */
+	public static SkbShellCommand newCommand(String command, SkbShellArgument[] arguments, SkbShellCommandCategory category, String description){
+		return new AbstractShellCommand(command, arguments, category, description);
+	}
+
+	/**
+	 * Returns a new shell argument, use the factory to create one.
+	 * @param argument the actual argument, cannot be blank
+	 * @param isOptional flag for optional (true if optional, false if not)
+	 * @param type the argument's type, cannot be null
+	 * @param description the command's description. cannot be null
+	 * @param addedHelp a string additional to the description for help
+	 * @return new shell argument
+	 * @throws IllegalArgumentException if argument, type, or description was null
+	 */
+	public static SkbShellArgument newArgument(String argument, boolean isOptional, SkbShellArgumentType type, String description, String addedHelp){
+		return new AbstractShellArgument(argument, isOptional, type, description, addedHelp);
+	}
+
+	/**
+	 * Returns a new argument array.
+	 * @param args input arguments, any argument being null will be ignored
+	 * @return argument array, null if none provided
+	 */
+	public static SkbShellArgument[] newArgumentArray(SkbShellArgument ... args){
+		if(args==null){
+			return null;
+		}
+		Set<SkbShellArgument> ret = new HashSet<>();
+		for(SkbShellArgument arg : args){
+			if(arg!=null){
+				ret.add(arg);
+			}
+		}
+		return ret.toArray(new SkbShellArgument[args.length]);
+	}
+
+	/**
+	 * Returns a new shell command category, use the {@link SkbShellFactory} to create a new object.
+	 * @param category the actual category
+	 * @param description the command's description
+	 * @return new shell command category
+	 * @throws IllegalArgumentException if command or description was null
+	 */
+	public static SkbShellCommandCategory newCategory(String category, String description){
+		return new AbstractCategory(category, description);
+	}
+
+	/**
+	 * A category for standard commands.
+	 */
+	
+	public static SkbShellCommandCategory STANDARD_COMMANDS = newCategory("Standard", "Standard shell commands");
+
+}

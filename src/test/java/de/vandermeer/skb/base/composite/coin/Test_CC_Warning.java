@@ -57,13 +57,6 @@ public class Test_CC_Warning {
 		warn.add(m);
 		assertEquals(EMessageType.WARNING, warn.getList().get(0).getType());	//type automatically changed to warning
 
-		warn = new CC_Warning(m);
-		assertEquals(EMessageType.WARNING, warn.getList().get(0).getType());	//type automatically changed to warning
-
-		m.changeType(EMessageType.WARNING);
-		warn = new CC_Warning(m);
-		assertEquals(EMessageType.WARNING, warn.getList().get(0).getType());	//type not changed
-
 		assertEquals(1, warn.getList().size());		//size 1
 		assertEquals(1, warn.size());				//size 1
 		warn.add(m);

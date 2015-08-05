@@ -116,7 +116,7 @@ public abstract class Abstract_CC implements Com_Coin {
 	}
 
 	@Override
-	abstract public Abstract_CC getCopy();
+	public abstract Abstract_CC getCopy();
 
 	@Override
 	public String toString() {

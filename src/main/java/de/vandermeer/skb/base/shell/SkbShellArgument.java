@@ -40,4 +40,10 @@ public interface SkbShellArgument extends IsKey<String>, HasDescription {
 	default String addedHelp(){
 		return null;
 	}
+
+	/**
+	 * Optional flag for the argument.
+	 * @return true if the argument is optional, false otherwise (default)
+	 */
+	boolean isOptional();
 }

@@ -30,7 +30,6 @@ public abstract class Skb_Defaults {
 	/** A default description. */
 	public static final String DEFAULT_DESCRIPTION = "##default description##";
 
-	//TODO ???
 	/** Class needed for some category classes. */
 	public class DefaultImpl {}
 
@@ -42,14 +41,11 @@ public abstract class Skb_Defaults {
 			"execs",
 			"skb-base",
 			"skb-categories",
-			"skb-collections",
 			"skb-commons",
-			"skb-composite",
 			"skb-configuration",
 			"skb-examples",
-			"skb-dal",
-			"skb-dsl",
-			"skb-tribe"
+			"skb-tribe",
+			"svg2vector",
 	};
 
 	/**

@@ -13,26 +13,10 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.utils;
-
-import org.apache.commons.lang3.text.StrBuilder;
-
 /**
- * Callback interface for a prompt to be printed on empty input.
+ * Some utilities for console handling.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
- * @since      v0.0.5
  */
-public interface PromptOnEmpty {
-
-	/**
-	 * Callback for a prompt to print on empty input string.
-	 * @return prompt
-	 */
-	default StrBuilder prompt(){
-		StrBuilder ret = new StrBuilder(30);
-		ret.append('[').append("default").append("]> ");
-		return ret;
-	}
-}
+package de.vandermeer.skb.base.console;

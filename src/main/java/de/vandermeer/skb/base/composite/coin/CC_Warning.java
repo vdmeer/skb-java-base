@@ -15,8 +15,6 @@
 
 package de.vandermeer.skb.base.composite.coin;
 
-import java.util.List;
-
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
@@ -38,22 +36,6 @@ public final class CC_Warning extends Abstract_CC {
 	 */
 	public CC_Warning(){
 		super();
-	}
-
-	/**
-	 * Creates a new DefaultWarning with a list of warning messages.
-	 * @param list warning list for initialization
-	 */
-	public CC_Warning(List<Message5WH> list){
-		super(list);
-	}
-
-	/**
-	 * Creates a new DefaultWarning with a single warning.
-	 * @param warn warning for initialization
-	 */
-	public CC_Warning(Message5WH warn){
-		super(warn);
 	}
 
 	/**
@@ -101,6 +83,8 @@ public final class CC_Warning extends Abstract_CC {
 
 	@Override
 	public CC_Warning getCopy() {
-		return new CC_Warning(this.msglist);
+		CC_Warning ret = new CC_Warning();
+		ret.msglist.addAll(this.msglist);
+		return ret;
 	}
 }

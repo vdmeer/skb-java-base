@@ -13,48 +13,26 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.shell;
+package de.vandermeer.skb.base.console;
+
+import org.apache.commons.lang3.text.StrBuilder;
 
 /**
- * Standard arguments for the {@link SkbShell}.
+ * Callback interface for a prompt to be printed on empty input.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
- * @since      v0.0.8
+ * @since      v0.0.5
  */
-public enum StandardShellArguments implements SkbShellArgument {
-	id (SkbShellArgumentType.String, "an identifier"),
-	;
-
-	/** Type of the argument. */
-	SkbShellArgumentType type;
-
-	/** A description. */
-	String description;
+public interface HasPrompt {
 
 	/**
-	 * Returns a new standard shell argument
-	 * @param type argument type
-	 * @param description argument description
+	 * Returns a prompt for an object.
+	 * @return the prompt, cannot be null
 	 */
-	StandardShellArguments(SkbShellArgumentType type, String description){
-		this.type = type;
-		this.description = description;
+	default StrBuilder prompt(){
+		StrBuilder ret = new StrBuilder(30);
+		ret.append('[').append("default").append("]> ");
+		return ret;
 	}
-
-	@Override
-	public String getDescription(){
-		return this.description;
-	}
-
-	@Override
-	public String _value() {
-		return this.name();
-	}
-
-	@Override
-	public SkbShellArgumentType getType() {
-		return this.type;
-	}
-
 }

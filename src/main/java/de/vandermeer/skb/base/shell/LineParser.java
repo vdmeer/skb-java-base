@@ -29,7 +29,7 @@ import org.apache.commons.lang3.StringUtils;
  * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
  * @since      v0.0.8
  */
-public class SkbShellLineParser {
+public class LineParser {
 
 	/** Original line to parse. */
 	protected String line;
@@ -41,7 +41,7 @@ public class SkbShellLineParser {
 	 * Returns a new command parser for a given command line.
 	 * @param line command line
 	 */
-	public SkbShellLineParser(String line){
+	public LineParser(String line){
 		this.line = StringUtils.trim(line);
 	}
 
@@ -50,7 +50,7 @@ public class SkbShellLineParser {
 	 * @param pos new position
 	 * @return self to allow for chaining
 	 */
-	public SkbShellLineParser setTokenPosition(int pos){
+	public LineParser setTokenPosition(int pos){
 		this.tokenPosition = pos;
 		return this;
 	}
@@ -151,7 +151,7 @@ public class SkbShellLineParser {
 								ret.put(ssa, entry.getValue());
 								break;
 							default:
-								System.err.println("CommandParser.getArgMap --> value key not yet supported: " + ssa.getType());
+								System.err.println("parser.getArgMap --> argument type not yet supported: " + ssa.getType());
 								break;
 						}
 					}

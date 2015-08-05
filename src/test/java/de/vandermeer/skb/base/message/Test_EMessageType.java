@@ -18,7 +18,6 @@ package de.vandermeer.skb.base.message;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 /**
@@ -36,8 +35,8 @@ public class Test_EMessageType {
 		for(int i=0; i<values.length; i++){
 			assertTrue(values[i].getNumber()==i);
 			assertEquals(values[i].name().toLowerCase(), values[i].toString());
-			String loggerAdd = StringUtils.capitalize(values[i].name().toLowerCase());
-			assertEquals("SKBLogger" + loggerAdd, values[i].getLoggerName());
+//			String loggerAdd = StringUtils.capitalize(values[i].name().toLowerCase());
+//			assertEquals("SKBLogger" + loggerAdd, values[i].getLoggerName());
 		}
 	}
 }

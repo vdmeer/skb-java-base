@@ -42,7 +42,7 @@ public class Test_SimpleDirectoryScanner {
 	public void testScanJavaSource(){
 		SimpleDirectoryScanner scanner = new SimpleDirectoryScanner(new DirectorySource("src/main/java"));
 		FileListSource files = scanner.load();
-		int checkSize = 147;
+		int checkSize = 159;
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());

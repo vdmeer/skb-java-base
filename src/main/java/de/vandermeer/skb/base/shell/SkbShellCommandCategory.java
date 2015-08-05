@@ -18,37 +18,20 @@ package de.vandermeer.skb.base.shell;
 import de.vandermeer.skb.base.categories.HasDescription;
 
 /**
- * A command for the {@link SkbShell}.
+ * Category of a shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
- * @since      v0.0.8
+ * @since      v0.1.0
  */
-public interface SkbShellCommand extends HasDescription {
+public interface SkbShellCommandCategory extends HasDescription {
 
 	/**
-	 * Returns the shell command.
-	 * @return shell commands
+	 * Returns the category.
+	 * @return category, cannot be null
 	 */
-	String getCommand();
+	String getCategory();
 
-	/**
-	 * Returns a category the command belongs to, useful for grouping commands for example in help screens.
-	 * @return the category of the command, can be null
-	 */
-	SkbShellCommandCategory getCategory();
-
-	/**
-	 * Returns the arguments of this command.
-	 * @return command arguments
-	 */
-	SkbShellArgument[] getArguments();
-
-	/**
-	 * Returns additional text for an auto-generated help for the argument.
-	 * @return additional help text, null if none set
-	 */
-	default String addedHelp(){
-		return null;
-	}
+	@Override
+	String getDescription();
 }

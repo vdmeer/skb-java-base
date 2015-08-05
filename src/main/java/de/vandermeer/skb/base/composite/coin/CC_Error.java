@@ -15,8 +15,6 @@
 
 package de.vandermeer.skb.base.composite.coin;
 
-import java.util.List;
-
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
@@ -39,22 +37,6 @@ public final class CC_Error extends Abstract_CC {
 	 */
 	public CC_Error(){
 		super();
-	}
-
-	/**
-	 * Creates a new Error with a list of errors.
-	 * @param list error list
-	 */
-	public CC_Error(List<Message5WH> list){
-		super(list);
-	}
-
-	/**
-	 * Creates a newError with a single error.
-	 * @param err error for initialization
-	 */
-	public CC_Error(Message5WH err){
-		super(err);
 	}
 
 	/**
@@ -114,6 +96,8 @@ public final class CC_Error extends Abstract_CC {
 
 	@Override
 	public CC_Error getCopy() {
-		return new CC_Error(this.msglist);
+		CC_Error ret = new CC_Error();
+		ret.msglist.addAll(this.msglist);
+		return ret;
 	}
 }

@@ -1,6 +1,23 @@
 v0.1.0 - feature add - 2015-##-##
 ---------------------------------
 * added module settings in main/module
+* added StringFileLoader
+* SkbShell rewrite
+	** added interfaces and abstract implementations for all artifacts
+	** added artifact for category
+	** added interpreters (help, exit, wait from original commands and run as a new one)
+* refactored Skb_FileUtils
+	** moved directory filter to DirectorySource
+	** moved file filer to 
+* coin package
+	** removed untyped constructors from CC_Error, CC_Info and CC_Warning
+* message package and ReportManager
+	** removed loggers from EMessageType and added Skb_ConsoleUtil loggers to ReportManager
+	** added Skb_ConsoleUtils.USE_CONSOLE test to ReportManager
+* new dependency versions
+	** logback-core: 1.0.9 -- something wrong with 1.1.3, makes some applications very slow...
+	** logback-classic: 1.0.9 -- something wrong with 1.1.3, makes some applications very slow...
+* moved Skb_ConsoleUtils into package console, refactored
 
 
 v0.0.9 - feature add - 2015-07-29

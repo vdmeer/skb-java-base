@@ -47,7 +47,7 @@ public class Test_CommonsDirectoryWalker {
 		});
 		CommonsDirectoryWalker ldw = new CommonsDirectoryWalker("src/main/java", DirectoryFileFilter.INSTANCE, ff);
 		FileListSource files = ldw.load();
-		int checkSize = 147;
+		int checkSize = 159;
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());

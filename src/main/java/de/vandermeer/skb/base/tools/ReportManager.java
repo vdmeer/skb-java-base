@@ -25,7 +25,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
@@ -34,6 +33,7 @@ import de.vandermeer.skb.base.Skb_ToStringStyle;
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.composite.coin.CC_Warning;
+import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.info.STGroupValidator;
 import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.Message5WH;
@@ -65,14 +65,6 @@ public class ReportManager {
 	 * Returns a map set with all expected template names and their expected arguments.
 	 * @return template map
 	 */
-//	private static final Map<String, Set<String>> loadChunks(){
-//		Map<String, Set<String>> ret = new HashMap<String, HashSet<String>>(4);
-//		ret.put("report",   Arrays.asList(new String[]{"who", "what", "when", "where", "why", "how", "type", "reporter"}));
-//		ret.put("where",    Arrays.asList(new String[]{"location", "line", "column"}));
-//		ret.put("maxErrors", Arrays.asList(new String[]{"name", "number"}));
-//		return ret;
-//	}
-
 	public final static Map<String, Set<String>> loadChunks(){
 		return new HashMap<String, Set<String>>(){
 			private static final long serialVersionUID = 1L;{
@@ -119,13 +111,13 @@ public class ReportManager {
 	}
 
 	/** Logger for info messages. */
-	protected Logger infoLogger=LoggerFactory.getLogger(EMessageType.INFO.getLoggerName());
+	protected Logger infoLogger = Skb_Console.SKB_CONSOLE_OUT;
 
 	/** Logger for error messages. */
-	protected Logger errorLogger=LoggerFactory.getLogger(EMessageType.ERROR.getLoggerName());
+	protected Logger errorLogger = Skb_Console.SKB_CONSOLE_ERR;
 
 	/** Logger for warning messages. */
-	protected Logger warningLogger=LoggerFactory.getLogger(EMessageType.WARNING.getLoggerName());
+	protected Logger warningLogger = Skb_Console.SKB_CONSOLE_OUT;
 
 	/**
 	 * Creates a new report manager loading the string templates from a file and setting maximum errors to 100.
@@ -154,7 +146,7 @@ public class ReportManager {
 	 */
 	public ReportManager setInfoLogger(Logger logger){
 		if(logger!=null){
-			this.infoLogger=logger;
+			this.infoLogger = logger;
 		}
 		return this;
 	}
@@ -166,7 +158,7 @@ public class ReportManager {
 	 */
 	public ReportManager setErrorLogger(Logger logger){
 		if(logger!=null){
-			this.errorLogger=logger;
+			this.errorLogger = logger;
 		}
 		return this;
 	}
@@ -178,7 +170,7 @@ public class ReportManager {
 	 */
 	public ReportManager setWarningLogger(Logger logger){
 		if(logger!=null){
-			this.warningLogger=logger;
+			this.warningLogger = logger;
 		}
 		return this;
 	}

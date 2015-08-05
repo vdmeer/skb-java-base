@@ -16,6 +16,7 @@
 package de.vandermeer.skb.base.info;
 
 import java.io.File;
+import java.io.FileFilter;
 
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 
@@ -115,4 +116,16 @@ public class FileSource extends AbstractFileInfo implements InfoSource {
 	protected ValidationOptions valOption() {
 		return ValidationOptions.AS_SOURCE;
 	}
+
+	/**
+	 * A simple filter for files.
+	 */
+	public final static FileFilter FILES_ONLY = new FileFilter(){
+		public boolean accept(File f){
+			if(f.exists() && f.isFile()){
+				return true;
+			}
+			return false;
+		}
+	};
 }

@@ -15,8 +15,6 @@
 
 package de.vandermeer.skb.base.composite.coin;
 
-import java.util.List;
-
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
@@ -38,22 +36,6 @@ public final class CC_Info extends Abstract_CC {
 	 */
 	public CC_Info(){
 		super();
-	}
-
-	/**
-	 * Creates a new DefaultInfo with a list of information.
-	 * @param list info list
-	 */
-	public CC_Info(List<Message5WH> list){
-		super(list);
-	}
-
-	/**
-	 * Creates a new DefaultInfo with a single information.
-	 * @param info info for initialization
-	 */
-	public CC_Info(Message5WH info){
-		super(info);
 	}
 
 	/**
@@ -101,6 +83,8 @@ public final class CC_Info extends Abstract_CC {
 
 	@Override
 	public CC_Info getCopy() {
-		return new CC_Info(this.msglist);
+		CC_Info ret = new CC_Info();
+		ret.msglist.addAll(this.msglist);
+		return ret;
 	}
 }

@@ -25,40 +25,24 @@ package de.vandermeer.skb.base.message;
  */
 public enum EMessageType {
 	/** An information (or informal) message */
-	INFO (0, "SKBLoggerInfo"),
+	INFO (0),
 
 	/** A warning message, usually rather formal in format */
-	WARNING (1, "SKBLoggerWarning"),
+	WARNING (1),
 
 	/** An error message, usually rather formal in format */
-	ERROR (2, "SKBLoggerError"),
+	ERROR (2),
 	;
 
 	/** The number of this instance */
 	private int number;
 
-	/** The logger name of this instance */
-	private String loggerName;
-
 	/**
 	 * Creates a new message type.
 	 * @param number unique number of the type
-	 * @param loggerName name of an associated logger
 	 */
-	private EMessageType(int number, String loggerName){
+	private EMessageType(int number){
 		this.number = number;
-		this.loggerName = loggerName;
-	}
-
-	/**
-	 * Returns the logger name associated with the enumerate instance.
-	 * The logger name is a string, uses "SKBLogger" as prefix and then a capitalised version of the 
-	 * enumerate's name as a suffix. This makes the returned name unique. In association with logging frameworks,
-	 * such as log4j or slf4j, it can be used to automatically retrieve a logger for a message of this type.
-	 * @return logger name
-	 */
-	public String getLoggerName(){
-		return this.loggerName;
 	}
 
 	/**

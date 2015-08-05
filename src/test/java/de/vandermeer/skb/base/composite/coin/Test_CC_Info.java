@@ -56,13 +56,6 @@ public class Test_CC_Info {
 		info.add(m);
 		assertEquals(EMessageType.INFO, info.getList().get(0).getType());	//type automatically changed to warning
 
-		info = new CC_Info(m);
-		assertEquals(EMessageType.INFO, info.getList().get(0).getType());	//type automatically changed to warning
-
-		m.changeType(EMessageType.INFO);
-		info = new CC_Info(m);
-		assertEquals(EMessageType.INFO, info.getList().get(0).getType());	//type not changed
-
 		assertEquals(1, info.getList().size());		//size 1
 		assertEquals(1, info.size());				//size 1
 		info.add(m);

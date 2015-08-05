@@ -15,15 +15,18 @@
 
 package de.vandermeer.skb.base.info;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
- * An file loader for JSON property files.
+ * An file loader for reading a file into a string.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
- * @since      v0.0.7
+ * @since      v0.1.0
  */
-public class JsonFileLoader extends AbstractLoader implements FileLoader {
+public class StringFileLoader extends AbstractLoader implements FileLoader {
 
 	/** The source file for the loader. */
 	final FileSource source;
@@ -32,10 +35,10 @@ public class JsonFileLoader extends AbstractLoader implements FileLoader {
 	 * Returns a new loader for a file source.
 	 * @param source the file source to be used
 	 */
-	public JsonFileLoader(FileSource source){
+	public StringFileLoader(FileSource source){
 		this.source = source;
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError()});
+			this.errors.add("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError()});
 		}
 	}
 
@@ -43,22 +46,41 @@ public class JsonFileLoader extends AbstractLoader implements FileLoader {
 	 * Returns a new loader for a file name, creating a file source automatically.
 	 * @param fileName a file name with all path elements (if required).
 	 */
-	public JsonFileLoader(String fileName){
+	public StringFileLoader(String fileName){
 		this.source = new FileSource(fileName);
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError()});
+			this.errors.add("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError()});
 		}
 	}
 
 	@Override
-	public Object load() {
-		// TODO Auto-generated method stub
-		return null;
+	public String load() {
+		String ret = null;
+		this.errors.clear();
+		if(this.validateSource()==false){
+			//no valid source
+			return ret;
+		}
+
+		Scanner s = null;
+		try{
+			s = new Scanner(this.source.asURL().openStream()).useDelimiter("\\Z");
+			ret = s.next();
+			s.close();
+		}
+		catch(FileNotFoundException ex){
+			this.errors.add("{}: unexpected file not found exception - {}", new Object[]{"string file loader", ex.getMessage()});
+			return ret;
+		} catch (IOException exio) {
+			this.errors.add("{}: unexpected IO not found exception - {}", new Object[]{"string file loader", exio.getMessage()});
+			return ret;
+		}
+
+		return ret;
 	}
 
 	@Override
 	public FileSource getSource() {
 		return this.source;
 	}
-
 }

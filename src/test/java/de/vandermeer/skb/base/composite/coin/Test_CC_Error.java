@@ -57,13 +57,6 @@ public class Test_CC_Error {
 		err.add(m);
 		assertEquals(EMessageType.ERROR, err.getList().get(0).getType());	//type automatically changed to error
 
-		err = new CC_Error(m);
-		assertEquals(EMessageType.ERROR, err.getList().get(0).getType());	//type automatically changed to error
-
-		m.changeType(EMessageType.ERROR);
-		err = new CC_Error(m);
-		assertEquals(EMessageType.ERROR, err.getList().get(0).getType());	//type not changed
-
 		assertEquals(1, err.getList().size());		//size 1
 		assertEquals(1, err.size());				//size 1
 		err.add(m);

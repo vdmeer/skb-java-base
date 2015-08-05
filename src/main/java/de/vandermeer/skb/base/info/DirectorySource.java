@@ -15,6 +15,9 @@
 
 package de.vandermeer.skb.base.info;
 
+import java.io.File;
+import java.io.FileFilter;
+
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 
 /**
@@ -61,4 +64,15 @@ public class DirectorySource extends AbstractDirectoryInfo implements InfoSource
 		return ValidationOptions.AS_SOURCE;
 	}
 
+	/**
+	 * A simple filter for directories.
+	 */
+	public final static FileFilter DIRECTORIES_ONLY = new FileFilter(){
+		public boolean accept(File f){
+			if(f.exists() && f.isDirectory()){
+				return true;
+			}
+			return false;
+		}
+	};
 }
