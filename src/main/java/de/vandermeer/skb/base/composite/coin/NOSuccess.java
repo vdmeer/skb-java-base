@@ -26,7 +26,7 @@ import de.vandermeer.skb.base.composite.Com_CoinType;
  * this type should only be used to express a 'success' result, but not to identify a specific 'success' result.
  * 
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.0-SNAPSHOT build 150729 (29-Jul-15) for Java 1.8
+ * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
 public enum NOSuccess implements NullObject {

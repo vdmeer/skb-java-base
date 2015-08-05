@@ -1,5 +1,5 @@
-v0.1.0 - feature add - 2015-##-##
----------------------------------
+v0.0.10 - feature add - 2015-08-05
+----------------------------------
 * added module settings in main/module
 * added StringFileLoader
 * SkbShell rewrite
