@@ -35,7 +35,7 @@ import de.vandermeer.skb.base.message.Message5WH_Builder;
  * An abstract shell implementation with all basic features, use the {@link SkbShellFactory} or a sub-class to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractShell implements SkbShell {
@@ -131,8 +131,13 @@ public class AbstractShell implements SkbShell {
 		Skb_Console.USE_CONSOLE = useConsole;
 		this.commandMap = new HashMap<>();
 
-		this.stg = AbstractShell.STG;
-		this.setSTGroup(stg);
+		if(stg!=null){
+			this.setSTGroup(stg);
+		}
+		if(this.stg==null){
+			//fall back
+			this.stg = AbstractShell.STG;
+		}
 
 		this.id = (id!=null)?id:"skbsh";
 	}
@@ -275,7 +280,8 @@ public class AbstractShell implements SkbShell {
 			this.getLastErrors().add(stgv.getValidationErrors());
 			return false;
 		}
-		return false;
+		this.stg = stg;
+		return true;
 	}
 }
 

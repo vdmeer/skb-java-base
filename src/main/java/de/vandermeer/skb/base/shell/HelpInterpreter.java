@@ -18,6 +18,7 @@ package de.vandermeer.skb.base.shell;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
@@ -28,7 +29,7 @@ import de.vandermeer.skb.base.console.Skb_Console;
  * An interpreter for the 'help' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class HelpInterpreter extends AbstractCommandInterpreter {
@@ -39,9 +40,9 @@ public class HelpInterpreter extends AbstractCommandInterpreter {
 	public HelpInterpreter(){
 		super(
 				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("help", null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command"),
-						SkbShellFactory.newCommand("h",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command"),
-						SkbShellFactory.newCommand("?",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command")
+						SkbShellFactory.newCommand("help", null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
+						SkbShellFactory.newCommand("h",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
+						SkbShellFactory.newCommand("?",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null)
 				}
 		);
 	}
@@ -67,7 +68,7 @@ public class HelpInterpreter extends AbstractCommandInterpreter {
 				for(SkbShellCommand ssc : ci.getCommands().values()){
 					String cat = defKey;
 					if(ssc.getCategory()!=null){
-						cat = ssc.getCategory().getDescription();
+						cat = ssc.getCategory().getCategory();
 					}
 					if(!cat2Cmd.containsKey(cat)){
 						cat2Cmd.put(cat, new TreeMap<>());
@@ -110,7 +111,13 @@ public class HelpInterpreter extends AbstractCommandInterpreter {
 
 				info.add("{} {} -- {}", ssc.getCommand(), new StrBuilder().appendWithSeparators(args.keySet(), ", "), ssc.getDescription());
 				for(SkbShellArgument ssa : args.values()){
-					if(ssa.addedHelp()!=null){
+					if(ssa.valueSet()!=null && ssa.addedHelp()!=null){
+						info.add(" -- <{}> of type {} - {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet()));
+					}
+					else if(ssa.valueSet()!=null && ssa.addedHelp()==null){
+						info.add(" -- <{}> of type {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet()));
+					}
+					else if(ssa.valueSet()==null && ssa.addedHelp()!=null){
 						info.add(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp());
 					}
 					else{

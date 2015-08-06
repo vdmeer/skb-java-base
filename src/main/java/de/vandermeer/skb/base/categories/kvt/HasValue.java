@@ -21,7 +21,7 @@ import de.vandermeer.skb.base.categories.CategoryHas;
  * Category of objects that have a value.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.6 (was in skb-categories before)
  */
 public interface HasValue<V> extends CategoryHas {

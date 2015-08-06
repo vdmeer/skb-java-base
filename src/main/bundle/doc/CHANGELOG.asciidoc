@@ -1,3 +1,8 @@
+v0.0.11 - feature add - 2015-##-##
+----------------------------------
+* added some default toString() methods to shell and other packages
+
+
 v0.0.10 - feature add - 2015-08-05
 ----------------------------------
 * added module settings in main/module

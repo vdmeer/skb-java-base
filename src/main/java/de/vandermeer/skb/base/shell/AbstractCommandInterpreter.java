@@ -24,7 +24,7 @@ import java.util.TreeMap;
  * An abstract command interpreter implementation with all basic features.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public abstract class AbstractCommandInterpreter implements CommandInterpreter {

@@ -24,7 +24,7 @@ import org.stringtemplate.v4.STGroup;
  * Factory for Skb Shell artifacts.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class SkbShellFactory {
@@ -103,11 +103,12 @@ public class SkbShellFactory {
 	 * @param arguments the command's arguments, can be null
 	 * @param category the command's category, can be null
 	 * @param description the command's description
+	 * @param addedHelp additional help, can be null
 	 * @return new shell command
 	 * @throws IllegalArgumentException if command or description was null
 	 */
-	public static SkbShellCommand newCommand(String command, SkbShellArgument[] arguments, SkbShellCommandCategory category, String description){
-		return new AbstractShellCommand(command, arguments, category, description);
+	public static SkbShellCommand newCommand(String command, SkbShellArgument[] arguments, SkbShellCommandCategory category, String description, String addedHelp){
+		return new AbstractShellCommand(command, arguments, category, description, addedHelp);
 	}
 
 	/**
@@ -115,13 +116,14 @@ public class SkbShellFactory {
 	 * @param argument the actual argument, cannot be blank
 	 * @param isOptional flag for optional (true if optional, false if not)
 	 * @param type the argument's type, cannot be null
-	 * @param description the command's description. cannot be null
+	 * @param valueSet the argument's value set if specified, can be null
+	 * @param description the command's description, cannot be null
 	 * @param addedHelp a string additional to the description for help
 	 * @return new shell argument
 	 * @throws IllegalArgumentException if argument, type, or description was null
 	 */
-	public static SkbShellArgument newArgument(String argument, boolean isOptional, SkbShellArgumentType type, String description, String addedHelp){
-		return new AbstractShellArgument(argument, isOptional, type, description, addedHelp);
+	public static SkbShellArgument newArgument(String argument, boolean isOptional, SkbShellArgumentType type, Object[] valueSet, String description, String addedHelp){
+		return new AbstractShellArgument(argument, isOptional, type, valueSet, description, addedHelp);
 	}
 
 	/**

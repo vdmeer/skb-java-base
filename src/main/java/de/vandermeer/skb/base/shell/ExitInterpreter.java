@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
  * An interpreter for the 'exit' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class ExitInterpreter extends AbstractCommandInterpreter {
@@ -32,9 +32,9 @@ public class ExitInterpreter extends AbstractCommandInterpreter {
 	public ExitInterpreter(){
 		super(
 				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("exit", null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell"),
-						SkbShellFactory.newCommand("quit", null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell"),
-						SkbShellFactory.newCommand("bye",  null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell")
+						SkbShellFactory.newCommand("exit", null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell", null),
+						SkbShellFactory.newCommand("quit", null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell", null),
+						SkbShellFactory.newCommand("bye",  null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell", null)
 				}
 		);
 	}

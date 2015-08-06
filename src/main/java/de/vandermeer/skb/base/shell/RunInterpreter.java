@@ -23,7 +23,7 @@ import de.vandermeer.skb.base.info.StringFileLoader;
  * An interpreter for the 'run' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class RunInterpreter extends AbstractCommandInterpreter {
@@ -38,9 +38,9 @@ public class RunInterpreter extends AbstractCommandInterpreter {
 		super(
 				SkbShellFactory.newCommand("run", 
 						SkbShellFactory.newArgumentArray(
-								SkbShellFactory.newArgument("script", false, SkbShellArgumentType.String, "name (filename) of a script", null)
+								SkbShellFactory.newArgument("script", false, SkbShellArgumentType.String, null, "name (filename) of a script", null)
 						),
-						SkbShellFactory.STANDARD_COMMANDS, "runs a <script> with shell commands"
+						SkbShellFactory.STANDARD_COMMANDS, "runs a <script> with shell commands", null
 				)
 		);
 	}

@@ -15,11 +15,16 @@
 
 package de.vandermeer.skb.base.shell;
 
+import java.util.Map;
+import java.util.TreeMap;
+
+import de.vandermeer.skb.base.message.FormattingTupleWrapper;
+
 /**
  * An abstract, default implementation of a shell command, use the {@link SkbShellFactory} to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractShellCommand implements SkbShellCommand {
@@ -36,15 +41,19 @@ public class AbstractShellCommand implements SkbShellCommand {
 	/** The command's description. */
 	private final String description;
 
+	/** Additional help if any set. */
+	private final String addedHelp;
+
 	/**
 	 * Returns a new shell command, use the {@link SkbShellFactory} to create a new object.
 	 * @param command the actual command
 	 * @param arguments the command's arguments, can be null
 	 * @param category the command's category, can be null
 	 * @param description the command's description
+	 * @param addedHelp additional help, can be null
 	 * @throws IllegalArgumentException if command or description was null
 	 */
-	AbstractShellCommand(String command, SkbShellArgument[] arguments, SkbShellCommandCategory category, String description){
+	AbstractShellCommand(String command, SkbShellArgument[] arguments, SkbShellCommandCategory category, String description, String addedHelp){
 		if(command==null){
 			throw new IllegalArgumentException("command cannot be null");
 		}
@@ -55,6 +64,7 @@ public class AbstractShellCommand implements SkbShellCommand {
 		this.arguments = arguments;
 		this.category = category;
 		this.description = description;
+		this.addedHelp = addedHelp;
 	}
 
 	@Override
@@ -75,5 +85,25 @@ public class AbstractShellCommand implements SkbShellCommand {
 	@Override
 	public SkbShellCommandCategory getCategory() {
 		return this.category;
+	}
+
+	@Override
+	public String addedHelp(){
+		return this.addedHelp;
+	}
+
+	@Override
+	public String toString(){
+		Map<String, SkbShellArgument> args = new TreeMap<>();
+		for(SkbShellArgument arg : this.getArguments()){
+			args.put(arg.key(), arg);
+		}
+		FormattingTupleWrapper ftw = new FormattingTupleWrapper(
+				"<{}> cat <{}> args {} descr <{}>",
+				new Object[]{
+						this.getCommand(), this.getCategory(), args.values(), this.getDescription()
+				}
+		);
+		return ftw.toString();
 	}
 }

@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
  * An interpreter for the 'wait' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.10 build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class WaitInterpreter extends AbstractCommandInterpreter {
@@ -33,9 +33,9 @@ public class WaitInterpreter extends AbstractCommandInterpreter {
 		super(
 				SkbShellFactory.newCommand("wait", 
 						SkbShellFactory.newArgumentArray(
-								SkbShellFactory.newArgument("time", false, SkbShellArgumentType.Integer, "wait time in milliseconds", null)
+								SkbShellFactory.newArgument("time", false, SkbShellArgumentType.Integer, null, "wait time in milliseconds", null)
 						),
-						SkbShellFactory.STANDARD_COMMANDS, "shell waits for <time> milliseconds before accepting the next command"
+						SkbShellFactory.STANDARD_COMMANDS, "shell waits for <time> milliseconds before accepting the next command", null
 				)
 		);
 	}
