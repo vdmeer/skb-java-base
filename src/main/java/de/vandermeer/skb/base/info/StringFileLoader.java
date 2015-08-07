@@ -38,7 +38,7 @@ public class StringFileLoader extends AbstractLoader implements FileLoader {
 	public StringFileLoader(FileSource source){
 		this.source = source;
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError()});
+			this.errors.add("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError().render()});
 		}
 	}
 
@@ -49,7 +49,7 @@ public class StringFileLoader extends AbstractLoader implements FileLoader {
 	public StringFileLoader(String fileName){
 		this.source = new FileSource(fileName);
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError()});
+			this.errors.add("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError().render()});
 		}
 	}
 

@@ -37,7 +37,7 @@ public class PropertyFileLoader extends AbstractLoader implements FileLoader {
 	public PropertyFileLoader(FileSource source){
 		this.source = source;
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"property file loader", this.source.getInitError()});
+			this.errors.add("{}: problems creating file source - {}", new Object[]{"property file loader", this.source.getInitError().render()});
 		}
 	}
 
@@ -49,7 +49,7 @@ public class PropertyFileLoader extends AbstractLoader implements FileLoader {
 	public PropertyFileLoader(String fileName){
 		this.source = new FileSource(fileName);
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"property file loader", this.source.getInitError()});
+			this.errors.add("{}: problems creating file source - {}", new Object[]{"property file loader", this.source.getInitError().render()});
 		}
 	}
 

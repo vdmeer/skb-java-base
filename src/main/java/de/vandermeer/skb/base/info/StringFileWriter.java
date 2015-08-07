@@ -38,7 +38,7 @@ public class StringFileWriter extends AbstractWriter {
 	public StringFileWriter(FileTarget target){
 		this.target = target;
 		if(!target.isValid()){
-			this.errors.add("{}: problems creating file target - {}", new Object[]{"string file writer", this.target.getInitError()});
+			this.errors.add("{}: problems creating file target - {}", new Object[]{"string file writer", this.target.getInitError().render()});
 		}
 	}
 
@@ -50,7 +50,7 @@ public class StringFileWriter extends AbstractWriter {
 	public StringFileWriter(String fileName){
 		this.target = new FileTarget(fileName);
 		if(!target.isValid()){
-			this.errors.add("{}: problems creating file target - {}", new Object[]{"string file writer", this.target.getInitError()});
+			this.errors.add("{}: problems creating file target - {}", new Object[]{"string file writer", this.target.getInitError().render()});
 		}
 	}
 

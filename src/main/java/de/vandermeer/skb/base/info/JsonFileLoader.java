@@ -35,7 +35,7 @@ public class JsonFileLoader extends AbstractLoader implements FileLoader {
 	public JsonFileLoader(FileSource source){
 		this.source = source;
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError()});
+			this.errors.add("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError().render()});
 		}
 	}
 
@@ -46,7 +46,7 @@ public class JsonFileLoader extends AbstractLoader implements FileLoader {
 	public JsonFileLoader(String fileName){
 		this.source = new FileSource(fileName);
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError()});
+			this.errors.add("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError().render()});
 		}
 	}
 
