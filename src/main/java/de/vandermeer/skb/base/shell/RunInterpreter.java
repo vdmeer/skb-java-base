@@ -17,6 +17,7 @@ package de.vandermeer.skb.base.shell;
 
 import org.apache.commons.lang3.StringUtils;
 
+import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.info.StringFileLoader;
 
 /**
@@ -71,7 +72,10 @@ public class RunInterpreter extends AbstractCommandInterpreter {
 				return 3;
 			}
 
-			shell.getLastInfos().add("{}: running file {}", new Object[]{shell.getID(), fileName});
+			if(Skb_Console.USE_CONSOLE==true){
+				Skb_Console.conInfo("{}: running file {}", new Object[]{shell.getPromptName(), fileName});
+				Skb_Console.conInfo("");
+			}
 			for(String s : StringUtils.split(content, '\n')){
 				shell.parseLine(s.trim());
 			}

@@ -50,7 +50,7 @@ public class WaitInterpreter extends AbstractCommandInterpreter {
 				Thread.sleep(new Integer(lp.setTokenPosition(1).getArgs()));
 			}
 			catch (InterruptedException e) {
-				shell.getLastErrors().add("{}: interrupted in wait {}", new Object[]{shell.getID(), e.getMessage()});
+				shell.getLastErrors().add("{}: interrupted in wait {}", new Object[]{shell.getPromptName(), e.getMessage()});
 			}
 
 			return 0;

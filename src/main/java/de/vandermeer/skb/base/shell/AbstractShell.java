@@ -212,7 +212,7 @@ public class AbstractShell implements SkbShell {
 		BufferedReader sysin = reader;
 
 		if(sysin==null){
-			Skb_Console.conError("{}: could not load standard input device (stdin)", this.getShortName());
+			Skb_Console.conError("{}: could not load standard input device (stdin)", this.getPromptName());
 			return -1;
 		}
 
@@ -228,16 +228,9 @@ public class AbstractShell implements SkbShell {
 					}
 				}
 
-				this.clearLastMessages();
+//				this.clearLastMessages();
 				in = sysin.readLine();
 				this.exitStatus = this.parseLine(in);
-
-				if(this.errors.size()>0){
-					Skb_Console.conError("{}", this.errors.render());
-				}
-				if(this.infos.size()>0){
-					Skb_Console.conInfo("{}", this.infos.render());
-				}
 
 				if(this.exitStatus==-2){
 					this.isRunning = false;
@@ -272,7 +265,7 @@ public class AbstractShell implements SkbShell {
 	@Override
 	public boolean setSTGroup(STGroup stg) {
 		if(stg==null){
-			this.getLastErrors().add("STG cannot be null");
+			this.getLastErrors().add("{}: STG cannot be null", this.getPromptName());
 			return false;
 		}
 		STGroupValidator stgv =new STGroupValidator(stg, Message5WH_Builder.stChunks);

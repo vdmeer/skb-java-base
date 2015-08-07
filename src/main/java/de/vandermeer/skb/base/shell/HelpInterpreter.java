@@ -130,7 +130,7 @@ public class HelpInterpreter extends AbstractCommandInterpreter {
 			}
 			else{
 				info.add("");
-				info.add("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{shell.getID(), toHelp});
+				info.add("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{shell.getPromptName(), toHelp});
 			}
 		}
 		info.add("");

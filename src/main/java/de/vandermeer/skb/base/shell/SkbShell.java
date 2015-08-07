@@ -28,6 +28,7 @@ import org.stringtemplate.v4.STGroupString;
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.console.HasPrompt;
+import de.vandermeer.skb.base.console.Skb_Console;
 
 /**
  * A shell with flexible adding of commands and auto-generation of help and other commands.
@@ -177,10 +178,10 @@ public interface SkbShell extends HasPrompt {
 	String getID();
 
 	/**
-	 * Returns the short name of the shell.
+	 * Returns the prompt name of the shell.
 	 * @return shell short name
 	 */
-	default String getShortName(){
+	default String getPromptName(){
 		return "skbsh";
 	}
 
@@ -199,8 +200,7 @@ public interface SkbShell extends HasPrompt {
 	@Override
 	default StrBuilder prompt(){
 		StrBuilder ret = new StrBuilder(30);
-		ret.append('[').append(this.getShortName()).append("]> ");
-		;
+		ret.append('[').append(this.getPromptName()).append("]> ");
 		return ret;
 	}
 
@@ -221,14 +221,24 @@ public interface SkbShell extends HasPrompt {
 
 		this.clearLastMessages();
 
+		int ret = 0;
 		LineParser lp = new LineParser(in);
 		String command = lp.getToken();
 		if(this.getCommandMap().containsKey(command)){
-			return this.getCommandMap().get(command).interpretCommand(command, lp, this);
+			ret = this.getCommandMap().get(command).interpretCommand(command, lp, this);
 		}
 		else{
-			return -1;
+			this.getLastErrors().add("{}: comand <{}> not found in shell, taken from line: <{}>", new Object[]{this.getPromptName(), command, in});
+			ret = -1;
 		}
+
+		if(this.getLastErrors().size()>0){
+			Skb_Console.conError("{}", this.getLastErrors().render());
+		}
+		if(this.getLastInfos().size()>0){
+			Skb_Console.conInfo("{}", this.getLastInfos().render());
+		}
+		return ret;
 	}
 
 	/**
