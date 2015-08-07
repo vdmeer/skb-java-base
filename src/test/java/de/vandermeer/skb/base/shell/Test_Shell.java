@@ -8,10 +8,10 @@ public class Test_Shell {
 	public void testMe(){
 
 		SkbShell skbsh = SkbShellFactory.newShell();
-		skbsh.addCommandInterpreter(new ExitInterpreter());
-		skbsh.addCommandInterpreter(new HelpInterpreter());
-		skbsh.addCommandInterpreter(new WaitInterpreter());
-		skbsh.addCommandInterpreter(new ScRunInterpreter());
+		skbsh.addCommandInterpreter(new Ci_Exit());
+		skbsh.addCommandInterpreter(new Ci_Help());
+		skbsh.addCommandInterpreter(new Ci_Wait());
+		skbsh.addCommandInterpreter(new Ci_ScRun());
 //		skbsh.runShell();
 System.err.println("#");
 //		skbsh.runShell();
