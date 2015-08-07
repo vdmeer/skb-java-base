@@ -32,10 +32,20 @@ public class RunInterpreter extends AbstractCommandInterpreter {
 	/** Last script run by the shell. */
 	protected String lastScript;
 
+	protected boolean printProgress = true;
+
 	/**
-	 * Returns an new 'run' command interpreter.
+	 * Returns an new 'run' command interpreter which will print progress information.
 	 */
 	public RunInterpreter(){
+		this(true);
+	}
+
+	/**
+	 * Returns an new 'run' command interpreter.
+	 * @param printProgress flag for printing progress when executing commands from a file, true for yes, false for no
+	 */
+	public RunInterpreter(boolean printProgress){
 		super(
 				SkbShellFactory.newCommand("run", 
 						SkbShellFactory.newArgumentArray(
@@ -44,6 +54,7 @@ public class RunInterpreter extends AbstractCommandInterpreter {
 						SkbShellFactory.STANDARD_COMMANDS, "runs a <script> with shell commands", null
 				)
 		);
+		this.printProgress = printProgress;
 	}
 
 	@Override
@@ -74,9 +85,11 @@ public class RunInterpreter extends AbstractCommandInterpreter {
 
 			if(Skb_Console.USE_CONSOLE==true){
 				Skb_Console.conInfo("{}: running file {}", new Object[]{shell.getPromptName(), fileName});
-				Skb_Console.conInfo("");
 			}
 			for(String s : StringUtils.split(content, '\n')){
+				if(this.printProgress==true && Skb_Console.USE_CONSOLE==true){
+					System.out.print(".");
+				}
 				shell.parseLine(s.trim());
 			}
 			this.lastScript = fileName;
