@@ -35,7 +35,7 @@ public class WaitInterpreter extends AbstractCommandInterpreter {
 						SkbShellFactory.newArgumentArray(
 								SkbShellFactory.newArgument("time", false, SkbShellArgumentType.Integer, null, "wait time in milliseconds", null)
 						),
-						SkbShellFactory.STANDARD_COMMANDS, "shell waits for <time> milliseconds before accepting the next command", null
+						SkbShellFactory.SIMPLE_COMMANDS, "shell waits for <time> milliseconds before accepting the next command", null
 				)
 		);
 	}

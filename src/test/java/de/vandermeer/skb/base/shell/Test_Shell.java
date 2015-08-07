@@ -11,7 +11,7 @@ public class Test_Shell {
 		skbsh.addCommandInterpreter(new ExitInterpreter());
 		skbsh.addCommandInterpreter(new HelpInterpreter());
 		skbsh.addCommandInterpreter(new WaitInterpreter());
-		skbsh.addCommandInterpreter(new RunInterpreter());
+		skbsh.addCommandInterpreter(new ScRunInterpreter());
 //		skbsh.runShell();
 System.err.println("#");
 //		skbsh.runShell();

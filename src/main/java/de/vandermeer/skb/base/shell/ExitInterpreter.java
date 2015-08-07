@@ -32,9 +32,9 @@ public class ExitInterpreter extends AbstractCommandInterpreter {
 	public ExitInterpreter(){
 		super(
 				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("exit", null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell", null),
-						SkbShellFactory.newCommand("quit", null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell", null),
-						SkbShellFactory.newCommand("bye",  null, SkbShellFactory.STANDARD_COMMANDS, "exit the shell", null)
+						SkbShellFactory.newCommand("exit", null, SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null),
+						SkbShellFactory.newCommand("quit", null, SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null),
+						SkbShellFactory.newCommand("bye",  null, SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null)
 				}
 		);
 	}

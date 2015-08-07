@@ -40,9 +40,9 @@ public class HelpInterpreter extends AbstractCommandInterpreter {
 	public HelpInterpreter(){
 		super(
 				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("help", null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
-						SkbShellFactory.newCommand("h",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
-						SkbShellFactory.newCommand("?",    null, SkbShellFactory.STANDARD_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null)
+						SkbShellFactory.newCommand("help", null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
+						SkbShellFactory.newCommand("h",    null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
+						SkbShellFactory.newCommand("?",    null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null)
 				}
 		);
 	}
