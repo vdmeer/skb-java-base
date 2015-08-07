@@ -84,6 +84,7 @@ public class RunInterpreter extends AbstractCommandInterpreter {
 			}
 
 			if(Skb_Console.USE_CONSOLE==true){
+				Skb_Console.conInfo("");
 				Skb_Console.conInfo("{}: running file {}", new Object[]{shell.getPromptName(), fileName});
 			}
 			for(String s : StringUtils.split(content, '\n')){
