@@ -32,12 +32,12 @@ import de.vandermeer.skb.base.console.Skb_Console;
  * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
-public class Ci_Help extends AbstractCommandInterpreter {
+public class Ci_HelpStg extends AbstractCommandInterpreter {
 
 	/**
 	 * Returns an new 'help' command interpreter.
 	 */
-	public Ci_Help(){
+	public Ci_HelpStg(){
 		super(
 				new SkbShellCommand[]{
 						SkbShellFactory.newCommand("help", null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
