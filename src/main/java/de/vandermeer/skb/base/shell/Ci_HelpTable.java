@@ -21,12 +21,12 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import de.vandermeer.asciitable.v2.AsciiTable;
-import de.vandermeer.asciitable.v2.AsciiTableRenderer;
-import de.vandermeer.asciitable.v2.RenderedAsciiTable;
-import de.vandermeer.asciitable.v2.core.Width;
-import de.vandermeer.asciitable.v2.core.WidthByAbsolute;
-import de.vandermeer.asciitable.v2.themes.E_TableThemes;
+import de.vandermeer.asciitable.v2.V2_AsciiTable;
+import de.vandermeer.asciitable.v2.V2_AsciiTableRenderer;
+import de.vandermeer.asciitable.v2.V2_RenderedAsciiTable;
+import de.vandermeer.asciitable.v2.core.V2_Width;
+import de.vandermeer.asciitable.v2.core.V2_WidthByAbsolute;
+import de.vandermeer.asciitable.v2.themes.V2_E_TableThemes;
 import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 
@@ -40,13 +40,13 @@ import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 public class Ci_HelpTable extends Ci_Help {
 
 	/** The theme for the table. */
-	protected E_TableThemes theme;
+	protected V2_E_TableThemes theme;
 
 	/** Table width calculated. */
-	protected Width width;
+	protected V2_Width width;
 
 	/**
-	 * Returns an new 'help' command interpreter for table output with default theme {@link E_TableThemes#UTF_DOUBLE_LIGHT} and 76 character width.
+	 * Returns an new 'help' command interpreter for table output with default theme {@link V2_E_TableThemes#UTF_DOUBLE_LIGHT} and 76 character width.
 	 */
 	public Ci_HelpTable(){
 		this(null);
@@ -56,11 +56,11 @@ public class Ci_HelpTable extends Ci_Help {
 	 * Returns an new 'help' command interpreter for table output.
 	 * @param theme a theme for the table
 	 */
-	public Ci_HelpTable(E_TableThemes theme){
+	public Ci_HelpTable(V2_E_TableThemes theme){
 		super();
 
-		this.theme = (theme==null)?E_TableThemes.PLAIN_7BIT_STRONG:theme;
-		this.width = new WidthByAbsolute().setWidth(76);
+		this.theme = (theme==null)?V2_E_TableThemes.PLAIN_7BIT_STRONG:theme;
+		this.width = new V2_WidthByAbsolute().setWidth(76);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class Ci_HelpTable extends Ci_Help {
 	 * @param width table width to be used
 	 * @return self to allow for chaining
 	 */
-	public Ci_HelpTable setWidth(Width width){
+	public Ci_HelpTable setWidth(V2_Width width){
 		if(width!=null){
 			this.width = width;
 		}
@@ -82,8 +82,8 @@ public class Ci_HelpTable extends Ci_Help {
 			return ret;
 		}
 
-		AsciiTable at = null;
-		at = new AsciiTable(2);
+		V2_AsciiTable at = null;
+		at = new V2_AsciiTable(2);
 		at.addRuleStrong();
 
 		String toHelp = lp.getArgs();
@@ -165,11 +165,11 @@ public class Ci_HelpTable extends Ci_Help {
 		at.addRule();
 
 		Skb_Console.conInfo("");
-		AsciiTableRenderer rend = new AsciiTableRenderer()
+		V2_AsciiTableRenderer rend = new V2_AsciiTableRenderer()
 			.setTheme(this.theme.get())
 			.setWidth(this.width)
 		;
-		RenderedAsciiTable rat = rend.render(at);
+		V2_RenderedAsciiTable rat = rend.render(at);
 		Skb_Console.conInfo(rat.toString());
 
 		return 0;
