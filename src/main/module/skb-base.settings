@@ -12,5 +12,5 @@ skb.module.scm.connection=scm:git:git://github.com/vdmeer/skb-java-base.git
 skb.module.scm.url=https://github.com/vdmeer/skb-java-base
 skb.module.issueManagement.url=https://github.com/vdmeer/skb-java-base/issues
 skb.module.issueManagement.system=github
-skb.module.internalDependencies=
+skb.module.internalDependencies=asciitable
 skb.module.packaging=

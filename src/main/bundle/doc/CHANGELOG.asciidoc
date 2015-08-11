@@ -1,6 +1,12 @@
-v0.0.11 - feature add - 2015-##-##
+v0.0.11 - maintenance - 2015-08-11
 ----------------------------------
 * added some default toString() methods to shell and other packages
+* fixed errors in info and shell packages
+* shell package
+	** refactored the CommandInterpreters
+	** extended Run command, now ScRun
+	** add CiHelp for ASCII Table
+* added dependency to asciitable to use it in the shell
 
 
 v0.0.10 - feature add - 2015-08-05

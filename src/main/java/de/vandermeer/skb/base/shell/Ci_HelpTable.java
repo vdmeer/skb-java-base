@@ -22,22 +22,47 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import de.vandermeer.skb.base.composite.coin.CC_Info;
+import de.vandermeer.asciitable.v2.AsciiTable;
+import de.vandermeer.asciitable.v2.AsciiTableRenderer;
+import de.vandermeer.asciitable.v2.RenderedAsciiTable;
+import de.vandermeer.asciitable.v2.core.Width;
+import de.vandermeer.asciitable.v2.core.WidthByAbsolute;
+import de.vandermeer.asciitable.v2.themes.E_TableThemes;
 import de.vandermeer.skb.base.console.Skb_Console;
+import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 
 /**
- * An interpreter for the 'help' shell command using an STG for output.
+ * An interpreter for the 'help' shell command using an ASCII table for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
-public class Ci_HelpStg extends AbstractCommandInterpreter {
+public class Ci_HelpTable extends AbstractCommandInterpreter {
+
+	/** The theme for the table. */
+	protected E_TableThemes theme;
+
+//	/** The tale width as an absolute number. */
+//	protected int width;
+
+	/** Table width calculated. */
+	protected Width width;
 
 	/**
-	 * Returns an new 'help' command interpreter for STG output.
+	 * Returns an new 'help' command interpreter for table output with default theme {@link E_TableThemes#UTF_DOUBLE_LIGHT} and 76 character width.
+	 * @param theme a theme for the table
+	 * @param width the table width as an absolute number
 	 */
-	public Ci_HelpStg(){
+	public Ci_HelpTable(){
+		this(null);
+	}
+
+	/**
+	 * Returns an new 'help' command interpreter for table output.
+	 * @param theme a theme for the table
+	 */
+	public Ci_HelpTable(E_TableThemes theme){
 		super(
 				new SkbShellCommand[]{
 						SkbShellFactory.newCommand("help", null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
@@ -45,6 +70,21 @@ public class Ci_HelpStg extends AbstractCommandInterpreter {
 						SkbShellFactory.newCommand("?",    null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null)
 				}
 		);
+
+		this.theme = (theme==null)?E_TableThemes.LATEX_7BIT_STRONG:theme;
+		this.width = new WidthByAbsolute().setWidth(76);
+	}
+
+	/**
+	 * Sets the table with.
+	 * @param width table width to be used
+	 * @return self to allow for chaining
+	 */
+	public Ci_HelpTable setWidth(Width width){
+		if(width!=null){
+			this.width = width;
+		}
+		return this;
 	}
 
 	@Override
@@ -56,8 +96,9 @@ public class Ci_HelpStg extends AbstractCommandInterpreter {
 			return -3;
 		}
 
-		CC_Info info = new CC_Info();
-		info.setSTG(shell.getSTGroup());
+		AsciiTable at = null;
+		at = new AsciiTable(2);
+		at.addRuleStrong();
 
 		String toHelp = lp.getArgs();
 		if(toHelp==null){
@@ -78,9 +119,8 @@ public class Ci_HelpStg extends AbstractCommandInterpreter {
 			}
 
 			//no argument, means general help
-			info.add("");
-			info.add("{} {}", shell.getDisplayName(), shell.getDescription());
-			info.add("");
+			at.addRow(null, shell.getDisplayName() + "-" + shell.getDescription());
+			at.addRule();
 
 			//do the commands per category, starting with "__standard"
 			for(String cat : cat2Cmd.keySet()){
@@ -88,9 +128,10 @@ public class Ci_HelpStg extends AbstractCommandInterpreter {
 				if(defKey.equals(cat)){
 					catDescr = "standard commands";
 				}
-				info.add("- {}: {}", new Object[]{catDescr, cat2Cmd.get(cat).keySet()});
+				at.addRow(catDescr, new StrBuilder().appendWithSeparators(cat2Cmd.get(cat).keySet(), ", "));
+				at.addRule();
 			}
-			info.add("  try: 'help <command>' for more details");
+			at.addRow(null, "try: 'help <command>' for more details");
 		}
 		else{
 			if(shell.getCommandMap().containsKey(toHelp)){
@@ -109,32 +150,41 @@ public class Ci_HelpStg extends AbstractCommandInterpreter {
 					}
 				}
 
-				info.add("{} {} -- {}", ssc.getCommand(), new StrBuilder().appendWithSeparators(args.keySet(), ", "), ssc.getDescription());
+				at.addRow(ssc.getCommand(), new StrBuilder().appendWithSeparators(args.keySet(), ", "));
+				at.addRow("", ssc.getDescription());
+
 				for(SkbShellArgument ssa : args.values()){
 					if(ssa.valueSet()!=null && ssa.addedHelp()!=null){
-						info.add(" -- <{}> of type {} - {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet()));
+						at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet())));
 					}
 					else if(ssa.valueSet()!=null && ssa.addedHelp()==null){
-						info.add(" -- <{}> of type {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet()));
+						at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet())));
 					}
 					else if(ssa.valueSet()==null && ssa.addedHelp()!=null){
-						info.add(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp());
+						at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp()));
 					}
 					else{
-						info.add(" -- <{}> of type {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription());
+						at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription()));
 					}
 				}
 				if(ssc.addedHelp()!=null){
-					info.add("{}", ssc.addedHelp());
+					at.addRow("", ssc.addedHelp());
 				}
 			}
 			else{
-				info.add("");
-				info.add("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{shell.getPromptName(), toHelp});
+				Skb_Console.conInfo("");
+				Skb_Console.conInfo("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{shell.getPromptName(), toHelp});
 			}
 		}
-		info.add("");
-		Skb_Console.conInfo(info.render());
+		at.addRule();
+
+		Skb_Console.conInfo("");
+		AsciiTableRenderer rend = new AsciiTableRenderer()
+			.setTheme(this.theme.get())
+			.setWidth(this.width)
+		;
+		RenderedAsciiTable rat = rend.render(at);
+		Skb_Console.conInfo(rat.toString());
 
 		return 0;
 	}
