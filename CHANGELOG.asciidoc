@@ -1,4 +1,4 @@
-v0.0.12 - maintenance - 2015-##-##
+v0.0.12 - maintenance - 2015-08-12
 ----------------------------------
 * shell package
 	** added a few more methods to the factory (some command methods might be ambigous in older code)

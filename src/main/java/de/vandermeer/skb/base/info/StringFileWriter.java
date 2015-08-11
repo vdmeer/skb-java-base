@@ -23,7 +23,7 @@ import org.apache.commons.io.FileUtils;
  * An file information writer writing strings into a file.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
+ * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.9
  */
 public class StringFileWriter extends AbstractWriter {

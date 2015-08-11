@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.vandermeer</groupId>
 	<artifactId>skb-base</artifactId>
-	<version>0.0.12-SNAPSHOT</version>
+	<version>0.0.12</version>
 	<packaging>jar</packaging>
 
 	<name>SKB Base</name>
@@ -48,7 +48,7 @@
 	<scm>
 		<developerConnection>scm:git:git@github.com:vdmeer/skb-java-base.git</developerConnection>
 		<connection>scm:git:git://github.com/vdmeer/skb-java-base.git</connection>
-		<tag>skb-base-0.0.12-SNAPSHOT</tag>
+		<tag>skb-base-0.0.12</tag>
 		<url>https://github.com/vdmeer/skb-java-base</url>
 	</scm>
 
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>de.vandermeer</groupId>
 			<artifactId>asciitable</artifactId>
-			<version>0.0.7</version>
+			<version>0.0.8</version>
 		</dependency>
 <!--
 		<dependency>
@@ -155,7 +155,7 @@
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<version>1.5.0</version>
+				<version>1.5.2</version>
 				<executions>
 					<execution>
 						<id>bundle-asciidoc</id>
@@ -231,7 +231,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.1</version>
+				<version>2.10.3</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -248,6 +248,9 @@
 							<header>${project.name}: ${project.version}</header>
 							<footer>${project.name}: ${project.version}</footer>
 							<doctitle>${project.name}: ${project.version}</doctitle>
+							<noqualifier>all</noqualifier>
+							<detectLinks>true</detectLinks>
+							<detectJavaApiLink>true</detectJavaApiLink>
 						</configuration>
 					</execution>
 				</executions>

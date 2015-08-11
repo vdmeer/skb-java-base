@@ -24,7 +24,7 @@ import de.vandermeer.skb.base.message.FormattingTupleWrapper;
  * An abstract, default implementation of a shell command, use the {@link SkbShellFactory} to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
+ * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractShellCommand implements SkbShellCommand {
