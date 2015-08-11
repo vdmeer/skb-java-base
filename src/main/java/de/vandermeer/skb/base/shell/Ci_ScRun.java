@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.info.CommonsDirectoryWalker;
 import de.vandermeer.skb.base.info.DirectoryLoader;
-import de.vandermeer.skb.base.info.FileListSource;
+import de.vandermeer.skb.base.info.FileSourceList;
 import de.vandermeer.skb.base.info.FileSource;
 import de.vandermeer.skb.base.info.StringFileLoader;
 
@@ -31,7 +31,7 @@ import de.vandermeer.skb.base.info.StringFileLoader;
  * An interpreter for the 'run' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_ScRun extends AbstractCommandInterpreter {
@@ -42,7 +42,44 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 	/** Flag for printing progress during script execution. */
 	protected boolean printProgress = true;
 
+	/** Extension for script files. */
 	public static String SCRIPT_FILE_EXTENSION = "ssc";
+
+	/** The argument for script file names for run. */
+	public static final SkbShellArgument ARG_SCRIPT_RUN = SkbShellFactory.newArgument(
+			"script", false, SkbShellArgumentType.String, null, "name (filename) of a script", "script files use the extension " + SCRIPT_FILE_EXTENSION + ", filename can be w/o extension"
+	);
+
+	/** The argument for script file names for info. */
+	public static final SkbShellArgument ARG_SCRIPT_INFO= SkbShellFactory.newArgument(
+			"script", false, SkbShellArgumentType.String, null, "name (filename) of a script", "the information provided is taken from a line in the script that starts with //**"
+	);
+
+	/** The argument for directory names. */
+	public static final SkbShellArgument ARG_DIRECTORY = SkbShellFactory.newArgument(
+			"directory", false, SkbShellArgumentType.String, null, "directory to search in, can be in file system or class path", null
+	);
+
+	/** The command for running scripts. */
+	public static final SkbShellCommand SC_RUN = SkbShellFactory.newCommand(
+			"scrun",
+			ARG_SCRIPT_RUN,
+			SkbShellFactory.SIMPLE_COMMANDS, "runs a <script> with shell commands", null
+	);
+
+	/** The command for info on scripts. */
+	public static final SkbShellCommand SC_INFO = SkbShellFactory.newCommand(
+			"scinfo",
+			ARG_SCRIPT_INFO,
+			SkbShellFactory.SIMPLE_COMMANDS, "provides information about <script> file if available", null
+	);
+
+	/** The command for ls on scripts. */
+	public static final SkbShellCommand SC_LS = SkbShellFactory.newCommand(
+			"scls",
+			ARG_DIRECTORY,
+			SkbShellFactory.SIMPLE_COMMANDS, "lists available script files", null
+	);
 
 	/**
 	 * Returns an new 'run' command interpreter which will print progress information.
@@ -56,28 +93,7 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 	 * @param printProgress flag for printing progress when executing commands from a file, true for yes, false for no
 	 */
 	public Ci_ScRun(boolean printProgress){
-		super(
-				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("scrun",
-								SkbShellFactory.newArgumentArray(
-										SkbShellFactory.newArgument("script", false, SkbShellArgumentType.String, null, "name (filename) of a script", "script files use the extension " + SCRIPT_FILE_EXTENSION + ", filename can be w/o extension")
-								),
-								SkbShellFactory.SIMPLE_COMMANDS, "runs a <script> with shell commands", null
-						),
-						SkbShellFactory.newCommand("scls",
-								SkbShellFactory.newArgumentArray(
-										SkbShellFactory.newArgument("directory", false, SkbShellArgumentType.String, null, "directory to search in, can be in file system or class path", null)
-								),
-								SkbShellFactory.SIMPLE_COMMANDS, "lists available script files", null
-						),
-						SkbShellFactory.newCommand("scinfo",
-								SkbShellFactory.newArgumentArray(
-										SkbShellFactory.newArgument("script", false, SkbShellArgumentType.String, null, "name (filename) of a script", "the information provided is taken from a line in the script that starts with //**")
-								),
-								SkbShellFactory.SIMPLE_COMMANDS, "provides information about <script> file if available", null
-						),
-				}
-		);
+		super(new SkbShellCommand[]{SC_RUN, SC_INFO, SC_LS,});
 		this.printProgress = printProgress;
 	}
 
@@ -86,7 +102,11 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		if(StringUtils.isBlank(command) || lp==null){
 			return -3;
 		}
-		if(command.equals("scrun")){
+		if(!SC_RUN.getCommand().equals(command) && !SC_INFO.getCommand().equals(command) && !SC_LS.getCommand().equals(command)){
+			return -1;
+		}
+
+		if(SC_RUN.getCommand().equals(command)){
 			String fileName = this.getFileName(lp);
 			String content = this.getContent(fileName, shell);
 			if(content==null){
@@ -99,13 +119,14 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 				if(this.printProgress==true && Skb_Console.USE_CONSOLE==true){
 					System.out.print(".");
 				}
-				shell.parseLine(s.trim());
+				shell.parseLine(s);
 			}
 			this.lastScript = fileName;
 
-			return 0;
+			//clear messages, they all should have been out already
+			shell.clearLastMessages();
 		}
-		else if(command.equals("scls")){
+		else if(SC_LS.getCommand().equals(command)){
 			String directory = lp.getArgs();
 			IOFileFilter fileFilter = new WildcardFileFilter(new String[]{
 						"*.ssc"
@@ -115,16 +136,17 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 				shell.getLastErrors().add(dl.getLoadErrors());
 				return 1;
 			}
-			FileListSource fsl = dl.load();
+			FileSourceList fsl = dl.load();
 			if(dl.getLoadErrors().size()>0){
 				shell.getLastErrors().add(dl.getLoadErrors());
 				return 1;
 			}
-			for(FileSource fs : fsl.getSourceAsFileSourceList("/" + directory)){
+			for(FileSource fs : fsl.getSource()){
+				//TODO need to adapt to new source return
 				Skb_Console.conInfo("{}: script file - dir <{}> file <{}>", new Object[]{shell.getPromptName(), directory, fs.getSetRootName()});
 			}
 		}
-		else if(command.equals("scinfo")){
+		else if(SC_INFO.getCommand().equals(command)){
 			String fileName = this.getFileName(lp);
 			String content = this.getContent(fileName, shell);
 			if(content==null){
@@ -143,7 +165,7 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 				Skb_Console.conInfo("{}: script {} - info: {}", new Object[]{shell.getPromptName(), fileName, info});
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 	/**

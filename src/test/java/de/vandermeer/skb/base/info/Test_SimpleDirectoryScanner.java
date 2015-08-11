@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import de.vandermeer.skb.base.info.CommonsDirectoryWalker;
 import de.vandermeer.skb.base.info.DirectorySource;
-import de.vandermeer.skb.base.info.FileListSource;
+import de.vandermeer.skb.base.info.FileSourceList;
 import de.vandermeer.skb.base.info.FileSource;
 import de.vandermeer.skb.base.info.SimpleDirectoryScanner;
 
@@ -33,7 +33,7 @@ import de.vandermeer.skb.base.info.SimpleDirectoryScanner;
  * Tests for {@link CommonsDirectoryWalker}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_SimpleDirectoryScanner {
@@ -41,21 +41,21 @@ public class Test_SimpleDirectoryScanner {
 	@Test
 	public void testScanJavaSource(){
 		SimpleDirectoryScanner scanner = new SimpleDirectoryScanner(new DirectorySource("src/main/java"));
-		FileListSource files = scanner.load();
-		int checkSize = 159;
+		FileSourceList files = scanner.load();
+		int checkSize = 161;//TODO update this if java files in src/main are have been removed or added
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());
 
-		File[] filesAr = files.getSourceAsArray();
+		File[] filesAr = files.getSourceAsFileArray();
 		assertTrue(filesAr!=null);
 		assertEquals(checkSize, filesAr.length);
 
-		List<FileSource> fsList = files.getSourceAsFileSourceList();
+		List<FileSource> fsList = files.getSource();
 		assertTrue(fsList!=null);
 		assertEquals(checkSize, fsList.size());
 
-		FileSource[] fsArray = files.getSourceAsFileSourceArray();
+		FileSource[] fsArray = files.getSourceAsArray();
 		assertTrue(fsArray!=null);
 		assertEquals(checkSize, fsArray.length);
 	}

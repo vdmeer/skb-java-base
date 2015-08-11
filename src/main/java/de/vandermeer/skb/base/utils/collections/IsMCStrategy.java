@@ -19,7 +19,7 @@ package de.vandermeer.skb.base.utils.collections;
  * Category of objects that represent a strategy for java.utils collection and map classes.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.5
  */
 public interface IsMCStrategy {

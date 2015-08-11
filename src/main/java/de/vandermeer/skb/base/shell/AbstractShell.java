@@ -35,7 +35,7 @@ import de.vandermeer.skb.base.message.Message5WH_Builder;
  * An abstract shell implementation with all basic features, use the {@link SkbShellFactory} or a sub-class to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractShell implements SkbShell {
@@ -228,7 +228,6 @@ public class AbstractShell implements SkbShell {
 					}
 				}
 
-//				this.clearLastMessages();
 				in = sysin.readLine();
 				this.exitStatus = this.parseLine(in);
 
@@ -277,109 +276,3 @@ public class AbstractShell implements SkbShell {
 		return true;
 	}
 }
-
-
-
-
-
-
-///**
-// * Prints a help screen for the command shell, for all shell commands.
-// * @param cpl command parser with arguments
-// */
-//private final void _commandHelp(LineParser cpl){
-//	CC_Info info = new CC_Info();
-//	info.setSTG(this.stgv.getInfo());
-//
-//	String toHelp = cpl.getArgs();
-//	if(toHelp==null){
-//		info.add("");
-//		info.add("{} {}", this.getDisplayName(), this.getDescription());
-//		info.add("");
-//		TreeSet<String> sc = new TreeSet<String>();
-//		sc.addAll(this.standardShellCommands.keySet());
-//		sc.addAll(this.addedShellCommands.keySet());
-//
-//		info.add("- shell commands: {}", sc);
-//		info.add("");
-//		if(this.commandHelp()!=null){
-//			info.add("  {}", this.commandHelp());
-//			info.add("");
-//		}
-//		info.add("  try: 'help <command>' for more details");
-//	}
-//	else if(this.standardShellCommands.containsKey(toHelp)){
-//		info.add("");
-//		this._doCmdHelp(info, toHelp, this.standardShellCommands);
-//	}
-//	else if(this.addedShellCommands.containsKey(toHelp)){
-//		info.add("");
-//		this._doCmdHelp(info, toHelp, this.addedShellCommands);
-//	}
-//	else{
-//		info.add("");
-//		info.add("{}", this.commandHelp(toHelp));
-//	}
-//	Skb_ConsoleUtils.conInfo(info.render());
-//}
-
-///**
-// * Do help for a particular command
-// * @param info the info object to add help to
-// * @param toHelp the command to do the help for
-// * @param cmds list of shell commands to select help from
-// */
-//private void _doCmdHelp(CC_Info info, String toHelp, Map<String, ? extends SkbShellCommand> cmds){
-//	SkbShellCommand sc = cmds.get(toHelp);
-//	TreeMap<String, SkbShellArgument> args = new TreeMap<>();
-//	if(sc.getArguments()!=null){
-//		for(SkbShellArgument ssa : sc.getArguments()){
-//			args.put(ssa.key(), ssa);
-//		}
-//	}
-//
-//	info.add("{} {} -- {}", sc.getCommand(), args.keySet(), sc.getDescription());
-//	for(SkbShellArgument ssa : args.values()){
-//		if(ssa.addedHelp()!=null){
-//			info.add(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp());
-//		}
-//		else{
-//			info.add(" -- <{}> of type {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription());
-//		}
-//	}
-//	if(sc.addedHelp()!=null){
-//		info.add("{}", sc.addedHelp());
-//	}
-//}
-
-///**
-// * Runs a script from a given file name.
-// * @param cpl command parser with arguments
-// */
-//public void runScript(LineParser cpl){
-//	String fileName = cpl.getArgs();
-//	if(fileName==null){
-//		fileName = this.lastScript;
-//	}
-//	StringFileLoader sfl = new StringFileLoader(fileName);
-//	if(sfl.getLoadErrors().size()>0){
-//		this.errors.add(sfl.getLoadErrors());
-//		return;
-//	}
-//
-//	String content = sfl.load();
-//	if(sfl.getLoadErrors().size()>0){
-//		this.errors.add(sfl.getLoadErrors());
-//		return;
-//	}
-//	if(content==null){
-//		this.errors.add("run: unexpected problem with run script, content was null");
-//		return;
-//	}
-//
-//	infos.add("{}: running file {}", new Object[]{this.getID(), fileName});
-//	for(String s : StringUtils.split(content, '\n')){
-//		this.parseLine(s.trim());
-//	}
-//	this.lastScript = fileName;
-//}

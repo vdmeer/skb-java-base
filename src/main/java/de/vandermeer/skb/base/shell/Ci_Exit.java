@@ -21,22 +21,25 @@ import org.apache.commons.lang3.StringUtils;
  * An interpreter for the 'exit' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_Exit extends AbstractCommandInterpreter {
+
+	/** The command for exit. */
+	public static final SkbShellCommand EXIT = SkbShellFactory.newCommand("exit", SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null);
+
+	/** The command for quit. */
+	public static final SkbShellCommand QUIT = SkbShellFactory.newCommand("quit", SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null);
+
+	/** The command for bye. */
+	public static final SkbShellCommand BYE = SkbShellFactory.newCommand("bye",  SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null);
 
 	/**
 	 * Returns an new 'exit' command interpreter.
 	 */
 	public Ci_Exit(){
-		super(
-				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("exit", null, SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null),
-						SkbShellFactory.newCommand("quit", null, SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null),
-						SkbShellFactory.newCommand("bye",  null, SkbShellFactory.SIMPLE_COMMANDS, "exit the shell", null)
-				}
-		);
+		super(new SkbShellCommand[]{EXIT, QUIT, BYE});
 	}
 
 	@Override
@@ -44,14 +47,11 @@ public class Ci_Exit extends AbstractCommandInterpreter {
 		if(StringUtils.isBlank(command) || lp==null){
 			return -3;
 		}
-		switch(command){
-			case "exit":
-			case "quit":
-			case "bye":
-				return -2;
-			default:
-				return -3;
+		if(!EXIT.getCommand().equals(command) && !QUIT.getCommand().equals(command) && !BYE.getCommand().equals(command)){
+			return -1;
 		}
+
+		return -2;
 	}
 
 }

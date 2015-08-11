@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0">
-<title>v0.0.11 - feature add - 2015--</title>
+<title>v0.0.12 - maintenance - 2015--</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -414,12 +414,62 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_v0_0_11_feature_add_2015_mark_mark">v0.0.11 - feature add - 2015-<mark>-</mark></h2>
+<h2 id="_v0_0_12_maintenance_2015_mark_mark">v0.0.12 - maintenance - 2015-<mark>-</mark></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>shell package</p>
+<div class="ulist">
+<ul>
+<li>
+<p>added a few more methods to the factory (some command methods might be ambigous in older code)</p>
+</li>
+<li>
+<p>changed internals of ScRun, Wait, Exit and Help (added abstract help CI)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>changed FileListSource to FileSourceList and all directory / list loaders accordingly</p>
+</li>
+<li>
+<p>fixed bugs in DirectorySource and FileSource implementations for setRoot methods</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_v0_0_11_maintenance_2015_08_11">v0.0.11 - maintenance - 2015-08-11</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
 <p>added some default toString() methods to shell and other packages</p>
+</li>
+<li>
+<p>fixed errors in info and shell packages</p>
+</li>
+<li>
+<p>shell package</p>
+<div class="ulist">
+<ul>
+<li>
+<p>refactored the CommandInterpreters</p>
+</li>
+<li>
+<p>extended Run command, now ScRun</p>
+</li>
+<li>
+<p>add CiHelp for ASCII Table</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>added dependency to asciitable to use it in the shell</p>
 </li>
 </ul>
 </div>
@@ -876,7 +926,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-05 21:21:26 IST
+Last updated 2015-08-11 15:39:07 IST
 </div>
 </div>
 </body>

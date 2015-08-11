@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
 import de.vandermeer.asciitable.v2.AsciiTable;
@@ -35,24 +34,19 @@ import de.vandermeer.skb.base.message.FormattingTupleWrapper;
  * An interpreter for the 'help' shell command using an ASCII table for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
-public class Ci_HelpTable extends AbstractCommandInterpreter {
+public class Ci_HelpTable extends Ci_Help {
 
 	/** The theme for the table. */
 	protected E_TableThemes theme;
-
-//	/** The tale width as an absolute number. */
-//	protected int width;
 
 	/** Table width calculated. */
 	protected Width width;
 
 	/**
 	 * Returns an new 'help' command interpreter for table output with default theme {@link E_TableThemes#UTF_DOUBLE_LIGHT} and 76 character width.
-	 * @param theme a theme for the table
-	 * @param width the table width as an absolute number
 	 */
 	public Ci_HelpTable(){
 		this(null);
@@ -63,15 +57,9 @@ public class Ci_HelpTable extends AbstractCommandInterpreter {
 	 * @param theme a theme for the table
 	 */
 	public Ci_HelpTable(E_TableThemes theme){
-		super(
-				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("help", null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
-						SkbShellFactory.newCommand("h",    null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
-						SkbShellFactory.newCommand("?",    null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null)
-				}
-		);
+		super();
 
-		this.theme = (theme==null)?E_TableThemes.LATEX_7BIT_STRONG:theme;
+		this.theme = (theme==null)?E_TableThemes.PLAIN_7BIT_STRONG:theme;
 		this.width = new WidthByAbsolute().setWidth(76);
 	}
 
@@ -89,11 +77,9 @@ public class Ci_HelpTable extends AbstractCommandInterpreter {
 
 	@Override
 	public int interpretCommand(String command, LineParser lp, SkbShell shell) {
-		if(StringUtils.isBlank(command) || lp==null){
-			return -3;
-		}
-		if(!"help".equals(command) && !"h".equals(command) && !"?".equals(command)){
-			return -3;
+		int ret = super.interpretCommand(command, lp, shell);
+		if(ret!=0){
+			return ret;
 		}
 
 		AsciiTable at = null;

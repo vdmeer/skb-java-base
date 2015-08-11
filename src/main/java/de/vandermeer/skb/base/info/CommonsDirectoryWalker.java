@@ -30,10 +30,10 @@ import de.vandermeer.skb.base.composite.coin.CC_Error;
  * Walks a directory and loads files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.7
  */
-public class CommonsDirectoryWalker extends DirectoryWalker<File> implements DirectoryLoader {
+public class CommonsDirectoryWalker extends DirectoryWalker<FileSource> implements DirectoryLoader {
 
 	/** The source for the walker, a root directory. */
 	final DirectorySource source;
@@ -64,10 +64,10 @@ public class CommonsDirectoryWalker extends DirectoryWalker<File> implements Dir
 	}
 
 	@Override
-	public FileListSource load(){
+	public FileSourceList load(){
 		if(this.errors.size()==0){
 			this.errors.clear();
-			List<File> ret = new ArrayList<>();
+			List<FileSource> ret = new ArrayList<>();
 			try {
 				File f = this.source.asFile();
 				walk(f, ret);
@@ -76,7 +76,7 @@ public class CommonsDirectoryWalker extends DirectoryWalker<File> implements Dir
 				this.errors.add("IOException while walking dir <{}> - {}",
 						new Object[]{this.source.getSource(), e.getMessage()});
 			}
-			return new FileListSource(ret);
+			return new FileSourceList(ret);
 		}
 		return null;
 	}
@@ -92,7 +92,7 @@ public class CommonsDirectoryWalker extends DirectoryWalker<File> implements Dir
 	}
 
 	@Override
-	protected void handleFile(File file, int depth, Collection<File> results) throws IOException {
-		results.add(file);
+	protected void handleFile(File file, int depth, Collection<FileSource> results) throws IOException {
+		results.add(new FileSource(file, this.source.getFullDirecoryName()));
 	}
 }

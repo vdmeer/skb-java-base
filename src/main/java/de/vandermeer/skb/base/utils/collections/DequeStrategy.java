@@ -26,7 +26,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  * Strategy for Deques.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.5
  */
 public enum DequeStrategy implements IsDequeStrategy {

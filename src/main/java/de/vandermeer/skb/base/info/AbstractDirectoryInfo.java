@@ -28,7 +28,7 @@ import de.vandermeer.skb.base.composite.coin.CC_Error;
  * An abstract directory info implementation that can be configured for use as source or target.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.8
  */
 public abstract class AbstractDirectoryInfo {
@@ -156,7 +156,7 @@ public abstract class AbstractDirectoryInfo {
 			try{
 				this.url = file.toURI().toURL();
 				this.file = file;
-				this.fullDirectoryName = FilenameUtils.getName(file.getAbsolutePath());
+				this.fullDirectoryName = FilenameUtils.getPath(file.getAbsolutePath());
 				this.setRootPath = directory;
 				return true;
 			}
@@ -184,7 +184,7 @@ public abstract class AbstractDirectoryInfo {
 					try{
 						this.url = file.toURI().toURL();
 						this.file = file;
-						this.fullDirectoryName = FilenameUtils.getName(file.getAbsolutePath());
+						this.fullDirectoryName = FilenameUtils.getPath(file.getAbsolutePath());
 						this.setRootPath = directory;
 						return true;
 					}
@@ -228,7 +228,7 @@ public abstract class AbstractDirectoryInfo {
 	 * Returns the full directory name.
 	 * @return full directory name if the file info object is valid, null otherwise
 	 */
-	public String getFullFileName(){
+	public String getFullDirecoryName(){
 		return this.fullDirectoryName;
 	}
 

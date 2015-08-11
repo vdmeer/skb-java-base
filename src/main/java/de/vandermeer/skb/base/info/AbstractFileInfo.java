@@ -30,7 +30,7 @@ import de.vandermeer.skb.base.composite.coin.CC_Error;
  * An abstract file info implementation that can be configured for use as source or target.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.7
  */
 public abstract class AbstractFileInfo {
@@ -46,6 +46,9 @@ public abstract class AbstractFileInfo {
 
 	/** A path set-as-root for the file if a directory was explicitly given to a constructor. */
 	private String setRootPath;
+
+//	/** The original name or identifier of the file. */
+//	private String originalFilename;
 
 	/** Local list of errors collected during process, cleared for every new validation call. */
 	protected final CC_Error errors = new CC_Error();
@@ -66,6 +69,7 @@ public abstract class AbstractFileInfo {
 				this.url = file.toURI().toURL();
 				this.file = file;
 				this.fullFileName = FilenameUtils.getName(file.getAbsolutePath());
+//				this.originalFilename = FilenameUtils.getFullPath(file.getAbsolutePath()) + FilenameUtils.getName(file.getAbsolutePath());
 			}
 			catch (MalformedURLException e) {
 				this.errors.add("constructor(file, boolean) - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
@@ -94,7 +98,8 @@ public abstract class AbstractFileInfo {
 				this.url = file.toURI().toURL();
 				this.file = file;
 				this.fullFileName = FilenameUtils.getName(file.getAbsolutePath());
-				this.setRootPath =setRoot;
+				this.setRootPath = setRoot;
+//				this.originalFilename = FilenameUtils.getPath(setRoot) + this.fullFileName;
 			}
 			catch (MalformedURLException e) {
 				this.errors.add("constructor(file, boolean) - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
@@ -193,6 +198,7 @@ public abstract class AbstractFileInfo {
 	protected void reset(){
 		this.url = null;
 		this.file = null;
+//		this.originalFilename = null;
 		this.fullFileName = null;
 	}
 
@@ -215,6 +221,7 @@ public abstract class AbstractFileInfo {
 					this.url = file.toURI().toURL();
 					this.file = file;
 					this.fullFileName = FilenameUtils.getName(file.getAbsolutePath());
+//					this.originalFilename = FilenameUtils.getFullPath(file.getAbsolutePath()) + FilenameUtils.getName(file.getAbsolutePath());
 				}
 			}
 			else if((directory!=null && fileName!=null) || fileName!=null){
@@ -302,6 +309,7 @@ public abstract class AbstractFileInfo {
 			try{
 				this.url = file.toURI().toURL();
 				this.file = file;
+//				this.originalFilename = FilenameUtils.getFullPath(fileName) + FilenameUtils.getName(fileName);
 				this.fullFileName = FilenameUtils.getName(file.getAbsolutePath());
 				if(directory!=null){
 					this.setRootPath = directory;
@@ -338,11 +346,15 @@ public abstract class AbstractFileInfo {
 			this.errors.add("could not get Resource URL");
 			return false;
 		}
+
 		this.url = url;
+//		this.originalFilename = FilenameUtils.getFullPath(fileName) + FilenameUtils.getName(fileName);
 		this.fullFileName = FilenameUtils.getName(fileName);
+
 		if(directory!=null){
 			this.setRootPath = directory;
 		}
+
 		return true;
 	}
 
@@ -467,6 +479,14 @@ public abstract class AbstractFileInfo {
 		}
 		return null;
 	}
+
+//	/**
+//	 * Returns the original name or identifier.
+//	 * @return original name or identifier
+//	 */
+//	public String getOriginalFilename(){
+//		return this.originalFilename;
+//	}
 
 	@Override
 	public String toString(){

@@ -12,37 +12,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.vandermeer.skb.base.shell;
 
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * An interpreter for the 'wait' shell command.
+ * An abstract help command interpreter.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
- * @since      v0.0.10
+ * @since      v0.0.12
  */
-public class Ci_Wait extends AbstractCommandInterpreter {
+public abstract class Ci_Help extends AbstractCommandInterpreter {
 
-	/** The argument for wait time. */
-	public static final SkbShellArgument ARG_TIME = SkbShellFactory.newArgument(
-			"time", false, SkbShellArgumentType.Integer, null, "wait time in milliseconds", null
-	);
+	/** The command for help. */
+	public static final SkbShellCommand HELP = SkbShellFactory.newCommand("help", SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null);
 
-	/** The command for wait. */
-	public static final SkbShellCommand WAIT = SkbShellFactory.newCommand(
-			"wait", 
-			ARG_TIME,
-			SkbShellFactory.SIMPLE_COMMANDS, "shell waits for <time> milliseconds before accepting the next command", null
-	);
+	/** The command for h. */
+	public static final SkbShellCommand HELP_H = SkbShellFactory.newCommand("h", SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null);
+
+	/** The command for ?. */
+	public static final SkbShellCommand HELP_QM = SkbShellFactory.newCommand("?", SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null);
 
 	/**
-	 * Returns an new 'wait' command interpreter.
+	 * Returns an new 'help' command interpreter for STG output.
 	 */
-	public Ci_Wait(){
-		super(WAIT);
+	public Ci_Help(){
+		super(new SkbShellCommand[]{HELP, HELP_H, HELP_QM});
 	}
 
 	@Override
@@ -50,17 +46,9 @@ public class Ci_Wait extends AbstractCommandInterpreter {
 		if(StringUtils.isBlank(command) || lp==null){
 			return -3;
 		}
-		if(!WAIT.getCommand().equals(command)){
+		if(!HELP.getCommand().equals(command) && !HELP_H.getCommand().equals(command) && !HELP_QM.getCommand().equals(command)){
 			return -1;
-		}
-
-		try {
-			Thread.sleep(new Integer(lp.setTokenPosition(1).getArgs()));
-		}
-		catch (InterruptedException e) {
-			shell.getLastErrors().add("{}: interrupted in wait {}", new Object[]{shell.getPromptName(), e.getMessage()});
 		}
 		return 0;
 	}
-
 }

@@ -1,4 +1,13 @@
-v0.0.11 - feature add - 2015-##-##
+v0.0.12 - maintenance - 2015-##-##
+----------------------------------
+* shell package
+	** added a few more methods to the factory (some command methods might be ambigous in older code)
+	** changed internals of ScRun, Wait, Exit and Help (added abstract help CI)
+* changed FileListSource to FileSourceList and all directory / list loaders accordingly
+* fixed bugs in DirectorySource and FileSource implementations for setRoot methods
+
+
+v0.0.11 - maintenance - 2015-08-11
 ----------------------------------
 * added some default toString() methods to shell and other packages
 * fixed errors in info and shell packages

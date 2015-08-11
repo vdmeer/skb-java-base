@@ -24,7 +24,7 @@ import org.stringtemplate.v4.STGroup;
  * Factory for Skb Shell artifacts.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class SkbShellFactory {
@@ -109,6 +109,33 @@ public class SkbShellFactory {
 	 */
 	public static SkbShellCommand newCommand(String command, SkbShellArgument[] arguments, SkbShellCommandCategory category, String description, String addedHelp){
 		return new AbstractShellCommand(command, arguments, category, description, addedHelp);
+	}
+
+	/**
+	 * Returns a new shell command, use the factory to create one.
+	 * @param command the actual command
+	 * @param argument the command's argument, can be null
+	 * @param category the command's category, can be null
+	 * @param description the command's description
+	 * @param addedHelp additional help, can be null
+	 * @return new shell command
+	 * @throws IllegalArgumentException if command or description was null
+	 */
+	public static SkbShellCommand newCommand(String command, SkbShellArgument argument, SkbShellCommandCategory category, String description, String addedHelp){
+		return SkbShellFactory.newCommand(command, new SkbShellArgument[]{argument}, category, description, addedHelp);
+	}
+
+	/**
+	 * Returns a new shell command without formal arguments, use the factory to create one.
+	 * @param command the actual command
+	 * @param category the command's category, can be null
+	 * @param description the command's description
+	 * @param addedHelp additional help, can be null
+	 * @return new shell command
+	 * @throws IllegalArgumentException if command or description was null
+	 */
+	public static SkbShellCommand newCommand(String command, SkbShellCommandCategory category, String description, String addedHelp){
+		return SkbShellFactory.newCommand(command, (SkbShellArgument) null, category, description, addedHelp);
 	}
 
 	/**

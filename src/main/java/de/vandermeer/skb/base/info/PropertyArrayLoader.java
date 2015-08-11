@@ -15,7 +15,6 @@
 
 package de.vandermeer.skb.base.info;
 
-import java.io.File;
 import java.util.List;
 import java.util.Properties;
 
@@ -24,13 +23,13 @@ import java.util.Properties;
  * An file loader for a set of Java property files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.7
  */
-public class PropertyArrayLoader extends AbstractLoader implements FileListLoader {
+public class PropertyArrayLoader extends AbstractLoader implements FileSourceListLoader {
 
 	/** The source file set for the loader. */
-	FileListSource source;
+	FileSourceList source;
 
 	/** A directory loader for loading a file set from a directory. */
 	DirectoryLoader dl;
@@ -47,7 +46,7 @@ public class PropertyArrayLoader extends AbstractLoader implements FileListLoade
 	 * Returns a new loader for a file source.
 	 * @param source a list of files as source
 	 */
-	public PropertyArrayLoader(FileListSource source){
+	public PropertyArrayLoader(FileSourceList source){
 		this.source = source;
 	}
 
@@ -55,8 +54,8 @@ public class PropertyArrayLoader extends AbstractLoader implements FileListLoade
 	 * Returns a new loader for a file name, creating a file source automatically.
 	 * @param files list of files for the loader
 	 */
-	public PropertyArrayLoader(List<File> files){
-		this.source = new FileListSource(files);
+	public PropertyArrayLoader(List<FileSource> files){
+		this.source = new FileSourceList(files);
 	}
 
 	@Override
@@ -83,7 +82,7 @@ public class PropertyArrayLoader extends AbstractLoader implements FileListLoade
 
 		//now we have a valid source, do the property load
 		Properties[] ret = new Properties[this.source.getSource().size()];
-		List<FileSource> files = this.source.getSourceAsFileSourceList();
+		List<FileSource> files = this.source.getSource();
 		for(int i=0; i<files.size(); i++){
 			ret[i] = new PropertyFileLoader(files.get(i)).load();
 		}
@@ -91,7 +90,7 @@ public class PropertyArrayLoader extends AbstractLoader implements FileListLoade
 	}
 
 	@Override
-	public FileListSource getSource() {
+	public FileSourceList getSource() {
 		return this.source;
 	}
 

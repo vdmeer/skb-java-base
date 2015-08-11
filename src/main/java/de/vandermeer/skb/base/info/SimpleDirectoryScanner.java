@@ -25,7 +25,7 @@ import org.apache.commons.lang3.text.StrBuilder;
  * Scans a directory and returns a complete list of files found.
  * 
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.6
  */
 public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryLoader {
@@ -84,10 +84,10 @@ public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryL
 	 * Hidden files and directories will be ignored (not scanned, found or counted)
 	 * @return a set of readable files found in the directory, empty set of none found, errors and warnings are collected per scan
 	 */
-	protected List<File> getFiles(){
+	protected List<FileSource> getFiles(){
 		this.clear();
 		File f = this.source.asFile();
-		List<File> ret = this.doScan(f);
+		List<FileSource> ret = this.doScan(f);
 		this.doInfo();
 		return ret;
 	}
@@ -108,8 +108,8 @@ public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryL
 	 * @param fDir starting directory
 	 * @return set of found and readable files, empty set of none found
 	 */
-	protected List<File> doScan(File fDir){
-		List<File> ret = new ArrayList<>();
+	protected List<FileSource> doScan(File fDir){
+		List<FileSource> ret = new ArrayList<>();
 		if(fDir!=null && fDir.exists() && !fDir.isHidden()){
 			for(final File entry : fDir.listFiles()) {
 				if(entry.isHidden()){
@@ -118,7 +118,7 @@ public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryL
 				if(!entry.isDirectory()) {
 					this.scFiles++;
 					if(entry.canRead()){
-						ret.add(entry);
+						ret.add(new FileSource(entry, this.source.getSetRootPath()));
 					}
 					else{
 						this.scFilesUnreadable++;
@@ -192,9 +192,9 @@ public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryL
 	}
 
 	@Override
-	public FileListSource load() {
+	public FileSourceList load() {
 		if(this.getSource().isValid()){
-			return new FileListSource(this.getFiles());
+			return new FileSourceList(this.getFiles());
 		}
 		return null;
 	}

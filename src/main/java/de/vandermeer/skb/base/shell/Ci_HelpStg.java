@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
 import de.vandermeer.skb.base.composite.coin.CC_Info;
@@ -29,31 +28,16 @@ import de.vandermeer.skb.base.console.Skb_Console;
  * An interpreter for the 'help' shell command using an STG for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.11-SNAPSHOT build 150805 (05-Aug-15) for Java 1.8
+ * @version    v0.0.12-SNAPSHOT build 150811 (11-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
-public class Ci_HelpStg extends AbstractCommandInterpreter {
-
-	/**
-	 * Returns an new 'help' command interpreter for STG output.
-	 */
-	public Ci_HelpStg(){
-		super(
-				new SkbShellCommand[]{
-						SkbShellFactory.newCommand("help", null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
-						SkbShellFactory.newCommand("h",    null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null),
-						SkbShellFactory.newCommand("?",    null, SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null)
-				}
-		);
-	}
+public class Ci_HelpStg extends Ci_Help {
 
 	@Override
 	public int interpretCommand(String command, LineParser lp, SkbShell shell) {
-		if(StringUtils.isBlank(command) || lp==null){
-			return -3;
-		}
-		if(!"help".equals(command) && !"h".equals(command) && !"?".equals(command)){
-			return -3;
+		int ret = super.interpretCommand(command, lp, shell);
+		if(ret!=0){
+			return ret;
 		}
 
 		CC_Info info = new CC_Info();
