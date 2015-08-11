@@ -17,6 +17,6 @@
  * A simple 5WH message object, for details on 5WH see <a target="_new" href="https://en.wikipedia.org/wiki/Five_Ws">Wikipedia</a>.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  */
 package de.vandermeer.skb.base.message;

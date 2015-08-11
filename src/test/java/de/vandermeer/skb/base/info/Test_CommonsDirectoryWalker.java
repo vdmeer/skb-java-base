@@ -34,7 +34,7 @@ import de.vandermeer.skb.base.info.FileSource;
  * Tests for {@link CommonsDirectoryWalker}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_CommonsDirectoryWalker {
