@@ -209,7 +209,7 @@ public class MessageMgrBuilder {
 	/**
 	 * Sets the STG overwriting an existing one.
 	 * @param stg new STG to set, not set if not valid
-	 * @return
+	 * @return self to allow for chaining
 	 */
 	public MessageMgrBuilder setStg(STGroup stg){
 		if(stg==null){

@@ -58,22 +58,43 @@ public class MessageMgr {
 	/** The identifier (or name) of the application using the message manager. */
 	protected final Object appID;
 
-	//TODO jdoc
+	/**
+	 * Creates a new information message.
+	 * @param what the what part of the message (what has happened)
+	 * @param obj objects to add to the message
+	 * @return new information message
+	 */
 	public static Message5WH createInfoMessage(String what, Object ... obj){
 		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.INFO).build();
 	}
 
-	//TODO jdoc
+	/**
+	 * Creates a new warning message.
+	 * @param what the what part of the message (what has happened)
+	 * @param obj objects to add to the message
+	 * @return new information message
+	 */
 	public static Message5WH createWarningMessage(String what, Object ... obj){
 		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.WARNING).build();
 	}
 
-	//TODO jdoc
+	/**
+	 * Creates a new error message.
+	 * @param what the what part of the message (what has happened)
+	 * @param obj objects to add to the message
+	 * @return new information message
+	 */
 	public static Message5WH createErrorMessage(String what, Object ... obj){
 		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.ERROR).build();
 	}
 
-	//TODO jdoc
+	/**
+	 * Returns a new manager.
+	 * @param appID the application identifier or name used in messages
+	 * @param messageHandlers the message handlers for the manager
+	 * @param doCollectMessages flag for collecting messages (true for do collect, false for not)
+	 * @param stg the STG for messages
+	 */
 	MessageMgr(Object appID, Map<EMessageType, MessageTypeHandler> messageHandlers, boolean doCollectMessages, STGroup stg){
 		this.messages = new LinkedHashMap<>();
 
@@ -112,6 +133,17 @@ public class MessageMgr {
 	}
 
 	/**
+	 * Returns true if the manager has infos reported, false otherwise
+	 * @return true if infos have been reported, false otherwise
+	 */
+	public boolean hasInfos(){
+		if(this.messageHandlers.containsKey(EMessageType.INFO)){
+			return (this.messageHandlers.get(EMessageType.INFO).getCount()==0)?true:false;
+		}
+		return false;
+	}
+
+	/**
 	 * Returns the current count for the given message type since its last initialization or reset.
 	 * @param type message type to report count for
 	 * @return current count of messages, -1 if not in active list
@@ -122,14 +154,6 @@ public class MessageMgr {
 		}
 		return -1;
 	}
-
-//	/**
-//	 * Returns the STG the manager is using
-//	 * @return the manager's stg
-//	 */
-//	public STGroup getSTG(){
-//		return this.stg;
-//	}
 
 	/**
 	 * Returns is the report level is enabled or not.
@@ -240,18 +264,6 @@ public class MessageMgr {
 		}
 		return ret;
 	}
-
-//	/**
-//	 * Resets the count for the given message type to 0.
-//	 * @param type to reset count for
-//	 * @return returns self to allow for chained calls
-//	 */
-//	public MessageMgr resetMessageCount(EMessageType type) {
-//		if(this.messageHandlers.containsKey(type)){
-//			this.messageHandlers.get(type).clear();
-//		}
-//		return this;
-//	}
 
 	/**
 	 * Resets the collected messages and all counters.
