@@ -79,4 +79,5 @@ public interface IsSortedSetStrategy extends IsMCStrategy {
 	 * @return new collection
 	 */
 	<T> SortedSet<T> get(Class<T> T, Comparator<T> comparator);
+
 }

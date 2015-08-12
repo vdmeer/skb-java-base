@@ -116,4 +116,5 @@ public abstract class Skb_CollectionFilter<T> {
 	public static <T> List<T> FILTER(Predicate<T> predicate, Collection<T> coll, ListStrategy strategy){
 		return strategy.get(FILTER(predicate, coll));
 	}
+
 }

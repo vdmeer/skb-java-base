@@ -44,4 +44,5 @@ public class Test_StgFileSource {
 		assertEquals(0, fsn.getInitError().size());
 		assertTrue(fsn.isValid());
 	}
+
 }

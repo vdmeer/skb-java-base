@@ -50,4 +50,5 @@ public enum ScopeKey implements IsKey_String {
 	public String toString(){
 		return ScopeKey.class.getSimpleName() + "(" + this.getClass().getSimpleName() + "):" + this.key();
 	}
+
 }

@@ -55,4 +55,5 @@ public enum SwitchKey  implements IsKey_String {
 	public String toString(){
 		return SwitchKey.class.getSimpleName() + "(" + this.getClass().getSimpleName() + "):" + this.key();
 	}
+
 }

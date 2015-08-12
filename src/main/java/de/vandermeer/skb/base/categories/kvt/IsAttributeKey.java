@@ -17,7 +17,6 @@ package de.vandermeer.skb.base.categories.kvt;
 
 import de.vandermeer.skb.base.Skb_Defaults;
 
-
 /**
  * Category of objects that represent an attribute key.
  *
@@ -62,4 +61,5 @@ public interface IsAttributeKey extends IsKey_String {
 	static IsAttributeKey create(){
 		return IsAttributeKey.create(null);
 	}
+
 }

@@ -35,4 +35,5 @@ public interface HasPrompt {
 		ret.append('[').append("default").append("]> ");
 		return ret;
 	}
+
 }

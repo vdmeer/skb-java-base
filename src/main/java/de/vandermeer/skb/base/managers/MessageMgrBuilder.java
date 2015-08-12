@@ -270,4 +270,5 @@ public class MessageMgrBuilder {
 		}
 		return new MessageMgr(this.appID, this.messageHandlers, this.doCollectMessages, this.stg);
 	}
+
 }

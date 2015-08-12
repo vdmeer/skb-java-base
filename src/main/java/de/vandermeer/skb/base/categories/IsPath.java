@@ -365,4 +365,5 @@ public interface IsPath extends CategoryIs, CategoryWithValue, HasDescription {
 		}
 		return new StrBuilder();
 	}
+
 }

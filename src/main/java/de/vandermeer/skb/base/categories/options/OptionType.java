@@ -25,11 +25,23 @@ import de.vandermeer.skb.base.categories.kvt.IsType;
  * @since      v0.0.6 (was in skb-categories before)
  */
 public enum OptionType implements IsType<String> {
+
+	/** A boolean type. */
 	BOOLEAN,
+
+	/** A character type. */
 	CHARACHTER,
+
+	/** A character array type. */
 	CHARACTER_ARRAY,
+
+	/** A string type. */
 	STRING,
+
+	/** A double type. */
 	DOUBLE,
+
+	/** An integer type. */
 	INTEGER
 	;
 
@@ -37,4 +49,5 @@ public enum OptionType implements IsType<String> {
 	public String _value() {
 		return this.name();
 	}
+
 }

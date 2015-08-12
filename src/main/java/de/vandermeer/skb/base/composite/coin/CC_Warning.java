@@ -87,4 +87,5 @@ public final class CC_Warning extends Abstract_CC {
 		ret.msglist.addAll(this.msglist);
 		return ret;
 	}
+
 }

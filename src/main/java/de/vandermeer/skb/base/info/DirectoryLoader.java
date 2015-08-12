@@ -15,7 +15,6 @@
 
 package de.vandermeer.skb.base.info;
 
-
 /**
  * An directory information loader.
  *
@@ -30,4 +29,5 @@ public interface DirectoryLoader extends InfoLoader {
 
 	@Override
 	FileSourceList load();
+
 }

@@ -30,4 +30,5 @@ public interface IsGroup extends CategoryIs, CategoryWithValue, HasDescription {
 	default Object group(){
 		return this._value();
 	}
+
 }

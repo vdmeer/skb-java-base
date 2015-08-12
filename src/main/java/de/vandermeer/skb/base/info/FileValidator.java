@@ -119,4 +119,5 @@ public class FileValidator extends AbstractValidator {
 	public String getOriginal(){
 		return this.original;
 	}
+
 }

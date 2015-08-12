@@ -17,7 +17,6 @@ package de.vandermeer.skb.base.info;
 
 import de.vandermeer.skb.base.info.DirectorySource;
 
-
 /**
  * Tests for {@link DirectorySource}.
  *

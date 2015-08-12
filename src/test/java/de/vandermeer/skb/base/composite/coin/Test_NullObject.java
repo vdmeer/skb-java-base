@@ -93,4 +93,5 @@ public class Test_NullObject {
 		NONull td2 = td1.getCopy();
 		assertEquals(td1, td2);
 	}
+
 }

@@ -47,4 +47,5 @@ public enum NONode implements NullObject {
 	public String toString() {
 		return Skb_ClassUtils.parentKV(Com_Coin.class, this.getClass(), this.getType()).toString();
 	}
+
 }

@@ -88,22 +88,6 @@ public interface SkbShell extends HasPrompt {
 		}
 	}
 
-//	/**
-//	 * Returns true if the shell has errors (last errors), false otherwise.
-//	 * @return true if errors are collected, false otherwise
-//	 */
-//	default boolean hasErrors(){
-//		return (this.getLastErrors().size()==0)?false:true;
-//	}
-
-//	/**
-//	 * Returns true if the shell has infos (last infos), false otherwise.
-//	 * @return true if infos are collected, false otherwise
-//	 */
-//	default boolean hasInfos(){
-//		return (this.getLastInfos().size()==0)?false:true;
-//	}
-
 	/**
 	 * Returns the description of the shell.
 	 * @return shell description
@@ -180,13 +164,6 @@ public interface SkbShell extends HasPrompt {
 			this.getMessageManager().report(MessageMgr.createErrorMessage("comand <{}> not found in shell, taken from line: <{}>", command, in));
 			ret = -1;
 		}
-
-//		if(this.getLastErrors().size()>0){
-//			Skb_Console.conError("{}", this.getLastErrors().render());
-//		}
-//		if(this.getLastInfos().size()>0){
-//			Skb_Console.conInfo("{}", this.getLastInfos().render());
-//		}
 		return ret;
 	}
 
@@ -236,4 +213,5 @@ public interface SkbShell extends HasPrompt {
 	 * @return the shell's message manager, should not be null
 	 */
 	MessageMgr getMessageManager();
+
 }

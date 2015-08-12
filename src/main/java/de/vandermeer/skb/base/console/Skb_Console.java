@@ -251,4 +251,5 @@ public abstract class Skb_Console {
 		}
 		return ret;
 	}
+
 }

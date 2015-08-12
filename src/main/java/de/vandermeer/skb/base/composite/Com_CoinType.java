@@ -25,6 +25,7 @@ import de.vandermeer.skb.base.categories.kvt.IsType;
  * @since      v0.0.6 (was in skb-composite before)
  */
 public enum Com_CoinType implements IsType<String> {
+
 	/** Node, part of a tree with no attached value but children. */
 	NO_NODE ("a node object marking the node of a tree"),
 
@@ -84,4 +85,5 @@ public enum Com_CoinType implements IsType<String> {
 	public String type() {
 		return this.type;
 	}
+
 }

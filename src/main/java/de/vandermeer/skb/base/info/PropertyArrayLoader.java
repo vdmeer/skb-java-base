@@ -18,7 +18,6 @@ package de.vandermeer.skb.base.info;
 import java.util.List;
 import java.util.Properties;
 
-
 /**
  * An file loader for a set of Java property files.
  *

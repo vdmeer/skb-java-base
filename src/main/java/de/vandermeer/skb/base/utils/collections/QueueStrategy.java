@@ -175,4 +175,5 @@ public enum QueueStrategy implements IsQueueStrategy {
 		}
 		return ret;
 	}
+
 }

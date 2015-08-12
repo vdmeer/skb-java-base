@@ -110,4 +110,5 @@ public class STGroupValidator extends AbstractValidator {
 		}
 		return StringUtils.substringBeforeLast(ret, ".");
 	}
+
 }

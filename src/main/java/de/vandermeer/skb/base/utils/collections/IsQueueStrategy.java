@@ -32,4 +32,5 @@ public interface IsQueueStrategy extends IsCollectionStrategy {
 
 	@Override
 	<T> Queue<T> get(Class<T> T);
+
 }

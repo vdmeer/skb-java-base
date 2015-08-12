@@ -15,7 +15,6 @@
 
 package de.vandermeer.skb.base.info;
 
-
 /**
  * An file set information loader.
  *
@@ -27,4 +26,5 @@ public interface FileSourceListLoader extends InfoLoader {
 
 	@Override
 	FileSourceList getSource();
+
 }

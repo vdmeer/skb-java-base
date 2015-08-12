@@ -63,4 +63,5 @@ public class Test_PropertyFileLoader {
 		assertTrue(p.containsKey("test1.test2.test3"));
 		assertTrue("1 2 3".equals(p.get("test1.test2.test3")));
 	}
+
 }

@@ -38,4 +38,5 @@ public class AbstractSource implements InfoSource {
 	public Object getSource() {
 		return null;
 	}
+
 }

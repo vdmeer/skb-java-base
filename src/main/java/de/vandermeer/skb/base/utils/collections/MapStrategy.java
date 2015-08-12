@@ -125,4 +125,5 @@ public enum MapStrategy implements IsMapStrategy {
 	public String toString() {
 		return this.name();
 	}
+
 }

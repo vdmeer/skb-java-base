@@ -63,4 +63,5 @@ public interface IsPropertyKey extends IsKey_String, OfGroup {
 	static IsPropertyKey create(){
 		return IsPropertyKey.create(null);
 	}
+
 }

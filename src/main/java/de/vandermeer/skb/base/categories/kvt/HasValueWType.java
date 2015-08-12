@@ -29,4 +29,5 @@ public interface HasValueWType<V, T> extends HasValue<V> {
 	 * @return type of a value value
 	 */
 	IsType<T> getValueType();
+
 }

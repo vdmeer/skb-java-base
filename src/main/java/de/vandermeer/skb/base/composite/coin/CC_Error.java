@@ -100,4 +100,5 @@ public final class CC_Error extends Abstract_CC {
 		ret.msglist.addAll(this.msglist);
 		return ret;
 	}
+
 }

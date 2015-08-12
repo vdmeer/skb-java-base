@@ -15,7 +15,6 @@
 
 package de.vandermeer.skb.base.categories.kvt;
 
-
 /**
  * Category of objects that represent a key/value combination.
  *

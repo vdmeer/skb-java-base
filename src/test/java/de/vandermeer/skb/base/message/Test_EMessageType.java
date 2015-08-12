@@ -39,4 +39,5 @@ public class Test_EMessageType {
 //			assertEquals("SKBLogger" + loggerAdd, values[i].getLoggerName());
 		}
 	}
+
 }

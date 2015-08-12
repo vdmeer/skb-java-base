@@ -34,4 +34,5 @@ public interface Com_Coin extends Com_Leaf, Com_Node, HasType<String> {
 
 	@Override
 	Com_Coin getCopy();
+
 }

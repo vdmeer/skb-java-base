@@ -95,4 +95,5 @@ public class CommonsDirectoryWalker extends DirectoryWalker<FileSource> implemen
 	protected void handleFile(File file, int depth, Collection<FileSource> results) throws IOException {
 		results.add(new FileSource(file, this.source.getFullDirecoryName()));
 	}
+
 }

@@ -102,4 +102,5 @@ public class Test_Skb_ClassUtils {
 		assertFalse(Skb_ClassUtils.INSTANCE_OF(new clsDB()).test(new clsB()));
 		assertFalse(Skb_ClassUtils.INSTANCE_OF(new clsDB()).test(new clsA()));
 	}
+
 }

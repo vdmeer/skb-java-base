@@ -74,4 +74,5 @@ public interface IsKey_String extends CategoryIs, CategoryWithValue, HasDescript
 	static IsKey_String create(){
 		return IsKey_String.create(null);
 	}
+
 }

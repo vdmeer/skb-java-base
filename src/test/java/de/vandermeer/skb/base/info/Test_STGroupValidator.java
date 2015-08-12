@@ -31,7 +31,6 @@ import org.stringtemplate.v4.STGroupFile;
 
 import de.vandermeer.skb.base.info.STGroupValidator;
 
-
 /**
  * Tests for {@link STGroupValidator}.
  *

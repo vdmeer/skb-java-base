@@ -32,4 +32,5 @@ public interface IsDequeStrategy extends IsCollectionStrategy {
 
 	@Override
 	<T> Deque<T> get(Class<T> T);
+
 }

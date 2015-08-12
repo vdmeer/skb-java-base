@@ -49,4 +49,5 @@ public interface InfoTarget {
 	default boolean isValid(){
 		return (this.getInitError().size()==0)?true:false;
 	}
+
 }

@@ -41,4 +41,5 @@ public interface IsMapStrategy extends IsMCStrategy {
 	 * @return new map view
 	 */
 	<T> Map<String, T> get(Map<String, T> map);
+
 }

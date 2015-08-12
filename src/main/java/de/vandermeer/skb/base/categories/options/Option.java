@@ -31,10 +31,24 @@ import de.vandermeer.skb.base.utils.Skb_ClassUtils;
  */
 public interface Option<V> extends HasDescription, KeyValueType<String, V, String> {
 
+	/**
+	 * Returns a log representation of the option
+	 * @param clazz class for logging
+	 * @return a log representation of the option
+	 */
 	default String toLog(Class<?> clazz){
 		return Skb_ClassUtils.kv(clazz, getKey()._value(), getValue()._value(), getDescription()).toString();
 	}
 
+	/**
+	 * Creates a new option.
+	 * @param key option key
+	 * @param value option value
+	 * @param type option type
+	 * @param description option description
+	 * @param <V> option value
+	 * @return new option
+	 */
 	static <V> Option<V> create(final IsKey<String> key, final IsValue<V> value, final OptionType type, final String description){
 		return new Option<V>(){
 			@Override public IsKey<String> getKey() {return key;}
@@ -45,6 +59,14 @@ public interface Option<V> extends HasDescription, KeyValueType<String, V, Strin
 		};
 	}
 
+	/**
+	 * Creates a new option.
+	 * @param key option key
+	 * @param value option value
+	 * @param description option description
+	 * @param <V> option value
+	 * @return new option
+	 */
 	static <V> Option<V> create(final String key, V value, String description){
 		OptionType type = null;
 		if(value.getClass().equals(Boolean.class)){
@@ -71,6 +93,13 @@ public interface Option<V> extends HasDescription, KeyValueType<String, V, Strin
 		return Option.create(IsKey.create(key), IsValue.create(value), type, description);
 	}
 
+	/**
+	 * Creates a new option.
+	 * @param key option key
+	 * @param value option value
+	 * @param <V> option value
+	 * @return new option
+	 */
 	static <V> Option<V> create(final String key, V value){
 		return Option.create(key, value, null);
 	}

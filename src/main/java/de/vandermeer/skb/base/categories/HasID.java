@@ -28,4 +28,5 @@ public interface HasID extends CategoryHas {
 	 * @return ID
 	 */
 	IsID getID();
+
 }

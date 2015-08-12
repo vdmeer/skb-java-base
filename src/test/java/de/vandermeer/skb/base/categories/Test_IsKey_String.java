@@ -72,4 +72,5 @@ public class Test_IsKey_String {
 	@Test public void test_key2Value(){
 		assertNull(CategoryWithValue.GET_VALUESTRING(null));
 	}
+
 }

@@ -61,7 +61,6 @@ public class Ci_Wait extends AbstractCommandInterpreter {
 		}
 		catch (InterruptedException e) {
 			mm.report(MessageMgr.createErrorMessage("interrupted in wait {}", e.getMessage()));
-//			shell.getLastErrors().add("{}: interrupted in wait {}", new Object[]{shell.getPromptName(), e.getMessage()});
 		}
 		return 0;
 	}

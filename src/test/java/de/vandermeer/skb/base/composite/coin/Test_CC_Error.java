@@ -63,4 +63,5 @@ public class Test_CC_Error {
 		assertEquals(2, err.getList().size());		//size now 2
 		assertEquals(2, err.size());				//size now 2
 	}
+
 }

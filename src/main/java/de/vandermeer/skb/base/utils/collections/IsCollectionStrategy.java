@@ -59,4 +59,5 @@ public interface IsCollectionStrategy extends IsMCStrategy {
 	 * @return new collection
 	 */
 	<T> Collection<T> get(Class<T> T);
+
 }

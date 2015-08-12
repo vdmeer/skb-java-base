@@ -50,4 +50,5 @@ public class Skb_BaseException extends RuntimeException {
 	public Skb_BaseException(String msg, String cause){
 		super(msg, new Error(cause));
 	}
+
 }

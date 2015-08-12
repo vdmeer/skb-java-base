@@ -60,4 +60,5 @@ public interface InfoLoader {
 		}
 		return true;
 	}
+
 }

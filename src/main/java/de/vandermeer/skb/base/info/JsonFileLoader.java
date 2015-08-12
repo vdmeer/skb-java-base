@@ -15,7 +15,6 @@
 
 package de.vandermeer.skb.base.info;
 
-
 /**
  * An file loader for JSON property files.
  *

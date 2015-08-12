@@ -32,4 +32,5 @@ public interface IsListStrategy extends IsCollectionStrategy {
 
 	@Override
 	<T> List<T> get(Class<T> T);
+
 }

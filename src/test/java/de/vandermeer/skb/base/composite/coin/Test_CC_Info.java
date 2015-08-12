@@ -62,4 +62,5 @@ public class Test_CC_Info {
 		assertEquals(2, info.getList().size());		//size now 2
 		assertEquals(2, info.size());				//size now 2
 	}
+
 }
