@@ -1,4 +1,4 @@
-v0.0.13 - maintenance - 2015-##-##
+v0.0.13 - maintenance - 2015-08-13
 ----------------------------------
 * removed Skb_ArrayUtils since we can now use the originals from asciitable
 * removed Skb_ToStringStyle since we can now use the style defined in asciitable
