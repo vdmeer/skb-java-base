@@ -24,7 +24,7 @@ import org.stringtemplate.v4.STGroup;
  * Factory for Skb Shell artifacts.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class SkbShellFactory {
@@ -122,6 +122,9 @@ public class SkbShellFactory {
 	 * @throws IllegalArgumentException if command or description was null
 	 */
 	public static SkbShellCommand newCommand(String command, SkbShellArgument argument, SkbShellCommandCategory category, String description, String addedHelp){
+		if(argument==null){
+			return new AbstractShellCommand(command, null, category, description, addedHelp);
+		}
 		return SkbShellFactory.newCommand(command, new SkbShellArgument[]{argument}, category, description, addedHelp);
 	}
 
@@ -135,7 +138,7 @@ public class SkbShellFactory {
 	 * @throws IllegalArgumentException if command or description was null
 	 */
 	public static SkbShellCommand newCommand(String command, SkbShellCommandCategory category, String description, String addedHelp){
-		return SkbShellFactory.newCommand(command, (SkbShellArgument) null, category, description, addedHelp);
+		return new AbstractShellCommand(command, null, category, description, addedHelp);
 	}
 
 	/**

@@ -1,3 +1,14 @@
+v0.0.13 - maintenance - 2015-08-13
+----------------------------------
+* removed Skb_ArrayUtils since we can now use the originals from asciitable
+* removed Skb_ToStringStyle since we can now use the style defined in asciitable
+	** added kv methods to Skb_ClassUtils
+* renamed tools to managers
+* rewrote ReportManager as MessageMgr with supporting builder and interface
+* added MessageMgr to SkbShell and changed all related code
+* fixed bug on SkbShellFactory for command creation (null argument handling on most methods was wrong)
+
+
 v0.0.12 - maintenance - 2015-08-12
 ----------------------------------
 * shell package

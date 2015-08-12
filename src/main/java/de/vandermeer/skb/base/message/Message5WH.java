@@ -20,8 +20,8 @@ import org.apache.commons.lang3.text.StrBuilder;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 
+import de.vandermeer.asciitable.commons.ObjectToStringStyle;
 import de.vandermeer.skb.base.Skb_Renderable;
-import de.vandermeer.skb.base.Skb_ToStringStyle;
 
 /**
  * Standard SKB message.
@@ -68,7 +68,7 @@ The Author: info from Message5WHTests in the class API documentation &gt;&gt; sh
  * </pre>
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.1
  */
 public class Message5WH implements Skb_Renderable {
@@ -239,7 +239,7 @@ public class Message5WH implements Skb_Renderable {
 	 */
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, Skb_ToStringStyle.TS_STYLE)
+		return new ToStringBuilder(this, ObjectToStringStyle.getStyle())
 			.append("who     ", this.who, false)
 			.append("who     ", this.who)
 			.append("what    ", this.what)

@@ -21,7 +21,7 @@ import org.apache.commons.lang3.text.StrBuilder;
  * Callback interface for a prompt to be printed on empty input.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.5
  */
 public interface HasPrompt {

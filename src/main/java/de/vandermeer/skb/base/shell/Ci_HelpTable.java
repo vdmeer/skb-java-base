@@ -28,13 +28,14 @@ import de.vandermeer.asciitable.v2.core.V2_Width;
 import de.vandermeer.asciitable.v2.core.V2_WidthByAbsolute;
 import de.vandermeer.asciitable.v2.themes.V2_E_TableThemes;
 import de.vandermeer.skb.base.console.Skb_Console;
+import de.vandermeer.skb.base.managers.MessageMgr;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 
 /**
  * An interpreter for the 'help' shell command using an ASCII table for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_HelpTable extends Ci_Help {
@@ -47,17 +48,19 @@ public class Ci_HelpTable extends Ci_Help {
 
 	/**
 	 * Returns an new 'help' command interpreter for table output with default theme {@link V2_E_TableThemes#UTF_DOUBLE_LIGHT} and 76 character width.
+	 * @param skbShell the calling shell
 	 */
-	public Ci_HelpTable(){
-		this(null);
+	public Ci_HelpTable(SkbShell skbShell){
+		this(skbShell, null);
 	}
 
 	/**
 	 * Returns an new 'help' command interpreter for table output.
+	 * @param skbShell the calling shell
 	 * @param theme a theme for the table
 	 */
-	public Ci_HelpTable(V2_E_TableThemes theme){
-		super();
+	public Ci_HelpTable(SkbShell skbShell, V2_E_TableThemes theme){
+		super(skbShell);
 
 		this.theme = (theme==null)?V2_E_TableThemes.PLAIN_7BIT_STRONG:theme;
 		this.width = new V2_WidthByAbsolute().setWidth(76);
@@ -76,91 +79,21 @@ public class Ci_HelpTable extends Ci_Help {
 	}
 
 	@Override
-	public int interpretCommand(String command, LineParser lp, SkbShell shell) {
-		int ret = super.interpretCommand(command, lp, shell);
+	public int interpretCommand(String command, LineParser lp, MessageMgr mm) {
+		int ret = super.interpretCommand(command, lp, mm);
 		if(ret!=0){
 			return ret;
 		}
 
-		V2_AsciiTable at = null;
-		at = new V2_AsciiTable(2);
+		V2_AsciiTable at = new V2_AsciiTable(2);
 		at.addRuleStrong();
 
 		String toHelp = lp.getArgs();
 		if(toHelp==null){
-			//collect all commands belonging to a particular category
-			String defKey = "__standard";
-			Map<String, TreeMap<String, SkbShellCommand>> cat2Cmd = new TreeMap<>();
-			for(CommandInterpreter ci : shell.getCommandMap().values()){
-				for(SkbShellCommand ssc : ci.getCommands().values()){
-					String cat = defKey;
-					if(ssc.getCategory()!=null){
-						cat = ssc.getCategory().getCategory();
-					}
-					if(!cat2Cmd.containsKey(cat)){
-						cat2Cmd.put(cat, new TreeMap<>());
-					}
-					cat2Cmd.get(cat).put(ssc.getCommand(), ssc);
-				}
-			}
-
-			//no argument, means general help
-			at.addRow(null, shell.getDisplayName() + "-" + shell.getDescription());
-			at.addRule();
-
-			//do the commands per category, starting with "__standard"
-			for(String cat : cat2Cmd.keySet()){
-				String catDescr = cat;
-				if(defKey.equals(cat)){
-					catDescr = "standard commands";
-				}
-				at.addRow(catDescr, new StrBuilder().appendWithSeparators(cat2Cmd.get(cat).keySet(), ", "));
-				at.addRule();
-			}
-			at.addRow(null, "try: 'help <command>' for more details");
+			this.generalHelp(at);
 		}
 		else{
-			if(shell.getCommandMap().containsKey(toHelp)){
-				//we have a command to show help for, collect all information and present help
-
-				SkbShellCommand ssc = shell.getCommandMap().get(toHelp).getCommands().get(toHelp);
-				TreeMap<String, SkbShellArgument> args = new TreeMap<>();
-				if(ssc.getArguments()!=null){
-					for(SkbShellArgument ssa : ssc.getArguments()){
-						if(ssa.isOptional()){
-							args.put("[" + ssa.key() + "]", ssa);
-						}
-						else{
-							args.put("<" + ssa.key() + ">", ssa);
-						}
-					}
-				}
-
-				at.addRow(ssc.getCommand(), new StrBuilder().appendWithSeparators(args.keySet(), ", "));
-				at.addRow("", ssc.getDescription());
-
-				for(SkbShellArgument ssa : args.values()){
-					if(ssa.valueSet()!=null && ssa.addedHelp()!=null){
-						at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet())));
-					}
-					else if(ssa.valueSet()!=null && ssa.addedHelp()==null){
-						at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet())));
-					}
-					else if(ssa.valueSet()==null && ssa.addedHelp()!=null){
-						at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp()));
-					}
-					else{
-						at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription()));
-					}
-				}
-				if(ssc.addedHelp()!=null){
-					at.addRow("", ssc.addedHelp());
-				}
-			}
-			else{
-				Skb_Console.conInfo("");
-				Skb_Console.conInfo("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{shell.getPromptName(), toHelp});
-			}
+			this.specificHelp(at, toHelp);
 		}
 		at.addRule();
 
@@ -173,5 +106,90 @@ public class Ci_HelpTable extends Ci_Help {
 		Skb_Console.conInfo(rat.toString());
 
 		return 0;
+	}
+
+	/**
+	 * Processes general help with no specific command requested.
+	 * @param at table to add help information to
+	 * @param toHelp the command to help with
+	 */
+	protected void specificHelp(V2_AsciiTable at, String toHelp){
+		if(this.skbShell.getCommandMap().containsKey(toHelp)){
+			//we have a command to show help for, collect all information and present help
+			SkbShellCommand ssc = this.skbShell.getCommandMap().get(toHelp).getCommands().get(toHelp);
+			TreeMap<String, SkbShellArgument> args = new TreeMap<>();
+			if(ssc.getArguments()!=null){
+				for(SkbShellArgument ssa : ssc.getArguments()){
+					if(ssa.isOptional()){
+						args.put("[" + ssa.key() + "]", ssa);
+					}
+					else{
+						args.put("<" + ssa.key() + ">", ssa);
+					}
+				}
+			}
+
+			at.addRow(ssc.getCommand(), new StrBuilder().appendWithSeparators(args.keySet(), ", "));
+			at.addRow("", ssc.getDescription());
+
+			for(SkbShellArgument ssa : args.values()){
+				if(ssa.valueSet()!=null && ssa.addedHelp()!=null){
+					at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet())));
+				}
+				else if(ssa.valueSet()!=null && ssa.addedHelp()==null){
+					at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet())));
+				}
+				else if(ssa.valueSet()==null && ssa.addedHelp()!=null){
+					at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp()));
+				}
+				else{
+					at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription()));
+				}
+			}
+			if(ssc.addedHelp()!=null){
+				at.addRow("", ssc.addedHelp());
+			}
+		}
+		else{
+			Skb_Console.conInfo("");
+			Skb_Console.conInfo("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{this.skbShell.getPromptName(), toHelp});
+		}
+	}
+
+	/**
+	 * Processes general help with no specific command requested.
+	 * @param at table to add help information to
+	 */
+	protected void generalHelp(V2_AsciiTable at){
+		//collect all commands belonging to a particular category
+		String defKey = "__standard";
+		Map<String, TreeMap<String, SkbShellCommand>> cat2Cmd = new TreeMap<>();
+		for(CommandInterpreter ci : this.skbShell.getCommandMap().values()){
+			for(SkbShellCommand ssc : ci.getCommands().values()){
+				String cat = defKey;
+				if(ssc.getCategory()!=null){
+					cat = ssc.getCategory().getCategory();
+				}
+				if(!cat2Cmd.containsKey(cat)){
+					cat2Cmd.put(cat, new TreeMap<>());
+				}
+				cat2Cmd.get(cat).put(ssc.getCommand(), ssc);
+			}
+		}
+
+		//no argument, means general help
+		at.addRow(null, this.skbShell.getDisplayName() + "-" + this.skbShell.getDescription());
+		at.addRule();
+
+		//do the commands per category, starting with "__standard"
+		for(String cat : cat2Cmd.keySet()){
+			String catDescr = cat;
+			if(defKey.equals(cat)){
+				catDescr = "standard commands";
+			}
+			at.addRow(catDescr, new StrBuilder().appendWithSeparators(cat2Cmd.get(cat).keySet(), ", "));
+			at.addRule();
+		}
+		at.addRow(null, "try: 'help <command>' for more details");
 	}
 }

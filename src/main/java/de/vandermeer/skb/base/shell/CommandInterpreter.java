@@ -18,11 +18,13 @@ package de.vandermeer.skb.base.shell;
 import java.util.Map;
 import java.util.Set;
 
+import de.vandermeer.skb.base.managers.MessageMgr;
+
 /**
  * An interpreter for a shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public interface CommandInterpreter {
@@ -31,7 +33,7 @@ public interface CommandInterpreter {
 	 * Interprets the given command.
 	 * @param command command for interpretation
 	 * @param lp a parser with the whole command line
-	 * @param shell the original calling shell
+	 * @param mm the message manager to use for reporting errors, warnings, and infos
 	 * @return
 	 * 			-3 if any of the input parameters was null, blank or not correct
 	 * 			-2 if command was found and interpreted but leads to an exit command for the shell,
@@ -39,7 +41,7 @@ public interface CommandInterpreter {
 	 * 			0 if command was found and interpretation was successful and did not lead to an exit command (exit shell),
 	 * 			greater than 0 otherwise (command found, interpreted, but some errors occurred)
 	 */
-	int interpretCommand(String command, LineParser lp, SkbShell shell);
+	int interpretCommand(String command, LineParser lp, MessageMgr mm);
 
 	/**
 	 * Returns the set of commands this interpreter does handle.

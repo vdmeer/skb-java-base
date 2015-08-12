@@ -23,15 +23,16 @@ import org.apache.commons.lang3.StringUtils;
 import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.info.CommonsDirectoryWalker;
 import de.vandermeer.skb.base.info.DirectoryLoader;
-import de.vandermeer.skb.base.info.FileSourceList;
 import de.vandermeer.skb.base.info.FileSource;
+import de.vandermeer.skb.base.info.FileSourceList;
 import de.vandermeer.skb.base.info.StringFileLoader;
+import de.vandermeer.skb.base.managers.MessageMgr;
 
 /**
  * An interpreter for the 'run' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_ScRun extends AbstractCommandInterpreter {
@@ -41,6 +42,9 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 
 	/** Flag for printing progress during script execution. */
 	protected boolean printProgress = true;
+
+	/** The calling shell, needed to parse lines. */
+	protected final SkbShell skbShell;
 
 	/** Extension for script files. */
 	public static String SCRIPT_FILE_EXTENSION = "ssc";
@@ -83,22 +87,25 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 
 	/**
 	 * Returns an new 'run' command interpreter which will print progress information.
+	 * @param skbShell the calling shell
 	 */
-	public Ci_ScRun(){
-		this(true);
+	public Ci_ScRun(SkbShell skbShell){
+		this(true, skbShell);
 	}
 
 	/**
 	 * Returns an new 'run' command interpreter.
 	 * @param printProgress flag for printing progress when executing commands from a file, true for yes, false for no
+	 * @param skbShell the calling shell
 	 */
-	public Ci_ScRun(boolean printProgress){
+	public Ci_ScRun(boolean printProgress, SkbShell skbShell){
 		super(new SkbShellCommand[]{SC_RUN, SC_INFO, SC_LS,});
 		this.printProgress = printProgress;
+		this.skbShell = skbShell;
 	}
 
 	@Override
-	public int interpretCommand(String command, LineParser lp, SkbShell shell) {
+	public int interpretCommand(String command, LineParser lp, MessageMgr mm) {
 		if(StringUtils.isBlank(command) || lp==null){
 			return -3;
 		}
@@ -107,64 +114,103 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		}
 
 		if(SC_RUN.getCommand().equals(command)){
-			String fileName = this.getFileName(lp);
-			String content = this.getContent(fileName, shell);
-			if(content==null){
-				return 1;
-			}
-
-			Skb_Console.conInfo("");
-			Skb_Console.conInfo("{}: running file {}", new Object[]{shell.getPromptName(), fileName});
-			for(String s : StringUtils.split(content, '\n')){
-				if(this.printProgress==true && Skb_Console.USE_CONSOLE==true){
-					System.out.print(".");
-				}
-				shell.parseLine(s);
-			}
-			this.lastScript = fileName;
-
-			//clear messages, they all should have been out already
-			shell.clearLastMessages();
+			return this.interpretRun(lp, mm);
 		}
 		else if(SC_LS.getCommand().equals(command)){
-			String directory = lp.getArgs();
-			IOFileFilter fileFilter = new WildcardFileFilter(new String[]{
-						"*.ssc"
-			});
-			DirectoryLoader dl = new CommonsDirectoryWalker(directory, DirectoryFileFilter.INSTANCE, fileFilter);
-			if(dl.getLoadErrors().size()>0){
-				shell.getLastErrors().add(dl.getLoadErrors());
-				return 1;
-			}
-			FileSourceList fsl = dl.load();
-			if(dl.getLoadErrors().size()>0){
-				shell.getLastErrors().add(dl.getLoadErrors());
-				return 1;
-			}
-			for(FileSource fs : fsl.getSource()){
-				//TODO need to adapt to new source return
-				Skb_Console.conInfo("{}: script file - dir <{}> file <{}>", new Object[]{shell.getPromptName(), directory, fs.getSetRootName()});
-			}
+			return this.interpretLs(lp, mm);
 		}
 		else if(SC_INFO.getCommand().equals(command)){
-			String fileName = this.getFileName(lp);
-			String content = this.getContent(fileName, shell);
-			if(content==null){
-				return 1;
-			}
-			String[] lines = StringUtils.split(content, "\n");
+			return this.interpretInfo(lp, mm);
+		}
+		return 0;
+	}
 
-			String info = null;
-			for(String s : lines){
-				if(s.startsWith("//**")){
-					info = StringUtils.substringAfter(s, "//**");
-					break;
-				}
-			}
-			if(info!=null){
-				Skb_Console.conInfo("{}: script {} - info: {}", new Object[]{shell.getPromptName(), fileName, info});
+	/**
+	 * Interprets the actual info command
+	 * @param lp line parser
+	 * @param mm the message manager to use for reporting errors, warnings, and infos
+	 * @return 0 for success, non-zero otherwise
+	 */
+	protected int interpretInfo(LineParser lp, MessageMgr mm){
+		String fileName = this.getFileName(lp);
+		String content = this.getContent(fileName, mm);
+		if(content==null){
+			return 1;
+		}
+		String[] lines = StringUtils.split(content, "\n");
+
+		String info = null;
+		for(String s : lines){
+			if(s.startsWith("//**")){
+				info = StringUtils.substringAfter(s, "//**");
+				break;
 			}
 		}
+		if(info!=null){
+			mm.report(MessageMgr.createInfoMessage("script {} - info: {}", new Object[]{fileName, info}));
+//			Skb_Console.conInfo("{}: script {} - info: {}", new Object[]{shell.getPromptName(), fileName, info});
+		}
+		return 0;
+	}
+
+	/**
+	 * Interprets the actual ls command
+	 * @param lp line parser
+	 * @param mm the message manager to use for reporting errors, warnings, and infos
+	 * @return 0 for success, non-zero otherwise
+	 */
+	protected int interpretLs(LineParser lp, MessageMgr mm){
+		String directory = lp.getArgs();
+		IOFileFilter fileFilter = new WildcardFileFilter(new String[]{
+					"*.ssc"
+		});
+		DirectoryLoader dl = new CommonsDirectoryWalker(directory, DirectoryFileFilter.INSTANCE, fileFilter);
+		if(dl.getLoadErrors().size()>0){
+			mm.report(dl.getLoadErrors());
+			return 1;
+		}
+		FileSourceList fsl = dl.load();
+		if(dl.getLoadErrors().size()>0){
+			mm.report(dl.getLoadErrors());
+			return 1;
+		}
+		for(FileSource fs : fsl.getSource()){
+			//TODO need to adapt to new source return
+			mm.report(MessageMgr.createInfoMessage("script file - dir <{}> file <{}>", directory, fs.getSetRootName()));
+//			Skb_Console.conInfo("{}: script file - dir <{}> file <{}>", new Object[]{shell.getPromptName(), directory, fs.getSetRootName()});
+		}
+		return 0;
+	}
+
+	/**
+	 * Interprets the actual run command
+	 * @param lp line parser
+	 * @param mm the message manager to use for reporting errors, warnings, and infos
+	 * @return 0 for success, non-zero otherwise
+	 */
+	protected int interpretRun(LineParser lp, MessageMgr mm){
+		String fileName = this.getFileName(lp);
+		String content = this.getContent(fileName, mm);
+		if(content==null){
+			return 1;
+		}
+
+		mm.report(MessageMgr.createInfoMessage(""));
+		mm.report(MessageMgr.createInfoMessage("running file {}", fileName));
+
+//		Skb_Console.conInfo("");
+//		Skb_Console.conInfo("{}: running file {}", new Object[]{shell.getPromptName(), fileName});
+
+		for(String s : StringUtils.split(content, '\n')){
+			if(this.printProgress==true && Skb_Console.USE_CONSOLE==true){
+				System.out.print(".");
+			}
+			this.skbShell.parseLine(s);
+		}
+		this.lastScript = fileName;
+
+		//clear messages, they all should have been out already
+//		shell.clearLastMessages();//TODO check
 		return 0;
 	}
 
@@ -187,23 +233,23 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 	/**
 	 * Returns the content of a string read from a file.
 	 * @param fileName name of file to read from
-	 * @param shell a shell for error messages
+	 * @param mm the message manager to use for reporting errors, warnings, and infos
 	 * @return null if no content could be found (error), content in string otherwise
 	 */
-	protected String getContent(String fileName, SkbShell shell){
+	protected String getContent(String fileName, MessageMgr mm){
 		StringFileLoader sfl = new StringFileLoader(fileName);
 		if(sfl.getLoadErrors().size()>0){
-			shell.getLastErrors().add(sfl.getLoadErrors());
+			mm.report(sfl.getLoadErrors());
 			return null;
 		}
 
 		String content = sfl.load();
 		if(sfl.getLoadErrors().size()>0){
-			shell.getLastErrors().add(sfl.getLoadErrors());
+			mm.report(sfl.getLoadErrors());
 			return null;
 		}
 		if(content==null){
-			shell.getLastErrors().add("run: unexpected problem with run script, content was null");
+			mm.report(MessageMgr.createErrorMessage("run: unexpected problem with run script, content was null"));
 			return null;
 		}
 		return content;

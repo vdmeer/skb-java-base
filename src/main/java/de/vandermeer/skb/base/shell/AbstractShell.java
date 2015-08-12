@@ -24,30 +24,26 @@ import java.util.TreeSet;
 
 import org.stringtemplate.v4.STGroup;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
-import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.console.NonBlockingReader;
 import de.vandermeer.skb.base.console.Skb_Console;
-import de.vandermeer.skb.base.info.STGroupValidator;
-import de.vandermeer.skb.base.message.Message5WH_Builder;
+import de.vandermeer.skb.base.managers.MessageMgr;
+import de.vandermeer.skb.base.managers.MessageMgrBuilder;
+import de.vandermeer.skb.base.message.EMessageType;
 
 /**
  * An abstract shell implementation with all basic features, use the {@link SkbShellFactory} or a sub-class to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractShell implements SkbShell {
 
-	/** Local list of errors collected during process, cleared for every new line parsing. */
-	protected final CC_Error errors = new CC_Error();
-
-	/** Local list of infos collected during process, cleared for every new line parsing. */
-	protected final CC_Info infos = new CC_Info();
-
 	/** Mapping of a set of commands to an associated command interpreter. */
 	protected final Map<String, CommandInterpreter> commandMap;
+
+	/** The shell's message manager. */
+	protected final MessageMgr mm;
 
 	/** Flag indicating if the shell is running. */
 	protected boolean isRunning = true;
@@ -60,9 +56,6 @@ public class AbstractShell implements SkbShell {
 
 	/** An object for notifications. */
 	protected Object notify;
-
-	/** The local String Template Group. */
-	protected STGroup stg;
 
 	/** The shell's identifier. */
 	protected String id;
@@ -131,30 +124,24 @@ public class AbstractShell implements SkbShell {
 		Skb_Console.USE_CONSOLE = useConsole;
 		this.commandMap = new HashMap<>();
 
-		if(stg!=null){
-			this.setSTGroup(stg);
-		}
-		if(this.stg==null){
-			//fall back
-			this.stg = AbstractShell.STG;
-		}
-
 		this.id = (id!=null)?id:"skbsh";
+
+		MessageMgrBuilder mmb = new MessageMgrBuilder(getPromptName(), true);
+		mmb.setStg(stg);//this will go wrong if the STG is not valid
+		mmb.setHandler(EMessageType.ERROR);
+		mmb.setHandler(EMessageType.WARNING);
+		mmb.setHandler(EMessageType.INFO);
+		mmb.enableMessageCollection();
+
+		this.mm = mmb.build();
+		if(this.mm==null){
+			throw new IllegalArgumentException("could not create MM, possibly wrong STG");
+		}
 	}
 
 	@Override
 	public String getID(){
 		return this.id;
-	}
-
-	@Override
-	public CC_Error getLastErrors() {
-		return this.errors;
-	}
-
-	@Override
-	public CC_Info getLastInfos() {
-		return this.infos;
 	}
 
 	@Override
@@ -262,17 +249,8 @@ public class AbstractShell implements SkbShell {
 	}
 
 	@Override
-	public boolean setSTGroup(STGroup stg) {
-		if(stg==null){
-			this.getLastErrors().add("{}: STG cannot be null", this.getPromptName());
-			return false;
-		}
-		STGroupValidator stgv =new STGroupValidator(stg, Message5WH_Builder.stChunks);
-		if(!stgv.isValid()){
-			this.getLastErrors().add(stgv.getValidationErrors());
-			return false;
-		}
-		this.stg = stg;
-		return true;
+	public MessageMgr getMessageManager() {
+		return this.mm;
 	}
+
 }

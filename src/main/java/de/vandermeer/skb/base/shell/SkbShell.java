@@ -22,57 +22,18 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrBuilder;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupString;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
-import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.console.HasPrompt;
-import de.vandermeer.skb.base.console.Skb_Console;
+import de.vandermeer.skb.base.managers.MessageMgr;
 
 /**
  * A shell with flexible adding of commands and auto-generation of help and other commands.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.8
  */
 public interface SkbShell extends HasPrompt {
-
-	/** Default STG for info and other messages, similar to Message5WH but w/o type. */
-	STGroup STG = new STGroupString(
-			"where(location, line, column) ::= <<\n" +
-			"<location;separator=\".\"><if(line&&column)> <line>:<column><elseif(!line&&!column)><elseif(!line)> -:<column><elseif(!column)> <line>:-<endif>\n"+
-			">>\n\n" +
-			"message5wh(reporter, type, who, when, where, what, why, how) ::= <<\n" +
-			"<if(reporter)><reporter>: <endif><if(who)><who> <endif><if(when)>at (<when>) <endif><if(where)>in <where> <endif><if(what)>\\>> <what><endif>" +
-			"<if(why)> \n       ==> <why><endif>\n" +
-			"<if(how)> \n       ==> <how><endif>\n" +
-			">>\n"
-	);
-
-	/**
-	 * Returns the STGroup file for the shell default is {@link #STG}.
-	 * @return STGroup file
-	 */
-	default STGroup getSTGroup(){
-		return SkbShell.STG;
-	}
-
-	/**
-	 * Sets the STGroup.
-	 * @param stg the new STGroup for the shell
-	 * @return true on success (no errors), false on error (errors in the error list)
-	 */
-	boolean setSTGroup(STGroup stg);
-
-	/**
-	 * Clears the list of last messages (infos and errors).
-	 */
-	default void clearLastMessages(){
-		this.getLastErrors().clear();
-		this.getLastInfos().clear();
-	}
 
 	/**
 	 * Adds a new command interpreter to the shell.
@@ -127,33 +88,21 @@ public interface SkbShell extends HasPrompt {
 		}
 	}
 
-	/**
-	 * Returns true if the shell has errors (last errors), false otherwise.
-	 * @return true if errors are collected, false otherwise
-	 */
-	default boolean hasErrors(){
-		return (this.getLastErrors().size()==0)?false:true;
-	}
+//	/**
+//	 * Returns true if the shell has errors (last errors), false otherwise.
+//	 * @return true if errors are collected, false otherwise
+//	 */
+//	default boolean hasErrors(){
+//		return (this.getLastErrors().size()==0)?false:true;
+//	}
 
-	/**
-	 * Returns true if the shell has infos (last infos), false otherwise.
-	 * @return true if infos are collected, false otherwise
-	 */
-	default boolean hasInfos(){
-		return (this.getLastInfos().size()==0)?false:true;
-	}
-
-	/**
-	 * Returns a list of collected errors from the last parsing process.
-	 * @return collected errors, empty list if none occurred
-	 */
-	CC_Error getLastErrors();
-
-	/**
-	 * Returns a list of collected infos from the last parsing process.
-	 * @return collected infos, empty list if none occurred
-	 */
-	CC_Info getLastInfos();
+//	/**
+//	 * Returns true if the shell has infos (last infos), false otherwise.
+//	 * @return true if infos are collected, false otherwise
+//	 */
+//	default boolean hasInfos(){
+//		return (this.getLastInfos().size()==0)?false:true;
+//	}
 
 	/**
 	 * Returns the description of the shell.
@@ -219,25 +168,25 @@ public interface SkbShell extends HasPrompt {
 			return 0;
 		}
 
-		this.clearLastMessages();
+		this.getMessageManager().clear();
 
 		int ret = 0;
 		LineParser lp = new LineParser(in);
 		String command = lp.getToken();
 		if(this.getCommandMap().containsKey(command)){
-			ret = this.getCommandMap().get(command).interpretCommand(command, lp, this);
+			ret = this.getCommandMap().get(command).interpretCommand(command, lp, this.getMessageManager());
 		}
 		else{
-			this.getLastErrors().add("{}: comand <{}> not found in shell, taken from line: <{}>", new Object[]{this.getPromptName(), command, in});
+			this.getMessageManager().report(MessageMgr.createErrorMessage("comand <{}> not found in shell, taken from line: <{}>", command, in));
 			ret = -1;
 		}
 
-		if(this.getLastErrors().size()>0){
-			Skb_Console.conError("{}", this.getLastErrors().render());
-		}
-		if(this.getLastInfos().size()>0){
-			Skb_Console.conInfo("{}", this.getLastInfos().render());
-		}
+//		if(this.getLastErrors().size()>0){
+//			Skb_Console.conError("{}", this.getLastErrors().render());
+//		}
+//		if(this.getLastInfos().size()>0){
+//			Skb_Console.conInfo("{}", this.getLastInfos().render());
+//		}
 		return ret;
 	}
 
@@ -281,4 +230,10 @@ public interface SkbShell extends HasPrompt {
 	 * 			greater than 0 otherwise
 	 */
 	int runShell(BufferedReader reader);
+
+	/**
+	 * Returns the shell's message manager.
+	 * @return the shell's message manager, should not be null
+	 */
+	MessageMgr getMessageManager();
 }

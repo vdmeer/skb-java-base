@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.vandermeer</groupId>
 	<artifactId>skb-base</artifactId>
-	<version>0.0.12</version>
+	<version>0.0.13</version>
 	<packaging>jar</packaging>
 
 	<name>SKB Base</name>
@@ -48,7 +48,7 @@
 	<scm>
 		<developerConnection>scm:git:git@github.com:vdmeer/skb-java-base.git</developerConnection>
 		<connection>scm:git:git://github.com/vdmeer/skb-java-base.git</connection>
-		<tag>skb-base-0.0.12</tag>
+		<tag>skb-base-0.0.13</tag>
 		<url>https://github.com/vdmeer/skb-java-base</url>
 	</scm>
 
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>de.vandermeer</groupId>
 			<artifactId>asciitable</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.1</version>
 		</dependency>
 <!--
 		<dependency>
@@ -147,7 +147,14 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
-		</dependency>	</dependencies>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.0.3-beta</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

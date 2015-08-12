@@ -16,11 +16,13 @@ package de.vandermeer.skb.base.shell;
 
 import org.apache.commons.lang3.StringUtils;
 
+import de.vandermeer.skb.base.managers.MessageMgr;
+
 /**
  * An abstract help command interpreter.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.12
  */
 public abstract class Ci_Help extends AbstractCommandInterpreter {
@@ -34,15 +36,20 @@ public abstract class Ci_Help extends AbstractCommandInterpreter {
 	/** The command for ?. */
 	public static final SkbShellCommand HELP_QM = SkbShellFactory.newCommand("?", SkbShellFactory.SIMPLE_COMMANDS, "general help, use 'help <cmd> for help on a specific command", null);
 
+	/** The calling shell, needed to parse lines. */
+	protected final SkbShell skbShell;
+
 	/**
 	 * Returns an new 'help' command interpreter for STG output.
+	 * @param skbShell the calling shell
 	 */
-	public Ci_Help(){
+	public Ci_Help(SkbShell skbShell){
 		super(new SkbShellCommand[]{HELP, HELP_H, HELP_QM});
+		this.skbShell = skbShell;
 	}
 
 	@Override
-	public int interpretCommand(String command, LineParser lp, SkbShell shell) {
+	public int interpretCommand(String command, LineParser lp, MessageMgr mm) {
 		if(StringUtils.isBlank(command) || lp==null){
 			return -3;
 		}

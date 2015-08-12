@@ -18,14 +18,14 @@ package de.vandermeer.skb.base.categories;
 import java.util.Comparator;
 
 import de.vandermeer.skb.base.Skb_Defaults;
-import de.vandermeer.skb.base.Skb_ToStringStyle;
 import de.vandermeer.skb.base.Skb_Transformer;
+import de.vandermeer.skb.base.utils.Skb_ClassUtils;
 
 /**
  * Comes with some value category.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.6 (was in skb-categories before)
  */
 public interface CategoryWithValue {
@@ -37,7 +37,7 @@ public interface CategoryWithValue {
 	Object _value();
 
 	default String toLog(Class<?> clazz){
-		return Skb_ToStringStyle.parentKV(clazz, Skb_Defaults.DefaultImpl.class, this._value()).toString();
+		return Skb_ClassUtils.parentKV(clazz, Skb_Defaults.DefaultImpl.class, this._value()).toString();
 	}
 
 	/**

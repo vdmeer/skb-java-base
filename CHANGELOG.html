@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>v0.0.12 - maintenance - 2015-08-12</title>
+<title>v0.0.13 - maintenance - 2015--</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -413,6 +413,40 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_v0_0_13_maintenance_2015_mark_mark">v0.0.13 - maintenance - 2015-<mark>-</mark></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>removed Skb_ArrayUtils since we can now use the originals from asciitable</p>
+</li>
+<li>
+<p>removed Skb_ToStringStyle since we can now use the style defined in asciitable</p>
+<div class="ulist">
+<ul>
+<li>
+<p>added kv methods to Skb_ClassUtils</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>renamed tools to managers</p>
+</li>
+<li>
+<p>rewrote ReportManager as MessageMgr with supporting builder and interface</p>
+</li>
+<li>
+<p>added MessageMgr to SkbShell and changed all related code</p>
+</li>
+<li>
+<p>fixed bug on SkbShellFactory for command creation (null argument handling on most methods was wrong)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_v0_0_12_maintenance_2015_08_12">v0.0.12 - maintenance - 2015-08-12</h2>
 <div class="sectionbody">
@@ -926,7 +960,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-12 00:18:54 IST
+Last updated 2015-08-12 19:01:47 IST
 </div>
 </div>
 </body>

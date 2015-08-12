@@ -15,9 +15,9 @@
 
 package de.vandermeer.skb.base.composite.coin;
 
-import de.vandermeer.skb.base.Skb_ToStringStyle;
 import de.vandermeer.skb.base.composite.Com_Coin;
 import de.vandermeer.skb.base.composite.Com_CoinType;
+import de.vandermeer.skb.base.utils.Skb_ClassUtils;
 
 /**
  * Null object to mark a node (in a tree or table).
@@ -26,7 +26,7 @@ import de.vandermeer.skb.base.composite.Com_CoinType;
  * this type should only be used to identify a node in a tree, but not to identify a specific instance or named node.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.12 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
 public enum NONode implements NullObject {
@@ -45,6 +45,6 @@ public enum NONode implements NullObject {
 
 	@Override
 	public String toString() {
-		return Skb_ToStringStyle.parentKV(Com_Coin.class, this.getClass(), this.getType()).toString();
+		return Skb_ClassUtils.parentKV(Com_Coin.class, this.getClass(), this.getType()).toString();
 	}
 }
