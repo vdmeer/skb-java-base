@@ -15,9 +15,9 @@
 
 package de.vandermeer.skb.base.composite.coin;
 
-import de.vandermeer.skb.base.Skb_ToStringStyle;
 import de.vandermeer.skb.base.composite.Com_Coin;
 import de.vandermeer.skb.base.composite.Com_CoinType;
+import de.vandermeer.skb.base.utils.Skb_ClassUtils;
 
 /**
  * Null object for 'none' results.
@@ -45,6 +45,6 @@ public enum NONone implements NullObject {
 
 	@Override
 	public String toString() {
-		return Skb_ToStringStyle.parentKV(Com_Coin.class, this.getClass(), this.getType()).toString();
+		return Skb_ClassUtils.parentKV(Com_Coin.class, this.getClass(), this.getType()).toString();
 	}
 }

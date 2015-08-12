@@ -20,8 +20,8 @@ import org.apache.commons.lang3.text.StrBuilder;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 
+import de.vandermeer.asciitable.commons.ObjectToStringStyle;
 import de.vandermeer.skb.base.Skb_Renderable;
-import de.vandermeer.skb.base.Skb_ToStringStyle;
 
 /**
  * Standard SKB message.
@@ -239,7 +239,7 @@ public class Message5WH implements Skb_Renderable {
 	 */
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, Skb_ToStringStyle.TS_STYLE)
+		return new ToStringBuilder(this, ObjectToStringStyle.getStyle())
 			.append("who     ", this.who, false)
 			.append("who     ", this.who)
 			.append("what    ", this.what)

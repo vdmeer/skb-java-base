@@ -18,8 +18,8 @@ package de.vandermeer.skb.base.categories;
 import java.util.Comparator;
 
 import de.vandermeer.skb.base.Skb_Defaults;
-import de.vandermeer.skb.base.Skb_ToStringStyle;
 import de.vandermeer.skb.base.Skb_Transformer;
+import de.vandermeer.skb.base.utils.Skb_ClassUtils;
 
 /**
  * Comes with some value category.
@@ -37,7 +37,7 @@ public interface CategoryWithValue {
 	Object _value();
 
 	default String toLog(Class<?> clazz){
-		return Skb_ToStringStyle.parentKV(clazz, Skb_Defaults.DefaultImpl.class, this._value()).toString();
+		return Skb_ClassUtils.parentKV(clazz, Skb_Defaults.DefaultImpl.class, this._value()).toString();
 	}
 
 	/**

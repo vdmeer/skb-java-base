@@ -2,8 +2,6 @@ package de.vandermeer.skb.base.shell;
 
 import org.junit.Test;
 
-import de.vandermeer.asciitable.v2.core.V2_WidthByColumns;
-
 public class Test_Shell {
 
 	@Test
@@ -11,9 +9,10 @@ public class Test_Shell {
 
 		SkbShell skbsh = SkbShellFactory.newShell();
 		skbsh.addCommandInterpreter(new Ci_Exit());
-		skbsh.addCommandInterpreter(new Ci_HelpTable().setWidth(new V2_WidthByColumns().add(10).add(66)));
+//		skbsh.addCommandInterpreter(new Ci_HelpTable(skbsh).setWidth(new V2_WidthByColumns().add(10).add(66)));
+		skbsh.addCommandInterpreter(new Ci_HelpStg(skbsh));
 		skbsh.addCommandInterpreter(new Ci_Wait());
-		skbsh.addCommandInterpreter(new Ci_ScRun());
+		skbsh.addCommandInterpreter(new Ci_ScRun(skbsh));
 //		skbsh.runShell();
 System.err.println("#");
 //		skbsh.runShell();

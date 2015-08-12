@@ -122,6 +122,9 @@ public class SkbShellFactory {
 	 * @throws IllegalArgumentException if command or description was null
 	 */
 	public static SkbShellCommand newCommand(String command, SkbShellArgument argument, SkbShellCommandCategory category, String description, String addedHelp){
+		if(argument==null){
+			return new AbstractShellCommand(command, null, category, description, addedHelp);
+		}
 		return SkbShellFactory.newCommand(command, new SkbShellArgument[]{argument}, category, description, addedHelp);
 	}
 
@@ -135,7 +138,7 @@ public class SkbShellFactory {
 	 * @throws IllegalArgumentException if command or description was null
 	 */
 	public static SkbShellCommand newCommand(String command, SkbShellCommandCategory category, String description, String addedHelp){
-		return SkbShellFactory.newCommand(command, (SkbShellArgument) null, category, description, addedHelp);
+		return new AbstractShellCommand(command, null, category, description, addedHelp);
 	}
 
 	/**

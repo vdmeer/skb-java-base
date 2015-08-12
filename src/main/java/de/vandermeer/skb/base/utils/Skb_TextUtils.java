@@ -87,24 +87,4 @@ public abstract class Skb_TextUtils {
 		};
 	}
 
-//	/**
-//	 * Returns a transformer that takes an object and returns a string array with wrapped lines of max length.
-//	 * For the input object, null and empty are allowed.
-//	 * The wrapping is done using StringUtils and WordUtils so that words are not broken into characters.
-//	 * @param length maximum length of a line
-//	 * @return transformer from object to String[], the transformation returns null if object was null or toString() returns null, empty array if empty string, array with lines of wrappings otherwise
-//	 */
-//	public static final Skb_Transformer<Object, String[]> WRAP_LINES(final int length){
-//		return new Skb_Transformer<Object, String[]>(){
-//			@Override public String[] transform(Object obj) {
-//				if(obj==null || obj.toString()==null){
-//					return null;
-//				}
-//				if("".equals(obj)){
-//					return new String[]{};
-//				}
-//				return StringUtils.split(WordUtils.wrap(obj.toString(), length, "@@@", true), "@@@");
-//			}
-//		};
-//	}
 }

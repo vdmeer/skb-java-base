@@ -17,6 +17,8 @@ package de.vandermeer.skb.base.shell;
 
 import org.apache.commons.lang3.StringUtils;
 
+import de.vandermeer.skb.base.managers.MessageMgr;
+
 /**
  * An interpreter for the 'exit' shell command.
  *
@@ -43,7 +45,7 @@ public class Ci_Exit extends AbstractCommandInterpreter {
 	}
 
 	@Override
-	public int interpretCommand(String command, LineParser lp, SkbShell shell) {
+	public int interpretCommand(String command, LineParser lp, MessageMgr mm) {
 		if(StringUtils.isBlank(command) || lp==null){
 			return -3;
 		}

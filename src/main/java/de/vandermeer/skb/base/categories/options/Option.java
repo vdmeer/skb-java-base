@@ -16,11 +16,11 @@
 package de.vandermeer.skb.base.categories.options;
 
 import de.vandermeer.skb.base.Skb_Defaults;
-import de.vandermeer.skb.base.Skb_ToStringStyle;
 import de.vandermeer.skb.base.categories.HasDescription;
 import de.vandermeer.skb.base.categories.kvt.IsKey;
 import de.vandermeer.skb.base.categories.kvt.IsValue;
 import de.vandermeer.skb.base.categories.kvt.KeyValueType;
+import de.vandermeer.skb.base.utils.Skb_ClassUtils;
 
 /**
  * An option interface.
@@ -32,7 +32,7 @@ import de.vandermeer.skb.base.categories.kvt.KeyValueType;
 public interface Option<V> extends HasDescription, KeyValueType<String, V, String> {
 
 	default String toLog(Class<?> clazz){
-		return Skb_ToStringStyle.kv(clazz, getKey()._value(), getValue()._value(), getDescription()).toString();
+		return Skb_ClassUtils.kv(clazz, getKey()._value(), getValue()._value(), getDescription()).toString();
 	}
 
 	static <V> Option<V> create(final IsKey<String> key, final IsValue<V> value, final OptionType type, final String description){

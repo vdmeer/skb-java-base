@@ -17,6 +17,8 @@ package de.vandermeer.skb.base.utils;
 
 import java.util.function.Predicate;
 
+import org.apache.commons.lang3.text.StrBuilder;
+
 import de.vandermeer.skb.base.Skb_BaseException;
 
 /**
@@ -109,5 +111,61 @@ public abstract class Skb_ClassUtils {
 				}
 			}
 		};
+	}
+
+	/**
+	 * Returns a builder using parent class, class and value.
+	 * @param parent parent class for the string
+	 * @param clazz current class for the string
+	 * @param values values for the string, printed comma separated
+	 * @return a StrBuilder combining the inputs
+	 */
+	public static StrBuilder parentKV(Class<?> parent, Class<?> clazz, Object ... values){
+		StrBuilder ret=new StrBuilder(50)
+			.append(parent.getSimpleName())
+			.append('(')
+			.append(clazz.getSimpleName())
+			.append(')')
+			.append(": ")
+			.appendWithSeparators(values, ", ");
+		;
+		return ret;
+	}
+
+	/**
+	 * Returns a builder using parent class, class and value.
+	 * @param parent parent class for the string
+	 * @param clazz current class for the string
+	 * @param value value for the string, printed comma separated
+	 * @return a StrBuilder combining the inputs
+	 */
+	public static StrBuilder parentKV(Class<?> parent, Class<?> clazz, Object value){
+		return Skb_ClassUtils.parentKV(parent, clazz, new Object[]{value});
+	}
+
+	/**
+	 * Returns a builder using the class and the value
+	 * @param clazz current class for the string
+	 * @param values values for the string, printed comma separated
+	 * @return a StrBuilder combining the inputs
+	 */
+	public static StrBuilder kv(Class<?> clazz, Object ... values){
+		StrBuilder ret=new StrBuilder(50)
+			.append(clazz.getSimpleName())
+			.append('[')
+			.appendWithSeparators(values, ", ")
+			.append(']')
+		;
+		return ret;
+	}
+
+	/**
+	 * Returns a builder using the class and the value
+	 * @param clazz current class for the string
+	 * @param value value for the string, printed comma separated
+	 * @return a StrBuilder combining the inputs
+	 */
+	public static StrBuilder kv(Class<?> clazz, Object value){
+		return Skb_ClassUtils.kv(clazz, new Object[]{value});
 	}
 }

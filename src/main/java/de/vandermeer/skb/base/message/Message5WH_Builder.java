@@ -35,7 +35,7 @@ import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
- * @since      v0.0.7 (most tests where in the message tests before)
+ * @since      v0.0.7
  */
 public class Message5WH_Builder {
 

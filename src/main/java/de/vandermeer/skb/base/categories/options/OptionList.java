@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import de.vandermeer.skb.base.Skb_ToStringStyle;
+import de.vandermeer.asciitable.commons.ObjectToStringStyle;
 
 /**
  * A list of options.
@@ -258,7 +258,7 @@ public class OptionList {
 
 	@Override
 	public String toString(){
-		ToStringBuilder ret=new ToStringBuilder(this, Skb_ToStringStyle.TS_STYLE)
+		ToStringBuilder ret=new ToStringBuilder(this, ObjectToStringStyle.getStyle())
 		.append("options   ", this.options, false)
 		.append("options   ", this.options);
 		return ret.toString();

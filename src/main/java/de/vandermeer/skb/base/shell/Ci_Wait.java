@@ -17,6 +17,8 @@ package de.vandermeer.skb.base.shell;
 
 import org.apache.commons.lang3.StringUtils;
 
+import de.vandermeer.skb.base.managers.MessageMgr;
+
 /**
  * An interpreter for the 'wait' shell command.
  *
@@ -46,7 +48,7 @@ public class Ci_Wait extends AbstractCommandInterpreter {
 	}
 
 	@Override
-	public int interpretCommand(String command, LineParser lp, SkbShell shell) {
+	public int interpretCommand(String command, LineParser lp, MessageMgr mm) {
 		if(StringUtils.isBlank(command) || lp==null){
 			return -3;
 		}
@@ -58,7 +60,8 @@ public class Ci_Wait extends AbstractCommandInterpreter {
 			Thread.sleep(new Integer(lp.setTokenPosition(1).getArgs()));
 		}
 		catch (InterruptedException e) {
-			shell.getLastErrors().add("{}: interrupted in wait {}", new Object[]{shell.getPromptName(), e.getMessage()});
+			mm.report(MessageMgr.createErrorMessage("interrupted in wait {}", e.getMessage()));
+//			shell.getLastErrors().add("{}: interrupted in wait {}", new Object[]{shell.getPromptName(), e.getMessage()});
 		}
 		return 0;
 	}
