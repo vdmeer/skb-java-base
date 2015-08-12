@@ -256,4 +256,5 @@ public abstract class AbstractDirectoryInfo {
 	 * @return validation option, if not set (null) will create init errors
 	 */
 	protected abstract ValidationOptions valOption();
+
 }

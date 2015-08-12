@@ -63,4 +63,5 @@ public class Test_CC_Warning {
 		assertEquals(2, warn.getList().size());		//size now 2
 		assertEquals(2, warn.size());				//size now 2
 	}
+
 }

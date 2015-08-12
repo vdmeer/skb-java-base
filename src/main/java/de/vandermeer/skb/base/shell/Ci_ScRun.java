@@ -177,7 +177,6 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		for(FileSource fs : fsl.getSource()){
 			//TODO need to adapt to new source return
 			mm.report(MessageMgr.createInfoMessage("script file - dir <{}> file <{}>", directory, fs.getSetRootName()));
-//			Skb_Console.conInfo("{}: script file - dir <{}> file <{}>", new Object[]{shell.getPromptName(), directory, fs.getSetRootName()});
 		}
 		return 0;
 	}
@@ -198,9 +197,6 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		mm.report(MessageMgr.createInfoMessage(""));
 		mm.report(MessageMgr.createInfoMessage("running file {}", fileName));
 
-//		Skb_Console.conInfo("");
-//		Skb_Console.conInfo("{}: running file {}", new Object[]{shell.getPromptName(), fileName});
-
 		for(String s : StringUtils.split(content, '\n')){
 			if(this.printProgress==true && Skb_Console.USE_CONSOLE==true){
 				System.out.print(".");
@@ -209,8 +205,6 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		}
 		this.lastScript = fileName;
 
-		//clear messages, they all should have been out already
-//		shell.clearLastMessages();//TODO check
 		return 0;
 	}
 
@@ -254,4 +248,5 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		}
 		return content;
 	}
+
 }

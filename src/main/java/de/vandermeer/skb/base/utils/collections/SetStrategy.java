@@ -91,4 +91,5 @@ public enum SetStrategy implements IsSetStrategy {
 	public boolean isQueue(){
 		return false;
 	}
+
 }

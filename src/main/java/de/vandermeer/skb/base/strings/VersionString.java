@@ -120,4 +120,5 @@ public class VersionString {
 	public String toString(){
 		return String.format("%d%c%d%c%d", this.major, this.separator, this.minor, this.separator, this.patch);
 	}
+
 }

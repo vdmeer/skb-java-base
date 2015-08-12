@@ -75,4 +75,5 @@ public interface OfGroup extends CategoryOf {
 	static Collection<OfGroup> GET_KEYS_FOR_GROUP(final IsGroup group, final OfGroup[] ... keys){
 		return Skb_CollectionFilter.FILTER(OfGroup.IN_GROUP(group), keys);
 	}
+
 }

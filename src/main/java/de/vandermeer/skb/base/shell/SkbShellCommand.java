@@ -51,4 +51,5 @@ public interface SkbShellCommand extends HasDescription {
 	default String addedHelp(){
 		return null;
 	}
+
 }

@@ -53,10 +53,21 @@ public interface IsValue<V> extends CategoryIs, CategoryWithValue, HasDescriptio
 		}
 	}
 
+	/**
+	 * Creates a new value object.
+	 * @param value the actual value
+	 * @param <V> value type
+	 * @return a new value object
+	 */
 	static <V> IsValue<V> create(V value){
 		return IsValue.create(value, null);
 	}
 
+	/**
+	 * Creates a new value object.
+	 * @param <V> value type
+	 * @return a new value object
+	 */
 	static <V> IsValue<V> create(){
 		return IsValue.create(null);
 	}

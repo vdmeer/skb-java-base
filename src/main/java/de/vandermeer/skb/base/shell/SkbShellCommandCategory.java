@@ -34,4 +34,5 @@ public interface SkbShellCommandCategory extends HasDescription {
 
 	@Override
 	String getDescription();
+
 }

@@ -87,4 +87,5 @@ public class Test_SetStrategy {
 				assertTrue("test does not (yet) support this set type <"+strategy+">", false);
 		}
 	}
+
 }

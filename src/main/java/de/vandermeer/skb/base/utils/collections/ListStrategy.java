@@ -112,4 +112,5 @@ public enum ListStrategy implements IsListStrategy {
 	public boolean isQueue(){
 		return false;
 	}
+
 }

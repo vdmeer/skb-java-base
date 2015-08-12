@@ -34,7 +34,6 @@ import java.util.concurrent.TimeoutException;
  */
 public abstract class NonBlockingReader {
 
-
 	/**
 	 * Returns a new callable for reading strings from a reader with a set timeout of 200ms.
 	 * @param reader input stream to read from

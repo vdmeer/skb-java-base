@@ -83,4 +83,5 @@ public class StringFileLoader extends AbstractLoader implements FileLoader {
 	public FileSource getSource() {
 		return this.source;
 	}
+
 }

@@ -27,4 +27,5 @@ public interface FileLoader extends InfoLoader {
 
 	@Override
 	FileSource getSource();
+
 }

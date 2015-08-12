@@ -50,4 +50,5 @@ public class Test_VersionString {
 		vs = new VersionString("0 1-2");
 		assertEquals("0.1.2", vs.toString());
 	}
+
 }

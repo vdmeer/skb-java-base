@@ -30,4 +30,5 @@ public interface HasValue<V> extends CategoryHas {
 	 * @return value
 	 */
 	IsValue<V> getValue();
+
 }

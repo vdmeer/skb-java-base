@@ -81,4 +81,5 @@ public class Test_SimpleDirectoryScanner {
 		assertEquals(0, scanner.lastWarnings().size());
 		assertEquals(4, scanner.lastInfos().size());
 	}
+
 }

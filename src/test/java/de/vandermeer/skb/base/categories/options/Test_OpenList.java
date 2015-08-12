@@ -173,4 +173,5 @@ public class Test_OpenList {
 	public static Option<Boolean> OPTION(Boolean value){
 		return Option.create("BOOLEAN_OPTION", value, "a boolean option");
 	}
+
 }

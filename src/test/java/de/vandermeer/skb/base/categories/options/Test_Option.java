@@ -97,4 +97,5 @@ public class Test_Option {
 		assertEquals("test description2", opt.getDescription());
 		assertEquals("Option[option2, false, test description2]", opt.toString());
 	}
+
 }

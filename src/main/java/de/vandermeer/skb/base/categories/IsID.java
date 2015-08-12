@@ -42,4 +42,5 @@ public interface IsID extends CategoryIs, CategoryWithValue, HasDescription {
 	static IsID create(final Object value){
 		return IsID.create(value, null);
 	}
+
 }

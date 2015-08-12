@@ -57,4 +57,5 @@ public enum SkbShellArgumentType implements HasDescription {
 	public String getDescription(){
 		return this.description;
 	}
+
 }

@@ -333,4 +333,5 @@ public class Message5WH_Builder {
 	public Message5WH build(){
 		return new Message5WH(this.who, this.what, this.where, this.stg, this.when, this.why, this.how, this.reporter, this.type);
 	}
+
 }

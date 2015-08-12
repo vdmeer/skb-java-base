@@ -33,4 +33,5 @@ public abstract class AbstractValidator implements InfoValidator {
 	public CC_Error getValidationErrors() {
 		return this.errors;
 	}
+
 }

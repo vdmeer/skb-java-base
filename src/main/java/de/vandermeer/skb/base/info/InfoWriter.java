@@ -62,4 +62,5 @@ public interface InfoWriter {
 		}
 		return true;
 	}
+
 }

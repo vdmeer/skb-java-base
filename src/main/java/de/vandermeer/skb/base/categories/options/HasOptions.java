@@ -31,4 +31,5 @@ public interface HasOptions extends CategoryHas {
 	 * @return option list
 	 */
 	OptionList getOptions();
+
 }

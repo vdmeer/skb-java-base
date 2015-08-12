@@ -43,5 +43,5 @@ public class Skb_Assertions {
 			throw new IllegalArgumentException(message);
 		}
 	}
-}
 
+}

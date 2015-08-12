@@ -106,4 +106,5 @@ public class AbstractShellCommand implements SkbShellCommand {
 		);
 		return ftw.toString();
 	}
+
 }

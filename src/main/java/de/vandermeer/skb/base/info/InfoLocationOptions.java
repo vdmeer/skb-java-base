@@ -23,6 +23,7 @@ package de.vandermeer.skb.base.info;
  * @since      v0.0.7
  */
 public enum InfoLocationOptions {
+
 	/** Try to locate as resource first, then in the file system (for a file). */
 	TRY_RESOURCE_THEN_FS,
 
@@ -44,4 +45,5 @@ public enum InfoLocationOptions {
 	/** Try only in class path (for directory). */
 	CLASSPATH_ONLY,
 	;
+
 }

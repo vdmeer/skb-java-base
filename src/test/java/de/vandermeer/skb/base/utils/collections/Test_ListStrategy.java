@@ -90,4 +90,5 @@ public class Test_ListStrategy {
 				assertTrue("test does not (yet) support this list type <"+strategy+">", false);
 		}
 	}
+
 }

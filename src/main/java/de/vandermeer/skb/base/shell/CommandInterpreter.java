@@ -54,4 +54,5 @@ public interface CommandInterpreter {
 	 * @return the mapping, cannot be null
 	 */
 	Map<String, SkbShellCommand> getCommands();
+
 }

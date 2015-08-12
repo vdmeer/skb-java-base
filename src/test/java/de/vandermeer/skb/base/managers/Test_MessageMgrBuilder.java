@@ -323,4 +323,5 @@ public class Test_MessageMgrBuilder {
 		assertTrue(mmb.buildErrors.size()==0);
 		assertTrue(mm!=null);
 	}
+
 }

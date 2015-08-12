@@ -187,4 +187,5 @@ public abstract class Skb_CollectionTransformer {
 	public final static String MAP_TO_TEXT(Map<?, ?> map){
 		return Skb_CollectionFactory.transformerMapToText().transform(map);
 	}
+
 }

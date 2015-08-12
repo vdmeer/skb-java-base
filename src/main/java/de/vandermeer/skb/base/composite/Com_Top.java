@@ -28,4 +28,5 @@ public interface Com_Top {
 	 * @return copy
 	 */
 	Com_Top getCopy();
+
 }

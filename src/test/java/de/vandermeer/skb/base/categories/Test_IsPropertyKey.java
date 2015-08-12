@@ -64,4 +64,5 @@ public class Test_IsPropertyKey {
 		assertEquals(Skb_Defaults.DEFAULT_DESCRIPTION, key.getDescription());
 		assertEquals("IsPropertyKey(DefaultImpl): deadbeef", key.toString());
 	}
+
 }

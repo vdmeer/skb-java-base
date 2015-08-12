@@ -76,4 +76,5 @@ public interface IsDictionary<SOURCE, TARGET> {
 	 * @return list of translations, empty list of there is no translation in the dictionary
 	 */
 	List<Skb_Pair<SOURCE, TARGET>> getTranslations();
+
 }

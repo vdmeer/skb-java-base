@@ -107,4 +107,5 @@ public enum DequeStrategy implements IsDequeStrategy {
 		}
 		return ret;
 	}
+
 }

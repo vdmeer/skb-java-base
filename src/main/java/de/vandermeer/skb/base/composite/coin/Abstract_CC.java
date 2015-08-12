@@ -36,6 +36,7 @@ import de.vandermeer.skb.base.message.Message5WH_Builder;
  * @since      v0.0.6 (was in skb-composite before)
  */
 public abstract class Abstract_CC implements Com_Coin {
+
 	/**
 	 * Local list of information messages.
 	 * This list is used to chain information messages. This can be useful when several chained method calls return an information message or when
@@ -175,4 +176,5 @@ public abstract class Abstract_CC implements Com_Coin {
 	public void clear(){
 		this.msglist.clear();
 	}
+
 }

@@ -61,4 +61,5 @@ public interface Skb_Transformer <FROM, TO> extends Function<FROM, TO> {
 			}
 		};
 	}
+
 }

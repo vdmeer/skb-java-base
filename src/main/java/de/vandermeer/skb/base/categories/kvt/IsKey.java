@@ -78,4 +78,5 @@ public interface IsKey<K> extends CategoryIs, CategoryWithValue, HasDescription 
 	static <K> IsKey<K> create(){
 		return IsKey.create(null);
 	}
+
 }

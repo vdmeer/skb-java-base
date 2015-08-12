@@ -52,4 +52,5 @@ public interface InfoValidator {
 	 * @return collected errors, should not be null but can be empty (meaning no errors).
 	 */
 	CC_Error getValidationErrors();
+
 }

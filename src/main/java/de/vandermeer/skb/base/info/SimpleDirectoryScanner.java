@@ -198,4 +198,5 @@ public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryL
 		}
 		return null;
 	}
+
 }

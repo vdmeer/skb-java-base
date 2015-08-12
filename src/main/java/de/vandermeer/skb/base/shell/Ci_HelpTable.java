@@ -192,4 +192,5 @@ public class Ci_HelpTable extends Ci_Help {
 		}
 		at.addRow(null, "try: 'help <command>' for more details");
 	}
+
 }

@@ -32,4 +32,5 @@ public interface HasDescription extends CategoryHas {
 	default Object getDescription(){
 		return Skb_Defaults.DEFAULT_DESCRIPTION;
 	}
+
 }

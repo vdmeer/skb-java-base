@@ -52,4 +52,5 @@ public interface SkbShellArgument extends IsKey<String>, HasDescription {
 	 * @return value set, null if non specified (which means any value is allowed)
 	 */
 	Object[] valueSet();
+
 }

@@ -30,4 +30,5 @@ public interface HasType<T> extends CategoryHas {
 	 * @return type
 	 */
 	IsType<T> getType();
+
 }

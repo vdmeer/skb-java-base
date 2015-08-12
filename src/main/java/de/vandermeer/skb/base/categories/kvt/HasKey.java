@@ -30,4 +30,5 @@ public interface HasKey<K> extends CategoryHas {
 	 * @return key
 	 */
 	IsKey<K> getKey();
+
 }

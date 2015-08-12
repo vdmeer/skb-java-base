@@ -62,4 +62,5 @@ public class Test_MapStrategy {
 				assertTrue("test does not (yet) support this map type", false);
 		}
 	}
+
 }

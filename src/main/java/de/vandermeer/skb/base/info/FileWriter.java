@@ -27,4 +27,5 @@ public interface FileWriter extends InfoWriter {
 
 	@Override
 	FileTarget getTarget();
+
 }

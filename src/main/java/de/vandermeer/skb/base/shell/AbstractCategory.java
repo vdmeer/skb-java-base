@@ -61,4 +61,5 @@ public class AbstractCategory implements SkbShellCommandCategory {
 	public String toString(){
 		return this.getCategory();
 	}
+
 }

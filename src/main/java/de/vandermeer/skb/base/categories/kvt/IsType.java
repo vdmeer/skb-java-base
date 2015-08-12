@@ -35,5 +35,9 @@ public interface IsType<T> extends CategoryIs, CategoryWithValue, HasDescription
 		return this._value();
 	}
 
+	/**
+	 * Returns the value.
+	 */
 	T _value();
+
 }

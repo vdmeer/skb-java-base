@@ -30,7 +30,6 @@ import org.stringtemplate.v4.STGroupFile;
 
 import de.vandermeer.skb.base.info.STValidator;
 
-
 /**
  * Tests for {@link STValidator}.
  *
@@ -186,4 +185,5 @@ public class Test_STValidator {
 		stv = new STValidator(st, chunks);
 		assertEquals(3, stv.getValidationErrors().size());
 	}
+
 }

@@ -32,4 +32,5 @@ public interface IsSetStrategy extends IsCollectionStrategy {
 
 	@Override
 	<T> Set<T> get(Class<T> T);
+
 }

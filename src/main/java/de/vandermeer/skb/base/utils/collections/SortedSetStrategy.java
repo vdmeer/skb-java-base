@@ -125,4 +125,5 @@ public enum SortedSetStrategy implements IsSortedSetStrategy {
 	public boolean isQueue(){
 		return false;
 	}
+
 }
