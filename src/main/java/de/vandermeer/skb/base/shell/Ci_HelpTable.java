@@ -21,11 +21,11 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
+import de.vandermeer.asciitable.v2.RenderedTable;
 import de.vandermeer.asciitable.v2.V2_AsciiTable;
-import de.vandermeer.asciitable.v2.V2_AsciiTableRenderer;
-import de.vandermeer.asciitable.v2.V2_RenderedAsciiTable;
-import de.vandermeer.asciitable.v2.core.V2_Width;
-import de.vandermeer.asciitable.v2.core.V2_WidthByAbsolute;
+import de.vandermeer.asciitable.v2.render.V2_AsciiTableRenderer;
+import de.vandermeer.asciitable.v2.render.width.V2_Width;
+import de.vandermeer.asciitable.v2.render.width.V2_WidthAbsoluteEven;
 import de.vandermeer.asciitable.v2.themes.V2_E_TableThemes;
 import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.managers.MessageMgr;
@@ -63,7 +63,7 @@ public class Ci_HelpTable extends Ci_Help {
 		super(skbShell);
 
 		this.theme = (theme==null)?V2_E_TableThemes.PLAIN_7BIT_STRONG:theme;
-		this.width = new V2_WidthByAbsolute().setWidth(76);
+		this.width = new V2_WidthAbsoluteEven().setWidth(76);
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class Ci_HelpTable extends Ci_Help {
 			return ret;
 		}
 
-		V2_AsciiTable at = new V2_AsciiTable(2);
-		at.addRuleStrong();
+		V2_AsciiTable at = new V2_AsciiTable();
+		at.addStrongRule();
 
 		String toHelp = lp.getArgs();
 		if(toHelp==null){
@@ -102,7 +102,7 @@ public class Ci_HelpTable extends Ci_Help {
 			.setTheme(this.theme.get())
 			.setWidth(this.width)
 		;
-		V2_RenderedAsciiTable rat = rend.render(at);
+		RenderedTable rat = rend.render(at);
 		Skb_Console.conInfo(rat.toString());
 
 		return 0;

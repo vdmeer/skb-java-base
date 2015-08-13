@@ -1,4 +1,9 @@
-v0.1.0 - minor version change - 2015-08-#13
+v0.1.1 -patch relsease - 2015-08-14
+-----------------------------------
+* patches for new asciitable version
+
+
+v0.1.0 - minor version change - 2015-08-13
 -------------------------------------------
 * maintenance of java files
 
