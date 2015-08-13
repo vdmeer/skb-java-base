@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
  * Default SKB assertions.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.1.1 build 150814 (14-Aug-15) for Java 1.8
  * @since      v0.0.6
  */
 public class Skb_Assertions {

@@ -35,7 +35,7 @@ import de.vandermeer.skb.base.info.STGroupValidator;
  * Tests for {@link STGroupValidator}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.13-SNAPSHOT build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.1.1 build 150814 (14-Aug-15) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_STGroupValidator {
