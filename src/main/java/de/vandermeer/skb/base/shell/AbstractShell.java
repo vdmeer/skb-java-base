@@ -225,6 +225,7 @@ public class AbstractShell implements SkbShell {
 
 				in = sysin.readLine();
 
+				//TODO history max!
 				if(!StringUtils.isBlank(in)){
 					this.history.add(in);
 				}
