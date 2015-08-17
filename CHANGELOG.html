@@ -421,6 +421,47 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>added simple history CI to shell</p>
 </li>
+<li>
+<p>MessageMgr</p>
+<div class="ulist">
+<ul>
+<li>
+<p>fixed hasErrors() and hasInfos() bug</p>
+</li>
+<li>
+<p>messages are now added if handler is found regardless if handler is enabled or not</p>
+</li>
+<li>
+<p>collected messages are now mapping of string&#8594;type</p>
+</li>
+<li>
+<p>moved st file in resources, removed message related calls, renamed max100 to max</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5WH Message, MessageMgr and CC_* classes</p>
+<div class="ulist">
+<ul>
+<li>
+<p>added renderer to 5WH message and changed the other classes to use the renderer</p>
+</li>
+<li>
+<p>changed render() in 5WH message to use default message renderer</p>
+</li>
+<li>
+<p>removed all setSTG() methods</p>
+</li>
+<li>
+<p>created st file in resources</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>fixed exception error in Ci_Wait, now proper error message w/o stack trace</p>
+</li>
 </ul>
 </div>
 </div>
@@ -996,7 +1037,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-17 10:10:17 IST
+Last updated 2015-08-17 22:29:38 IST
 </div>
 </div>
 </body>

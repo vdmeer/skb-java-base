@@ -1,11 +1,12 @@
-v0.1.2 - patch- 2015-##-##
---------------------------
+v0.1.2 - feature add- 2015-08-17
+--------------------------------
 * added simple history CI to shell
 * MessageMgr
 	** fixed hasErrors() and hasInfos() bug
 	** messages are now added if handler is found regardless if handler is enabled or not
 	** collected messages are now mapping of string->type
 	** moved st file in resources, removed message related calls, renamed max100 to max
+	** add hasWarnings()
 * 5WH Message, MessageMgr and CC_* classes
 	** added renderer to 5WH message and changed the other classes to use the renderer
 	** changed render() in 5WH message to use default message renderer

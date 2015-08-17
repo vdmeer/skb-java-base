@@ -176,6 +176,17 @@ public class MessageMgr {
 	}
 
 	/**
+	 * Returns true if the manager has warnings reported, false otherwise
+	 * @return true if warnings have been reported, false otherwise
+	 */
+	public boolean hasWarnings(){
+		if(this.messageHandlers.containsKey(EMessageType.WARNING)){
+			return (this.messageHandlers.get(EMessageType.WARNING).getCount()==0)?false:true;
+		}
+		return false;
+	}
+
+	/**
 	 * Returns true if the manager has infos reported, false otherwise
 	 * @return true if infos have been reported, false otherwise
 	 */
