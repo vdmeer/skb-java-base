@@ -19,12 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.text.StrBuilder;
-import org.stringtemplate.v4.STGroup;
 
 import de.vandermeer.skb.base.composite.Com_Coin;
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.message.Message5WH;
-import de.vandermeer.skb.base.message.Message5WH_Builder;
+import de.vandermeer.skb.base.message.Message5WH_Renderer;
 
 /**
  * Special object for information.
@@ -44,8 +43,8 @@ public abstract class Abstract_CC implements Com_Coin {
 	 */
 	protected List<Message5WH> msglist;
 
-	/** The ST group for the CC object. */
-	private STGroup stg = null;
+	/** Message renderer. */
+	protected Message5WH_Renderer renderer = null;
 
 	/**
 	 * Creates a new object w/o any information.
@@ -87,14 +86,13 @@ public abstract class Abstract_CC implements Com_Coin {
 	}
 
 	/**
-	 * Sets an STGroup for the object, which then will be used to render all messages.
-	 * @param stg new STGroup, which must have been checked against the required chunks defined in {@link Message5WH_Builder#stChunks}.
-	 * 		If the group is not valid, rendering this message might result in runtime errors
+	 * Sets an renderer for the object, which then will be used to render all messages.
+	 * @param renderer new renderer
 	 * @return self to allow chaining
 	 */
-	public Abstract_CC setSTG(STGroup stg){
-		if(stg!=null){
-			this.stg = stg;
+	public Abstract_CC setRenderer(Message5WH_Renderer renderer){
+		if(renderer!=null){
+			this.renderer = renderer;
 		}
 		return this;
 	}
@@ -161,11 +159,13 @@ public abstract class Abstract_CC implements Com_Coin {
 	 */
 	public String render(){
 		StrBuilder ret = new StrBuilder(50);
-		for(Message5WH err : this.msglist){
-			if(this.stg!=null){
-				err.setSTG(this.stg);
+		if(this.renderer!=null){
+			return this.renderer.render(this.msglist);
+		}
+		else{
+			for(Message5WH msg : this.msglist){
+				ret.appendln(msg.render());
 			}
-			ret.appendln(err.render());
 		}
 		return ret.toString();
 	}

@@ -17,18 +17,21 @@ package de.vandermeer.skb.base.shell;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.stringtemplate.v4.STGroup;
+import org.apache.commons.lang3.StringUtils;
 
 import de.vandermeer.skb.base.console.NonBlockingReader;
 import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.managers.MessageMgr;
 import de.vandermeer.skb.base.managers.MessageMgrBuilder;
 import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.Message5WH_Renderer;
 
 /**
  * An abstract shell implementation with all basic features, use the {@link SkbShellFactory} or a sub-class to create a new object.
@@ -60,6 +63,9 @@ public class AbstractShell implements SkbShell {
 	/** The shell's identifier. */
 	protected String id;
 
+	/** Command history of the shell, that is the last n commands. */
+	protected final List<String> history;
+
 	/**
 	 * Returns a new shell with the default identifier and the default STG and console activated.
 	 */
@@ -69,20 +75,20 @@ public class AbstractShell implements SkbShell {
 
 	/**
 	 * Returns a new shell with the default identifier and the given STG and console activated.
-	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param renderer a renderer for help messages
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
-	protected AbstractShell(STGroup stg){
-		this(null, stg, true);
+	protected AbstractShell(Message5WH_Renderer renderer){
+		this(null, renderer, true);
 	}
 
 	/**
 	 * Returns a new shell with given STG and console flag.
-	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param renderer a renderer for help messages
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen (except for errors on runShell() and some help commands)
 	 */
-	protected AbstractShell(STGroup stg, boolean useConsole){
-		this(null, stg, useConsole);
+	protected AbstractShell(Message5WH_Renderer renderer, boolean useConsole){
+		this(null, renderer, useConsole);
 	}
 
 	/**
@@ -106,28 +112,27 @@ public class AbstractShell implements SkbShell {
 	/**
 	 * Returns a new shell with a given identifier and STGroup plus console activated.
 	 * @param id new shell with identifier
-	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param renderer a renderer for help messages
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
-	protected AbstractShell(String id, STGroup stg){
-		this(id, stg, true);
+	protected AbstractShell(String id, Message5WH_Renderer renderer){
+		this(id, renderer, true);
 	}
 
 	/**
 	 * Returns a new shell with given identifier and console flag.
 	 * @param id new shell with identifier
-	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param renderer a renderer for help messages
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
 	 */
-	protected AbstractShell(String id, STGroup stg, boolean useConsole){
+	protected AbstractShell(String id, Message5WH_Renderer renderer, boolean useConsole){
 		//activate console output
 		Skb_Console.USE_CONSOLE = useConsole;
 		this.commandMap = new HashMap<>();
 
 		this.id = (id!=null)?id:"skbsh";
 
-		MessageMgrBuilder mmb = new MessageMgrBuilder(getPromptName(), true);
-		mmb.setStg(stg);//this will go wrong if the STG is not valid
+		MessageMgrBuilder mmb = new MessageMgrBuilder(getPromptName());
 		mmb.setHandler(EMessageType.ERROR);
 		mmb.setHandler(EMessageType.WARNING);
 		mmb.setHandler(EMessageType.INFO);
@@ -137,6 +142,9 @@ public class AbstractShell implements SkbShell {
 		if(this.mm==null){
 			throw new IllegalArgumentException("could not create MM, possibly wrong STG");
 		}
+		this.mm.setRenderer(renderer);
+
+		this.history = new ArrayList<>(20);
 	}
 
 	@Override
@@ -216,6 +224,12 @@ public class AbstractShell implements SkbShell {
 				}
 
 				in = sysin.readLine();
+
+				//TODO history max!
+				if(!StringUtils.isBlank(in)){
+					this.history.add(in);
+				}
+
 				this.exitStatus = this.parseLine(in);
 
 				if(this.exitStatus==-2){
@@ -251,6 +265,11 @@ public class AbstractShell implements SkbShell {
 	@Override
 	public MessageMgr getMessageManager() {
 		return this.mm;
+	}
+
+	@Override
+	public List<String> getCommandHistory() {
+		return this.history;
 	}
 
 }

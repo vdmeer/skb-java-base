@@ -23,28 +23,11 @@
  * @version    v0.1.1 build 150814 (14-Aug-15)
  */
 
-group ReportManager;
-
-report(who, what, when, where, why, how, type, reporter) ::= <<
-<if(reporter)><reporter>: <endif><if(type)><type> <endif><if(who)><who> <endif><if(when)>at <when> <endif><if(where)>in <where> <endif><if(what)> -> <what><endif>
-<if(why)>
-       ==> <why>
-<endif>
-<if(how)>
-       ==> <how>
-
-<endif>
->>
-
-where(location, line, column) ::= <<
-<location><if(line&&column)> <line>:<column><endif><if(!line&&column)> -:<column><endif><if(line&&!column)> <line>:-<endif>
->>
-
 /*
- * error100
- * message saying: more than 100 errors
+ * max
+ * message saying: more than 100 of some message type
  */
-maxErrors(name, number) ::= <<
-<name>: found <if(number)>more than <number><else>too many<endif> errors
+max(name, number, type) ::= <<
+<name>: found <if(number)>more than <number><else>too many<endif> <type>s
 
 >>

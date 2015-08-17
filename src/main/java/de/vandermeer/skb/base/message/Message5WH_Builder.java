@@ -15,18 +15,10 @@
 
 package de.vandermeer.skb.base.message;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 import org.apache.commons.lang3.text.StrBuilder;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupString;
 
 import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
 
@@ -39,43 +31,6 @@ import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
  */
 public class Message5WH_Builder {
 
-	/** The default STGroup definition for the 5WH message class. */
-	public final static String messageSTGroup = 
-			"where(location, line, column) ::= <<\n" +
-			"<location;separator=\".\"><if(line&&column)> <line>:<column><elseif(!line&&!column)><elseif(!line)> -:<column><elseif(!column)> <line>:-<endif>\n"+
-			">>\n\n" +
-			"message5wh(reporter, type, who, when, where, what, why, how) ::= <<\n" +
-			"<if(reporter)><reporter>: <endif><if(type)><type> <endif><if(who)><who> <endif><if(when)>at (<when>) <endif><if(where)>in <where> <endif><if(what)>\\>> <what><endif>" +
-			"<if(why)> \n       ==> <why><endif>\n" +
-			"<if(how)> \n       ==> <how><endif>\n" +
-			">>\n"
-	;
-
-	/** The STGroup chunks for validation of an STGroup for a message. */
-	public final static Map<String, Set<String>> stChunks = new HashMap<String, Set<String>>(){
-		private static final long serialVersionUID = 1L;{
-			put("where", new HashSet<String>(){
-				private static final long serialVersionUID = 1L;{
-					add("location");
-					add("line");
-					add("column");
-				}}
-			);
-			put("message5wh", new HashSet<String>(){
-				private static final long serialVersionUID = 1L;{
-					add("reporter");
-					add("type");
-					add("who");
-					add("when");
-					add("where");
-					add("what");
-					add("why");
-					add("how");
-				}}
-			);
-		}
-	};
-
 	/** Initial capacity for StrBuilder members */
 	protected int initialCapacity;
 
@@ -85,11 +40,14 @@ public class Message5WH_Builder {
 	/** What happened? */
 	protected StrBuilder what;
 
-	/** Where did it happen? */
-	protected ST where;
+	/** Where did it happen: location. */
+	protected Object whereLocation;
 
-	/** The ST group for the message */
-	protected STGroup stg;
+	/** Where did it happen: line. */
+	protected int whereLine;
+
+	/** Where did it happen: column. */
+	protected int whereColumn;
 
 	/** When did take place/happen? */
 	protected Object when;
@@ -108,7 +66,6 @@ public class Message5WH_Builder {
 
 	public Message5WH_Builder(){
 		this.initialCapacity = 50;
-		this.stg = new STGroupString(Message5WH_Builder.messageSTGroup);
 	}
 
 	/**
@@ -160,21 +117,6 @@ public class Message5WH_Builder {
 	}
 
 	/**
-	 * Sets a new STGroup for the message.
-	 * The STGroup contains the two templates used for rendering a message: <code>where</code> and <code>message5wh</code>.
-	 * The default templates are defined in {@link Message5WH_Builder#messageSTGroup}.
-	 * If the STGroup is not valid, the build message will not render and rendering might result in runtime errors.
-	 * @param stg new STGroup
-	 * @return self to allow chaining, but only sets the new STGroup if it contains the two required functions with all arguments
-	 */
-	public Message5WH_Builder setSTG(STGroup stg){
-		if(stg!=null){
-				this.stg = stg;
-		}
-		return this;
-	}
-
-	/**
 	 * Sets the Reporter of the message.
 	 * Since null is a valid value for this member of the message, no further check is applied to the argument.
 	 * @param reporter new reporter
@@ -216,16 +158,9 @@ public class Message5WH_Builder {
 	 * @return self to allow chaining
 	 */
 	public Message5WH_Builder setWhere(Object where, int line, int column){
-		if(where!=null){
-			this.where = this.stg.getInstanceOf("where");
-			this.where.add("location", where);
-			if(line>0){
-				this.where.add("line", line);
-			}
-			if(column>0){
-				this.where.add("column", column);
-			}
-		}
+		this.whereLocation = where;
+		this.whereLine = line;
+		this.whereColumn = column;
 		return this;
 	}
 
@@ -299,15 +234,14 @@ public class Message5WH_Builder {
 			int line = ste.getLineNumber();
 			//StackTraceElement requires Class and Method set to !null but allows for "", we cope with null but not "" in ST4
 			if(!"".equals(cn) || !"".equals(mn)){
-				this.where = this.stg.getInstanceOf("where");
 				if(!"".equals(cn)){
-					this.where.add("location", ste.getClassName());
+					this.whereLocation = ste.getClassName();
 				}
 				if(!"".equals(mn)){
-					this.where.add("location", ste.getMethodName());
+					this.whereLocation = ste.getMethodName();
 				}
 				if(line>0){
-					this.where.add("line", ste.getLineNumber());
+					this.whereLine = ste.getLineNumber();
 				}
 				//no column information in a stack trace
 			}
@@ -331,7 +265,7 @@ public class Message5WH_Builder {
 	 * @return new message object
 	 */
 	public Message5WH build(){
-		return new Message5WH(this.who, this.what, this.where, this.stg, this.when, this.why, this.how, this.reporter, this.type);
+		return new Message5WH(this.who, this.what, this.whereLocation, this.whereLine, this.whereColumn, this.when, this.why, this.how, this.reporter, this.type);
 	}
 
 }

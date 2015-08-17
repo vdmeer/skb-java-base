@@ -119,8 +119,9 @@ class MessageTypeHandler {
 	 * Handles the message.
 	 * @param message the message to be handled
 	 * @param type message type
+	 * @param appID application identifier for max messae count
 	 */
-	public void handleMessage(ST message, EMessageType type, ST max100, Object appID){
+	public void handleMessage(String message, EMessageType type, ST max100, Object appID){
 		this.count++;
 
 		boolean doMax = false;
@@ -133,19 +134,19 @@ class MessageTypeHandler {
 		if(this.useSkbConsole==true){
 			switch(type){
 				case ERROR:
-					Skb_Console.conError(message.render());
+					Skb_Console.conError(message);
 					if(doMax==true){
 						Skb_Console.conError(max100.render());
 					}
 					break;
 				case INFO:
-					Skb_Console.conInfo(message.render());
+					Skb_Console.conInfo(message);
 					if(doMax==true){
 						Skb_Console.conError(max100.render());
 					}
 					break;
 				case WARNING:
-					Skb_Console.conWarn(message.render());
+					Skb_Console.conWarn(message);
 					if(doMax==true){
 						Skb_Console.conError(max100.render());
 					}
@@ -155,19 +156,19 @@ class MessageTypeHandler {
 		else{
 			switch(type){
 				case ERROR:
-					this.logger.error(message.render());
+					this.logger.error(message);
 					if(doMax==true){
 						this.logger.error(max100.render());
 					}
 					break;
 				case INFO:
-					this.logger.info(message.render());
+					this.logger.info(message);
 					if(doMax==true){
 						this.logger.error(max100.render());
 					}
 					break;
 				case WARNING:
-					this.logger.warn(message.render());
+					this.logger.warn(message);
 					if(doMax==true){
 						this.logger.error(max100.render());
 					}

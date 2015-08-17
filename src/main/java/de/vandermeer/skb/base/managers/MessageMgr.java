@@ -17,12 +17,14 @@ package de.vandermeer.skb.base.managers;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupFile;
 
 import de.vandermeer.asciitable.commons.ObjectToStringStyle;
 import de.vandermeer.skb.base.composite.coin.Abstract_CC;
@@ -33,6 +35,7 @@ import de.vandermeer.skb.base.message.EMessageType;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 import de.vandermeer.skb.base.message.Message5WH;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
+import de.vandermeer.skb.base.message.Message5WH_Renderer;
 
 /**
  * Manages Info, Warning and Error messages supporting {@link Message5WH}, {@link CC_Info}, {@link CC_Warning}, and {@link CC_Error} objects as well as arrays and collections of them.
@@ -43,8 +46,33 @@ import de.vandermeer.skb.base.message.Message5WH_Builder;
  */
 public class MessageMgr {
 
+	/**
+	 * Returns a map set with all expected template names and their expected arguments.
+	 * 
+	 * The map that maintains the expected templates and their arguments for the manager.
+	 * Any STGroup handed over the the manager will be tested against this map.
+	 * Templates or template arguments that are missing can be reported, and the report manager will not invoke in any report activity if the provided STGroup does not provide for all required chunks.
+	 * The set templates and their arguments are:
+	 * <ul>
+	 * 		<li>max ::= name, number, type</li>
+	 * </ul>
+	 * 
+	 * @return template map
+	 */
+	public final static Map<String, Set<String>> loadChunks(){
+		return new HashMap<String, Set<String>>(){
+			private static final long serialVersionUID = 1L;{
+				put("max", new HashSet<String>(){
+					private static final long serialVersionUID = 1L;{
+						add("name"); add("number"); add("type");
+					}}
+				);
+			}
+		};
+	}
+
 	/** Map of collected messages (errors, warnings, information) as rendered strings. */
-	protected final LinkedHashMap<EMessageType, String> messages;
+	protected final LinkedHashMap<String, EMessageType> messages;
 
 	/** Maps of message handlers for message types. */
 	protected final Map<EMessageType, MessageTypeHandler> messageHandlers;
@@ -52,8 +80,11 @@ public class MessageMgr {
 	/** Flag to define the behavior for message collection. */
 	protected final boolean doCollectMessages;
 
-	/** Message output STG. */
-	protected final STGroup stg;
+	/** Message renderer. */
+	protected Message5WH_Renderer renderer = null;
+
+	/** STGroup for max100 messages. */
+	protected final STGroup max100stg = new STGroupFile("de/vandermeer/skb/base/managers/msg-manager.stg");
 
 	/** The identifier (or name) of the application using the message manager. */
 	protected final Object appID;
@@ -93,16 +124,28 @@ public class MessageMgr {
 	 * @param appID the application identifier or name used in messages
 	 * @param messageHandlers the message handlers for the manager
 	 * @param doCollectMessages flag for collecting messages (true for do collect, false for not)
-	 * @param stg the STG for messages
 	 */
-	MessageMgr(Object appID, Map<EMessageType, MessageTypeHandler> messageHandlers, boolean doCollectMessages, STGroup stg){
+	MessageMgr(Object appID, Map<EMessageType, MessageTypeHandler> messageHandlers, boolean doCollectMessages){
 		this.messages = new LinkedHashMap<>();
 
 		this.appID = appID;
 		this.messageHandlers = new HashMap<>();
 		this.messageHandlers.putAll(messageHandlers);
 		this.doCollectMessages = doCollectMessages;
-		this.stg = stg;
+
+		this.renderer = new Message5WH_Renderer();
+	}
+
+	/**
+	 * Sets an renderer for the object, which then will be used to render all messages.
+	 * @param renderer new renderer
+	 * @return self to allow chaining
+	 */
+	public MessageMgr setRenderer(Message5WH_Renderer renderer){
+		if(renderer!=null){
+			this.renderer = renderer;
+		}
+		return this;
 	}
 
 	/**
@@ -110,14 +153,14 @@ public class MessageMgr {
 	 * @return empty if collection is disabled, a list of collected reports otherwise
 	 */
 	public Collection<String> getMessageCollection(){
-		return this.messages.values();
+		return this.messages.keySet();
 	}
 
 	/**
 	 * Returns the collected messages.
 	 * @return empty if collection is disabled, a list of collected reports otherwise
 	 */
-	public Map<EMessageType, String> getMessageMap(){
+	public Map<String, EMessageType> getMessageMap(){
 		return this.messages;
 	}
 
@@ -127,7 +170,18 @@ public class MessageMgr {
 	 */
 	public boolean hasErrors(){
 		if(this.messageHandlers.containsKey(EMessageType.ERROR)){
-			return (this.messageHandlers.get(EMessageType.ERROR).getCount()==0)?true:false;
+			return (this.messageHandlers.get(EMessageType.ERROR).getCount()==0)?false:true;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns true if the manager has warnings reported, false otherwise
+	 * @return true if warnings have been reported, false otherwise
+	 */
+	public boolean hasWarnings(){
+		if(this.messageHandlers.containsKey(EMessageType.WARNING)){
+			return (this.messageHandlers.get(EMessageType.WARNING).getCount()==0)?false:true;
 		}
 		return false;
 	}
@@ -138,7 +192,7 @@ public class MessageMgr {
 	 */
 	public boolean hasInfos(){
 		if(this.messageHandlers.containsKey(EMessageType.INFO)){
-			return (this.messageHandlers.get(EMessageType.INFO).getCount()==0)?true:false;
+			return (this.messageHandlers.get(EMessageType.INFO).getCount()==0)?false:true;
 		}
 		return false;
 	}
@@ -181,40 +235,16 @@ public class MessageMgr {
 		if(message==null){
 			return false; // no message to handle
 		}
+
 		EMessageType type = message.getType();
 		if(!this.messageHandlers.containsKey(message.getType())){
 			return false; // no handler means message type not managed
 		}
 		MessageTypeHandler handler = this.messageHandlers.get(message.getType());
-		if(!handler.isEnabled()){
-			return false; // handler found but it's not enabled
-		}
 
-		ST template = this.stg.getInstanceOf("report");
-		template.add("type", message.getType());
-
-		template.add("who", message.getWho());
-		template.add("what", message.getWhat());
-		template.add("when", message.getWhen());
-		template.add("why", message.getWhy());
-		template.add("how", message.getHow());
-		template.add("reporter", message.getReporter());
-
-		ST where = message.getWhere();
-		if(where!=null){
-			ST whereST = this.stg.getInstanceOf("where");
-			whereST.add("location", where.getAttribute("location"));
-			whereST.add("line", where.getAttribute("line"));
-			whereST.add("column", where.getAttribute("column"));
-			template.add("where", whereST);
-		}
-
-		handler.handleMessage(template, type, this.stg.getInstanceOf("maxError"), this.appID);
-
-		//finally collect the information, regardless of logger settings for report type
-		if(this.messages!=null){
-			this.messages.put(type, template.render());
-		}
+		String template = this.renderer.render(message);
+		handler.handleMessage(template, type, this.max100stg.getInstanceOf("max"), this.appID);
+		this.messages.put(template, type);
 		return true;
 	}
 

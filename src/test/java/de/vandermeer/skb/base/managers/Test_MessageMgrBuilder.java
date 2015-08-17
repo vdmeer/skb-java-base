@@ -30,10 +30,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupFile;
 
-import de.vandermeer.skb.base.info.STGroupValidator;
 import de.vandermeer.skb.base.message.EMessageType;
 
 /**
@@ -61,50 +58,21 @@ public class Test_MessageMgrBuilder {
 
 	@Test
 	public void test_StgChunks(){
-		Map<String, Set<String>> stgChunks = MessageMgrBuilder.loadChunks();
+		Map<String, Set<String>> stgChunks = MessageMgr.loadChunks();
 
-		assertTrue(stgChunks.containsKey("report"));
-		assertTrue(stgChunks.get("report").contains("who"));
-		assertTrue(stgChunks.get("report").contains("what"));
-		assertTrue(stgChunks.get("report").contains("when"));
-		assertTrue(stgChunks.get("report").contains("where"));
-		assertTrue(stgChunks.get("report").contains("who"));
-		assertTrue(stgChunks.get("report").contains("how"));
-		assertTrue(stgChunks.get("report").contains("type"));
-		assertTrue(stgChunks.get("report").contains("reporter"));
-
-		assertTrue(stgChunks.containsKey("where"));
-		assertTrue(stgChunks.get("where").contains("location"));
-		assertTrue(stgChunks.get("where").contains("line"));
-		assertTrue(stgChunks.get("where").contains("column"));
-
-		assertTrue(stgChunks.containsKey("maxErrors"));
-		assertTrue(stgChunks.get("maxErrors").contains("name"));
-		assertTrue(stgChunks.get("maxErrors").contains("number"));
-	}
-
-
-	@Test
-	public void test_DefaultSTG(){
-		STGroup stg = new STGroupFile("de/vandermeer/skb/base/report-manager.stg");
-		STGroupValidator stgv = new STGroupValidator(stg, MessageMgrBuilder.loadChunks());
-		assertTrue(stgv.isValid());
+		assertTrue(stgChunks.containsKey("max"));
+		assertTrue(stgChunks.get("max").contains("name"));
+		assertTrue(stgChunks.get("max").contains("number"));
+		assertTrue(stgChunks.get("max").contains("type"));
 	}
 
 
 	@Test
 	public void test_ConstructorException(){
 		try {new MessageMgrBuilder(null);fail("no exception");} catch (IllegalArgumentException expected) {}
-		try {new MessageMgrBuilder(null, false);fail("no exception");} catch (IllegalArgumentException expected) {}
-
 		try {new MessageMgrBuilder("");fail("no exception");} catch (IllegalArgumentException expected) {}
-		try {new MessageMgrBuilder("", false);fail("no exception");} catch (IllegalArgumentException expected) {}
-
 		try {new MessageMgrBuilder(retNull);fail("no exception");} catch (IllegalArgumentException expected) {}
-		try {new MessageMgrBuilder(retNull, false);fail("no exception");} catch (IllegalArgumentException expected) {}
-
 		try {new MessageMgrBuilder(retEmpty);fail("no exception");} catch (IllegalArgumentException expected) {}
-		try {new MessageMgrBuilder(retEmpty, false);fail("no exception");} catch (IllegalArgumentException expected) {}
 	}
 
 
@@ -114,78 +82,7 @@ public class Test_MessageMgrBuilder {
 
 		mmb = new MessageMgrBuilder("@test");
 		assertEquals("@test", mmb.appID);
-		assertTrue(mmb.stg==null);
 		assertTrue(mmb.buildErrors.size()==0);
-
-		mmb = new MessageMgrBuilder("@test", false);
-		assertEquals("@test", mmb.appID);
-		assertTrue(mmb.stg==null);
-		assertTrue(mmb.buildErrors.size()==0);
-
-		mmb = new MessageMgrBuilder("@test", true);
-		assertEquals("@test", mmb.appID);
-		assertTrue(mmb.stg!=null);
-		assertTrue(mmb.buildErrors.size()==0);
-	}
-
-
-	@Test
-	public void test_LoadStg(){
-		MessageMgrBuilder mmb;
-
-		//OK
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.loadStg("de/vandermeer/skb/base/report-manager.stg");
-		assertTrue(mmb.stg!=null);
-		assertTrue(mmb.buildErrors.size()==0);
-
-		//ERROR - null
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.loadStg(null);
-		assertTrue(mmb.stg==null);
-		assertTrue(mmb.buildErrors.size()>0);
-
-		//ERROR - blank
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.loadStg("");
-		assertTrue(mmb.stg==null);
-		assertTrue(mmb.buildErrors.size()>0);
-
-		//ERROR - no file found
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.loadStg("xyz-manager.stg");
-		assertTrue(mmb.stg==null);
-		assertTrue(mmb.buildErrors.size()>0);
-
-		//ERROR - wrong chunks
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.loadStg("de/vandermeer/skb/base/utils/test-simple.stg");
-		assertTrue(mmb.stg==null);
-		assertTrue(mmb.buildErrors.size()>0);
-	}
-
-
-	@Test
-	public void test_SetStg(){
-		MessageMgrBuilder mmb;
-
-		//OK
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.setStg(new STGroupFile("de/vandermeer/skb/base/report-manager.stg"));
-		assertTrue(mmb.stg!=null);
-		assertTrue(mmb.buildErrors.size()==0);
-
-		//ERROR - null
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.setStg(null);
-		assertTrue(mmb.stg==null);
-		assertTrue(mmb.buildErrors.size()>0);
-
-		//ERROR - wrong chunks
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.setStg(new STGroupFile("de/vandermeer/skb/base/utils/test-simple.stg"));
-		assertTrue(mmb.stg==null);
-		assertTrue(mmb.buildErrors.size()>0);
 	}
 
 
@@ -193,22 +90,22 @@ public class Test_MessageMgrBuilder {
 	public void test_SetHandlerError(){
 		MessageMgrBuilder mmb;
 
-		mmb = new MessageMgrBuilder("@test", false);
+		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(null);
 		assertEquals(0, mmb.messageHandlers.size());
 		assertTrue(mmb.buildErrors.size()>0);
 
-		mmb = new MessageMgrBuilder("@test", false);
+		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(null, 0);
 		assertEquals(0, mmb.messageHandlers.size());
 		assertTrue(mmb.buildErrors.size()>0);
 
-		mmb = new MessageMgrBuilder("@test", false);
+		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(null, null);
 		assertEquals(0, mmb.messageHandlers.size());
 		assertTrue(mmb.buildErrors.size()>0);
 
-		mmb = new MessageMgrBuilder("@test", false);
+		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(null, 0, null);
 		assertEquals(0, mmb.messageHandlers.size());
 		assertTrue(mmb.buildErrors.size()>0);
@@ -220,7 +117,7 @@ public class Test_MessageMgrBuilder {
 		MessageMgrBuilder mmb;
 
 		//all defaults for info, 1 handler
-		mmb = new MessageMgrBuilder("@test", false);
+		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(EMessageType.INFO);
 		assertEquals(1, mmb.messageHandlers.size());
 		assertTrue(mmb.messageHandlers.containsKey(EMessageType.INFO));
@@ -295,14 +192,7 @@ public class Test_MessageMgrBuilder {
 		MessageMgr mm;
 
 		//no stg set
-		mmb = new MessageMgrBuilder("@test", false);
-		mm = mmb.build();
-		assertTrue(mmb.buildErrors.size()>0);
-		assertEquals(null, mm);
-
-		//no handlers set
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.setStg(new STGroupFile("de/vandermeer/skb/base/report-manager.stg"));
+		mmb = new MessageMgrBuilder("@test");
 		mm = mmb.build();
 		assertTrue(mmb.buildErrors.size()>0);
 		assertEquals(null, mm);
@@ -315,8 +205,7 @@ public class Test_MessageMgrBuilder {
 		MessageMgr mm;
 
 		//all good, 1 handler for INFO
-		mmb = new MessageMgrBuilder("@test", false);
-		mmb.setStg(new STGroupFile("de/vandermeer/skb/base/report-manager.stg"));
+		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(EMessageType.INFO);
 		mm = mmb.build();
 		assertEquals(1, mm.messageHandlers.size());

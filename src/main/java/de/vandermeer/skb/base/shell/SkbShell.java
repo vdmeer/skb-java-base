@@ -17,6 +17,7 @@ package de.vandermeer.skb.base.shell;
 
 import java.io.BufferedReader;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -214,4 +215,9 @@ public interface SkbShell extends HasPrompt {
 	 */
 	MessageMgr getMessageManager();
 
+	/**
+	 * Returns the command history of the shell, that is the last n commands (n depends on implementation).
+	 * @return shell command history
+	 */
+	List<String> getCommandHistory();
 }
