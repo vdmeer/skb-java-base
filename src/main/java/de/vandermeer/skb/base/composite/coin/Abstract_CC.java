@@ -31,7 +31,7 @@ import de.vandermeer.skb.base.message.Message5WH_Renderer;
  * descriptions about things that have been noticeable, as compared to a boolean return or a single message or a thrown exception.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.1 build 150814 (14-Aug-15) for Java 1.8
+ * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
 public abstract class Abstract_CC implements Com_Coin {

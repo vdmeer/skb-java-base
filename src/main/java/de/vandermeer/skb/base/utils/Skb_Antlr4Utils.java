@@ -28,7 +28,7 @@ import de.vandermeer.skb.base.Skb_Transformer;
  * Methods to query ANTLR4 objects.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.1 build 150814 (14-Aug-15) for Java 1.8
+ * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
  * @since      v0.0.1
  */
 public abstract class Skb_Antlr4Utils {
