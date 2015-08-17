@@ -16,26 +16,14 @@
 package de.vandermeer.skb.base.message;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 import org.apache.commons.lang3.text.StrBuilder;
 import org.junit.Test;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.ST.AttributeList;
-
-import de.vandermeer.skb.base.info.STGroupValidator;
 
 /**
  * Tests for {@link Message5WH_Builder}.
@@ -56,13 +44,12 @@ public class Test_Message5WH_Builder {
 		assertNull(mb.reporter);
 		assertNull(mb.when);
 		assertNull(mb.who);
-		assertNull(mb.where);
+		assertNull(mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//initialCapacity should not be lower than 50
 		assertTrue(50 >= mb.initialCapacity);
-
-		//STGroup should not be null, must have a default initialization
-		assertNotNull(mb.stg);
 	}
 
 	@Test public void testBuilderMethods(){
@@ -84,7 +71,9 @@ public class Test_Message5WH_Builder {
 
 		//SkbMessage setWhere(Object, int, int)
 		mb = new Message5WH_Builder().setWhere("whereTest", 10, 20);
-		this.testWhereST(mb.where, "whereTest", "10", "20");
+		assertEquals("whereTest", mb.whereLocation);
+		assertEquals(10, mb.whereLine);
+		assertEquals(20, mb.whereColumn);
 
 		//SkbMessage setWhere(Object, RecognitionException)
 //		RecognitionException re=new RecognitionException();
@@ -98,7 +87,10 @@ public class Test_Message5WH_Builder {
 		tk.setLine(10);
 		tk.setCharPositionInLine(20);
 		mb = new Message5WH_Builder().setWhere("whereToken", tk);
-		this.testWhereST(mb.where, "whereToken", "10", "20");
+		assertEquals("whereToken", mb.whereLocation);
+		assertEquals(10, mb.whereLine);
+		assertEquals(20, mb.whereColumn);
+
 
 		//SkbMessage setWhere(Object, Tree)
 //		Tree tree = new CommonTree(tk);
@@ -108,7 +100,9 @@ public class Test_Message5WH_Builder {
 		//SkbMessage setWhere(StackTraceElement)
 		StackTraceElement ste = new StackTraceElement("myClass", "myMethod", "myFilename", 10);
 		mb = new Message5WH_Builder().setWhere(ste);
-		this.testWhereST(mb.where, Arrays.asList(new Object[]{"myClass", "myMethod"}), "10", null);
+		assertEquals("myMethod", mb.whereLocation);
+		assertEquals(10, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//for what, how and why we do a .toString() equals only, exact equals tested elsewhere
 		mb = new Message5WH_Builder().addWhat("whatTest");
@@ -119,45 +113,6 @@ public class Test_Message5WH_Builder {
 
 		mb = new Message5WH_Builder().addWhy("whyTest");
 		assertEquals("whyTest", mb.why.toString());
-	}
-
-	@Test public void testSTGroup(){
-		Message5WH_Builder mb = new Message5WH_Builder();
-
-		//initial STGroup should not be null (test here to make sure this test works, also tested in constructor test)
-		assertNotNull(mb.stg);
-
-		//these are the expected chunks for the STG
-		Map<String, Set<String>> expectedChunks = new HashMap<String, Set<String>>(){
-			private static final long serialVersionUID = 1L;{
-				put("where", new HashSet<String>(){
-					private static final long serialVersionUID = 1L;{
-						add("location");
-						add("line");
-						add("column");
-					}}
-				);
-				put("message5wh", new HashSet<String>(){
-					private static final long serialVersionUID = 1L;{
-						add("reporter");
-						add("type");
-						add("who");
-						add("when");
-						add("where");
-						add("what");
-						add("why");
-						add("how");
-					}}
-				);
-			}
-		};
-//
-//		expectedChunks.put("where",      Arrays.asList(new String[]{"location", "line", "column"}));
-//		expectedChunks.put("message5wh", Arrays.asList(new String[]{"reporter", "type", "who", "when", "where", "what", "why", "how"}));
-
-		//test for the expected chunks, returned list must be size 0
-		STGroupValidator stgv = new STGroupValidator(mb.stg, expectedChunks);
-		assertTrue(stgv.isValid());
 	}
 
 	@Test public void testTypeSet(){
@@ -332,23 +287,33 @@ public class Test_Message5WH_Builder {
 
 		//set to null should not change the default
 		mb.setWhere(null, 0, 0);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now test valid location with line/column being 0 (i.e. not set) -- must be ST with location but w/o line/column set
 		mb.setWhere("loc1", 0, 0);
-		this.testWhereST(mb.where, "loc1", null, null);
+		assertEquals("loc1", mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now test with different location (new ST created) and set line to a value greater than 0 but not column
 		mb.setWhere("loc2", 1, 0);
-		this.testWhereST(mb.where, "loc2", "1", null);
+		assertEquals("loc2", mb.whereLocation);
+		assertEquals(1, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now test with different location (new ST created) and set column to a value greater than 0 but not line
 		mb.setWhere("loc3", 0, 1);
-		this.testWhereST(mb.where, "loc3", null, "1");
+		assertEquals("loc3", mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(1, mb.whereColumn);
 
 		//now test with different location (new ST created) and set line and column to a value greater than 0
 		mb.setWhere("loc4", 1, 1);
-		this.testWhereST(mb.where, "loc4", "1", "1");
+		assertEquals("loc4", mb.whereLocation);
+		assertEquals(1, mb.whereLine);
+		assertEquals(1, mb.whereColumn);
 	}
 
 	@Test public void testWhereSet_Token(){
@@ -358,35 +323,49 @@ public class Test_Message5WH_Builder {
 
 		//set both to null should not change the default
 		mb.setWhere(null, (Token)null);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//set one to null should not change the default
 		mb.setWhere("loc", (Token)null);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//set the other one to null should not change the default
 		mb.setWhere(null, tk);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now test valid location with line/column being 0 (i.e. not set) -- must be ST with location but w/o line/column set
 		mb.setWhere("loc1", tk);
-		this.testWhereST(mb.where, "loc1", null, null);
+		assertEquals("loc1", mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(-1, mb.whereColumn);
 
 		//now test with different location (new ST created) and set line to a value greater than 0 but not column
 		tk.setLine(1);
 		mb.setWhere("loc2", tk);
-		this.testWhereST(mb.where, "loc2", "1", null);
+		assertEquals("loc2", mb.whereLocation);
+		assertEquals(1, mb.whereLine);
+		assertEquals(-1, mb.whereColumn);
 
 		//now test with different location (new ST created) and set column to a value greater than 0 but not line
 		tk.setLine(0);
 		tk.setCharPositionInLine(1);
 		mb.setWhere("loc3", tk);
-		this.testWhereST(mb.where, "loc3", null, "1");
+		assertEquals("loc3", mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(1, mb.whereColumn);
 
 		//now test with different location (new ST created) and set line and column to a value greater than 0
 		tk.setLine(1);
 		mb.setWhere("loc4", tk);
-		this.testWhereST(mb.where, "loc4", "1", "1");
+		assertEquals("loc4", mb.whereLocation);
+		assertEquals(1, mb.whereLine);
+		assertEquals(1, mb.whereColumn);
 	}
 
 	@Test public void testWhereSet_STE(){
@@ -396,50 +375,69 @@ public class Test_Message5WH_Builder {
 
 		//check with null first
 		mb = new Message5WH_Builder().setWhere((StackTraceElement)null);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now check with an STE that doesn't have any values
 		mb = new Message5WH_Builder().setWhere(ste);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now put in valid line only -- null
 		ste = new StackTraceElement("", "", null, 1);
 		mb = new Message5WH_Builder().setWhere(ste);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now put in valid class name only
 		ste = new StackTraceElement("myClass", "", null, 0);
 		mb = new Message5WH_Builder().setWhere(ste);
-		this.testWhereST(mb.where, "myClass", null, null);
+		assertEquals("myClass", mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now put in valid method name only
 		ste = new StackTraceElement("", "myMethod", null, 0);
 		mb = new Message5WH_Builder().setWhere(ste);
-		this.testWhereST(mb.where, "myMethod", null, null);
+		assertEquals("myMethod", mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now put in valid class and method but not line
 		ste = new StackTraceElement("myClass", "myMethod", null, 0);
 		mb = new Message5WH_Builder().setWhere(ste);
-		this.testWhereST(mb.where, Arrays.asList(new Object[]{"myClass", "myMethod"}), null, null);
+		assertEquals("myMethod", mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 
 		//now check for a complete STE
 		ste = new StackTraceElement("myClass", "myMethod", null, 1);
 		mb = new Message5WH_Builder().setWhere(ste);
-		this.testWhereST(mb.where, Arrays.asList(new Object[]{"myClass", "myMethod"}), "1", null);
+		assertEquals("myMethod", mb.whereLocation);
+		assertEquals(1, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
 	}
 
 	@Test public void testWhereSet_RE(){
 		//test setWhere(Object, RecognitionException)
 		Message5WH_Builder mb = new Message5WH_Builder();
-//		RecognitionException re = new RecognitionException();
 
 		//set both to null should not change the default
 		mb.setWhere(null, (RecognitionException)null);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
+//		assertTrue(mb.where==null);
 
 		//set one to null should not change the default
 		mb.setWhere("loc", (RecognitionException)null);
-		assertTrue(mb.where==null);
+		assertEquals(null, mb.whereLocation);
+		assertEquals(0, mb.whereLine);
+		assertEquals(0, mb.whereColumn);
+//		assertTrue(mb.where==null);
 
 		//set the other one to null should not change the default
 //		mb.setWhere(null, re);
@@ -505,58 +503,44 @@ public class Test_Message5WH_Builder {
 //		this.testWhereST(mb.where, "loc4", "1", "1");
 	}
 
-	/**
-	 * Tests the attributes of a string template for Where.
-	 * The test calls testSTAttribute() using the attribute names "location", "line" and "column".
-	 * @param st template to be used for testing
-	 * @param expectedLocation expected location value (and type)
-	 * @param expectedLine expected line value (and type)
-	 * @param expectedColumn expected column value (and type)
-	 */
-	private void testWhereST(ST st, Object expectedLocation, Object expectedLine, Object expectedColumn){
-		this.testSTAttribute(st, "location", expectedLocation);
-		this.testSTAttribute(st, "line", expectedLine);
-		this.testSTAttribute(st, "column", expectedColumn);
-	}
-
-	/**
-	 * Tests a single attribute in an ST4.
-	 * The test generally fails if a) the ST is null or b) the attribute name is null.
-	 * If there is no general failure, then the value of the attribute will be tested against the expected value (and its type).
-	 * First test is for null, so if the expected value is null and the actual one is not, the test fails, and vice versa.
-	 * If the expected value is not null and all previous tests are successful, then the type of the expected value is used for further testing.
-	 * If the type is an instance of java.utils.List, the actual and the expected value will be converted to Object[] and those tested member by
-	 * member for equality (test fails for the first pair not being equal or is successful if all pairs are equal).
-	 * For all other cases, the test uses expectedValue.toString() for an equal test.
-	 * @param st template to be used for testing
-	 * @param attrName attribute name to look for
-	 * @param expectedValue expected value to test for
-	 */
-	private void testSTAttribute(ST st, String attrName, Object expectedValue){
-		assertNotNull(st);
-		assertNotNull(attrName);
-		Object o = st.getAttribute(attrName);
-		if(expectedValue==null){
-			assertNull(o);
-		}
-		else{
-			assertNotNull(o);
-			if(expectedValue instanceof List){
-				assertTrue(o instanceof AttributeList);
-
-				Object[] expected = ((List<?>)expectedValue).toArray();
-				Object[] actual = ((AttributeList)o).toArray();
-
-				assertEquals(expected.length, actual.length);
-				for(int i=0; i<expected.length; i++){
-					assertEquals(expected[i], actual[i]);
-				}
-			}
-			else{
-				//last chance toString compare
-				assertEquals(expectedValue, o.toString());
-			}
-		}
-	}
+//	/**
+//	 * Tests a single attribute in an ST4.
+//	 * The test generally fails if a) the ST is null or b) the attribute name is null.
+//	 * If there is no general failure, then the value of the attribute will be tested against the expected value (and its type).
+//	 * First test is for null, so if the expected value is null and the actual one is not, the test fails, and vice versa.
+//	 * If the expected value is not null and all previous tests are successful, then the type of the expected value is used for further testing.
+//	 * If the type is an instance of java.utils.List, the actual and the expected value will be converted to Object[] and those tested member by
+//	 * member for equality (test fails for the first pair not being equal or is successful if all pairs are equal).
+//	 * For all other cases, the test uses expectedValue.toString() for an equal test.
+//	 * @param st template to be used for testing
+//	 * @param attrName attribute name to look for
+//	 * @param expectedValue expected value to test for
+//	 */
+//	private void testSTAttribute(ST st, String attrName, Object expectedValue){
+//		assertNotNull(st);
+//		assertNotNull(attrName);
+//		Object o = st.getAttribute(attrName);
+//		if(expectedValue==null){
+//			assertNull(o);
+//		}
+//		else{
+//			assertNotNull(o);
+//			if(expectedValue instanceof List){
+//				assertTrue(o instanceof AttributeList);
+//
+//				Object[] expected = ((List<?>)expectedValue).toArray();
+//				Object[] actual = ((AttributeList)o).toArray();
+//
+//				assertEquals(expected.length, actual.length);
+//				for(int i=0; i<expected.length; i++){
+//					assertEquals(expected[i], actual[i]);
+//				}
+//			}
+//			else{
+//				//last chance toString compare
+//				assertEquals(expectedValue, o.toString());
+//			}
+//		}
+//	}
 
 }

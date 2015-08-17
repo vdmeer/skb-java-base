@@ -17,8 +17,6 @@ package de.vandermeer.skb.base.message;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.text.StrBuilder;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
 
 import de.vandermeer.asciitable.commons.ObjectToStringStyle;
 import de.vandermeer.skb.base.Skb_Renderable;
@@ -79,11 +77,14 @@ public class Message5WH implements Skb_Renderable {
 	/** What happened? */
 	private StrBuilder what;
 
-	/** Where did it happen? */
-	private ST where;
+	/** Where did it happen: location. */
+	protected Object whereLocation;
 
-	/** The ST group for the message. */
-	private STGroup stg;
+	/** Where did it happen: line. */
+	protected int whereLine;
+
+	/** Where did it happen: column. */
+	protected int whereColumn;
 
 	/** When did take place/happen? */
 	private Object when;
@@ -100,11 +101,12 @@ public class Message5WH implements Skb_Renderable {
 	/** Type of message. */
 	private EMessageType type;
 
-	Message5WH(Object who, StrBuilder what, ST where, STGroup stg, Object when, StrBuilder why, StrBuilder how, Object reporter, EMessageType type){
+	Message5WH(Object who, StrBuilder what, Object whereLocation, int whereLine, int whereColumn, Object when, StrBuilder why, StrBuilder how, Object reporter, EMessageType type){
 		this.who = who;
 		this.what = what;
-		this.where = where;
-		this.stg = stg;
+		this.whereLocation = whereLocation;
+		this.whereLine = whereLine;
+		this.whereColumn = whereColumn;
 		this.when = when;
 		this.why = why;
 		this.how = how;
@@ -112,36 +114,9 @@ public class Message5WH implements Skb_Renderable {
 		this.type = type;
 	}
 
-	/**
-	 * Renders the message for output.
-	 * @return returns a rendered version of the message as string
-	 */
 	@Override
 	public String render(){
-		ST ret = this.stg.getInstanceOf("message5wh");
-		ret.add("reporter", this.reporter);
-		ret.add("type",     this.type);
-		ret.add("who",      this.who);
-		ret.add("when",     this.when);
-		ret.add("where",    this.where);
-		ret.add("what",     this.what);
-		ret.add("why",      this.why);
-		ret.add("how",      this.how);
-
-		return ret.render();
-	}
-
-	/**
-	 * Sets the STGroup for the message based on a validator.
-	 * @param stg new STGroup, which must have been checked against the required chunks defined in {@link Message5WH_Builder#stChunks}.
-	 * 		If the group is not valid, rendering this message might result in runtime errors
-	 * @return true if STG was set, false otherwise
-	 */
-	public boolean setSTG(STGroup stg){
-		if(stg!=null){
-			this.stg = stg;
-		}
-		return false;
+		return new Message5WH_Renderer().render(this);
 	}
 
 	/**
@@ -198,11 +173,27 @@ public class Message5WH implements Skb_Renderable {
 	}
 
 	/**
-	 * Returns the Where? part of the message.
-	 * @return Where? part, null if no set
+	 * Returns the Where? location part of the message.
+	 * @return Where? location part, null if no set
 	 */
-	public ST getWhere(){
-		return this.where;
+	public Object getWhereLocation(){
+		return this.whereLocation;
+	}
+
+	/**
+	 * Returns the Where? line part of the message.
+	 * @return Where? line part, 0 if no set
+	 */
+	public int getWhereLine(){
+		return this.whereLine;
+	}
+
+	/**
+	 * Returns the Where? column part of the message.
+	 * @return Where? column part, null if no set
+	 */
+	public int getWhereColumn(){
+		return this.whereColumn;
 	}
 
 	/**
@@ -240,17 +231,19 @@ public class Message5WH implements Skb_Renderable {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ObjectToStringStyle.getStyle())
-			.append("who     ", this.who, false)
-			.append("who     ", this.who)
-			.append("what    ", this.what)
-			.append("where   ", this.where)
-			.append("when    ", this.when, false)
-			.append("when    ", this.when)
-			.append("why     ", this.why)
-			.append("how     ", this.how)
-			.append("type    ", this.type)
-			.append("reporter", this.reporter, false)
-			.append("reporter", this.reporter)
+			.append("who       ", this.who, false)
+			.append("who       ", this.who)
+			.append("what      ", this.what)
+			.append("whereLoc  ", this.whereLocation)
+			.append("whereLine ", this.whereLine)
+			.append("whereCol  ", this.whereColumn)
+			.append("when      ", this.when, false)
+			.append("when      ", this.when)
+			.append("why       ", this.why)
+			.append("how       ", this.how)
+			.append("type      ", this.type)
+			.append("reporter  ", this.reporter, false)
+			.append("reporter  ", this.reporter)
 			.toString();
 	}
 

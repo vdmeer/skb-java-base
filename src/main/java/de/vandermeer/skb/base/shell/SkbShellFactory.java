@@ -18,7 +18,7 @@ package de.vandermeer.skb.base.shell;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.stringtemplate.v4.STGroup;
+import de.vandermeer.skb.base.message.Message5WH_Renderer;
 
 /**
  * Factory for Skb Shell artifacts.
@@ -39,21 +39,21 @@ public class SkbShellFactory {
 
 	/**
 	 * Returns a new shell with the default identifier and the given STG and console activated.
-	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param renderer a renderer for help messages
 	 * @return new shell
 	 */
-	public static SkbShell newShell(STGroup stg){
-		return SkbShellFactory.newShell(null, stg, true);
+	public static SkbShell newShell(Message5WH_Renderer renderer){
+		return SkbShellFactory.newShell(null, renderer, true);
 	}
 
 	/**
 	 * Returns a new shell with given STG and console flag.
-	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param renderer a renderer for help messages
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen (except for errors on runShell() and some help commands)
 	 * @return new shell
 	 */
-	public static SkbShell newShell(STGroup stg, boolean useConsole){
-		return SkbShellFactory.newShell(null, stg, useConsole);
+	public static SkbShell newShell(Message5WH_Renderer renderer, boolean useConsole){
+		return SkbShellFactory.newShell(null, renderer, useConsole);
 	}
 
 	/**
@@ -79,22 +79,22 @@ public class SkbShellFactory {
 	/**
 	 * Returns a new shell with a given identifier and STGroup plus console activated.
 	 * @param id new shell with identifier
-	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param renderer a renderer for help messages
 	 * @return new shell
 	 */
-	public static SkbShell newShell(String id, STGroup stg){
-		return SkbShellFactory.newShell(id, stg, true);
+	public static SkbShell newShell(String id, Message5WH_Renderer renderer){
+		return SkbShellFactory.newShell(id, renderer, true);
 	}
 
 	/**
 	 * Returns a new shell with given identifier and console flag.
 	 * @param id new shell with identifier
-	 * @param stg an STGroup for help messages, uses default if given STG is not valid
+	 * @param renderer a renderer for help messages
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
 	 * @return new shell
 	 */
-	public static SkbShell newShell(String id, STGroup stg, boolean useConsole){
-		return new AbstractShell(id, stg, useConsole);
+	public static SkbShell newShell(String id, Message5WH_Renderer renderer, boolean useConsole){
+		return new AbstractShell(id, renderer, useConsole);
 	}
 
 	/**

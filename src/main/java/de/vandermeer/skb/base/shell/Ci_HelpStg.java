@@ -20,8 +20,6 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.text.StrBuilder;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupString;
 
 import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.console.Skb_Console;
@@ -35,18 +33,6 @@ import de.vandermeer.skb.base.managers.MessageMgr;
  * @since      v0.0.10
  */
 public class Ci_HelpStg extends Ci_Help {
-
-	/** Default STG for help messages. */
-	STGroup STG = new STGroupString(
-			"where(location, line, column) ::= <<\n" +
-			"<location;separator=\".\"><if(line&&column)> <line>:<column><elseif(!line&&!column)><elseif(!line)> -:<column><elseif(!column)> <line>:-<endif>\n"+
-			">>\n\n" +
-			"message5wh(reporter, type, who, when, where, what, why, how) ::= <<\n" +
-			"<if(reporter)><reporter>: <endif><if(who)><who> <endif><if(when)>at (<when>) <endif><if(where)>in <where> <endif><if(what)>\\>> <what><endif>" +
-			"<if(why)> \n       ==> <why><endif>\n" +
-			"<if(how)> \n       ==> <how><endif>\n" +
-			">>\n"
-	);
 
 	/**
 	 * Returns an new 'help' command interpreter for STG output.
@@ -64,7 +50,6 @@ public class Ci_HelpStg extends Ci_Help {
 		}
 
 		CC_Info info = new CC_Info();
-		info.setSTG(this.STG);
 
 		String toHelp = lp.getArgs();
 		if(toHelp==null){

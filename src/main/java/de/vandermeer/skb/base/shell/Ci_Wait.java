@@ -16,6 +16,7 @@
 package de.vandermeer.skb.base.shell;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import de.vandermeer.skb.base.managers.MessageMgr;
 
@@ -56,12 +57,19 @@ public class Ci_Wait extends AbstractCommandInterpreter {
 			return -1;
 		}
 
-		try {
-			Thread.sleep(new Integer(lp.setTokenPosition(1).getArgs()));
+		int sleep = NumberUtils.toInt(lp.setTokenPosition(1).getArgs(), -1);
+		if(sleep==-1){
+			mm.report(MessageMgr.createErrorMessage("wait with no number argument: {}", lp.setTokenPosition(1).getArgs()));
 		}
-		catch (InterruptedException e) {
-			mm.report(MessageMgr.createErrorMessage("interrupted in wait {}", e.getMessage()));
+		else{
+			try {
+				Thread.sleep(sleep);
+			}
+			catch (InterruptedException e) {
+				mm.report(MessageMgr.createErrorMessage("interrupted in wait {}", e.getMessage()));
+			}
 		}
+
 		return 0;
 	}
 
