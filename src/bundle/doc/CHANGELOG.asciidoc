@@ -1,5 +1,6 @@
 v0.1.2 - patch- 2015-##-##
 --------------------------
+* added simple history CI to shell
 
 
 v0.1.1 - patch - 2015-08-14

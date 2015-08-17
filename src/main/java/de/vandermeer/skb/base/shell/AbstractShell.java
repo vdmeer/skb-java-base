@@ -17,11 +17,14 @@ package de.vandermeer.skb.base.shell;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.StringUtils;
 import org.stringtemplate.v4.STGroup;
 
 import de.vandermeer.skb.base.console.NonBlockingReader;
@@ -59,6 +62,9 @@ public class AbstractShell implements SkbShell {
 
 	/** The shell's identifier. */
 	protected String id;
+
+	/** Command history of the shell, that is the last n commands. */
+	protected final List<String> history;
 
 	/**
 	 * Returns a new shell with the default identifier and the default STG and console activated.
@@ -137,6 +143,8 @@ public class AbstractShell implements SkbShell {
 		if(this.mm==null){
 			throw new IllegalArgumentException("could not create MM, possibly wrong STG");
 		}
+
+		this.history = new ArrayList<>(20);
 	}
 
 	@Override
@@ -216,6 +224,11 @@ public class AbstractShell implements SkbShell {
 				}
 
 				in = sysin.readLine();
+
+				if(!StringUtils.isBlank(in)){
+					this.history.add(in);
+				}
+
 				this.exitStatus = this.parseLine(in);
 
 				if(this.exitStatus==-2){
@@ -251,6 +264,11 @@ public class AbstractShell implements SkbShell {
 	@Override
 	public MessageMgr getMessageManager() {
 		return this.mm;
+	}
+
+	@Override
+	public List<String> getCommandHistory() {
+		return this.history;
 	}
 
 }
