@@ -60,8 +60,8 @@ public class Test_Message5WH_Builder {
 		mb = new Message5WH_Builder().setReporter("repTest");
 		assertEquals("repTest", mb.reporter);
 
-		mb = new Message5WH_Builder().setType(EMessageType.ERROR);
-		assertTrue(mb.type==EMessageType.ERROR);
+		mb = new Message5WH_Builder().setType(E_MessageType.ERROR);
+		assertTrue(mb.type==E_MessageType.ERROR);
 
 		mb = new Message5WH_Builder().setWho("whoTest");
 		assertEquals("whoTest", mb.who);
@@ -123,16 +123,16 @@ public class Test_Message5WH_Builder {
 		assertTrue(mb.type==null);
 
 		// set error means error
-		mb.setType(EMessageType.ERROR);
-		assertTrue(mb.type==EMessageType.ERROR);
+		mb.setType(E_MessageType.ERROR);
+		assertTrue(mb.type==E_MessageType.ERROR);
 
 		//set warning means warning
-		mb.setType(EMessageType.WARNING);
-		assertTrue(mb.type==EMessageType.WARNING);
+		mb.setType(E_MessageType.WARNING);
+		assertTrue(mb.type==E_MessageType.WARNING);
 
 		//set message means message
-		mb.setType(EMessageType.INFO);
-		assertTrue(mb.type==EMessageType.INFO);
+		mb.setType(E_MessageType.INFO);
+		assertTrue(mb.type==E_MessageType.INFO);
 
 		//set null means null
 		mb.setType(null);

@@ -1,0 +1,44 @@
+/* Copyright 2011-2014 Sven van der Meer <vdmeer.sven@mykolab.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ * Template for the 5WH message in de.vandermeer.skb.base.message
+ *
+ * @package    de.vandermeer.skb.commons
+ * @author     Sven van der Meer <vdmeer.sven@mykolab.com>
+ * @copyright  2011-2014 Sven van der Meer
+ * @license    http://www.apache.org/licenses/LICENSE-2.0  Apache License, Version 2.0
+ * @version    v0.1.2 build 150817 (17-Aug-15)
+ */
+
+message5wh(reporter, type, who, when, where, what, why, how) ::= <%
+<if(what)><what> <endif>
+<if(where)>in <where> <endif>
+<if(who)>created by <who> <endif>
+<if(type.error&&what)>of <type> <endif>
+<if(why)><why> <endif>
+<if(how)><how> <endif>
+<\n>
+
+This has been reported:
+<if(reporter)><\n>- by <reporter><endif>
+<if(type)><\n>- as <type><endif>
+<if(when)><\n>- at <when><endif>
+<\n>
+%>
+
+where(location, line, column) ::= <%
+<location;separator=".">
+%>

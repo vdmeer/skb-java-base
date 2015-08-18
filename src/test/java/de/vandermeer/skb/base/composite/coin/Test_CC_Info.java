@@ -24,7 +24,7 @@ import de.vandermeer.skb.base.composite.Com_Coin;
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.composite.Com_Leaf;
 import de.vandermeer.skb.base.composite.Com_Node;
-import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.E_MessageType;
 import de.vandermeer.skb.base.message.Message5WH;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
 
@@ -51,10 +51,10 @@ public class Test_CC_Info {
 	@Test public void testAdd(){
 		CC_Info info = new CC_Info();
 
-		Message5WH m = new Message5WH_Builder().setType(EMessageType.ERROR).build();
+		Message5WH m = new Message5WH_Builder().setType(E_MessageType.ERROR).build();
 
 		info.add(m);
-		assertEquals(EMessageType.INFO, info.getList().get(0).getType());	//type automatically changed to warning
+		assertEquals(E_MessageType.INFO, info.getList().get(0).getType());	//type automatically changed to warning
 
 		assertEquals(1, info.getList().size());		//size 1
 		assertEquals(1, info.size());				//size 1
