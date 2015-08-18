@@ -1,47 +1,74 @@
 SKB Base
---------
+========
 
-Base definitions, some standard classes and services, categories for the SKB, and the base line for composite hierarchies for the SKB.
+Implementation of basic concepts, some small some bigger but all re-useable in many contexts.
 
+The project is organised in packages representing those implementations.
+Some concepts require more than one package.
+Packages can but don't have to be related to each other.
+For instance, the +message+ package is used by the +composite.coin+ package which in turn is used by the +managers+ package.
 
-SKB Message
-~~~~~~~~~~~
-This message class contains information following the 5WH news style: 
+Implemented Concepts
+--------------------
 
-* Who is it about?
-* What happened?
-* When did it take place?
-* Where did it take place?
-* Why did it happen?
-* How did it happen?
+Base
+~~~~
+Very basic interfaces are provided in the top level +base+ package.
 
-In addition to that, the class also provides for information on the reporter (the object reporting the message) and
-the message type (i.e. an error, a warning or an information).
+Categories
+~~~~~~~~~~
+The package +categories+ defines a hiearchy of interfaces (and some classes and default implementations) for categories such as 'has' something or 'is' something.
+It has two sub packages: +categories.kvt+ for key/value/type categories (e.g. keys and keys with types) and +categories.options+ for option categories (still experimental).
 
-The class comprises methods to build a message (+add*+, +set*+), methods to access a message (+get*+) and some additional
-methods to process a complete message (+asST+, +render+, +toString+). Additionally, it carries an enumerate +EMessageType+ for typing messages.
-Message properties that have a +set+ method (_reporter_, _type_, _when_, _where_, _who_) can only be set once and are immutable afterwards.
-For message properties that have an +add+ method (_how_, _what_, _why_) information can be appended unlimited, but once added it cannot be removed.
+Composite Pattern
+~~~~~~~~~~~~~~~~~
+The package +composite+ privides a simple implementation of the composite pattern with a top element and nodes (containing other nodes and leafs) and of course leafs.
+It has one sub package +composite.coin+ that defines classes implementing node and leaf functionality (so "both sides of a +coin+").
 
-The simplest way to create a message is to use the the builder methods. The following example creates a new message and sets all of its
-properties:
+Those zwitter objects can be used as node and leaf. The package defines +null+ objects, which can be used to qualify a +null+ return (as compared to simply returning +null+).
+The package also defined +CC+ objects for standard message types: information, warning, and error.
 
----------------------------------------------------------------
-Message5WH msg=new Message5WH()
-	.setWho("from " + this.getClass().getSimpleName())
-	.addWhat("showing a test message")
-	.setWhen(null)
-	.setWhere("the class API documentation", 0, 0)
-	.addWhy("as a demo")
-	.addHow("added to the class JavaDoc")
-	.setReporter("The Author")
-	.setType(EMessageType.INFO)
-;
----------------------------------------------------------------
+Console
+~~~~~~~
+The +console+ package has an implementation of a non-blocking console reader and an object with some interesting console features.
++Skb_Console+ defines loggers that can then be used for standard console output (similar to stdout and stderr, just using loggers thus configurable at runtime).
 
-This message will print to the following lines:
----------------------------------------------------------------
-The Author: info from Message5WHTests in the class API documentation >> showing a test message 
-       ==> as a demo 
-       ==> added to the class JavaDoc
----------------------------------------------------------------
+It also provides standard methods to use the loggers. For example conWarn() will print a message typed warning to the standard out logger.
+These methods make use of a global variable +USE_CONSOLE+, thus they can be switched on and off by an application resulting in standard output being printed or ignored at runtime.
+
+Info (source, loader, target, writer, validator)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The +info+ package implements a concept for defining, retrieving, writing, and validation infomation sources and information.
+This package solves many standard problem: define and validate a directory or a file or a set of both, load STGroups from any source and validate them, walk directries and apply actions to filtered elements found.
+
+The concept here is based in +InfoSource+ as a source of information (directory, file, database with constraints such as file system, resource),
++InfoLoader+ as something that can load information from a given +InfoSource+ (for instance a set of files from a directory),
++InfoTarget+ as a target of information (the opposite of an +InfoSource+),
++InfoWriter+ as a writer of information to an +InfoTarget+ (kind of the opposite of an +InfoLoader+),
++InfoValidator+ as a validtor of source or target or actual information.
+Each of these concepts has some implementations for standard problems.
+
+Managers
+~~~~~~~~
+The +managers+ package implements managers, currently only a message manager that uses the standard message and coin objects and provides an object with flexible message processing (printing, storing, counting).
+
+Message (5WH)
+~~~~~~~~~~~~~
+The +message+ package implements the concept of a message as a 5WH object: who, what, when, where, why, and how. It comes with builder and renderer (using string templates).
+
+(Command) Shell
+~~~~~~~~~~~~~~~
+The +shell+ package implements a shell with commands being injected into as command interpreters.
+Commands can have arguments (parameters).
+
+All of those shell components are defined in interfaces and the package provides abstract implementations and a factory.
+Some standard commands (exit, wait, standard help generation using string templates or ASCII tables, history, and run commands) are implemented.
+
+Strings
+~~~~~~~
+The +strings+ package implements strings that have an identifier and a version and/or a value part.
+This can be very helpful when identifier need to be encoded along with versions but defining a class is for some reasons not suitable.
+
+Utils
+~~~~~
+The +utils+ package provides some standard utils. The sub package +utils.collections+ has some simple helper classes to deal with Java maps and Java collections.

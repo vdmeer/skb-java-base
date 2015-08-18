@@ -411,78 +411,109 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
+<h1>SKB Base</h1>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_skb_base">SKB Base</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Base definitions, some standard classes and services, categories for the SKB, and the base line for composite hierarchies for the SKB.</p>
+<p>Implementation of basic concepts, some small some bigger but all re-useable in many contexts.</p>
+</div>
+<div class="paragraph">
+<p>The project is organised in packages representing those implementations.
+Some concepts require more than one package.
+Packages can but don&#8217;t have to be related to each other.
+For instance, the <code>message</code> package is used by the <code>composite.coin</code> package which in turn is used by the <code>managers</code> package.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implemented_concepts">Implemented Concepts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_base">Base</h3>
+<div class="paragraph">
+<p>Very basic interfaces are provided in the top level <code>base</code> package.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_skb_message">SKB Message</h3>
+<h3 id="_categories">Categories</h3>
 <div class="paragraph">
-<p>This message class contains information following the 5WH news style:</p>
+<p>The package <code>categories</code> defines a hiearchy of interfaces (and some classes and default implementations) for categories such as <em>has</em> something or <em>is</em> something.
+It has two sub packages: <code>categories.kvt</code> for key/value/type categories (e.g. keys and keys with types) and <code>categories.options</code> for option categories (still experimental).</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Who is it about?</p>
-</li>
-<li>
-<p>What happened?</p>
-</li>
-<li>
-<p>When did it take place?</p>
-</li>
-<li>
-<p>Where did it take place?</p>
-</li>
-<li>
-<p>Why did it happen?</p>
-</li>
-<li>
-<p>How did it happen?</p>
-</li>
-</ul>
+</div>
+<div class="sect2">
+<h3 id="_composite_pattern">Composite Pattern</h3>
+<div class="paragraph">
+<p>The package <code>composite</code> privides a simple implementation of the composite pattern with a top element and nodes (containing other nodes and leafs) and of course leafs.
+It has one sub package <code>composite.coin</code> that defines classes implementing node and leaf functionality (so "both sides of a <code>coin</code>").</p>
 </div>
 <div class="paragraph">
-<p>In addition to that, the class also provides for information on the reporter (the object reporting the message) and
-the message type (i.e. an error, a warning or an information).</p>
+<p>Those zwitter objects can be used as node and leaf. The package defines <code>null</code> objects, which can be used to qualify a <code>null</code> return (as compared to simply returning <code>null</code>).
+The package also defined <code>CC</code> objects for standard message types: information, warning, and error.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_console">Console</h3>
+<div class="paragraph">
+<p>The <code>console</code> package has an implementation of a non-blocking console reader and an object with some interesting console features.
+<code>Skb_Console</code> defines loggers that can then be used for standard console output (similar to stdout and stderr, just using loggers thus configurable at runtime).</p>
 </div>
 <div class="paragraph">
-<p>The class comprises methods to build a message (add*, set*), methods to access a message (get*) and some additional
-methods to process a complete message (asST, render, toString). Additionally, it carries an enumerate EMessageType for typing messages.
-Message properties that have a set method (<em>reporter</em>, <em>type</em>, <em>when</em>, <em>where</em>, <em>who</em>) can only be set once and are immutable afterwards.
-For message properties that have an add method (<em>how</em>, <em>what</em>, <em>why</em>) information can be appended unlimited, but once added it cannot be removed.</p>
+<p>It also provides standard methods to use the loggers. For example conWarn() will print a message typed warning to the standard out logger.
+These methods make use of a global variable <code>USE_CONSOLE</code>, thus they can be switched on and off by an application resulting in standard output being printed or ignored at runtime.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_info_source_loader_target_writer_validator">Info (source, loader, target, writer, validator)</h3>
+<div class="paragraph">
+<p>The <code>info</code> package implements a concept for defining, retrieving, writing, and validation infomation sources and information.
+This package solves many standard problem: define and validate a directory or a file or a set of both, load STGroups from any source and validate them, walk directries and apply actions to filtered elements found.</p>
 </div>
 <div class="paragraph">
-<p>The simplest way to create a message is to use the the builder methods. The following example creates a new message and sets all of its
-properties:</p>
+<p>The concept here is based in <code>InfoSource</code> as a source of information (directory, file, database with constraints such as file system, resource),
+<code>InfoLoader</code> as something that can load information from a given <code>InfoSource</code> (for instance a set of files from a directory),
+<code>InfoTarget</code> as a target of information (the opposite of an <code>InfoSource</code>),
+<code>InfoWriter</code> as a writer of information to an <code>InfoTarget</code> (kind of the opposite of an <code>InfoLoader</code>),
+<code>InfoValidator</code> as a validtor of source or target or actual information.
+Each of these concepts has some implementations for standard problems.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>Message5WH msg=new Message5WH()
-	.setWho("from " + this.getClass().getSimpleName())
-	.addWhat("showing a test message")
-	.setWhen(null)
-	.setWhere("the class API documentation", 0, 0)
-	.addWhy("as a demo")
-	.addHow("added to the class JavaDoc")
-	.setReporter("The Author")
-	.setType(EMessageType.INFO)
-;</pre>
 </div>
+<div class="sect2">
+<h3 id="_managers">Managers</h3>
+<div class="paragraph">
+<p>The <code>managers</code> package implements managers, currently only a message manager that uses the standard message and coin objects and provides an object with flexible message processing (printing, storing, counting).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_message_5wh">Message (5WH)</h3>
+<div class="paragraph">
+<p>The <code>message</code> package implements the concept of a message as a 5WH object: who, what, when, where, why, and how. It comes with builder and renderer (using string templates).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__command_shell">(Command) Shell</h3>
+<div class="paragraph">
+<p>The <code>shell</code> package implements a shell with commands being injected into as command interpreters.
+Commands can have arguments (parameters).</p>
 </div>
 <div class="paragraph">
-<p>This message will print to the following lines:</p>
+<p>All of those shell components are defined in interfaces and the package provides abstract implementations and a factory.
+Some standard commands (exit, wait, standard help generation using string templates or ASCII tables, history, and run commands) are implemented.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>The Author: info from Message5WHTests in the class API documentation &gt;&gt; showing a test message
-       ==&gt; as a demo
-       ==&gt; added to the class JavaDoc</pre>
 </div>
+<div class="sect2">
+<h3 id="_strings">Strings</h3>
+<div class="paragraph">
+<p>The <code>strings</code> package implements strings that have an identifier and a version and/or a value part.
+This can be very helpful when identifier need to be encoded along with versions but defining a class is for some reasons not suitable.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_utils">Utils</h3>
+<div class="paragraph">
+<p>The <code>utils</code> package provides some standard utils. The sub package <code>utils.collections</code> has some simple helper classes to deal with Java maps and Java collections.</p>
 </div>
 </div>
 </div>
@@ -490,7 +521,7 @@ properties:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-17 22:54:56 IST
+Last updated 2015-08-18 17:17:58 IST
 </div>
 </div>
 </body>
