@@ -30,7 +30,7 @@ import de.vandermeer.skb.base.console.NonBlockingReader;
 import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.managers.MessageMgr;
 import de.vandermeer.skb.base.managers.MessageMgrBuilder;
-import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.E_MessageType;
 import de.vandermeer.skb.base.message.Message5WH_Renderer;
 
 /**
@@ -133,9 +133,9 @@ public class AbstractShell implements SkbShell {
 		this.id = (id!=null)?id:"skbsh";
 
 		MessageMgrBuilder mmb = new MessageMgrBuilder(getPromptName());
-		mmb.setHandler(EMessageType.ERROR);
-		mmb.setHandler(EMessageType.WARNING);
-		mmb.setHandler(EMessageType.INFO);
+		mmb.setHandler(E_MessageType.ERROR);
+		mmb.setHandler(E_MessageType.WARNING);
+		mmb.setHandler(E_MessageType.INFO);
 		mmb.enableMessageCollection();
 
 		this.mm = mmb.build();
