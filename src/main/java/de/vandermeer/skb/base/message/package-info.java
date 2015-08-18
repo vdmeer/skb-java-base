@@ -54,7 +54,7 @@
  * <h3>Creating a message</h3>
  * 
  * Use the builder to create a message. The following example shows a simple information message being created:
- * <pre>
+ * <pre>{@code
 	Message5WH msg = new Message5WH_Builder()
 		.setWho("from " + this.getClass().getSimpleName())
 		.addWhat("showing a test message")
@@ -66,7 +66,7 @@
 		.setType(EMessageType.INFO)
 		.build()
 	;
- * </pre>
+ * }</pre>
  * 
  * <p>
  * 		The builder provides methods to set the who, when, and where parts of the message as well as the reporter and the type.
@@ -124,11 +124,11 @@
  * Simply call the appropriate render method.
  * 
  * The following example loads a renderer using a defined template (in the src/test/resources of the package source) and uses that to render the message above:
- * <pre>
+ * <pre>{@code
 	Message5WH_Renderer ren = new Message5WH_Renderer("de/vandermeer/skb/base/message/5wh-example.stg");
 	String rendererd = ren.render(msg);
 	System.out.println(rendererd);
- * </pre>
+ * }</pre>
  * 
  * With this template the same message will render as:
  * <pre>
