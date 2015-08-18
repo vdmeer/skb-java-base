@@ -24,7 +24,7 @@ package de.vandermeer.skb.base.message;
  * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
  * @since      v0.0.1
  */
-public enum EMessageType {
+public enum E_MessageType {
 	/** An information (or informal) message */
 	INFO (0),
 
@@ -42,7 +42,7 @@ public enum EMessageType {
 	 * Creates a new message type.
 	 * @param number unique number of the type
 	 */
-	private EMessageType(int number){
+	private E_MessageType(int number){
 		this.number = number;
 	}
 

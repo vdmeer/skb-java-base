@@ -23,47 +23,6 @@ import de.vandermeer.skb.base.Skb_Renderable;
 
 /**
  * Standard SKB message.
- * This message class contains information following the 5WH news style (see also <a target="_new" href="https://en.wikipedia.org/wiki/Five_Ws">Wikipedia</a>): 
- * <ul>
- * 		<li>Who is it about?</li>
- * 		<li>What happened?</li>
- * 		<li>When did it take place?</li>
- * 		<li>Where did it take place?</li>
- * 		<li>Why did it happen?</li>
- * 		<li>How did it happen?</li>
- * </ul>
- * In addition to that, the class also provides for information on the reporter (the object reporting the message) and
- * the message type (i.e. an error, a warning or an information).
- * 
- * <p>
- * The class comprises methods to build a message (add*, set*), methods to access a message (get*) and some additional
- * methods to process a complete message (asST, render, toString). Additionally, it carries an enumerate {@link EMessageType} for typing messages.
- * Message properties that have a "set" method (reporter, type, when, where, who) can only be set once and are immutable afterwards.
- * For message properties that have an "add" method (how, what, why) information can be appended unlimited, but once added it cannot be removed.
- * </p>
- * 
- * <p>
- * The simplest way to create a message is to use the the builder methods. The following example creates a new message and sets all of its
- * properties:
- * <pre>
-Message5WH msg = new Message5WH_Builder()
-	.setWho("from " + this.getClass().getSimpleName())
-	.addWhat("showing a test message")
-	.setWhen(null)
-	.setWhere("the class API documentation", 0, 0)
-	.addWhy("as a demo")
-	.addHow("added to the class JavaDoc")
-	.setReporter("The Author")
-	.setType(EMessageType.INFO)
-	.build()
-;
- * </pre>
- *This message will print to the following lines:
- * <pre>
-The Author: info from Message5WHTests in the class API documentation &gt;&gt; showing a test message 
-       ==&gt; as a demo 
-       ==&gt; added to the class JavaDoc
- * </pre>
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
@@ -99,9 +58,9 @@ public class Message5WH implements Skb_Renderable {
 	private Object reporter;
 
 	/** Type of message. */
-	private EMessageType type;
+	private E_MessageType type;
 
-	Message5WH(Object who, StrBuilder what, Object whereLocation, int whereLine, int whereColumn, Object when, StrBuilder why, StrBuilder how, Object reporter, EMessageType type){
+	Message5WH(Object who, StrBuilder what, Object whereLocation, int whereLine, int whereColumn, Object when, StrBuilder why, StrBuilder how, Object reporter, E_MessageType type){
 		this.who = who;
 		this.what = what;
 		this.whereLocation = whereLocation;
@@ -152,7 +111,7 @@ public class Message5WH implements Skb_Renderable {
 	 * Returns the type of the message.
 	 * @return message type, null if not set
 	 */
-	public EMessageType getType(){
+	public E_MessageType getType(){
 		return this.type;
 	}
 
@@ -218,7 +177,7 @@ public class Message5WH implements Skb_Renderable {
 	 * @param type new type
 	 * @return self to allow chaining
 	 */
-	public Message5WH changeType(EMessageType type){
+	public Message5WH changeType(E_MessageType type){
 		this.type = type;
 		return this;
 	}

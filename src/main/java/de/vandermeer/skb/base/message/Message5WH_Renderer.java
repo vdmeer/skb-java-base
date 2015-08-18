@@ -48,7 +48,7 @@ public class Message5WH_Renderer {
 	public static STGroup DEFAULT_STG = new STGroupFile(Message5WH_Renderer.DEFAULT_STG_FN);
 
 	/** The STGroup chunks for validation of an STGroup for a message. */
-	public final static Map<String, Set<String>> stChunks = new HashMap<String, Set<String>>(){
+	public final static Map<String, Set<String>> STG_CHUNKS = new HashMap<String, Set<String>>(){
 		private static final long serialVersionUID = 1L;{
 			put("where", new HashSet<String>(){
 				private static final long serialVersionUID = 1L;{
@@ -112,7 +112,7 @@ public class Message5WH_Renderer {
 			throw new IllegalArgumentException("stg is null");
 		}
 
-		STGroupValidator stgv = new STGroupValidator(this.stg, Message5WH_Renderer.stChunks);
+		STGroupValidator stgv = new STGroupValidator(this.stg, Message5WH_Renderer.STG_CHUNKS);
 		if(stgv.getValidationErrors().size()>0){
 			throw new IllegalArgumentException(stgv.getValidationErrors().render());
 		}
