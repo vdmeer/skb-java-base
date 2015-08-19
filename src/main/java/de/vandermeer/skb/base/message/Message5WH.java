@@ -19,7 +19,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.text.StrBuilder;
 
 import de.vandermeer.asciitable.commons.ObjectToStringStyle;
-import de.vandermeer.skb.base.Skb_Renderable;
+import de.vandermeer.skb.base.utils.Skb_Renderable;
 
 /**
  * Standard SKB message.
@@ -75,7 +75,59 @@ public class Message5WH implements Skb_Renderable {
 
 	@Override
 	public String render(){
-		return new Message5WH_Renderer().render(this);
+		StrBuilder ret = new StrBuilder(100);
+
+		StrBuilder where = null;
+		if(this.getWhereLocation()!=null){
+			where = new StrBuilder(30);
+			where.append(this.whereLocation);
+			if(this.whereLine>0 && this.whereColumn>0){
+				where.append(' ').append(this.whereLine).append(':').append(this.whereColumn).append(' ');
+			}
+			else if(this.whereLine<1 && this.whereColumn<1){
+				where.append(' ');
+			}
+			else if(this.whereLine<1){
+				where.append(" -:").append(this.whereColumn).append(' ');
+			}
+			else if(this.whereColumn<1){
+				where.append(' ').append(this.whereLine).append(":- ");
+			}
+		}
+
+		if(this.reporter!=null){
+			ret.append(this.reporter).append(": ");
+		}
+		if(this.what!=null){
+			ret.append(this.type.name().toLowerCase()).append(' ');
+		}
+		if(this.who!=null){
+			ret.append(this.who).append(' ');
+		}
+		if(this.when!=null){
+			ret.append("at (").append(this.when).append(") ");
+		}
+
+		if(where!=null){
+			ret.append("in ").append(where);
+		}
+
+		if(this.type==E_MessageType.ERROR){
+			ret.append("-> ");
+		}
+		if(this.what!=null){
+			ret.append(this.what);
+		}
+
+		if(this.why!=null){
+			ret.appendNewLine();
+			ret.append("        ==> ").append(this.why);
+		}
+		if(this.how!=null){
+			ret.appendNewLine();
+			ret.append("        ==> ").append(this.how);
+		}
+		return ret.toString();
 	}
 
 	/**

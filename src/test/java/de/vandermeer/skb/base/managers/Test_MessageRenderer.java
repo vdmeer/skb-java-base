@@ -13,25 +13,25 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.message;
+package de.vandermeer.skb.base.managers;
 
 import org.junit.Test;
 
 /**
- * Tests for {@link Test_Message5WH_Renderer}.
+ * Tests for {@link MessageRenderer}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
  */
-public class Test_Message5WH_Renderer {
+public class Test_MessageRenderer {
 
 	@Test
 	public void test_Constructor(){
-		Message5WH_Renderer ren;
+		MessageRenderer ren;
 
-		ren = new Message5WH_Renderer();
-		ren = new Message5WH_Renderer(Message5WH_Renderer.DEFAULT_STG);
-		ren = new Message5WH_Renderer(Message5WH_Renderer.DEFAULT_STG_FN);
+		ren = new MessageRenderer();
+		ren = new MessageRenderer(MessageRenderer.DEFAULT_STG);
+		ren = new MessageRenderer(MessageRenderer.DEFAULT_STG_FN);
 
 		ren.stg.show();
 	}

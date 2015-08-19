@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base;
+package de.vandermeer.skb.base.utils;
 
 /**
  * A pair of things, with a left and a right hand side (or left and right).

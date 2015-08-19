@@ -18,7 +18,7 @@ package de.vandermeer.skb.base.shell;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.vandermeer.skb.base.message.Message5WH_Renderer;
+import de.vandermeer.skb.base.managers.MessageRenderer;
 
 /**
  * Factory for Skb Shell artifacts.
@@ -42,7 +42,7 @@ public class SkbShellFactory {
 	 * @param renderer a renderer for help messages
 	 * @return new shell
 	 */
-	public static SkbShell newShell(Message5WH_Renderer renderer){
+	public static SkbShell newShell(MessageRenderer renderer){
 		return SkbShellFactory.newShell(null, renderer, true);
 	}
 
@@ -52,7 +52,7 @@ public class SkbShellFactory {
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen (except for errors on runShell() and some help commands)
 	 * @return new shell
 	 */
-	public static SkbShell newShell(Message5WH_Renderer renderer, boolean useConsole){
+	public static SkbShell newShell(MessageRenderer renderer, boolean useConsole){
 		return SkbShellFactory.newShell(null, renderer, useConsole);
 	}
 
@@ -82,7 +82,7 @@ public class SkbShellFactory {
 	 * @param renderer a renderer for help messages
 	 * @return new shell
 	 */
-	public static SkbShell newShell(String id, Message5WH_Renderer renderer){
+	public static SkbShell newShell(String id, MessageRenderer renderer){
 		return SkbShellFactory.newShell(id, renderer, true);
 	}
 
@@ -93,7 +93,7 @@ public class SkbShellFactory {
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
 	 * @return new shell
 	 */
-	public static SkbShell newShell(String id, Message5WH_Renderer renderer, boolean useConsole){
+	public static SkbShell newShell(String id, MessageRenderer renderer, boolean useConsole){
 		return new AbstractShell(id, renderer, useConsole);
 	}
 

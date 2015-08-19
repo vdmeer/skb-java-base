@@ -417,13 +417,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implementation of basic concepts, some small some bigger but all build for reuse in many contexts.</p>
+<p>Implementation of basic concepts, some small some bigger but all re-useable in many contexts.</p>
 </div>
 <div class="paragraph">
-<p>The project is organized in packages representing those implementations.
+<p>The project is organised in packages representing those implementations.
 Some concepts require more than one package.
 Packages can but don&#8217;t have to be related to each other.
-For instance, the <code>message</code> package is used by the <code>composite.coin</code> package which in turn is used by the <code>managers</code> package.</p>
+For instance, the <code>message</code> package is used by the <code>composite.coin</code> package which in turn is used by the <code>managers</code> package.
+The figure below shows the composition of the overall project.</p>
+<p><img src="doc-files/composition.png" align="center" alt="Skb Base Composition"></p>
 </div>
 </div>
 </div>
@@ -439,18 +441,18 @@ For instance, the <code>message</code> package is used by the <code>composite.co
 <div class="sect2">
 <h3 id="_categories">Categories</h3>
 <div class="paragraph">
-<p>The package <code>categories</code> defines a hierarchy of interfaces (and some classes and default implementations) for categories such as <em>has</em> something or <em>is</em> something.
+<p>The package <code>categories</code> defines a hiearchy of interfaces (and some classes and default implementations) for categories such as <em>has</em> something or <em>is</em> something.
 It has two sub packages: <code>categories.kvt</code> for key/value/type categories (e.g. keys and keys with types) and <code>categories.options</code> for option categories (still experimental).</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_composite_pattern">Composite Pattern</h3>
 <div class="paragraph">
-<p>The package <code>composite</code> provides a simple implementation of the composite pattern with a top element and nodes (containing other nodes and leafs) and of course leafs.
+<p>The package <code>composite</code> privides a simple implementation of the composite pattern with a top element and nodes (containing other nodes and leafs) and of course leafs.
 It has one sub package <code>composite.coin</code> that defines classes implementing node and leaf functionality (so "both sides of a <code>coin</code>").</p>
 </div>
 <div class="paragraph">
-<p>Those hybrid objects can be used as node and leaf. The package defines <code>null</code> objects, which can be used to qualify a <code>null</code> return (as compared to simply returning <code>null</code>).
+<p>Those zwitter objects can be used as node and leaf. The package defines <code>null</code> objects, which can be used to qualify a <code>null</code> return (as compared to simply returning <code>null</code>).
 The package also defined <code>CC</code> objects for standard message types: information, warning, and error.</p>
 </div>
 </div>
@@ -468,33 +470,16 @@ These methods make use of a global variable <code>USE_CONSOLE</code>, thus they 
 <div class="sect2">
 <h3 id="_info_source_loader_target_writer_validator">Info (source, loader, target, writer, validator)</h3>
 <div class="paragraph">
-<p>The <code>info</code> package implements a concept for defining, retrieving, writing, and validation information sources and information.
+<p>The <code>info</code> package implements a concept for defining, retrieving, writing, and validation infomation sources and information.
 This package solves many standard problem: define and validate a directory or a file or a set of both, load STGroups from any source and validate them, walk directries and apply actions to filtered elements found.</p>
 </div>
 <div class="paragraph">
-<p>The concept here is based on</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>InfoSource</code> as a source of information (directory, file, database with constraints such as file system, resource),</p>
-</li>
-<li>
-<p><code>InfoLoader</code> as something that can load information from a given <code>InfoSource</code> (for instance a set of files from a directory),</p>
-</li>
-<li>
-<p><code>InfoTarget</code> as a target of information (the opposite of an <code>InfoSource</code>),</p>
-</li>
-<li>
-<p><code>InfoWriter</code> as a writer of information to an <code>InfoTarget</code> (kind of the opposite of an <code>InfoLoader</code>),</p>
-</li>
-<li>
-<p><code>InfoValidator</code> as a validator of source or target or actual information.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Each of these concepts has some implementations for standard problems.</p>
+<p>The concept here is based in <code>InfoSource</code> as a source of information (directory, file, database with constraints such as file system, resource),
+<code>InfoLoader</code> as something that can load information from a given <code>InfoSource</code> (for instance a set of files from a directory),
+<code>InfoTarget</code> as a target of information (the opposite of an <code>InfoSource</code>),
+<code>InfoWriter</code> as a writer of information to an <code>InfoTarget</code> (kind of the opposite of an <code>InfoLoader</code>),
+<code>InfoValidator</code> as a validtor of source or target or actual information.
+Each of these concepts has some implementations for standard problems.</p>
 </div>
 </div>
 <div class="sect2">
@@ -538,7 +523,7 @@ This can be very helpful when identifier need to be encoded along with versions 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-19 12:17:14 IST
+Last updated 2015-08-18 17:17:58 IST
 </div>
 </div>
 </body>

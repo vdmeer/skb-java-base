@@ -12,11 +12,11 @@
   <property name="project-type" value="maven" />
   <property name="hide-externals" value="true" />
   <classpath>
-    <classpathentry kind="lib" path="../../../target/skb-base-0.0.9-SNAPSHOT.jar" />
-    <classpathentry kind="lib" path="../../../target/test-classes" />
+    <classpathentry kind="lib" path="../../target/skb-base-0.1.3.jar" />
+    <classpathentry kind="lib" path="../../target/test-classes" />
   </classpath>
   <pom-root-files>
-    <pom path="../../../pom.xml" />
+    <pom path="../../pom.xml" />
   </pom-root-files>
   <excludes>
     <exclude expression="*.Test*" active="true" />

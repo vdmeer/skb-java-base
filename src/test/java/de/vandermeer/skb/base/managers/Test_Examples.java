@@ -13,11 +13,15 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.message;
+package de.vandermeer.skb.base.managers;
 
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+
+import de.vandermeer.skb.base.message.E_MessageType;
+import de.vandermeer.skb.base.message.Message5WH;
+import de.vandermeer.skb.base.message.Message5WH_Builder;
 
 /**
  * Tests for examples of message objects.
@@ -28,21 +32,23 @@ import org.junit.Test;
  */
 public class Test_Examples {
 
-	@Test public void testJavadocExample1(){
+	@Test public void testJavadocExample2(){
 		Message5WH msg = new Message5WH_Builder()
-				.setWho("from " + this.getClass().getSimpleName())
-				.addWhat("showing a test message")
-				.setWhen("noon")
-				.setWhere("the package API documentation", 0, 0)
-				.addWhy("as a demo")
-				.addHow("added to the package JavaDoc")
-				.setReporter("The Author")
-				.setType(E_MessageType.INFO)
-				.build()
+			.setWho("from " + this.getClass().getSimpleName())
+			.addWhat("showing a test message")
+			.setWhen("noon")
+			.setWhere("the package API documentation", 0, 0)
+			.addWhy("as a demo")
+			.addHow("added to the package JavaDoc")
+			.setReporter("The Author")
+			.setType(E_MessageType.INFO)
+			.build()
 		;
 		assertNotNull(msg);
-		System.out.println(msg.render());
+
+		MessageRenderer ren = new MessageRenderer("de/vandermeer/skb/base/managers/5wh-example.stg");
+		String rendered = ren.render(msg);
+		System.out.println(rendered);
 		System.out.println(msg);
 	}
-
 }

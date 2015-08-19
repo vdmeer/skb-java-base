@@ -35,7 +35,6 @@ import de.vandermeer.skb.base.message.E_MessageType;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 import de.vandermeer.skb.base.message.Message5WH;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
-import de.vandermeer.skb.base.message.Message5WH_Renderer;
 
 /**
  * Manages Info, Warning and Error messages supporting {@link Message5WH}, {@link CC_Info}, {@link CC_Warning}, and {@link CC_Error} objects as well as arrays and collections of them.
@@ -81,7 +80,7 @@ public class MessageMgr {
 	protected final boolean doCollectMessages;
 
 	/** Message renderer. */
-	protected Message5WH_Renderer renderer = null;
+	protected MessageRenderer renderer = null;
 
 	/** STGroup for max100 messages. */
 	protected final STGroup max100stg = new STGroupFile("de/vandermeer/skb/base/managers/msg-manager.stg");
@@ -133,7 +132,7 @@ public class MessageMgr {
 		this.messageHandlers.putAll(messageHandlers);
 		this.doCollectMessages = doCollectMessages;
 
-		this.renderer = new Message5WH_Renderer();
+		this.renderer = new MessageRenderer();
 	}
 
 	/**
@@ -141,7 +140,7 @@ public class MessageMgr {
 	 * @param renderer new renderer
 	 * @return self to allow chaining
 	 */
-	public MessageMgr setRenderer(Message5WH_Renderer renderer){
+	public MessageMgr setRenderer(MessageRenderer renderer){
 		if(renderer!=null){
 			this.renderer = renderer;
 		}
