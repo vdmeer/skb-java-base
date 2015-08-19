@@ -1,6 +1,5 @@
 SKB Base
 ========
-
 Implementation of basic concepts, some small some bigger but all build for reuse in many contexts.
 :toc:
 
