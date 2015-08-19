@@ -16,7 +16,7 @@
 package de.vandermeer.skb.base.composite.coin;
 
 import de.vandermeer.skb.base.composite.Com_CoinType;
-import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.E_MessageType;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 import de.vandermeer.skb.base.message.Message5WH;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
@@ -47,7 +47,7 @@ public final class CC_Error extends Abstract_CC {
 	@Override
 	public CC_Error add(Message5WH add){
 		if(add!=null){
-			super.add(add.changeType(EMessageType.ERROR));
+			super.add(add.changeType(E_MessageType.ERROR));
 		}
 		return this;
 	}
@@ -59,7 +59,7 @@ public final class CC_Error extends Abstract_CC {
 	 */
 	public CC_Error add(String what){
 		if(what!=null){
-			super.add(new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, new Object[0])).setType(EMessageType.ERROR).build());
+			super.add(new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, new Object[0])).setType(E_MessageType.ERROR).build());
 		}
 		return this;
 	}
@@ -72,7 +72,7 @@ public final class CC_Error extends Abstract_CC {
 	 */
 	public CC_Error add(String what, Object ... obj){
 		if(what!=null){
-			super.add(new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.ERROR).build());
+			super.add(new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(E_MessageType.ERROR).build());
 		}
 		return this;
 	}

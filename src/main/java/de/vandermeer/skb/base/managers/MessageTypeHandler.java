@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.stringtemplate.v4.ST;
 
 import de.vandermeer.skb.base.console.Skb_Console;
-import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.E_MessageType;
 
 /**
  * Handles a message type for the message manager.
@@ -43,12 +43,12 @@ class MessageTypeHandler {
 	protected Logger logger;
 
 	/** The message type the handler handles. */
-	protected final EMessageType type;
+	protected final E_MessageType type;
 
 	/**
 	 * Returns a new handler with max count set to -1 using {@link Skb_Console}.
 	 */
-	MessageTypeHandler(EMessageType type){
+	MessageTypeHandler(E_MessageType type){
 		this(type, 0);
 	}
 
@@ -56,7 +56,7 @@ class MessageTypeHandler {
 	 * Returns a new handler with given max count using {@link Skb_Console}.
 	 * @param maxCount given maximum count, only used of greater than 0, set to -1 otherwise
 	 */
-	MessageTypeHandler(EMessageType type, int maxCount){
+	MessageTypeHandler(E_MessageType type, int maxCount){
 		this.type = type;
 
 		this.maxCount = (maxCount>0)?maxCount:-1;
@@ -69,7 +69,7 @@ class MessageTypeHandler {
 	 * @param maxCount maxCount given maximum count, only used of greater than 0, set to -1 otherwise
 	 * @param logger used as logger for the message type if not null, handler will use {@link Skb_Console} otherwise
 	 */
-	MessageTypeHandler(EMessageType type, int maxCount, Logger logger){
+	MessageTypeHandler(E_MessageType type, int maxCount, Logger logger){
 		this(type, maxCount);
 		if(logger!=null){
 			this.useSkbConsole = false;
@@ -81,7 +81,7 @@ class MessageTypeHandler {
 	 * Returns a new handler with max count set to -1 using given logger.
 	 * @param logger used as logger for the message type if not null, handler will use {@link Skb_Console} otherwise
 	 */
-	MessageTypeHandler(EMessageType type, Logger logger){
+	MessageTypeHandler(E_MessageType type, Logger logger){
 		this(type, 0, logger);
 	}
 
@@ -121,7 +121,7 @@ class MessageTypeHandler {
 	 * @param type message type
 	 * @param appID application identifier for max messae count
 	 */
-	public void handleMessage(String message, EMessageType type, ST max100, Object appID){
+	public void handleMessage(String message, E_MessageType type, ST max100, Object appID){
 		this.count++;
 
 		boolean doMax = false;

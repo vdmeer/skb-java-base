@@ -18,7 +18,7 @@ package de.vandermeer.skb.base.categories;
 import java.util.Collection;
 import java.util.List;
 
-import de.vandermeer.skb.base.Skb_Pair;
+import de.vandermeer.skb.base.utils.Skb_Pair;
 
 /**
  * A dictionary between two languages.

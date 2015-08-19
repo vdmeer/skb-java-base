@@ -28,21 +28,21 @@ import org.junit.Test;
  */
 public class Test_Examples {
 
-	@Test public void testJavadocExample(){
+	@Test public void testJavadocExample1(){
 		Message5WH msg = new Message5WH_Builder()
-				.setWho("from "+this.getClass().getSimpleName())
+				.setWho("from " + this.getClass().getSimpleName())
 				.addWhat("showing a test message")
 				.setWhen("noon")
-				.setWhere("the class API documentation", 0, 0)
+				.setWhere("the package API documentation", 0, 0)
 				.addWhy("as a demo")
-				.addHow("added to the class JavaDoc")
+				.addHow("added to the package JavaDoc")
 				.setReporter("The Author")
-				.setType(EMessageType.INFO)
+				.setType(E_MessageType.INFO)
 				.build()
 		;
 		assertNotNull(msg);
-//		System.err.println(msg.render());
-//		System.err.println(msg);
+		System.out.println(msg.render());
+		System.out.println(msg);
 	}
 
 }

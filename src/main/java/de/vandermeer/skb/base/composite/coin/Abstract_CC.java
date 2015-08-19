@@ -23,7 +23,6 @@ import org.apache.commons.lang3.text.StrBuilder;
 import de.vandermeer.skb.base.composite.Com_Coin;
 import de.vandermeer.skb.base.composite.Com_CoinType;
 import de.vandermeer.skb.base.message.Message5WH;
-import de.vandermeer.skb.base.message.Message5WH_Renderer;
 
 /**
  * Special object for information.
@@ -42,9 +41,6 @@ public abstract class Abstract_CC implements Com_Coin {
 	 * a single method call wants to express a number of information messages.
 	 */
 	protected List<Message5WH> msglist;
-
-	/** Message renderer. */
-	protected Message5WH_Renderer renderer = null;
 
 	/**
 	 * Creates a new object w/o any information.
@@ -81,18 +77,6 @@ public abstract class Abstract_CC implements Com_Coin {
 	public Abstract_CC add(Message5WH add){
 		if(add!=null){
 			this.msglist.add(add);
-		}
-		return this;
-	}
-
-	/**
-	 * Sets an renderer for the object, which then will be used to render all messages.
-	 * @param renderer new renderer
-	 * @return self to allow chaining
-	 */
-	public Abstract_CC setRenderer(Message5WH_Renderer renderer){
-		if(renderer!=null){
-			this.renderer = renderer;
 		}
 		return this;
 	}
@@ -159,13 +143,8 @@ public abstract class Abstract_CC implements Com_Coin {
 	 */
 	public String render(){
 		StrBuilder ret = new StrBuilder(50);
-		if(this.renderer!=null){
-			return this.renderer.render(this.msglist);
-		}
-		else{
-			for(Message5WH msg : this.msglist){
-				ret.appendln(msg.render());
-			}
+		for(Message5WH msg : this.msglist){
+			ret.appendln(msg.render());
 		}
 		return ret.toString();
 	}

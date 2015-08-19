@@ -13,35 +13,38 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base;
+package de.vandermeer.skb.base.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import de.vandermeer.skb.base.Skb_Transformer;
 
 /**
- * Default SKB assertions.
+ * Interface for classes that support a render method.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
- * @since      v0.0.6
+ * @since      v0.0.1
  */
-public class Skb_Assertions {
+public interface Skb_Renderable {
 
 	/**
-	 * Asserts that a value is not null and throws an {@link IllegalArgumentException} if it is null.
-	 * @param para parameter to test
-	 * @param message a message in case the parameter is null, will be used for throwing the exception
-	 * @param<P> generic type of the parameter to check
+	 * Renders an object for output.
+	 * @return rendered object
 	 */
-	public static <P> void argumentNotNull(P para, String message) {
-		if(para==null){
-			throw new IllegalArgumentException(message);
-		}
-	}
+	public String render();
 
-	public static void stringNotEMpty(String s, String message) {
-		if(StringUtils.isEmpty(s)){
-			throw new IllegalArgumentException(message);
-		}
+	/**
+	 * A transformer that returns a String if a {@link Readable} object was provided.
+	 * @return string of the transformation or null if object was not of type {@link Readable}
+	 */
+	public static Skb_Transformer<Object, String> OBJECT_TO_RENDERABLE_VALUE(){
+		return new Skb_Transformer<Object, String>(){
+			@Override public String transform(Object obj) {
+				if(obj instanceof Skb_Renderable){
+					return ((Skb_Renderable)obj).render();
+				}
+				return null;
+			}
+		};
 	}
 
 }

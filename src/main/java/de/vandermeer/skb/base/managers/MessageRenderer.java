@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package de.vandermeer.skb.base.message;
+package de.vandermeer.skb.base.managers;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,7 +27,11 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
+import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.base.composite.coin.CC_Info;
+import de.vandermeer.skb.base.composite.coin.CC_Warning;
 import de.vandermeer.skb.base.info.STGroupValidator;
+import de.vandermeer.skb.base.message.Message5WH;
 
 /**
  * Renderer for a {@link Message5WH} object.
@@ -36,19 +40,19 @@ import de.vandermeer.skb.base.info.STGroupValidator;
  * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
  * @since      v0.1.2
  */
-public class Message5WH_Renderer {
+public class MessageRenderer {
 
 	/** The ST group for the message */
 	protected STGroup stg;
 
 	/** The file name of the default STGroup file. */
-	public static String DEFAULT_STG_FN = "de/vandermeer/skb/base/message/5wh.stg";
+	public static String DEFAULT_STG_FN = "de/vandermeer/skb/base/managers/5wh.stg";
 
 	/** The default STGroup for messages read from {@link #DEFAULT_STG_FN}. */
-	public static STGroup DEFAULT_STG = new STGroupFile(Message5WH_Renderer.DEFAULT_STG_FN);
+	public static STGroup DEFAULT_STG = new STGroupFile(MessageRenderer.DEFAULT_STG_FN);
 
 	/** The STGroup chunks for validation of an STGroup for a message. */
-	public final static Map<String, Set<String>> stChunks = new HashMap<String, Set<String>>(){
+	public final static Map<String, Set<String>> STG_CHUNKS = new HashMap<String, Set<String>>(){
 		private static final long serialVersionUID = 1L;{
 			put("where", new HashSet<String>(){
 				private static final long serialVersionUID = 1L;{
@@ -75,8 +79,8 @@ public class Message5WH_Renderer {
 	/**
 	 * Returns a new renderer with the default STGroup.
 	 */
-	public Message5WH_Renderer(){
-		this.stg = Message5WH_Renderer.DEFAULT_STG;
+	public MessageRenderer(){
+		this.stg = MessageRenderer.DEFAULT_STG;
 		this.validateSTG();
 	}
 
@@ -85,7 +89,7 @@ public class Message5WH_Renderer {
 	 * @param stg given STGroup for the renderer
 	 * @throws IllegalArgumentException if the given STGroup was null or not valid
 	 */
-	public Message5WH_Renderer(STGroup stg){
+	public MessageRenderer(STGroup stg){
 		this.stg = stg;
 		this.validateSTG();
 	}
@@ -95,7 +99,7 @@ public class Message5WH_Renderer {
 	 * @param filename file to read STGroup from
 	 * @throws IllegalArgumentException if the given file name or STGroup was null or not valid
 	 */
-	public Message5WH_Renderer(String filename){
+	public MessageRenderer(String filename){
 		if(StringUtils.isBlank(filename)){
 			throw new IllegalArgumentException("filename cannot be blank (null or empty)");
 		}
@@ -112,7 +116,7 @@ public class Message5WH_Renderer {
 			throw new IllegalArgumentException("stg is null");
 		}
 
-		STGroupValidator stgv = new STGroupValidator(this.stg, Message5WH_Renderer.stChunks);
+		STGroupValidator stgv = new STGroupValidator(this.stg, MessageRenderer.STG_CHUNKS);
 		if(stgv.getValidationErrors().size()>0){
 			throw new IllegalArgumentException(stgv.getValidationErrors().render());
 		}
@@ -175,4 +179,39 @@ public class Message5WH_Renderer {
 		return ret.toString();
 	}
 
+	/**
+	 * Renders messages in an {@link CC_Error} object.
+	 * @param errors the error object with messages
+	 * @return rendered messages, null if the input was null
+	 */
+	public String render(CC_Error errors){
+		if(errors!=null){
+			return this.render(errors.getList());
+		}
+		return null;
+	}
+
+	/**
+	 * Renders messages in an {@link CC_Info} object.
+	 * @param infos the info object with messages
+	 * @return rendered messages, null if the input was null
+	 */
+	public String render(CC_Info infos){
+		if(infos!=null){
+			return this.render(infos.getList());
+		}
+		return null;
+	}
+
+	/**
+	 * Renders messages in an {@link CC_Warning} object.
+	 * @param warnings the warning object with messages
+	 * @return rendered messages, null if the input was null
+	 */
+	public String render(CC_Warning warnings){
+		if(warnings!=null){
+			return this.render(warnings.getList());
+		}
+		return null;
+	}
 }

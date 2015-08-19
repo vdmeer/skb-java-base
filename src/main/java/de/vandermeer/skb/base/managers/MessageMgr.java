@@ -31,11 +31,10 @@ import de.vandermeer.skb.base.composite.coin.Abstract_CC;
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.composite.coin.CC_Info;
 import de.vandermeer.skb.base.composite.coin.CC_Warning;
-import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.E_MessageType;
 import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 import de.vandermeer.skb.base.message.Message5WH;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
-import de.vandermeer.skb.base.message.Message5WH_Renderer;
 
 /**
  * Manages Info, Warning and Error messages supporting {@link Message5WH}, {@link CC_Info}, {@link CC_Warning}, and {@link CC_Error} objects as well as arrays and collections of them.
@@ -72,16 +71,16 @@ public class MessageMgr {
 	}
 
 	/** Map of collected messages (errors, warnings, information) as rendered strings. */
-	protected final LinkedHashMap<String, EMessageType> messages;
+	protected final LinkedHashMap<String, E_MessageType> messages;
 
 	/** Maps of message handlers for message types. */
-	protected final Map<EMessageType, MessageTypeHandler> messageHandlers;
+	protected final Map<E_MessageType, MessageTypeHandler> messageHandlers;
 
 	/** Flag to define the behavior for message collection. */
 	protected final boolean doCollectMessages;
 
 	/** Message renderer. */
-	protected Message5WH_Renderer renderer = null;
+	protected MessageRenderer renderer = null;
 
 	/** STGroup for max100 messages. */
 	protected final STGroup max100stg = new STGroupFile("de/vandermeer/skb/base/managers/msg-manager.stg");
@@ -96,7 +95,7 @@ public class MessageMgr {
 	 * @return new information message
 	 */
 	public static Message5WH createInfoMessage(String what, Object ... obj){
-		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.INFO).build();
+		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(E_MessageType.INFO).build();
 	}
 
 	/**
@@ -106,7 +105,7 @@ public class MessageMgr {
 	 * @return new information message
 	 */
 	public static Message5WH createWarningMessage(String what, Object ... obj){
-		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.WARNING).build();
+		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(E_MessageType.WARNING).build();
 	}
 
 	/**
@@ -116,7 +115,7 @@ public class MessageMgr {
 	 * @return new information message
 	 */
 	public static Message5WH createErrorMessage(String what, Object ... obj){
-		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(EMessageType.ERROR).build();
+		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(E_MessageType.ERROR).build();
 	}
 
 	/**
@@ -125,7 +124,7 @@ public class MessageMgr {
 	 * @param messageHandlers the message handlers for the manager
 	 * @param doCollectMessages flag for collecting messages (true for do collect, false for not)
 	 */
-	MessageMgr(Object appID, Map<EMessageType, MessageTypeHandler> messageHandlers, boolean doCollectMessages){
+	MessageMgr(Object appID, Map<E_MessageType, MessageTypeHandler> messageHandlers, boolean doCollectMessages){
 		this.messages = new LinkedHashMap<>();
 
 		this.appID = appID;
@@ -133,7 +132,7 @@ public class MessageMgr {
 		this.messageHandlers.putAll(messageHandlers);
 		this.doCollectMessages = doCollectMessages;
 
-		this.renderer = new Message5WH_Renderer();
+		this.renderer = new MessageRenderer();
 	}
 
 	/**
@@ -141,7 +140,7 @@ public class MessageMgr {
 	 * @param renderer new renderer
 	 * @return self to allow chaining
 	 */
-	public MessageMgr setRenderer(Message5WH_Renderer renderer){
+	public MessageMgr setRenderer(MessageRenderer renderer){
 		if(renderer!=null){
 			this.renderer = renderer;
 		}
@@ -160,7 +159,7 @@ public class MessageMgr {
 	 * Returns the collected messages.
 	 * @return empty if collection is disabled, a list of collected reports otherwise
 	 */
-	public Map<String, EMessageType> getMessageMap(){
+	public Map<String, E_MessageType> getMessageMap(){
 		return this.messages;
 	}
 
@@ -169,8 +168,8 @@ public class MessageMgr {
 	 * @return true if errors have been reported, false otherwise
 	 */
 	public boolean hasErrors(){
-		if(this.messageHandlers.containsKey(EMessageType.ERROR)){
-			return (this.messageHandlers.get(EMessageType.ERROR).getCount()==0)?false:true;
+		if(this.messageHandlers.containsKey(E_MessageType.ERROR)){
+			return (this.messageHandlers.get(E_MessageType.ERROR).getCount()==0)?false:true;
 		}
 		return false;
 	}
@@ -180,8 +179,8 @@ public class MessageMgr {
 	 * @return true if warnings have been reported, false otherwise
 	 */
 	public boolean hasWarnings(){
-		if(this.messageHandlers.containsKey(EMessageType.WARNING)){
-			return (this.messageHandlers.get(EMessageType.WARNING).getCount()==0)?false:true;
+		if(this.messageHandlers.containsKey(E_MessageType.WARNING)){
+			return (this.messageHandlers.get(E_MessageType.WARNING).getCount()==0)?false:true;
 		}
 		return false;
 	}
@@ -191,8 +190,8 @@ public class MessageMgr {
 	 * @return true if infos have been reported, false otherwise
 	 */
 	public boolean hasInfos(){
-		if(this.messageHandlers.containsKey(EMessageType.INFO)){
-			return (this.messageHandlers.get(EMessageType.INFO).getCount()==0)?false:true;
+		if(this.messageHandlers.containsKey(E_MessageType.INFO)){
+			return (this.messageHandlers.get(E_MessageType.INFO).getCount()==0)?false:true;
 		}
 		return false;
 	}
@@ -202,7 +201,7 @@ public class MessageMgr {
 	 * @param type message type to report count for
 	 * @return current count of messages, -1 if not in active list
 	 */
-	public int getMessageCount(EMessageType type) {
+	public int getMessageCount(E_MessageType type) {
 		if(this.messageHandlers.containsKey(type)){
 			return this.messageHandlers.get(type).getCount();
 		}
@@ -214,7 +213,7 @@ public class MessageMgr {
 	 * @param type message type to check
 	 * @return true if the message type is in the list of active message types of the manager and if the associated logger is enabled, false otherwise
 	 */
-	public boolean isEnabledFor(EMessageType type) {
+	public boolean isEnabledFor(E_MessageType type) {
 		if(!this.messageHandlers.containsKey(type)){
 			return false;
 		}
@@ -236,7 +235,7 @@ public class MessageMgr {
 			return false; // no message to handle
 		}
 
-		EMessageType type = message.getType();
+		E_MessageType type = message.getType();
 		if(!this.messageHandlers.containsKey(message.getType())){
 			return false; // no handler means message type not managed
 		}

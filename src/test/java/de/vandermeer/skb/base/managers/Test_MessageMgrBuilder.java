@@ -31,7 +31,7 @@ import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.E_MessageType;
 
 /**
  * Tests for Tests for {@link MessageMgrBuilder}.
@@ -118,70 +118,70 @@ public class Test_MessageMgrBuilder {
 
 		//all defaults for info, 1 handler
 		mmb = new MessageMgrBuilder("@test");
-		mmb.setHandler(EMessageType.INFO);
+		mmb.setHandler(E_MessageType.INFO);
 		assertEquals(1, mmb.messageHandlers.size());
-		assertTrue(mmb.messageHandlers.containsKey(EMessageType.INFO));
-		assertTrue(mmb.messageHandlers.get(EMessageType.INFO).useSkbConsole);
-		assertEquals(-1, mmb.messageHandlers.get(EMessageType.INFO).maxCount);
-		assertEquals(0, mmb.messageHandlers.get(EMessageType.INFO).count);
-		assertEquals(EMessageType.INFO, mmb.messageHandlers.get(EMessageType.INFO).type);
-		assertTrue(mmb.messageHandlers.get(EMessageType.INFO).logger==null);
+		assertTrue(mmb.messageHandlers.containsKey(E_MessageType.INFO));
+		assertTrue(mmb.messageHandlers.get(E_MessageType.INFO).useSkbConsole);
+		assertEquals(-1, mmb.messageHandlers.get(E_MessageType.INFO).maxCount);
+		assertEquals(0, mmb.messageHandlers.get(E_MessageType.INFO).count);
+		assertEquals(E_MessageType.INFO, mmb.messageHandlers.get(E_MessageType.INFO).type);
+		assertTrue(mmb.messageHandlers.get(E_MessageType.INFO).logger==null);
 		assertTrue(mmb.buildErrors.size()==0);
 
 		//maxCount with SkbConsole for error, 2 handlers
-		mmb.setHandler(EMessageType.ERROR, 49);
+		mmb.setHandler(E_MessageType.ERROR, 49);
 		assertEquals(2, mmb.messageHandlers.size());
-		assertTrue(mmb.messageHandlers.containsKey(EMessageType.ERROR));
-		assertTrue(mmb.messageHandlers.get(EMessageType.ERROR).useSkbConsole);
-		assertEquals(49, mmb.messageHandlers.get(EMessageType.ERROR).maxCount);
-		assertEquals(0, mmb.messageHandlers.get(EMessageType.ERROR).count);
-		assertEquals(EMessageType.ERROR, mmb.messageHandlers.get(EMessageType.ERROR).type);
-		assertTrue(mmb.messageHandlers.get(EMessageType.ERROR).logger==null);
+		assertTrue(mmb.messageHandlers.containsKey(E_MessageType.ERROR));
+		assertTrue(mmb.messageHandlers.get(E_MessageType.ERROR).useSkbConsole);
+		assertEquals(49, mmb.messageHandlers.get(E_MessageType.ERROR).maxCount);
+		assertEquals(0, mmb.messageHandlers.get(E_MessageType.ERROR).count);
+		assertEquals(E_MessageType.ERROR, mmb.messageHandlers.get(E_MessageType.ERROR).type);
+		assertTrue(mmb.messageHandlers.get(E_MessageType.ERROR).logger==null);
 		assertTrue(mmb.buildErrors.size()==0);
 
 		//null logger means all defaults for Warn, 3 handlers
-		mmb.setHandler(EMessageType.WARNING, null);
+		mmb.setHandler(E_MessageType.WARNING, null);
 		assertEquals(3, mmb.messageHandlers.size());
-		assertTrue(mmb.messageHandlers.containsKey(EMessageType.WARNING));
-		assertTrue(mmb.messageHandlers.get(EMessageType.WARNING).useSkbConsole);
-		assertEquals(-1, mmb.messageHandlers.get(EMessageType.WARNING).maxCount);
-		assertEquals(0, mmb.messageHandlers.get(EMessageType.WARNING).count);
-		assertEquals(EMessageType.WARNING, mmb.messageHandlers.get(EMessageType.WARNING).type);
-		assertTrue(mmb.messageHandlers.get(EMessageType.WARNING).logger==null);
+		assertTrue(mmb.messageHandlers.containsKey(E_MessageType.WARNING));
+		assertTrue(mmb.messageHandlers.get(E_MessageType.WARNING).useSkbConsole);
+		assertEquals(-1, mmb.messageHandlers.get(E_MessageType.WARNING).maxCount);
+		assertEquals(0, mmb.messageHandlers.get(E_MessageType.WARNING).count);
+		assertEquals(E_MessageType.WARNING, mmb.messageHandlers.get(E_MessageType.WARNING).type);
+		assertTrue(mmb.messageHandlers.get(E_MessageType.WARNING).logger==null);
 		assertTrue(mmb.buildErrors.size()==0);
 
 		//logger w/o max means max is -1 for INFO, 3 handlers and all INFO settings are for the new one
 		Logger logger = LoggerFactory.getLogger("test");
-		mmb.setHandler(EMessageType.INFO, logger);
+		mmb.setHandler(E_MessageType.INFO, logger);
 		assertEquals(3, mmb.messageHandlers.size());
-		assertTrue(mmb.messageHandlers.containsKey(EMessageType.INFO));
-		assertEquals(false, mmb.messageHandlers.get(EMessageType.INFO).useSkbConsole);
-		assertEquals(-1, mmb.messageHandlers.get(EMessageType.INFO).maxCount);
-		assertEquals(0, mmb.messageHandlers.get(EMessageType.INFO).count);
-		assertEquals(EMessageType.INFO, mmb.messageHandlers.get(EMessageType.INFO).type);
-		assertEquals(logger, mmb.messageHandlers.get(EMessageType.INFO).logger);
+		assertTrue(mmb.messageHandlers.containsKey(E_MessageType.INFO));
+		assertEquals(false, mmb.messageHandlers.get(E_MessageType.INFO).useSkbConsole);
+		assertEquals(-1, mmb.messageHandlers.get(E_MessageType.INFO).maxCount);
+		assertEquals(0, mmb.messageHandlers.get(E_MessageType.INFO).count);
+		assertEquals(E_MessageType.INFO, mmb.messageHandlers.get(E_MessageType.INFO).type);
+		assertEquals(logger, mmb.messageHandlers.get(E_MessageType.INFO).logger);
 		assertTrue(mmb.buildErrors.size()==0);
 
 		//logger null w/ max count means max and SkbConsole for WARN, 3 handlers and all WARN settings are for the new one
-		mmb.setHandler(EMessageType.WARNING, 20, null);
+		mmb.setHandler(E_MessageType.WARNING, 20, null);
 		assertEquals(3, mmb.messageHandlers.size());
-		assertTrue(mmb.messageHandlers.containsKey(EMessageType.WARNING));
-		assertTrue(mmb.messageHandlers.get(EMessageType.WARNING).useSkbConsole);
-		assertEquals(20, mmb.messageHandlers.get(EMessageType.WARNING).maxCount);
-		assertEquals(0, mmb.messageHandlers.get(EMessageType.WARNING).count);
-		assertEquals(EMessageType.WARNING, mmb.messageHandlers.get(EMessageType.WARNING).type);
-		assertTrue(mmb.messageHandlers.get(EMessageType.WARNING).logger==null);
+		assertTrue(mmb.messageHandlers.containsKey(E_MessageType.WARNING));
+		assertTrue(mmb.messageHandlers.get(E_MessageType.WARNING).useSkbConsole);
+		assertEquals(20, mmb.messageHandlers.get(E_MessageType.WARNING).maxCount);
+		assertEquals(0, mmb.messageHandlers.get(E_MessageType.WARNING).count);
+		assertEquals(E_MessageType.WARNING, mmb.messageHandlers.get(E_MessageType.WARNING).type);
+		assertTrue(mmb.messageHandlers.get(E_MessageType.WARNING).logger==null);
 		assertTrue(mmb.buildErrors.size()==0);
 
 		//logger with max count means all set for ERROR, 3 handlers and all ERROR settings for the new onemmb.setHandler(EMessageType.WARNING, 20, null);
-		mmb.setHandler(EMessageType.ERROR, 71, logger);
+		mmb.setHandler(E_MessageType.ERROR, 71, logger);
 		assertEquals(3, mmb.messageHandlers.size());
-		assertTrue(mmb.messageHandlers.containsKey(EMessageType.ERROR));
-		assertEquals(false, mmb.messageHandlers.get(EMessageType.INFO).useSkbConsole);
-		assertEquals(71, mmb.messageHandlers.get(EMessageType.ERROR).maxCount);
-		assertEquals(0, mmb.messageHandlers.get(EMessageType.ERROR).count);
-		assertEquals(EMessageType.ERROR, mmb.messageHandlers.get(EMessageType.ERROR).type);
-		assertEquals(logger, mmb.messageHandlers.get(EMessageType.ERROR).logger);
+		assertTrue(mmb.messageHandlers.containsKey(E_MessageType.ERROR));
+		assertEquals(false, mmb.messageHandlers.get(E_MessageType.INFO).useSkbConsole);
+		assertEquals(71, mmb.messageHandlers.get(E_MessageType.ERROR).maxCount);
+		assertEquals(0, mmb.messageHandlers.get(E_MessageType.ERROR).count);
+		assertEquals(E_MessageType.ERROR, mmb.messageHandlers.get(E_MessageType.ERROR).type);
+		assertEquals(logger, mmb.messageHandlers.get(E_MessageType.ERROR).logger);
 		assertTrue(mmb.buildErrors.size()==0);
 	}
 
@@ -206,7 +206,7 @@ public class Test_MessageMgrBuilder {
 
 		//all good, 1 handler for INFO
 		mmb = new MessageMgrBuilder("@test");
-		mmb.setHandler(EMessageType.INFO);
+		mmb.setHandler(E_MessageType.INFO);
 		mm = mmb.build();
 		assertEquals(1, mm.messageHandlers.size());
 		assertTrue(mmb.buildErrors.size()==0);

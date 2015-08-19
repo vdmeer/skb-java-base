@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.vandermeer</groupId>
 	<artifactId>skb-base</artifactId>
-	<version>0.1.2</version>
+	<version>0.1.3</version>
 	<packaging>jar</packaging>
 
 	<name>SKB Base</name>
@@ -48,7 +48,7 @@
 	<scm>
 		<developerConnection>scm:git:git@github.com:vdmeer/skb-java-base.git</developerConnection>
 		<connection>scm:git:git://github.com/vdmeer/skb-java-base.git</connection>
-		<tag>skb-base-0.1.2</tag>
+		<tag>skb-base-0.1.3</tag>
 		<url>https://github.com/vdmeer/skb-java-base</url>
 	</scm>
 
@@ -231,7 +231,7 @@
 							<docencoding>${project.resources.sourceEncoding}</docencoding>
 							<charset>${project.resources.sourceEncoding}</charset>
 							<aggregate>true</aggregate>
-							<overview>overview.html</overview>
+							<overview>${basedir}/src/main/javadoc/overview.html</overview>
 							<nohelp>true</nohelp>
 							<header>${project.name}: ${project.version}</header>
 							<footer>${project.name}: ${project.version}</footer>
@@ -239,6 +239,8 @@
 							<noqualifier>all</noqualifier>
 							<detectLinks>true</detectLinks>
 							<detectJavaApiLink>true</detectJavaApiLink>
+							<javadocDirectory>${basedir}/src/main/javadoc</javadocDirectory>
+							<docfilessubdirs>true</docfilessubdirs>
 						</configuration>
 					</execution>
 				</executions>

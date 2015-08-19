@@ -1,4 +1,16 @@
-v0.1.2 - feature add- 2015-08-17
+v0.1.3 - refactoring - 2015-08-19
+---------------------------------
+* removed Skb_Assertions, can use ValidationUtils from apache Common Lang3 instead
+* moved Skb_Pair and Skb_Renderable to the +utils+ package
+* changes on message / manager and related classes
+	** moved Message5WH_Renderer from message to managers as MessageRenderer (keeps the message package clean and fixes a silly tangle)
+	** moved STGs from message to managers folder
+	** rewrote +render()+ method on message to use StrBuilder instead of STGroup (so no more STGroup and templates in the message package)
+	** removed renderer from Abstract_CC and added CC_Error, CC_Warning and CC_Info to MessageRenderer
+	** Abstract_CC uses the native message render mthod only now
+
+
+v0.1.2 - feature add - 2015-08-17
 --------------------------------
 * added simple history CI to shell
 * MessageMgr

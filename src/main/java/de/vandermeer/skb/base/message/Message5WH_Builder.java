@@ -62,7 +62,7 @@ public class Message5WH_Builder {
 	protected Object reporter;
 
 	/** Type of message */
-	protected EMessageType type;
+	protected E_MessageType type;
 
 	public Message5WH_Builder(){
 		this.initialCapacity = 50;
@@ -133,7 +133,7 @@ public class Message5WH_Builder {
 	 * @param type new type
 	 * @return self to allow chaining
 	 */
-	public Message5WH_Builder setType(EMessageType type){
+	public Message5WH_Builder setType(E_MessageType type){
 		this.type = type;
 		return this;
 	}

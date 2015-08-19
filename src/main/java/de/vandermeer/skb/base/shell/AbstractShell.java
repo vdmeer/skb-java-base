@@ -30,8 +30,8 @@ import de.vandermeer.skb.base.console.NonBlockingReader;
 import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.managers.MessageMgr;
 import de.vandermeer.skb.base.managers.MessageMgrBuilder;
-import de.vandermeer.skb.base.message.EMessageType;
-import de.vandermeer.skb.base.message.Message5WH_Renderer;
+import de.vandermeer.skb.base.managers.MessageRenderer;
+import de.vandermeer.skb.base.message.E_MessageType;
 
 /**
  * An abstract shell implementation with all basic features, use the {@link SkbShellFactory} or a sub-class to create a new object.
@@ -78,7 +78,7 @@ public class AbstractShell implements SkbShell {
 	 * @param renderer a renderer for help messages
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
-	protected AbstractShell(Message5WH_Renderer renderer){
+	protected AbstractShell(MessageRenderer renderer){
 		this(null, renderer, true);
 	}
 
@@ -87,7 +87,7 @@ public class AbstractShell implements SkbShell {
 	 * @param renderer a renderer for help messages
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen (except for errors on runShell() and some help commands)
 	 */
-	protected AbstractShell(Message5WH_Renderer renderer, boolean useConsole){
+	protected AbstractShell(MessageRenderer renderer, boolean useConsole){
 		this(null, renderer, useConsole);
 	}
 
@@ -115,7 +115,7 @@ public class AbstractShell implements SkbShell {
 	 * @param renderer a renderer for help messages
 	 * @throws IllegalArgumentException if the STG did not validate
 	 */
-	protected AbstractShell(String id, Message5WH_Renderer renderer){
+	protected AbstractShell(String id, MessageRenderer renderer){
 		this(id, renderer, true);
 	}
 
@@ -125,7 +125,7 @@ public class AbstractShell implements SkbShell {
 	 * @param renderer a renderer for help messages
 	 * @param useConsole flag to use (true) or not to use (false) console, of false then no output will happen
 	 */
-	protected AbstractShell(String id, Message5WH_Renderer renderer, boolean useConsole){
+	protected AbstractShell(String id, MessageRenderer renderer, boolean useConsole){
 		//activate console output
 		Skb_Console.USE_CONSOLE = useConsole;
 		this.commandMap = new HashMap<>();
@@ -133,9 +133,9 @@ public class AbstractShell implements SkbShell {
 		this.id = (id!=null)?id:"skbsh";
 
 		MessageMgrBuilder mmb = new MessageMgrBuilder(getPromptName());
-		mmb.setHandler(EMessageType.ERROR);
-		mmb.setHandler(EMessageType.WARNING);
-		mmb.setHandler(EMessageType.INFO);
+		mmb.setHandler(E_MessageType.ERROR);
+		mmb.setHandler(E_MessageType.WARNING);
+		mmb.setHandler(E_MessageType.INFO);
 		mmb.enableMessageCollection();
 
 		this.mm = mmb.build();

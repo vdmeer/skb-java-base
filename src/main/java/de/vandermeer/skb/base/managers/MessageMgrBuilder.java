@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 
 import de.vandermeer.skb.base.composite.coin.CC_Error;
 import de.vandermeer.skb.base.console.Skb_Console;
-import de.vandermeer.skb.base.message.EMessageType;
+import de.vandermeer.skb.base.message.E_MessageType;
 
 /**
  * Builds a {@link MessageMgr} object with all settings.
@@ -38,7 +38,7 @@ public class MessageMgrBuilder {
 	protected final CC_Error buildErrors;
 
 	/** Maps of message handlers for message types. */
-	protected final Map<EMessageType, MessageTypeHandler> messageHandlers;
+	protected final Map<E_MessageType, MessageTypeHandler> messageHandlers;
 
 	/** Flag to define the behavior for message collection. */
 	protected boolean doCollectMessages;
@@ -78,7 +78,7 @@ public class MessageMgrBuilder {
 	 * @param type message type to be activated, nothing will be set if null
 	 * @return self to allow for chaining
 	 */
-	public MessageMgrBuilder setHandler(EMessageType type){
+	public MessageMgrBuilder setHandler(E_MessageType type){
 		if(type!=null){
 			this.messageHandlers.put(type, new MessageTypeHandler(type));
 		}
@@ -95,7 +95,7 @@ public class MessageMgrBuilder {
 	 * @param maxCount max count for the handler, -1 to ignore or greater than 0 to be used
 	 * @return self to allow for chaining
 	 */
-	public MessageMgrBuilder setHandler(EMessageType type, int maxCount){
+	public MessageMgrBuilder setHandler(E_MessageType type, int maxCount){
 		if(type!=null){
 			this.messageHandlers.put(type, new MessageTypeHandler(type, maxCount));
 		}
@@ -112,7 +112,7 @@ public class MessageMgrBuilder {
 	 * @param logger the logger to be used for the handler, if null {@link Skb_Console} will be used
 	 * @return self to allow for chaining
 	 */
-	public MessageMgrBuilder setHandler(EMessageType type, Logger logger){
+	public MessageMgrBuilder setHandler(E_MessageType type, Logger logger){
 		if(type!=null){
 			this.messageHandlers.put(type, new MessageTypeHandler(type, logger));
 		}
@@ -130,7 +130,7 @@ public class MessageMgrBuilder {
 	 * @param logger the logger to be used for the handler, if null {@link Skb_Console} will be used
 	 * @return self to allow for chaining
 	 */
-	public MessageMgrBuilder setHandler(EMessageType type, int maxCount, Logger logger){
+	public MessageMgrBuilder setHandler(E_MessageType type, int maxCount, Logger logger){
 		if(type!=null){
 			this.messageHandlers.put(type, new MessageTypeHandler(type, maxCount, logger));
 		}

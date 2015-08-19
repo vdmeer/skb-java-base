@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- * Tests for {@link EMessageType}.
+ * Tests for {@link E_MessageType}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
@@ -31,7 +31,7 @@ public class Test_EMessageType {
 
 	@Test public void testMessageEnum(){
 		//check the number (increasing), toString (as name().tolower()) and name of the logger for each of the enumerates
-		EMessageType[] values = EMessageType.values();
+		E_MessageType[] values = E_MessageType.values();
 		for(int i=0; i<values.length; i++){
 			assertTrue(values[i].getNumber()==i);
 			assertEquals(values[i].name().toLowerCase(), values[i].toString());

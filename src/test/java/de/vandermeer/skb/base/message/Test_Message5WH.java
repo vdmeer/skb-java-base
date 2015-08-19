@@ -44,16 +44,16 @@ public class Test_Message5WH {
 		assertTrue(m.getType()==null);
 
 		// set error means error
-		m.changeType(EMessageType.ERROR);
-		assertTrue(m.getType()==EMessageType.ERROR);
+		m.changeType(E_MessageType.ERROR);
+		assertTrue(m.getType()==E_MessageType.ERROR);
 
 		//set warning means warning
-		m.changeType(EMessageType.WARNING);
-		assertTrue(m.getType()==EMessageType.WARNING);
+		m.changeType(E_MessageType.WARNING);
+		assertTrue(m.getType()==E_MessageType.WARNING);
 
 		//set message means message
-		m.changeType(EMessageType.INFO);
-		assertTrue(m.getType()==EMessageType.INFO);
+		m.changeType(E_MessageType.INFO);
+		assertTrue(m.getType()==E_MessageType.INFO);
 
 		//set null means null
 		m.changeType(null);

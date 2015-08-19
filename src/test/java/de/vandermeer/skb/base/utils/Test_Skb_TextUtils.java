@@ -27,7 +27,6 @@ import org.antlr.v4.runtime.CommonToken;
 import org.apache.commons.lang3.text.StrBuilder;
 import org.junit.Test;
 
-import de.vandermeer.skb.base.Skb_Renderable;
 import de.vandermeer.skb.base.Skb_Transformer;
 
 /**

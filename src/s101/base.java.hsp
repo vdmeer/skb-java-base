@@ -12,11 +12,11 @@
   <property name="project-type" value="maven" />
   <property name="hide-externals" value="true" />
   <classpath>
-    <classpathentry kind="lib" path="../../../target/skb-base-0.0.9-SNAPSHOT.jar" />
-    <classpathentry kind="lib" path="../../../target/test-classes" />
+    <classpathentry kind="lib" path="../../target/skb-base-0.1.3.jar" />
+    <classpathentry kind="lib" path="../../target/test-classes" />
   </classpath>
   <pom-root-files>
-    <pom path="../../../pom.xml" />
+    <pom path="../../pom.xml" />
   </pom-root-files>
   <excludes>
     <exclude expression="*.Test*" active="true" />
@@ -28,7 +28,83 @@
     <set version="3" name="Model 1" hiview="Codemap" active="true" todo="false" list="0" />
   </restructuring>
   <sourcepaths>
-    <pathentry type="file" path="/mnt/shares/vdm/dev/github/skb-java/base/src/main/java" />
+    <pathentry type="file" path="/mnt/shares/vdm/dev/github/skb-java/base/src/s101/../../src/main/java" />
   </sourcepaths>
+  <grid-set sep="." version="4.1.5501">
+    <grid name="skb-base.skb-base-0_1_3.de.vandermeer.skb.base" enforce="true" locked="true" strict="false">
+      <row>
+        <cell pattern="" vexpanded="true" visibility="public" drill="false">
+          <grid>
+            <row>
+              <cell name="shell" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.shell.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="managers" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.managers.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="info" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.info.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="composite" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.*" vexpanded="true" visibility="public" drill="false">
+                <grid>
+                  <row>
+                    <cell name="coin" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.?" vexpanded="false" visibility="public" drill="false">
+                      <grid>
+                        <row>
+                          <cell name="CC_Error" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.CC_Error" vexpanded="false" visibility="public" drill="false" />
+                          <cell name="CC_Info" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.CC_Info" vexpanded="false" visibility="public" drill="false" />
+                          <cell name="CC_Warning" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.CC_Warning" vexpanded="false" visibility="public" drill="false" />
+                          <cell name="NONode" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.NONode" vexpanded="false" visibility="public" drill="false" />
+                          <cell name="NONone" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.NONone" vexpanded="false" visibility="public" drill="false" />
+                          <cell name="NONull" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.NONull" vexpanded="false" visibility="public" drill="false" />
+                          <cell name="NOSuccess" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.NOSuccess" vexpanded="false" visibility="public" drill="false" />
+                        </row>
+                        <row>
+                          <cell name="Abstract_CC" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.Abstract_CC" vexpanded="false" visibility="public" drill="false" />
+                          <cell name="NullObject" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.composite.coin.NullObject" vexpanded="false" visibility="public" drill="false" />
+                        </row>
+                      </grid>
+                    </cell>
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="categories" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.categories.*" vexpanded="true" visibility="public" drill="false">
+                <grid>
+                  <row>
+                    <cell name="options" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.categories.options.?" vexpanded="false" visibility="public" drill="false" />
+                  </row>
+                  <row>
+                    <cell name="kvt" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.categories.kvt.?" vexpanded="false" visibility="public" drill="false" />
+                  </row>
+                  <row>
+                    <cell name="categories" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.categories.?" vexpanded="false" visibility="public" drill="false" />
+                  </row>
+                </grid>
+              </cell>
+              <cell name="message" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.message.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="utils" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.utils.*" vexpanded="true" visibility="public" drill="false">
+                <grid>
+                  <row>
+                    <cell name="collections" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.utils.collections.?" vexpanded="false" visibility="public" drill="false" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="console" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.console.?" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Skb_BaseException" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.Skb_BaseException" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Skb_Defaults" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.Skb_Defaults" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Skb_Transformer" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.Skb_Transformer" vexpanded="false" visibility="public" drill="false" />
+              <cell name="strings" pattern="skb-base.skb-base-0_1_3.de.vandermeer.skb.base.strings.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+          </grid>
+        </cell>
+      </row>
+    </grid>
+  </grid-set>
 </local-project>
 

@@ -1,0 +1,121 @@
+<html>
+
+	<head>
+		<title>SKB Base</title>
+	</head>
+
+	<body>
+
+		<p>
+			Implementation of basic concepts, some small some bigger but all build for reuse in many contexts.
+		</p>
+
+		<h1>SKB Base</h1>
+
+		<p>
+			The project is organized in packages representing those implementations.
+			Some concepts require more than one package.
+			Packages can but don't have to be related to each other.
+			For instance, the <code>message</code> package is used by the <code>composite.coin</code> package which in turn is used by the <code>managers</code> package.
+			The figure below shows the composition of the overall project.
+		</p>
+
+		<p align="center">
+			<img src="doc-files/composition.png" alt="Skb Base Composition">
+		</p>
+
+
+		<h2>Implemented Concepts</h2>
+
+			<h3>Base</h3>
+			<p>
+				Very basic interfaces are provided in the top level <code>base</code> package.
+			</p>
+
+
+			<h3>Categories</h3>
+			<p>
+				The package <code>categories</code> defines a hierarchy of interfaces (and some classes and default implementations) for categories such as 'has' something or 'is' something.
+				It has two sub packages: <code>categories.kvt</code> for key/value/type categories (e.g. keys and keys with types) and <code>categories.options</code> for option categories (still experimental).
+			</p>
+
+
+			<h3>Composite Pattern</h3>
+			<p>
+				The package <code>composite</code> provides a simple implementation of the composite pattern with a top element and nodes (containing other nodes and leafs) and of course leafs.
+				It has one sub package <code>composite.coin</code> that defines hybrid classes implementing node and leaf functionality (so "both sides of a <code>coin</code>").
+			</p>
+			<p>
+				Those hybrid objects can be used as node and leaf. The package defines <code>null</code> objects, which can be used to qualify a <code>null</code> return (as compared to simply returning <code>null</code>).
+				The package also defined <code>CC</code> objects for standard message types: information, warning, and error.
+			</p>
+
+
+			<h3>Console</h3>
+			<p>
+				The <code>console</code> package has an implementation of a non-blocking console reader and an object with some interesting console features.
+				<code>Skb_Console</code> defines loggers that can then be used for standard console output (similar to stdout and stderr, just using loggers thus configurable at runtime).
+			</p>
+			<p>
+				It also provides standard methods to use the loggers. For example conWarn() will print a message typed warning to the standard out logger.
+				These methods make use of a global variable <code>USE_CONSOLE</code>, thus they can be switched on and off by an application resulting in standard output being printed or ignored at runtime.
+			</p>
+
+
+			<h3>Info (source, loader, target, writer, validator)</h3>
+			<p>
+				The <code>info</code> package implements a concept for defining, retrieving, writing, and validation information sources and information.
+				This package solves many standard problem: define and validate a directory or a file or a set of both, load STGroups from any source and validate them, walk directries and apply actions to filtered elements found.
+			</p>
+			<p>
+				The concept here is based on
+			</p>
+			<ul>
+				<li><code>InfoSource</code> as a source of information (directory, file, database with constraints such as file system, resource)</li>
+				<li><code>InfoLoader</code> as something that can load information from a given <code>InfoSource</code> (for instance a set of files from a directory)</li>
+				<li><code>InfoTarget</code> as a target of information (the opposite of an <code>InfoSource</code>)</li>
+				<li><code>InfoWriter</code> as a writer of information to an <code>InfoTarget</code> (kind of the opposite of an <code>InfoLoader</code>)</li>
+				<li><code>InfoValidator</code> as a validator of source or target or actual information</li>
+			</ul>
+			<p>
+				Each of these concepts has some implementations for standard problems.
+			</p>
+
+
+			<h3>Managers</h3>
+			<p>
+				The <code>managers</code> package implements managers, currently only a message manager that uses the standard message and coin objects and provides an object with flexible message processing (printing, storing, counting).
+			</p>
+
+
+			<h3>Message (5WH)</h3>
+			<p>
+				The <code>message</code> package implements the concept of a message as a 5WH object: who, what, when, where, why, and how. It comes with builder and renderer (using string templates).
+			</p>
+
+
+			<h3>(Command) Shell</h3>
+			<p>
+				The <code>shell</code> package implements a shell with commands being injected into as command interpreters.
+				Commands can have arguments (parameters).
+			</p>
+			<p>
+				All of those shell components are defined in interfaces and the package provides abstract implementations and a factory.
+				Some standard commands (exit, wait, standard help generation using string templates or ASCII tables, history, and run commands) are implemented.
+			</p>
+
+
+			<h3>Strings</h3>
+			<p>
+				The <code>strings</code> package implements strings that have an identifier and a version and/or a value part.
+				This can be very helpful when identifier need to be encoded along with versions but defining a class is for some reasons not suitable.
+			</p>
+
+
+			<h3>Utils</h3>
+			<p>
+				The <code>utils</code> package provides some standard utils. The sub package <code>utils.collections</code> has some simple helper classes to deal with Java maps and Java collections.
+			</p>
+
+	</body>
+</html>
