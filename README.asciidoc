@@ -2,8 +2,12 @@ SKB Base
 ========
 
 Implementation of basic concepts, some small some bigger but all build for reuse in many contexts.
+:toc:
 
-The project is organized in packages representing those implementations.
+Current release is https://search.maven.org/#artifactdetails|de.vandermeer|skb-base|0.1.2|jar[0.1.2].
+All releases are on https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22de.vandermeer%22%20AND%20a%3A%22skb-base%22[Maven Central].
+
+The project is organized in packages representing implementations of basic concepts.
 Some concepts require more than one package.
 Packages can but don't have to be related to each other.
 For instance, the +message+ package is used by the +composite.coin+ package which in turn is used by the +managers+ package.

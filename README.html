@@ -417,10 +417,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implementation of basic concepts, some small some bigger but all build for reuse in many contexts.</p>
+<p>Implementation of basic concepts, some small some bigger but all build for reuse in many contexts.
+:toc:</p>
 </div>
 <div class="paragraph">
-<p>The project is organized in packages representing those implementations.
+<p>Current release is <a href="https://search.maven.org/#artifactdetails|de.vandermeer|skb-base|0.1.2|jar">0.1.2</a>.
+All releases are on <a href="https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22de.vandermeer%22%20AND%20a%3A%22skb-base%22">Maven Central</a>.</p>
+</div>
+<div class="paragraph">
+<p>The project is organized in packages representing implementations of basic concepts.
 Some concepts require more than one package.
 Packages can but don&#8217;t have to be related to each other.
 For instance, the <code>message</code> package is used by the <code>composite.coin</code> package which in turn is used by the <code>managers</code> package.</p>
@@ -447,7 +452,7 @@ It has two sub packages: <code>categories.kvt</code> for key/value/type categori
 <h3 id="_composite_pattern">Composite Pattern</h3>
 <div class="paragraph">
 <p>The package <code>composite</code> provides a simple implementation of the composite pattern with a top element and nodes (containing other nodes and leafs) and of course leafs.
-It has one sub package <code>composite.coin</code> that defines classes implementing node and leaf functionality (so "both sides of a <code>coin</code>").</p>
+It has one sub package <code>composite.coin</code> that defines hybrid classes implementing node and leaf functionality (so "both sides of a <code>coin</code>").</p>
 </div>
 <div class="paragraph">
 <p>Those hybrid objects can be used as node and leaf. The package defines <code>null</code> objects, which can be used to qualify a <code>null</code> return (as compared to simply returning <code>null</code>).
@@ -538,7 +543,7 @@ This can be very helpful when identifier need to be encoded along with versions 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-19 12:17:14 IST
+Last updated 2015-08-19 21:36:29 IST
 </div>
 </div>
 </body>
