@@ -26,7 +26,7 @@ import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
  * Builder for a {@link Message5WH} object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
+ * @version    v0.1.3 build 150819 (19-Aug-15) for Java 1.8
  * @since      v0.0.7
  */
 public class Message5WH_Builder {

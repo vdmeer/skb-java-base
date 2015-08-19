@@ -22,7 +22,7 @@ import de.vandermeer.skb.base.categories.kvt.IsKey;
  * An argument for a command for the {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.2 build 150817 (17-Aug-15) for Java 1.8
+ * @version    v0.1.3 build 150819 (19-Aug-15) for Java 1.8
  * @since      v0.0.8
  */
 public interface SkbShellArgument extends IsKey<String>, HasDescription {
