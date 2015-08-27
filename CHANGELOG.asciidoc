@@ -1,5 +1,6 @@
 v0.1.4 - refactoring - 2015-##-##
 ---------------------------------
+* added FigletShutdown from ExecS
 
 
 v0.1.3 - refactoring - 2015-08-19
