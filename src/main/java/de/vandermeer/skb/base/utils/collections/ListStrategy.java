@@ -26,7 +26,7 @@ import java.util.Vector;
  * Strategies for lists.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.3 build 150819 (19-Aug-15) for Java 1.8
+ * @version    v0.1.4 build 150827 (27-Aug-15) for Java 1.8
  * @since      v0.0.5
  */
 public enum ListStrategy implements IsListStrategy {

@@ -23,7 +23,7 @@ import java.util.Random;
  * FigLets are special fonts.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.0 build 150812 (12-Aug-15) for Java 1.8
+ * @version    v0.1.4 build 150827 (27-Aug-15) for Java 1.8
  * @since      v0.1.4 (was in ExecS before)
  */
 public enum FigletShutdown {
