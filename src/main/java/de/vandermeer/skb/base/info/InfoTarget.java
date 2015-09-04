@@ -47,7 +47,7 @@ public interface InfoTarget {
 	 * 		If the target is valid, then {@link #getTarget()} must return a non-null target object, otherwise it must return null.
 	 */
 	default boolean isValid(){
-		return (this.getInitError().size()==0)?true:false;
+		return this.getInitError().size()==0;
 	}
 
 }

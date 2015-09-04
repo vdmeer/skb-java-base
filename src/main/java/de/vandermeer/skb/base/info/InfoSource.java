@@ -47,7 +47,7 @@ public interface InfoSource {
 	 * 		If the source is valid, then {@link #getSource()} must return a non-null source object, otherwise it must return null.
 	 */
 	default boolean isValid(){
-		return (this.getInitError().size()==0)?true:false;
+		return this.getInitError().size()==0;
 	}
 
 //	/**

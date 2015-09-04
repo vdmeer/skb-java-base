@@ -487,7 +487,7 @@ public abstract class AbstractFileInfo {
 	 * @return true if the validation was successful (error list is of size 0), false otherwise (error list is of size greater than 0)
 	 */
 	public boolean isValid(){
-		return (this.errors.size()==0)?true:false;
+		return this.errors.size()==0;
 	}
 
 	/**
