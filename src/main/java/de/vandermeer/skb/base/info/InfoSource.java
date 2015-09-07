@@ -35,6 +35,13 @@ public interface InfoSource {
 	Object getSource();
 
 	/**
+	 * Returns a string representation of the source for messages.
+	 * This representation should be configurable, for instance for a file source it might return the root directory or a set-root directory or the file base name or the file extension, depending on configuration.
+	 * @return string representation of the source
+	 */
+	String asString();
+
+	/**
 	 * Returns any error that happened during initialization (and relate validation) of the source.
 	 * @return a null string if the source is initialized successfully (and thus valid), a string with an error message otherwise
 	 */

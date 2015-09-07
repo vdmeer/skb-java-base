@@ -51,6 +51,39 @@ public abstract class AbstractFileInfo {
 	protected final CC_Error errors = new CC_Error();
 
 	/**
+	 * Options for an asString method
+	 * @author Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
+	 */
+	public enum Options {
+		/** As string returns the absolute path of the file source. */
+		AS_STRING_ABSOLUTE_PATH,
+
+		/** As string returns the absolute name of the file source. */
+		AS_STRING_ABSOLUTE_NAME,
+
+		/** As string returns the full file name of the file source. */
+		AS_STRING_FULL_FILE_NAME,
+
+		/** As string returns the base name of the file of the file source. */
+		AS_STRING_BASE_FILE_NAME,
+
+		/** As string returns the file extension of the file source. */
+		AS_STRING__FILE_EXTENSION,
+
+		/** As string returns the root path of the file source. */
+		AS_STRING_ROOT_PATH,
+
+		/** As string returns the set-root path of the file source. */
+		AS_STRING_SET_ROOT_PATH,
+
+		/** As string returns the set-root name of the file source. */
+		AS_STRING_SET_ROOT_NAME,
+	}
+
+	/** Option for the return value of asString method. */
+	protected Options asStringOpt = Options.AS_STRING_SET_ROOT_NAME;
+
+	/**
 	 * Creates a new file info object from an existing File object with optional validation.
 	 * @param file existing file object
 	 * @param doValidate true if internal validation is required, false otherwise (for instance if the file object comes from another loader).
@@ -495,5 +528,15 @@ public abstract class AbstractFileInfo {
 	 * @return validation option, if not set (null) will create init errors
 	 */
 	protected abstract ValidationOptions valOption();
+
+	/**
+	 * Sets the option for an asString method
+	 * @param option new option, only set if not null
+	 */
+	public void setAsStringOption(Options option){
+		if(option!=null){
+			this.asStringOpt = option;
+		}
+	}
 
 }

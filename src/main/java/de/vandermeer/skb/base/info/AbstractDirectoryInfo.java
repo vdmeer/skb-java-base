@@ -49,6 +49,21 @@ public abstract class AbstractDirectoryInfo {
 	protected final CC_Error errors = new CC_Error();
 
 	/**
+	 * Options for an asString method
+	 * @author Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
+	 */
+	public enum Options {
+		/** As string returns the full directory name of the directory source. */
+		AS_STRING_FULL_DIRECTORY_NAME,
+
+		/** As string returns the set-root path of the directory source. */
+		AS_STRING_SET_ROOT_PATH,
+	}
+
+	/** Option for the return value of asString method. */
+	protected Options asStringOpt = Options.AS_STRING_SET_ROOT_PATH;
+
+	/**
 	 * Creates a new directory info object from a directory name.
 	 * This constructor will try to locate the directory in the class path first and in the file system next.
 	 * @param directory name of the directory.
@@ -256,5 +271,15 @@ public abstract class AbstractDirectoryInfo {
 	 * @return validation option, if not set (null) will create init errors
 	 */
 	protected abstract ValidationOptions valOption();
+
+	/**
+	 * Sets the option for an asString method
+	 * @param option new option, only set if not null
+	 */
+	public void setAsStringOption(Options option){
+		if(option!=null){
+			this.asStringOpt = option;
+		}
+	}
 
 }

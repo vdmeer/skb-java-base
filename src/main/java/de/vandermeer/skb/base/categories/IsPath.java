@@ -89,7 +89,7 @@ public interface IsPath extends CategoryIs, CategoryWithValue, HasDescription {
 	 * The path value is evaluated as FQPN string in terms of:
 	 * <ul>
 	 * 		<li>is of length one and contains only the separator</li>
-	 * 		<li> or fulfils all of the following criteria
+	 * 		<li> or fulfills all of the following criteria
 	 * 			<ul> 
 	 * 				<li>is not empty (null, "" or only white spaces</li>
 	 * 				<li>does start with the separator, e.g. '/'</li>

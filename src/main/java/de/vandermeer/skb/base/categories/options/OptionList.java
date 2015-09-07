@@ -52,7 +52,7 @@ public class OptionList {
 	}
 
 	/**
-	 * Creates a new OptionList initialised with all non-null options from the collection
+	 * Creates a new OptionList initialized with all non-null options from the collection
 	 * @param options collection of options
 	 */
 	public OptionList(Collection<Option<?>> options){

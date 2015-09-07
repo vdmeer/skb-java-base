@@ -1,3 +1,10 @@
+v0.1.5 - feature add - 2015-##-##
+---------------------------------
+* added an +asString()+ method to InfoSource and InfoTarget
+	** added flexible configuration of the method return to FileSource and FileTarget (via AbstractFileInfo)
+	** added flexible configuration of the method return to DirectorySource and DirectoryTarget (via AbstractDirectoryInfo)
+
+
 v0.1.4 - refactoring - 2015-08-27
 ---------------------------------
 * added FigletShutdown from ExecS
@@ -12,7 +19,7 @@ v0.1.3 - refactoring - 2015-08-19
 	** moved STGs from message to managers folder
 	** rewrote +render()+ method on message to use StrBuilder instead of STGroup (so no more STGroup and templates in the message package)
 	** removed renderer from Abstract_CC and added CC_Error, CC_Warning and CC_Info to MessageRenderer
-	** Abstract_CC uses the native message render mthod only now
+	** Abstract_CC uses the native message render method only now
 
 
 v0.1.2 - feature add - 2015-08-17
@@ -171,7 +178,7 @@ v0.0.6 - feature add - 2015-07-12
 * moved standard categories from skb-categories to here
 * moved all composite implementation from skb-composite to here
 * added ReportManager from skb-commons
-* added skb-collections as pacakge de.vandermeer.skb.base.utils.collections
+* added skb-collections as package de.vandermeer.skb.base.utils.collections
   ** cleanup some of the utility classes
   ** created factory, transformation, filter classes
   ** moved Skb_CollectionUtils to the new package
@@ -187,7 +194,7 @@ v0.0.5 - feature add - 2015-06-23
 * added console utils
 * moved encoding to console utils
 * added jar and package filters for ExecS usage
-* added net and thread uilities
+* added net and thread utilities
 
 
 v0.0.4 - maintenance - 2015-06-19
@@ -206,7 +213,7 @@ v0.0.3 - feature add - 2015-06-18
 v0.0.2 - feature add - 2014-06-25
 ---------------------------------
 * fixed javadoc problems (missing parameters)
-* changed STGroup behaviour in Message5WH: added custom groups and group tests; removed static STGroup member
+* changed STGroup behavior in Message5WH: added custom groups and group tests; removed static STGroup member
 
 
 v0.0.1 - initial release - 2014-06-10

@@ -39,6 +39,11 @@ public interface IsID extends CategoryIs, CategoryWithValue, HasDescription {
 		};
 	}
 
+	/**
+	 * Creates a new object.
+	 * @param value the value
+	 * @return new object
+	 */
 	static IsID create(final Object value){
 		return IsID.create(value, null);
 	}

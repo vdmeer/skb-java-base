@@ -75,7 +75,7 @@ public abstract class Skb_ObjectUtils {
 	 * is unsafe. Because all actual castings follow an explicit type check, this suppression should have not negative impact
 	 * (i.e. there are no ClassCastExceptions).
 	 * @param <T> target class for the transformation
-	 * @param clazz the requested type of the return value, required for initialisation
+	 * @param clazz the requested type of the return value, required for initialization
 	 * @param nullValue the value to be used if a null test succeeds
 	 * @param falseValue the value to be used in case no test succeeds
 	 * @param collFirst if set true, collections will be processed and the first element returned, no special collection processing otherwise
@@ -147,7 +147,7 @@ public abstract class Skb_ObjectUtils {
 	 * @see #CONVERT(Object, Class, Object, Object, boolean)
 	 * @param <T> type of the return object
 	 * @param value the value that should be converted
-	 * @param clazz the requested type of the return value, needed for initialisation
+	 * @param clazz the requested type of the return value, needed for initialization
 	 * @return a value of type T if a conversion was successful, nullValue if null was tested successfully, falseValue in all other cases
 	 */
 	public static final <T> T CONVERT(Object value, Class<T> clazz){
@@ -161,7 +161,7 @@ public abstract class Skb_ObjectUtils {
 	 * @see #CONVERT(Object, Class, Object, Object, boolean)
 	 * @param <T> type of the return object
 	 * @param value the value that should be converted
-	 * @param clazz the requested type of the return value, needed for initialisation
+	 * @param clazz the requested type of the return value, needed for initialization
 	 * @param nullValue the value to be used if a null test succeeds
 	 * @param falseValue the value to be used in case no test succeeds
 	 * @return a value of type T if a conversion was successful, nullValue if null was tested successfully, falseValue in all other cases
@@ -175,7 +175,7 @@ public abstract class Skb_ObjectUtils {
 	 * @see #OBJECT_TO_TARGET
 	 * @param <T> type of the return object
 	 * @param value the value that should be converted
-	 * @param clazz the requested type of the return value, needed for initialisation
+	 * @param clazz the requested type of the return value, needed for initialization
 	 * @param nullValue the value to be used if a null test succeeds
 	 * @param falseValue the value to be used in case no test succeeds
 	 * @param collFirst if set true, collections will be processed and the first element returned, no special collection processing otherwise

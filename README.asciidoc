@@ -47,7 +47,7 @@ These methods make use of a global variable +USE_CONSOLE+, thus they can be swit
 Info (source, loader, target, writer, validator)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The +info+ package implements a concept for defining, retrieving, writing, and validation information sources and information.
-This package solves many standard problem: define and validate a directory or a file or a set of both, load STGroups from any source and validate them, walk directries and apply actions to filtered elements found.
+This package solves many standard problem: define and validate a directory or a file or a set of both, load STGroups from any source and validate them, walk directories and apply actions to filtered elements found.
 
 The concept here is based on
 
