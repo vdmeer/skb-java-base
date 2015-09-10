@@ -48,7 +48,7 @@
 	<scm>
 		<developerConnection>scm:git:git@github.com:vdmeer/skb-java-base.git</developerConnection>
 		<connection>scm:git:git://github.com/vdmeer/skb-java-base.git</connection>
-		<tag>skb-base-0.1.4</tag>
+		<tag>skb-base-0.1.5</tag>
 		<url>https://github.com/vdmeer/skb-java-base</url>
 	</scm>
 
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>de.vandermeer</groupId>
 			<artifactId>asciitable</artifactId>
-			<version>0.2.1</version>
+			<version>0.2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
