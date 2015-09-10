@@ -17,6 +17,8 @@ package de.vandermeer.skb.base.shell;
 
 import org.junit.Test;
 
+import de.vandermeer.asciitable.v2.render.WidthFixedColumns;
+
 /**
  * Tests for Tests for {@link SkbShell}.
  *
@@ -32,8 +34,8 @@ public class Test_EclRun_Shell {
 		if("true".equals(System.getProperty("EclRun"))){
 			SkbShell skbsh = SkbShellFactory.newShell();
 			skbsh.addCommandInterpreter(new Ci_Exit());
-//			skbsh.addCommandInterpreter(new Ci_HelpTable(skbsh).setWidth(new V2_WidthByColumns().add(10).add(66)));
-			skbsh.addCommandInterpreter(new Ci_HelpStg(skbsh));
+			skbsh.addCommandInterpreter(new Ci_HelpTable(skbsh).setWidth(new WidthFixedColumns().add(10).add(66)));
+//			skbsh.addCommandInterpreter(new Ci_HelpStg(skbsh));
 			skbsh.addCommandInterpreter(new Ci_Wait());
 			skbsh.addCommandInterpreter(new Ci_ScRun(skbsh));
 			skbsh.addCommandInterpreter(new Ci_History(skbsh));

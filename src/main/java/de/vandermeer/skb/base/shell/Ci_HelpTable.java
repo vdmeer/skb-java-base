@@ -105,7 +105,6 @@ public class Ci_HelpTable extends Ci_Help {
 		;
 		RenderedTable rat = rend.render(at);
 		Skb_Console.conInfo(rat.toString());
-
 		return 0;
 	}
 

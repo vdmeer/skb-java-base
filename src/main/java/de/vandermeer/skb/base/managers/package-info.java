@@ -66,7 +66,7 @@
  * <pre>{@code
 	Message5WH_Renderer ren = new Message5WH_Renderer("de/vandermeer/skb/base/message/5wh-example.stg");
 	String rendered = ren.render(msg);
-	System.out.println(rendererd);
+	System.out.println(rendered);
  * }</pre>
  * 
  * With this template the same message will render as:

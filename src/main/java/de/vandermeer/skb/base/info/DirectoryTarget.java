@@ -61,4 +61,15 @@ public class DirectoryTarget extends AbstractDirectoryInfo implements InfoSource
 		return ValidationOptions.AS_TARGET;
 	}
 
+	@Override
+	public String asString() {
+		switch(this.asStringOpt){
+			case AS_STRING_FULL_DIRECTORY_NAME:
+				return this.getFullDirecoryName();
+			case AS_STRING_SET_ROOT_PATH:
+				return this.getSetRootPath();
+		}
+		return null;
+	}
+
 }

@@ -133,4 +133,27 @@ public class FileTarget extends AbstractFileInfo implements InfoTarget {
 		return null;
 	}
 
+	@Override
+	public String asString() {
+		switch(this.asStringOpt){
+			case AS_STRING_ABSOLUTE_NAME:
+				return this.getAbsoluteName();
+			case AS_STRING_ABSOLUTE_PATH:
+				return this.getAbsolutePath();
+			case AS_STRING_BASE_FILE_NAME:
+				return this.getBaseFileName();
+			case AS_STRING_FULL_FILE_NAME:
+				return this.getFullFileName();
+			case AS_STRING_ROOT_PATH:
+				return this.getRootPath();
+			case AS_STRING_SET_ROOT_NAME:
+				return this.getSetRootName();
+			case AS_STRING_SET_ROOT_PATH:
+				return this.getSetRootPath();
+			case AS_STRING__FILE_EXTENSION:
+				return this.getFileExtension();
+		}
+		return null;
+	}
+
 }

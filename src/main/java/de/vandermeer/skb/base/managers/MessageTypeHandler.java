@@ -119,7 +119,7 @@ class MessageTypeHandler {
 	 * Handles the message.
 	 * @param message the message to be handled
 	 * @param type message type
-	 * @param appID application identifier for max messae count
+	 * @param appID application identifier for max message count
 	 */
 	public void handleMessage(String message, E_MessageType type, ST max100, Object appID){
 		this.count++;

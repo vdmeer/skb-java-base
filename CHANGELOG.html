@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>v0.1.4 - refactoring - 2015-08-27</title>
+<title>v0.1.5 - maintenance - 2015-09-10</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -414,6 +414,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
+<h2 id="_v0_1_5_maintenance_2015_09_10">v0.1.5 - maintenance - 2015-09-10</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>added an asString() method to InfoSource and InfoTarget</p>
+<div class="ulist">
+<ul>
+<li>
+<p>added flexible configuration of the method return to FileSource and FileTarget (via AbstractFileInfo)</p>
+</li>
+<li>
+<p>added flexible configuration of the method return to DirectorySource and DirectoryTarget (via AbstractDirectoryInfo)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_v0_1_4_refactoring_2015_08_27">v0.1.4 - refactoring - 2015-08-27</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -453,7 +475,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>removed renderer from Abstract_CC and added CC_Error, CC_Warning and CC_Info to MessageRenderer</p>
 </li>
 <li>
-<p>Abstract_CC uses the native message render mthod only now</p>
+<p>Abstract_CC uses the native message render method only now</p>
 </li>
 </ul>
 </div>
@@ -977,7 +999,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>added ReportManager from skb-commons</p>
 </li>
 <li>
-<p>added skb-collections as pacakge de.vandermeer.skb.base.utils.collections</p>
+<p>added skb-collections as package de.vandermeer.skb.base.utils.collections</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1026,7 +1048,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>added jar and package filters for ExecS usage</p>
 </li>
 <li>
-<p>added net and thread uilities</p>
+<p>added net and thread utilities</p>
 </li>
 </ul>
 </div>
@@ -1074,7 +1096,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>fixed javadoc problems (missing parameters)</p>
 </li>
 <li>
-<p>changed STGroup behaviour in Message5WH: added custom groups and group tests; removed static STGroup member</p>
+<p>changed STGroup behavior in Message5WH: added custom groups and group tests; removed static STGroup member</p>
 </li>
 </ul>
 </div>
@@ -1089,7 +1111,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-27 12:07:28 IST
+Last updated 2015-09-10 10:47:02 IST
 </div>
 </div>
 </body>

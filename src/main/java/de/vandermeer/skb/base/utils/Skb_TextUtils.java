@@ -72,7 +72,8 @@ public abstract class Skb_TextUtils {
 
 	/**
 	 * Returns a transformer that takes an object and returns a string.
-	 * @return transformer from object to string, the transformation returns the object itself it it was a string, the object's toString method if it is not null, an empty string otherwise */
+	 * @return transformer from object to string, the transformation returns the object itself it it was a string, the object's toString method if it is not null, an empty string otherwise
+	 */
 	public static final Skb_Transformer<Object, String> TO_STRING(){
 		return new Skb_Transformer<Object, String>(){
 			@Override public String transform(Object obj) {

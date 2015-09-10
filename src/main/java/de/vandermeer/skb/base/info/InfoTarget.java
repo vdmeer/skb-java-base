@@ -35,6 +35,13 @@ public interface InfoTarget {
 	Object getTarget();
 
 	/**
+	 * Returns a string representation of the target for messages.
+	 * This representation should be configurable, for instance for a file target it might return the root directory or a set-root directory or the file base name or the file extension, depending on configuration.
+	 * @return string representation of the target
+	 */
+	String asString();
+
+	/**
 	 * Returns any error that happened during initialization (and relate validation) of the target.
 	 * @return a null string if the target is initialized successfully (and thus valid), a string with an error message otherwise
 	 */
@@ -47,7 +54,7 @@ public interface InfoTarget {
 	 * 		If the target is valid, then {@link #getTarget()} must return a non-null target object, otherwise it must return null.
 	 */
 	default boolean isValid(){
-		return (this.getInitError().size()==0)?true:false;
+		return this.getInitError().size()==0;
 	}
 
 }

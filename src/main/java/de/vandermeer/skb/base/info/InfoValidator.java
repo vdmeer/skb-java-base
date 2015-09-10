@@ -44,7 +44,7 @@ public interface InfoValidator {
 	 * @return true if the validation was successful (error list is of size 0), false otherwise (error list is of size greater than 0)
 	 */
 	default boolean isValid(){
-		return (this.getValidationErrors().size()==0)?true:false;
+		return this.getValidationErrors().size()==0;
 	}
 
 	/**

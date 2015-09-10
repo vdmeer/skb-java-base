@@ -39,4 +39,8 @@ public class AbstractSource implements InfoSource {
 		return null;
 	}
 
+	@Override
+	public String asString() {
+		return null;
+	}
 }
