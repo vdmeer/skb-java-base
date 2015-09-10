@@ -1,4 +1,4 @@
-v0.1.5 - feature add - 2015-##-##
+v0.1.5 - maintenance - 2015-09-10
 ---------------------------------
 * added an +asString()+ method to InfoSource and InfoTarget
 	** added flexible configuration of the method return to FileSource and FileTarget (via AbstractFileInfo)

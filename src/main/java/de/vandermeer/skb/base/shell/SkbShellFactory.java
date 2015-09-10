@@ -188,7 +188,6 @@ public class SkbShellFactory {
 	/**
 	 * A category for standard commands.
 	 */
-	
 	public static SkbShellCommandCategory SIMPLE_COMMANDS = newCategory("Simple", "commands with 0 or 1 argument, no argument id required");
 
 }

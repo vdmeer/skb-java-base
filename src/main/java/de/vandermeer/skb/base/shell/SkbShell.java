@@ -116,7 +116,7 @@ public interface SkbShell extends HasPrompt {
 	 * @return shell short name
 	 */
 	default String getPromptName(){
-		return "skbsh";
+		return this.getID();
 	}
 
 	/**
