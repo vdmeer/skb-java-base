@@ -33,7 +33,11 @@ import de.vandermeer.skb.base.info.SimpleDirectoryScanner;
  * Tests for {@link CommonsDirectoryWalker}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.5 build 160201 (01-Feb-16) for Java 1.8
+<<<<<<< HEAD
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+=======
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+>>>>>>> dev
  * @since      v0.0.7
  */
 public class Test_SimpleDirectoryScanner {
@@ -42,7 +46,7 @@ public class Test_SimpleDirectoryScanner {
 	public void testScanJavaSource(){
 		SimpleDirectoryScanner scanner = new SimpleDirectoryScanner(new DirectorySource("src/main/java"));
 		FileSourceList files = scanner.load();
-		int checkSize = 163;//TODO update this if java files in src/main are have been removed or added
+		int checkSize = 169;//TODO update this if java files in src/main are have been removed or added
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());

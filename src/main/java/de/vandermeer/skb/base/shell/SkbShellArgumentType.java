@@ -21,7 +21,11 @@ import de.vandermeer.skb.base.categories.HasDescription;
  * An argument type for the {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.5 build 160201 (01-Feb-16) for Java 1.8
+<<<<<<< HEAD
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+=======
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+>>>>>>> dev
  * @since      v0.0.8
  */
 public enum SkbShellArgumentType implements HasDescription {
@@ -40,6 +44,13 @@ public enum SkbShellArgumentType implements HasDescription {
 
 	/** A String type. */
 	String ("a java.lang.String"),
+
+	/** A list of strings. */
+	ListString ("A list of strings"),
+
+	/** A list of integers. */
+	ListInteger ("A list of integers"),
+
 	;
 
 	/** A description. */

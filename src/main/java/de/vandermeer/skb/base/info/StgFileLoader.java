@@ -22,7 +22,11 @@ import org.stringtemplate.v4.STGroupFile;
  * An file loader for STG property files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.5 build 160201 (01-Feb-16) for Java 1.8
+<<<<<<< HEAD
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+=======
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+>>>>>>> dev
  * @since      v0.0.7
  */
 public class StgFileLoader extends AbstractLoader implements FileLoader {
@@ -30,13 +34,16 @@ public class StgFileLoader extends AbstractLoader implements FileLoader {
 	/** The source file for the loader. */
 	final StgFileSource source;
 
-	/**
-	 * Returns a new loader for a file source.
-	 * @param source a file source to load an STG from
-	 */
-	public StgFileLoader(StgFileSource source){
-		this.source = source;
-	}
+	/** The original file name, needed because STGroupFile is doing it's own load of resources. */
+	final String fileName;
+
+//	/**
+//	 * Returns a new loader for a file source.
+//	 * @param source a file source to load an STG from
+//	 */
+//	public StgFileLoader(StgFileSource source){
+//		this.source = source;
+//	}
 
 	/**
 	 * Returns a new loader for a file name, creating a file source automatically.
@@ -44,12 +51,13 @@ public class StgFileLoader extends AbstractLoader implements FileLoader {
 	 */
 	public StgFileLoader(String fileName){
 		this.source = new StgFileSource(fileName);
+		this.fileName = fileName;
 	}
 
 	@Override
 	public STGroup load() {
 		if(this.validateSource()){
-			STGroupFile ret = new STGroupFile(this.source.getAbsoluteName());
+			STGroupFile ret = new STGroupFile(this.fileName);
 			return ret;
 		}
 		return null;

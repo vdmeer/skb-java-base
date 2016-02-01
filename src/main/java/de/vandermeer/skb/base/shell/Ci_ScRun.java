@@ -32,7 +32,11 @@ import de.vandermeer.skb.base.managers.MessageMgr;
  * An interpreter for the 'run' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.5 build 160201 (01-Feb-16) for Java 1.8
+<<<<<<< HEAD
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+=======
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+>>>>>>> dev
  * @since      v0.0.10
  */
 public class Ci_ScRun extends AbstractCommandInterpreter {
@@ -176,7 +180,7 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		}
 		for(FileSource fs : fsl.getSource()){
 			//TODO need to adapt to new source return
-			mm.report(MessageMgr.createInfoMessage("script file - dir <{}> file <{}>", directory, fs.getSetRootName()));
+			mm.report(MessageMgr.createInfoMessage("script file - dir <{}> file <{}>", directory, fs.getBaseFileName()));
 		}
 		return 0;
 	}

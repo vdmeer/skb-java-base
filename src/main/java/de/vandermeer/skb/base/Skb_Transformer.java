@@ -21,7 +21,11 @@ import java.util.function.Function;
  * Standard transformer interface.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.5 build 160201 (01-Feb-16) for Java 1.8
+<<<<<<< HEAD
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+=======
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+>>>>>>> dev
  * @since      v0.0.1
  */
 public interface Skb_Transformer <FROM, TO> extends Function<FROM, TO> {

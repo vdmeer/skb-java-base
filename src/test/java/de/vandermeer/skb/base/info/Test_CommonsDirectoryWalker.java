@@ -34,7 +34,11 @@ import de.vandermeer.skb.base.info.FileSource;
  * Tests for {@link CommonsDirectoryWalker}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.5 build 160201 (01-Feb-16) for Java 1.8
+<<<<<<< HEAD
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+=======
+ * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+>>>>>>> dev
  * @since      v0.0.7
  */
 public class Test_CommonsDirectoryWalker {
@@ -47,7 +51,7 @@ public class Test_CommonsDirectoryWalker {
 		});
 		CommonsDirectoryWalker ldw = new CommonsDirectoryWalker("src/main/java", DirectoryFileFilter.INSTANCE, ff);
 		FileSourceList files = ldw.load();
-		int checkSize = 163;//TODO update this if java files in src/main are have been removed or added
+		int checkSize = 169;//TODO update this if java files in src/main are have been removed or added
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());
