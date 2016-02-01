@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.vandermeer</groupId>
 	<artifactId>skb-base</artifactId>
-	<version>0.1.6</version>
+	<version>0.1.8</version>
 	<packaging>jar</packaging>
 
 	<name>SKB Base</name>
@@ -48,7 +48,7 @@
 	<scm>
 		<developerConnection>scm:git:git@github.com:vdmeer/skb-java-base.git</developerConnection>
 		<connection>scm:git:git://github.com/vdmeer/skb-java-base.git</connection>
-		<tag>skb-base-0.1.6</tag>
+		<tag>skb-base-0.1.8</tag>
 		<url>https://github.com/vdmeer/skb-java-base</url>
 	</scm>
 
