@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
  * Dictionary to translate HTML character encodings to LaTeX character encodings.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
+ * @version    v0.1.8 build 160201 (01-Feb-16) for Java 1.8
  */
 public class Text2Html implements Translator {
 

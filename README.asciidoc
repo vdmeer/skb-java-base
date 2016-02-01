@@ -3,7 +3,7 @@ SKB Base
 Implementation of basic concepts, some small some bigger but all build for reuse in many contexts.
 :toc:
 
-Current release is https://search.maven.org/#artifactdetails|de.vandermeer|skb-base|0.1.7|jar[0.1.7].
+Current release is https://search.maven.org/#artifactdetails|de.vandermeer|skb-base|0.1.8|jar[0.1.8].
 All releases are on https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22de.vandermeer%22%20AND%20a%3A%22skb-base%22[Maven Central].
 
 The project is organized in packages representing implementations of basic concepts.
