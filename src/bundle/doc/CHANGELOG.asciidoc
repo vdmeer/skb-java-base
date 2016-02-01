@@ -1,6 +1,7 @@
 v0.1.7 - maintenance - 2016-02-01
 ---------------------------------
 * fixed GIT problems created in last version
+* removed all old HEAD entries
 
 v0.1.6 - feature add - 2016-02-01
 ---------------------------------
