@@ -27,11 +27,7 @@ import de.vandermeer.skb.base.message.Message5WH_Builder;
  * descriptions about things that have been noticeable, as compared to a boolean return or a single info message or a thrown exception.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
-<<<<<<< HEAD
  * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
-=======
- * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
->>>>>>> dev
  * @since      v0.0.6 (was in skb-composite before)
  */
 public final class CC_Info extends Abstract_CC {

@@ -37,11 +37,7 @@ import de.vandermeer.skb.base.message.Message5WH;
  * Renderer for a {@link Message5WH} object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
-<<<<<<< HEAD
  * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
-=======
- * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
->>>>>>> dev
  * @since      v0.1.2
  */
 public class MessageRenderer {
