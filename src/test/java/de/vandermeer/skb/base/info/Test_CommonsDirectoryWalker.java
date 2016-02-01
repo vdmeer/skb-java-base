@@ -47,7 +47,7 @@ public class Test_CommonsDirectoryWalker {
 		});
 		CommonsDirectoryWalker ldw = new CommonsDirectoryWalker("src/main/java", DirectoryFileFilter.INSTANCE, ff);
 		FileSourceList files = ldw.load();
-		int checkSize = 163;//TODO update this if java files in src/main are have been removed or added
+		int checkSize = 169;//TODO update this if java files in src/main are have been removed or added
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());

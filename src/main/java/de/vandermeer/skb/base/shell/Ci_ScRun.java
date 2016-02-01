@@ -176,7 +176,7 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		}
 		for(FileSource fs : fsl.getSource()){
 			//TODO need to adapt to new source return
-			mm.report(MessageMgr.createInfoMessage("script file - dir <{}> file <{}>", directory, fs.getSetRootName()));
+			mm.report(MessageMgr.createInfoMessage("script file - dir <{}> file <{}>", directory, fs.getBaseFileName()));
 		}
 		return 0;
 	}

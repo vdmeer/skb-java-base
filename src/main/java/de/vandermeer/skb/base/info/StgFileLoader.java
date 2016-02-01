@@ -30,13 +30,16 @@ public class StgFileLoader extends AbstractLoader implements FileLoader {
 	/** The source file for the loader. */
 	final StgFileSource source;
 
-	/**
-	 * Returns a new loader for a file source.
-	 * @param source a file source to load an STG from
-	 */
-	public StgFileLoader(StgFileSource source){
-		this.source = source;
-	}
+	/** The original file name, needed because STGroupFile is doing it's own load of resources. */
+	final String fileName;
+
+//	/**
+//	 * Returns a new loader for a file source.
+//	 * @param source a file source to load an STG from
+//	 */
+//	public StgFileLoader(StgFileSource source){
+//		this.source = source;
+//	}
 
 	/**
 	 * Returns a new loader for a file name, creating a file source automatically.
@@ -44,12 +47,13 @@ public class StgFileLoader extends AbstractLoader implements FileLoader {
 	 */
 	public StgFileLoader(String fileName){
 		this.source = new StgFileSource(fileName);
+		this.fileName = fileName;
 	}
 
 	@Override
 	public STGroup load() {
 		if(this.validateSource()){
-			STGroupFile ret = new STGroupFile(this.source.getAbsoluteName());
+			STGroupFile ret = new STGroupFile(this.fileName);
 			return ret;
 		}
 		return null;

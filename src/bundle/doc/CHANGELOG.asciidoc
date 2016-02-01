@@ -1,3 +1,10 @@
+v0.1.6 - feature add - 2015-##-##
+---------------------------------
+* added encodings with translators text2latex, html2latex and text2html
+* changed StgFileLoader to load group from original file name and not from FileSource (STGroupFile does it's own resource loading)
+* added ListString and ListInteger to LineParser
+
+
 v0.1.5 - maintenance - 2015-09-10
 ---------------------------------
 * added an +asString()+ method to InfoSource and InfoTarget

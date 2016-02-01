@@ -17,6 +17,7 @@ package de.vandermeer.skb.base.shell;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -35,7 +36,7 @@ public class LineParser {
 	protected String line;
 
 	/** Current position of the parser in the token stream. */
-	protected int tokenPosition=1;
+	protected int tokenPosition = 1;
 
 	/**
 	 * Returns a new command parser for a given command line.
@@ -150,8 +151,28 @@ public class LineParser {
 							case String:
 								ret.put(ssa, entry.getValue());
 								break;
+							case ListString:
+								String[] ar = StringUtils.split(entry.getValue(), ';');
+								if(ar!=null){
+									List<String> val = new ArrayList<>();
+									for(String s : ar){
+										val.add(s);
+									}
+									ret.put(ssa, val);
+								}
+								break;
+							case ListInteger:
+								String[] arInt = StringUtils.split(entry.getValue(), ';');
+								if(arInt!=null){
+									List<Integer> valInt = new ArrayList<>();
+									for(String s : arInt){
+										valInt.add(Integer.valueOf(s));
+									}
+									ret.put(ssa, valInt);
+								}
+								break;
 							default:
-								System.err.println("parser.getArgMap --> argument type not yet supported: " + ssa.getType());
+								System.err.println("parser.getArgMap --> argument type not yet supported: " + ssa.getType());//TODO do not use syserr prints
 								break;
 						}
 					}

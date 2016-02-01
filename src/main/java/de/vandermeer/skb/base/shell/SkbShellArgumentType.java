@@ -40,6 +40,13 @@ public enum SkbShellArgumentType implements HasDescription {
 
 	/** A String type. */
 	String ("a java.lang.String"),
+
+	/** A list of strings. */
+	ListString ("A list of strings"),
+
+	/** A list of integers. */
+	ListInteger ("A list of integers"),
+
 	;
 
 	/** A description. */
