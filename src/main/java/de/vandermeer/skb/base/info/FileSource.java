@@ -24,7 +24,7 @@ import de.vandermeer.skb.base.composite.coin.CC_Error;
  * File source for an information source.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.5 build 150910 (10-Sep-15) for Java 1.8
+ * @version    v0.1.5 build 160201 (01-Feb-16) for Java 1.8
  * @since      v0.0.7
  */
 public class FileSource extends AbstractFileInfo implements InfoSource {

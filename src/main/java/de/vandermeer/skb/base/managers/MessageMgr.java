@@ -40,7 +40,7 @@ import de.vandermeer.skb.base.message.Message5WH_Builder;
  * Manages Info, Warning and Error messages supporting {@link Message5WH}, {@link CC_Info}, {@link CC_Warning}, and {@link CC_Error} objects as well as arrays and collections of them.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.5 build 150910 (10-Sep-15) for Java 1.8
+ * @version    v0.1.5 build 160201 (01-Feb-16) for Java 1.8
  * @since      v0.0.6 (was in skb-commons before)
  */
 public class MessageMgr {
