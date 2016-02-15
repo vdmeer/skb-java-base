@@ -1,12 +1,19 @@
+v0.1.9 - maintenance - 2016-##-##
+---------------------------------
+* removed some more DIFF artifacts from STG and java files (tests)
+
+
 v0.1.8 - maintenance - 2016-02-01
 ---------------------------------
 * minor changes to the build configuration
+
 
 v0.1.7 - maintenance - 2016-02-01
 ---------------------------------
 * fixed GIT problems created in last version
 * removed all old HEAD entries
 * not published on Maven
+
 
 v0.1.6 - feature add - 2016-02-01
 ---------------------------------
