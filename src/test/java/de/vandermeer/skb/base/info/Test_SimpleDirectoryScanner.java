@@ -42,7 +42,7 @@ public class Test_SimpleDirectoryScanner {
 	public void testScanJavaSource(){
 		SimpleDirectoryScanner scanner = new SimpleDirectoryScanner(new DirectorySource("src/main/java"));
 		FileSourceList files = scanner.load();
-		int checkSize = 169;//TODO update this if java files in src/main are have been removed or added
+		int checkSize = 171;//TODO update this if java files in src/main are have been removed or added
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());
