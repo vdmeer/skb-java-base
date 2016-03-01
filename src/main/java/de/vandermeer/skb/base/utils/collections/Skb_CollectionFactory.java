@@ -31,7 +31,7 @@ import de.vandermeer.skb.base.Skb_Transformer;
  * Factory for SKB collections, mainly for transformers.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
  * @since      v0.0.5
  */
 public abstract class Skb_CollectionFactory {

@@ -31,7 +31,7 @@ import de.vandermeer.skb.base.managers.MessageMgr;
  * A shell with flexible adding of commands and auto-generation of help and other commands.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
  * @since      v0.0.8
  */
 public interface SkbShell extends HasPrompt {

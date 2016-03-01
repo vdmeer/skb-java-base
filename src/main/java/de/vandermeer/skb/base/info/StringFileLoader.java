@@ -23,7 +23,7 @@ import java.util.Scanner;
  * An file loader for reading a file into a string.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class StringFileLoader extends AbstractLoader implements FileLoader {

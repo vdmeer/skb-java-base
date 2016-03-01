@@ -22,7 +22,7 @@ import java.util.Properties;
  * An file loader for Java property files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public class PropertyFileLoader extends AbstractLoader implements FileLoader {

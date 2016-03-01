@@ -17,6 +17,6 @@
  * Some utilities for console handling.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
  */
 package de.vandermeer.skb.base.console;
