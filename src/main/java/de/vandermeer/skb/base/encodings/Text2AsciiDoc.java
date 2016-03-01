@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
  * Dictionary to translate text character encodings to AsciiDoc character encodings.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.1 build 151209 (09-Dec-15)
+ * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
  */
 public class Text2AsciiDoc implements Translator {
 

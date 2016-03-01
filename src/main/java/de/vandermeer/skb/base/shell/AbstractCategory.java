@@ -19,7 +19,7 @@ package de.vandermeer.skb.base.shell;
  * Abstract category implementation, use the {@link SkbShellFactory} to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.8 build 160201 (01-Feb-16) for Java 1.8
+ * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractCategory implements SkbShellCommandCategory {
