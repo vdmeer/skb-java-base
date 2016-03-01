@@ -4,7 +4,7 @@ v0.1.9 - maintenance - 2016-##-##
 * pushed asciidoctor plugin to 1.5.3
 * added HTML to AsciiDoc encoding target and added it to encoding factory
 * added Text to AsciiDoc encoding target and added it to encoding factory
-* moved external dependencies from skb file into settings, using skb v2.1.0 modules script now
+* removed old module/ settings, added bundle/pm settings
 
 
 v0.1.8 - maintenance - 2016-02-01
