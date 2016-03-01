@@ -17,6 +17,6 @@
  * Strategies for some classes for dealing with Java collections and maps.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.8 build 160201 (01-Feb-16) for Java 1.8
+ * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
  */
 package de.vandermeer.skb.base.utils.collections;

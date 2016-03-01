@@ -19,7 +19,7 @@ package de.vandermeer.skb.base.encodings;
  * Factory for encoding translators.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.8 build 160201 (01-Feb-16) for Java 1.8
+ * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
  * @since      v0.0.1
  */
 public abstract class TranslatorFactory {
@@ -29,7 +29,7 @@ public abstract class TranslatorFactory {
 	 * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
 	 */
 	public enum Target{
-		Text2LaTeX, HTML2LaTeX, Text2HTML
+		Text2LaTeX, HTML2LaTeX, Text2HTML, HTML2AD, Text2AD
 	}
 
 	/**
@@ -48,6 +48,10 @@ public abstract class TranslatorFactory {
 				return new Html2Latex();
 			case Text2HTML:
 				return new Text2Html();
+			case HTML2AD:
+				return new Html2AsciiDoc();
+			case Text2AD:
+				return new Text2AsciiDoc();
 			default:
 				return null;
 		}

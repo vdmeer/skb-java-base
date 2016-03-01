@@ -1,12 +1,23 @@
+v0.1.9 - maintenance - 2016-##-##
+---------------------------------
+* removed some more DIFF artifacts from STG and java files (tests)
+* pushed asciidoctor plugin to 1.5.3
+* added HTML to AsciiDoc encoding target and added it to encoding factory
+* added Text to AsciiDoc encoding target and added it to encoding factory
+* removed old module/ settings, added bundle/pm settings
+
+
 v0.1.8 - maintenance - 2016-02-01
 ---------------------------------
 * minor changes to the build configuration
+
 
 v0.1.7 - maintenance - 2016-02-01
 ---------------------------------
 * fixed GIT problems created in last version
 * removed all old HEAD entries
 * not published on Maven
+
 
 v0.1.6 - feature add - 2016-02-01
 ---------------------------------

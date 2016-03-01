@@ -19,11 +19,7 @@ package de.vandermeer.skb.base.managers;
  * Tests for Tests for {@link MessageMgr}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
-<<<<<<< HEAD
- * @version    v0.1.8 build 160201 (01-Feb-16) for Java 1.8
-=======
- * @version    v0.1.6 build 160201 (01-Feb-16) for Java 1.8
->>>>>>> dev
+ * @version    v0.1.9-SNAPSHOT build 160301 (01-Mar-16) for Java 1.8
  * @since      v0.0.6 (was in skb-commons before)
  */
 public class Test_MessageMgr {
