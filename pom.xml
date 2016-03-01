@@ -86,7 +86,7 @@
         <dependency>
             <groupId>de.vandermeer</groupId>
             <artifactId>asciitable</artifactId>
-            <version>0.2.5-SNAPSHOT</version>
+            <version>0.2.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -281,8 +281,6 @@
         </plugins>
     </build>
 
-</project>
-
     <!-- Environment Settings -->
     <issueManagement>
         <system>github</system>
@@ -309,3 +307,5 @@
 <pluginRepositories>...</pluginRepositories>
 <distributionManagement>...</distributionManagement>
 -->
+
+</project>

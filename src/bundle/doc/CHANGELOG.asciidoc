@@ -1,4 +1,4 @@
-v0.1.9 - maintenance - 2016-##-##
+v0.1.9 - maintenance - 2016-03-01
 ---------------------------------
 * removed some more DIFF artifacts from STG and java files (tests)
 * pushed asciidoctor plugin to 1.5.3
