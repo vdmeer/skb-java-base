@@ -19,7 +19,7 @@ package de.vandermeer.skb.base.categories.kvt;
  * Category of objects that represent the type of a value.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160304 (04-Mar-16) for Java 1.8
  * @since      v0.0.6 (was in skb-categories before)
  */
 public interface IsValueWType<V, T> extends IsValue<V> {

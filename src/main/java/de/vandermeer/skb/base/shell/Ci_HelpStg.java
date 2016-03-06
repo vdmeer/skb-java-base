@@ -29,7 +29,7 @@ import de.vandermeer.skb.base.managers.MessageMgr;
  * An interpreter for the 'help' shell command using an STG for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160304 (04-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_HelpStg extends Ci_Help {
