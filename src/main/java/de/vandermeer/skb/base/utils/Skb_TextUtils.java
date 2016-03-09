@@ -25,7 +25,7 @@ import de.vandermeer.skb.base.Skb_Transformer;
  * Text converters.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160304 (04-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
  * @since      v0.0.2
  */
 public abstract class Skb_TextUtils {

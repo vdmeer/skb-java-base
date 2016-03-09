@@ -27,7 +27,7 @@ import de.vandermeer.skb.base.message.Message5WH_Builder;
  * descriptions about things that went wrong, as compared to a boolean return or a single error message or a thrown exception.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160304 (04-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
  * @since      v0.0.6 (was in skb-composite before)
  */
 public final class CC_Error extends Abstract_CC {
