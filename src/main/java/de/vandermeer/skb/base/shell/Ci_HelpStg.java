@@ -21,15 +21,15 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import de.vandermeer.skb.base.composite.coin.CC_Info;
-import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.managers.MessageMgr;
+import de.vandermeer.skb.interfaces.MessageConsole;
+import de.vandermeer.skb.interfaces.categories.is.messagesets.IsInfoSetFT;
 
 /**
  * An interpreter for the 'help' shell command using an STG for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_HelpStg extends Ci_Help {
@@ -49,7 +49,7 @@ public class Ci_HelpStg extends Ci_Help {
 			return ret;
 		}
 
-		CC_Info info = new CC_Info();
+		IsInfoSetFT info = IsInfoSetFT.create();
 
 		String toHelp = lp.getArgs();
 		if(toHelp==null){
@@ -58,8 +58,8 @@ public class Ci_HelpStg extends Ci_Help {
 		else{
 			this.specificHelp(info, toHelp);
 		}
-		info.add("");
-		Skb_Console.conInfo(info.render());
+		info.addInfo("");
+		MessageConsole.conInfo(info.render());
 
 		return 0;
 	}
@@ -69,7 +69,7 @@ public class Ci_HelpStg extends Ci_Help {
 	 * @param info the info object to add help to
 	 * @param toHelp the command to help with
 	 */
-	protected void specificHelp(CC_Info info, String toHelp){
+	protected void specificHelp(IsInfoSetFT info, String toHelp){
 		if(this.skbShell.getCommandMap().containsKey(toHelp)){
 			//we have a command to show help for, collect all information and present help
 
@@ -78,36 +78,36 @@ public class Ci_HelpStg extends Ci_Help {
 			if(ssc.getArguments()!=null){
 				for(SkbShellArgument ssa : ssc.getArguments()){
 					if(ssa.isOptional()){
-						args.put("[" + ssa.key() + "]", ssa);
+						args.put("[" + ssa.getKey() + "]", ssa);
 					}
 					else{
-						args.put("<" + ssa.key() + ">", ssa);
+						args.put("<" + ssa.getKey() + ">", ssa);
 					}
 				}
 			}
 
-			info.add("{} {} -- {}", ssc.getCommand(), new StrBuilder().appendWithSeparators(args.keySet(), ", "), ssc.getDescription());
+			info.addInfo("{} {} -- {}", ssc.getCommand(), new StrBuilder().appendWithSeparators(args.keySet(), ", "), ssc.getDescription());
 			for(SkbShellArgument ssa : args.values()){
 				if(ssa.valueSet()!=null && ssa.addedHelp()!=null){
-					info.add(" -- <{}> of type {} - {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet()));
+					info.addInfo(" -- <{}> of type {} - {} - {} - value set {}", ssa.getKey(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet()));
 				}
 				else if(ssa.valueSet()!=null && ssa.addedHelp()==null){
-					info.add(" -- <{}> of type {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet()));
+					info.addInfo(" -- <{}> of type {} - {} - value set {}", ssa.getKey(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet()));
 				}
 				else if(ssa.valueSet()==null && ssa.addedHelp()!=null){
-					info.add(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp());
+					info.addInfo(" -- <{}> of type {} - {} - {}", ssa.getKey(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp());
 				}
 				else{
-					info.add(" -- <{}> of type {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription());
+					info.addInfo(" -- <{}> of type {} - {}", ssa.getKey(), ssa.getType().name(), ssa.getDescription());
 				}
 			}
 			if(ssc.addedHelp()!=null){
-				info.add("{}", ssc.addedHelp());
+				info.addInfo("{}", ssc.addedHelp());
 			}
 		}
 		else{
-			info.add("");
-			info.add("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{this.skbShell.getPromptName(), toHelp});
+			info.addInfo("");
+			info.addInfo("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{this.skbShell.getPromptName(), toHelp});
 		}
 	}
 
@@ -116,7 +116,7 @@ public class Ci_HelpStg extends Ci_Help {
 	 * Processes general help with no specific command requested.
 	 * @param info the info object to add help to
 	 */
-	protected void generalHelp(CC_Info info){
+	protected void generalHelp(IsInfoSetFT info){
 		//collect all commands belonging to a particular category
 		String defKey = "__standard";
 		Map<String, TreeMap<String, SkbShellCommand>> cat2Cmd = new TreeMap<>();
@@ -134,9 +134,9 @@ public class Ci_HelpStg extends Ci_Help {
 		}
 
 		//no argument, means general help
-		info.add("");
-		info.add("{} {}", this.skbShell.getDisplayName(), this.skbShell.getDescription());
-		info.add("");
+		info.addInfo("");
+		info.addInfo("{} {}", this.skbShell.getDisplayName(), this.skbShell.getDescription());
+		info.addInfo("");
 
 		//do the commands per category, starting with "__standard"
 		for(String cat : cat2Cmd.keySet()){
@@ -144,9 +144,9 @@ public class Ci_HelpStg extends Ci_Help {
 			if(defKey.equals(cat)){
 				catDescr = "standard commands";
 			}
-			info.add("- {}: {}", new Object[]{catDescr, cat2Cmd.get(cat).keySet()});
+			info.addInfo("- {}: {}", new Object[]{catDescr, cat2Cmd.get(cat).keySet()});
 		}
-		info.add("  try: 'help <command>' for more details");
+		info.addInfo("  try: 'help <command>' for more details");
 	}
 
 }

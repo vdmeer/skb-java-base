@@ -20,19 +20,19 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.StringUtils;
 
-import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.info.CommonsDirectoryWalker;
 import de.vandermeer.skb.base.info.DirectoryLoader;
 import de.vandermeer.skb.base.info.FileSource;
 import de.vandermeer.skb.base.info.FileSourceList;
 import de.vandermeer.skb.base.info.StringFileLoader;
 import de.vandermeer.skb.base.managers.MessageMgr;
+import de.vandermeer.skb.interfaces.MessageConsole;
 
 /**
  * An interpreter for the 'run' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_ScRun extends AbstractCommandInterpreter {
@@ -165,12 +165,12 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 					"*.ssc"
 		});
 		DirectoryLoader dl = new CommonsDirectoryWalker(directory, DirectoryFileFilter.INSTANCE, fileFilter);
-		if(dl.getLoadErrors().size()>0){
+		if(dl.getLoadErrors().hasErrors()){
 			mm.report(dl.getLoadErrors());
 			return 1;
 		}
 		FileSourceList fsl = dl.load();
-		if(dl.getLoadErrors().size()>0){
+		if(dl.getLoadErrors().hasErrors()){
 			mm.report(dl.getLoadErrors());
 			return 1;
 		}
@@ -198,7 +198,7 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 		mm.report(MessageMgr.createInfoMessage("running file {}", fileName));
 
 		for(String s : StringUtils.split(content, '\n')){
-			if(this.printProgress==true && Skb_Console.USE_CONSOLE==true){
+			if(this.printProgress==true && MessageConsole.PRINT_MESSAGES){
 				System.out.print(".");
 			}
 			this.skbShell.parseLine(s);
@@ -232,13 +232,13 @@ public class Ci_ScRun extends AbstractCommandInterpreter {
 	 */
 	protected String getContent(String fileName, MessageMgr mm){
 		StringFileLoader sfl = new StringFileLoader(fileName);
-		if(sfl.getLoadErrors().size()>0){
+		if(sfl.getLoadErrors().hasErrors()){
 			mm.report(sfl.getLoadErrors());
 			return null;
 		}
 
 		String content = sfl.load();
-		if(sfl.getLoadErrors().size()>0){
+		if(sfl.getLoadErrors().hasErrors()){
 			mm.report(sfl.getLoadErrors());
 			return null;
 		}

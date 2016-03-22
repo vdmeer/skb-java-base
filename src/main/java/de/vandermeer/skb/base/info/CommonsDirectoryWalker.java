@@ -24,13 +24,13 @@ import java.util.List;
 import org.apache.commons.io.DirectoryWalker;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
 
 /**
  * Walks a directory and loads files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public class CommonsDirectoryWalker extends DirectoryWalker<FileSource> implements DirectoryLoader {
@@ -39,7 +39,7 @@ public class CommonsDirectoryWalker extends DirectoryWalker<FileSource> implemen
 	final DirectorySource source;
 
 	/** Local list of errors collected during process, cleared for every new validation call. */
-	final CC_Error errors = new CC_Error();
+	final IsErrorSetFT errors = IsErrorSetFT.create();
 
 	/**
 	 * Returns a new loader that uses a directory walker with directory and file filters.
@@ -65,15 +65,15 @@ public class CommonsDirectoryWalker extends DirectoryWalker<FileSource> implemen
 
 	@Override
 	public FileSourceList load(){
-		if(this.errors.size()==0){
-			this.errors.clear();
+		if(!this.errors.hasErrors()){
+			this.errors.clearErrorMessages();;
 			List<FileSource> ret = new ArrayList<>();
 			try {
 				File f = this.source.asFile();
 				walk(f, ret);
 			}
 			catch (IOException e) {
-				this.errors.add("IOException while walking dir <{}> - {}",
+				this.errors.addError("IOException while walking dir <{}> - {}",
 						new Object[]{this.source.getSource(), e.getMessage()});
 			}
 			return new FileSourceList(ret);
@@ -87,7 +87,7 @@ public class CommonsDirectoryWalker extends DirectoryWalker<FileSource> implemen
 	}
 
 	@Override
-	public CC_Error getLoadErrors(){
+	public IsErrorSetFT getLoadErrors(){
 		return this.errors;
 	}
 

@@ -1,5 +1,23 @@
-v0.1.10 - maintenance - 2016-##-##
-----------------------------------
+v0.2.0 - major rewrite and refactoring (using code will break) - 2016-##-##
+----------------------------------------------------------------------------
+* moved SKB_Transformer to skb-interfaces (now Transformer)
+* moved the ToStringStyle class to skb-interfaces
+* removed SKB_Renderable (now in `skb-interfaces` DoesRender with the transformer)
+* moved SKB_Pair to skb-interfaces SimplePair
+* moved HasPrompt to skb-interfaces
+* removed utils package
+  ** TextUtils, now in skb-interfaces, mainly in hasText
+  ** AntlrUtils, now in sbk-interfaces as IsAntlrRuntimeObject
+  ** SKB_ClassUtils, better to use Apache Common Lang3
+  ** Skb_ObjectUtils, now in skb-interfaces as a single transformer
+  ** SKB_ThreadUtils now in skb-interfaces as Sleep
+  ** SKB_NetUtils now in skb-interfaces as Network
+* removed encodings package, all character translations are now in char-translation
+* removed collection interfaces and enums, now in skb-interfaces
+* removed Otions (main and test), need to rewrite it anyway
+* removed package composite, now as package coin in skb-interfaces (and refactored code)
+* removed SKB_Console, now in skb-interfaces with new behavior (i.e. not using loggers anymore)
+
 
 v0.1.9 - maintenance - 2016-03-01
 ---------------------------------

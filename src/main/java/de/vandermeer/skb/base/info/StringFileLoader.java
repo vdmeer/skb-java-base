@@ -23,7 +23,7 @@ import java.util.Scanner;
  * An file loader for reading a file into a string.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class StringFileLoader extends AbstractLoader implements FileLoader {
@@ -38,7 +38,7 @@ public class StringFileLoader extends AbstractLoader implements FileLoader {
 	public StringFileLoader(FileSource source){
 		this.source = source;
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError().render()});
+			this.errors.addError("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError().render()});
 		}
 	}
 
@@ -49,14 +49,14 @@ public class StringFileLoader extends AbstractLoader implements FileLoader {
 	public StringFileLoader(String fileName){
 		this.source = new FileSource(fileName);
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError().render()});
+			this.errors.addError("{}: problems creating file source - {}", new Object[]{"string file loader", this.source.getInitError().render()});
 		}
 	}
 
 	@Override
 	public String load() {
 		String ret = null;
-		this.errors.clear();
+		this.errors.clearErrorMessages();;
 		if(this.validateSource()==false){
 			//no valid source
 			return ret;
@@ -69,10 +69,10 @@ public class StringFileLoader extends AbstractLoader implements FileLoader {
 			s.close();
 		}
 		catch(FileNotFoundException ex){
-			this.errors.add("{}: unexpected file not found exception - {}", new Object[]{"string file loader", ex.getMessage()});
+			this.errors.addError("{}: unexpected file not found exception - {}", new Object[]{"string file loader", ex.getMessage()});
 			return ret;
 		} catch (IOException exio) {
-			this.errors.add("{}: unexpected IO not found exception - {}", new Object[]{"string file loader", exio.getMessage()});
+			this.errors.addError("{}: unexpected IO not found exception - {}", new Object[]{"string file loader", exio.getMessage()});
 			return ret;
 		}
 

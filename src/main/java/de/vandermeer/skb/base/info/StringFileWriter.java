@@ -23,7 +23,7 @@ import org.apache.commons.io.FileUtils;
  * An file information writer writing strings into a file.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.9
  */
 public class StringFileWriter extends AbstractWriter {
@@ -38,7 +38,7 @@ public class StringFileWriter extends AbstractWriter {
 	public StringFileWriter(FileTarget target){
 		this.target = target;
 		if(!target.isValid()){
-			this.errors.add("{}: problems creating file target - {}", new Object[]{"string file writer", this.target.getInitError().render()});
+			this.errors.addError("{}: problems creating file target - {}", new Object[]{"string file writer", this.target.getInitError().render()});
 		}
 	}
 
@@ -50,13 +50,13 @@ public class StringFileWriter extends AbstractWriter {
 	public StringFileWriter(String fileName){
 		this.target = new FileTarget(fileName);
 		if(!target.isValid()){
-			this.errors.add("{}: problems creating file target - {}", new Object[]{"string file writer", this.target.getInitError().render()});
+			this.errors.addError("{}: problems creating file target - {}", new Object[]{"string file writer", this.target.getInitError().render()});
 		}
 	}
 
 	@Override
 	public boolean write(Object content) {
-		this.errors.clear();
+		this.errors.clearErrorMessages();;
 		if(this.validateTarget()==false){
 			//no valid target
 			return false;
@@ -73,7 +73,7 @@ public class StringFileWriter extends AbstractWriter {
 			FileUtils.writeStringToFile(this.target.asFile(), content.toString());
 		}
 		catch (IOException e) {
-			this.errors.add("{}: IO exception writing to file w/writeStringToFile()", "string file writer");
+			this.errors.addError("{}: IO exception writing to file w/writeStringToFile()", "string file writer");
 			return false;
 		}
 

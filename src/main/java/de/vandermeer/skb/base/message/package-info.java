@@ -45,7 +45,7 @@
  * 		<li>{@link de.vandermeer.skb.base.message.Message5WH_Builder} - a builder object that is used to create a message object.</li>
  * 		<li>{@link de.vandermeer.skb.base.managers.MessageRenderer} - a renderer object that is used to render a message before printing or storing.</li>
  * 		<li>{@link de.vandermeer.skb.base.message.E_MessageType} - an enumerate for the supported message types, e.g. info, warning, error.</li>
- * 		<li>{@link de.vandermeer.skb.base.message.FormattingTupleWrapper} - a wrapper to create SLF4J formatting tuples and convert them into strings when needed.
+ * 		<li>{@link de.vandermeer.skb.interfaces.FormattingTupleWrapper} - a wrapper to create SLF4J formatting tuples and convert them into strings when needed.
  * 			The wrapper creates a new formatting tuple and uses its getMessage() method in toString().
  * 		</li>
  * </ul>
@@ -102,6 +102,6 @@
  * 
  * 
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  */
 package de.vandermeer.skb.base.message;

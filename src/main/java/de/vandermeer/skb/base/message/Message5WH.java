@@ -18,17 +18,17 @@ package de.vandermeer.skb.base.message;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import de.vandermeer.asciitable.commons.ObjectToStringStyle;
-import de.vandermeer.skb.base.utils.Skb_Renderable;
+import de.vandermeer.skb.interfaces.categories.does.DoesRender;
+import de.vandermeer.skb.interfaces.categories.has.HasToStringStyle;
 
 /**
  * Standard SKB message.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.1
  */
-public class Message5WH implements Skb_Renderable {
+public class Message5WH implements DoesRender, HasToStringStyle {
 
 	/** Who is this message about? */
 	private Object who;
@@ -241,7 +241,7 @@ public class Message5WH implements Skb_Renderable {
 	 */
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ObjectToStringStyle.getStyle())
+		return new ToStringBuilder(this, this.getStyle())
 			.append("who       ", this.who, false)
 			.append("who       ", this.who)
 			.append("what      ", this.what)

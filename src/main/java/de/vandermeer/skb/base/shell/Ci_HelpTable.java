@@ -27,15 +27,15 @@ import de.vandermeer.asciitable.v2.render.V2_AsciiTableRenderer;
 import de.vandermeer.asciitable.v2.render.V2_Width;
 import de.vandermeer.asciitable.v2.render.WidthFixedColumns;
 import de.vandermeer.asciitable.v2.themes.V2_E_TableThemes;
-import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.managers.MessageMgr;
-import de.vandermeer.skb.base.message.FormattingTupleWrapper;
+import de.vandermeer.skb.interfaces.FormattingTupleWrapper;
+import de.vandermeer.skb.interfaces.MessageConsole;
 
 /**
  * An interpreter for the 'help' shell command using an ASCII table for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_HelpTable extends Ci_Help {
@@ -98,13 +98,13 @@ public class Ci_HelpTable extends Ci_Help {
 		}
 		at.addRule();
 
-		Skb_Console.conInfo("");
+		MessageConsole.conInfo("");
 		V2_AsciiTableRenderer rend = new V2_AsciiTableRenderer()
 			.setTheme(this.theme.get())
 			.setWidth(this.width)
 		;
 		RenderedTable rat = rend.render(at);
-		Skb_Console.conInfo(rat.toString());
+		MessageConsole.conInfo(rat.toString());
 		return 0;
 	}
 
@@ -121,10 +121,10 @@ public class Ci_HelpTable extends Ci_Help {
 			if(ssc.getArguments()!=null){
 				for(SkbShellArgument ssa : ssc.getArguments()){
 					if(ssa.isOptional()){
-						args.put("[" + ssa.key() + "]", ssa);
+						args.put("[" + ssa.getKey() + "]", ssa);
 					}
 					else{
-						args.put("<" + ssa.key() + ">", ssa);
+						args.put("<" + ssa.getKey() + ">", ssa);
 					}
 				}
 			}
@@ -134,16 +134,16 @@ public class Ci_HelpTable extends Ci_Help {
 
 			for(SkbShellArgument ssa : args.values()){
 				if(ssa.valueSet()!=null && ssa.addedHelp()!=null){
-					at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet())));
+					at.addRow("", FormattingTupleWrapper.create(" -- <{}> of type {} - {} - {} - value set {}", ssa.getKey(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp(), ArrayUtils.toString(ssa.valueSet())));
 				}
 				else if(ssa.valueSet()!=null && ssa.addedHelp()==null){
-					at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - value set {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet())));
+					at.addRow("", FormattingTupleWrapper.create(" -- <{}> of type {} - {} - value set {}", ssa.getKey(), ssa.getType().name(), ssa.getDescription(), ArrayUtils.toString(ssa.valueSet())));
 				}
 				else if(ssa.valueSet()==null && ssa.addedHelp()!=null){
-					at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp()));
+					at.addRow("", FormattingTupleWrapper.create(" -- <{}> of type {} - {} - {}", ssa.getKey(), ssa.getType().name(), ssa.getDescription(), ssa.addedHelp()));
 				}
 				else{
-					at.addRow("", new FormattingTupleWrapper(" -- <{}> of type {} - {}", ssa.key(), ssa.getType().name(), ssa.getDescription()));
+					at.addRow("", FormattingTupleWrapper.create(" -- <{}> of type {} - {}", ssa.getKey(), ssa.getType().name(), ssa.getDescription()));
 				}
 			}
 			if(ssc.addedHelp()!=null){
@@ -151,8 +151,8 @@ public class Ci_HelpTable extends Ci_Help {
 			}
 		}
 		else{
-			Skb_Console.conInfo("");
-			Skb_Console.conInfo("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{this.skbShell.getPromptName(), toHelp});
+			MessageConsole.conInfo("");
+			MessageConsole.conInfo("{}: no command {} found for help, try 'help' to see all available commands", new Object[]{this.skbShell.getPromptName(), toHelp});
 		}
 	}
 

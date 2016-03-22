@@ -15,13 +15,13 @@
 
 package de.vandermeer.skb.base.info;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
 
 /**
  * An information source loader.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public interface InfoLoader {
@@ -43,7 +43,7 @@ public interface InfoLoader {
 	 * Returns collected errors from the last invocation of load or other methods.
 	 * @return collected errors, should not be null but can be empty (meaning no errors).
 	 */
-	CC_Error getLoadErrors();
+	IsErrorSetFT getLoadErrors();
 
 	/**
 	 * Validates the loaders source.
@@ -51,11 +51,12 @@ public interface InfoLoader {
 	 */
 	default boolean validateSource(){
 		if(this.getSource()==null){
-			this.getLoadErrors().add("{} - source is null", "loader");
+			this.getLoadErrors().addError("{} - source is null", "loader");
 			return false;
 		}
 		if(!this.getSource().isValid()){
-			this.getLoadErrors().add("{} - invalid source <{}> - {}", new Object[]{"loader", this.getSource().getSource(), this.getSource().getInitError().render()});
+			Object src = (this.getSource().getSource()==null)?"null":this.getSource().getSource();
+			this.getLoadErrors().addError("{} - invalid source <{}> - {}", new Object[]{"loader", src, this.getSource().getInitError().render()});
 			return false;
 		}
 		return true;

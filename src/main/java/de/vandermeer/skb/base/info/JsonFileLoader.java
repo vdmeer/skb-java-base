@@ -19,7 +19,7 @@ package de.vandermeer.skb.base.info;
  * An file loader for JSON files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public class JsonFileLoader extends AbstractLoader implements FileLoader {
@@ -34,7 +34,7 @@ public class JsonFileLoader extends AbstractLoader implements FileLoader {
 	public JsonFileLoader(FileSource source){
 		this.source = source;
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError().render()});
+			this.errors.addError("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError().render()});
 		}
 	}
 
@@ -45,7 +45,7 @@ public class JsonFileLoader extends AbstractLoader implements FileLoader {
 	public JsonFileLoader(String fileName){
 		this.source = new FileSource(fileName);
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError().render()});
+			this.errors.addError("{}: problems creating file source - {}", new Object[]{"json file loader", this.source.getInitError().render()});
 		}
 	}
 

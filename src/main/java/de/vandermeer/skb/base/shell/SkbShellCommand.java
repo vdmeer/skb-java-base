@@ -15,13 +15,13 @@
 
 package de.vandermeer.skb.base.shell;
 
-import de.vandermeer.skb.base.categories.HasDescription;
+import de.vandermeer.skb.interfaces.categories.has.HasDescription;
 
 /**
  * A command for the {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.8
  */
 public interface SkbShellCommand extends HasDescription {

@@ -19,19 +19,10 @@ package de.vandermeer.skb.base;
  * Some default definitions for the SKB.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.1
  */
 public abstract class Skb_Defaults {
-
-	/** A default value. */
-	public static final String DEFAULT_VALUE = "##default value##";
-
-	/** A default description. */
-	public static final String DEFAULT_DESCRIPTION = "##default description##";
-
-	/** Class needed for some category classes. */
-	public class DefaultImpl {}
 
 	/**
 	 * An array of SKB jars, used to optimize for speed when searching in all known jars in ExecS.

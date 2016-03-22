@@ -27,7 +27,7 @@ import org.apache.commons.lang3.StringUtils;
  * A line parser for the {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.8
  */
 public class LineParser {
@@ -137,7 +137,7 @@ public class LineParser {
 		if(arguments!=null){
 			for(Entry<String, String> entry : this.getArgMap().entrySet()){
 				for(SkbShellArgument ssa : arguments){
-					if(ssa.key().equals(entry.getKey())){
+					if(ssa.getKey().equals(entry.getKey())){
 						switch(ssa.getType()){
 							case Boolean:
 								ret.put(ssa, Boolean.valueOf(entry.getValue()));

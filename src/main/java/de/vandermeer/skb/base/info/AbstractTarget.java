@@ -15,22 +15,22 @@
 
 package de.vandermeer.skb.base.info;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
 
 /**
  * Abstract target implementation.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public abstract class AbstractTarget implements InfoTarget {
 
 	/** List of errors that occurred during initialization, empty if object is valid. */
-	final CC_Error errors = new CC_Error();
+	final IsErrorSetFT errors = IsErrorSetFT.create();
 
 	@Override
-	public CC_Error getInitError(){
+	public IsErrorSetFT getInitError(){
 		return this.errors;
 	}
 

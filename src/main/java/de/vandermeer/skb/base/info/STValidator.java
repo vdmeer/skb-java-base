@@ -24,7 +24,7 @@ import org.stringtemplate.v4.ST;
  * An validator for an ST file.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public class STValidator extends AbstractValidator {
@@ -42,13 +42,13 @@ public class STValidator extends AbstractValidator {
 	 */
 	public STValidator(ST st, Set<String> expectedArguments){
 		if(st==null){
-			this.errors.add("ST is null");
+			this.errors.addError("ST is null");
 		}
 		if(expectedArguments==null){
-			this.errors.add("expectedArguments is null");
+			this.errors.addError("expectedArguments is null");
 		}
 
-		if(this.getValidationErrors().size()==0){
+		if(!this.getValidationErrors().hasErrors()){
 			this.validate(st, expectedArguments);
 			if(this.isValid()){
 				this.info = st;
@@ -66,13 +66,13 @@ public class STValidator extends AbstractValidator {
 		Map<?,?> formalArgs = st.impl.formalArguments;
 		if(formalArgs==null){
 			for(String s : expectedArguments){
-				this.errors.add("ST <{}> does not define argument <{}>", st.getName(), s);
+				this.errors.addError("ST <{}> does not define argument <{}>", st.getName(), s);
 			}
 		}
 		else{
 			for(String s : expectedArguments){
 				if(!formalArgs.containsKey(s)){
-					this.errors.add("ST <{}> does not define argument <{}>", st.getName(), s);
+					this.errors.addError("ST <{}> does not define argument <{}>", st.getName(), s);
 				}
 			}
 		}

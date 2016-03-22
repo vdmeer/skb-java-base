@@ -24,7 +24,7 @@ import de.vandermeer.skb.base.managers.MessageMgr;
  * An interpreter for the 'wait' shell command.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_Wait extends AbstractCommandInterpreter {

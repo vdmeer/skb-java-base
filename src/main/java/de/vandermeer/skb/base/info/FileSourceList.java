@@ -23,7 +23,7 @@ import java.util.List;
  * A source object for an array of File objects.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public class FileSourceList extends AbstractSource {
@@ -38,7 +38,7 @@ public class FileSourceList extends AbstractSource {
 	public FileSourceList(List<FileSource> fileSources){
 		if(fileSources==null){
 			this.source = null;
-			this.errors.add("constructor(List<FileSource>) - fileSources cannot be null");
+			this.errors.addError("constructor(List<FileSource>) - fileSources cannot be null");
 		}
 		else{
 			this.source = fileSources;

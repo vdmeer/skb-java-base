@@ -18,13 +18,13 @@ package de.vandermeer.skb.base.info;
 import java.io.File;
 import java.io.IOException;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
 
 /**
  * File target for an information target.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public class FileTarget extends AbstractFileInfo implements InfoTarget {
@@ -108,7 +108,7 @@ public class FileTarget extends AbstractFileInfo implements InfoTarget {
 	}
 
 	@Override
-	public CC_Error getInitError() {
+	public IsErrorSetFT getInitError() {
 		return this.errors;
 	}
 

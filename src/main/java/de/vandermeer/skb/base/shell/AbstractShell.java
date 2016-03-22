@@ -27,17 +27,17 @@ import java.util.TreeSet;
 import org.apache.commons.lang3.StringUtils;
 
 import de.vandermeer.skb.base.console.NonBlockingReader;
-import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.managers.MessageMgr;
 import de.vandermeer.skb.base.managers.MessageMgrBuilder;
 import de.vandermeer.skb.base.managers.MessageRenderer;
 import de.vandermeer.skb.base.message.E_MessageType;
+import de.vandermeer.skb.interfaces.MessageConsole;
 
 /**
  * An abstract shell implementation with all basic features, use the {@link SkbShellFactory} or a sub-class to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractShell implements SkbShell {
@@ -127,7 +127,7 @@ public class AbstractShell implements SkbShell {
 	 */
 	protected AbstractShell(String id, MessageRenderer renderer, boolean useConsole){
 		//activate console output
-		Skb_Console.USE_CONSOLE = useConsole;
+		MessageConsole.PRINT_MESSAGES = useConsole;
 		this.commandMap = new HashMap<>();
 
 		this.id = (id!=null)?id:"skbsh";
@@ -207,7 +207,7 @@ public class AbstractShell implements SkbShell {
 		BufferedReader sysin = reader;
 
 		if(sysin==null){
-			Skb_Console.conError("{}: could not load standard input device (stdin)", this.getPromptName());
+			MessageConsole.conError("{}: could not load standard input device (stdin)", this.getPromptName());
 			return -1;
 		}
 
@@ -218,7 +218,7 @@ public class AbstractShell implements SkbShell {
 			this.exitStatus = -99;
 			try{
 				if(in!=null || "".equals(in) || "\n".equals(in)){
-					if(Skb_Console.USE_CONSOLE==true){
+					if(MessageConsole.PRINT_MESSAGES){
 						System.out.print(this.prompt());
 					}
 				}

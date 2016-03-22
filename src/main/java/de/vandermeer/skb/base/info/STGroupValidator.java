@@ -28,7 +28,7 @@ import org.stringtemplate.v4.STGroupString;
  * An validator for an STGroup file.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public class STGroupValidator extends AbstractValidator {
@@ -40,19 +40,19 @@ public class STGroupValidator extends AbstractValidator {
 	Map<String, Set<String>> original;
 
 	/**
-	 * Returns a new STGroup validator
+	 * Returns a new STGroup validator.
 	 * @param stg the STGroup to validate
 	 * @param expectedChunks the expected chunks (methods and their arguments) to validate against
 	 */
 	public STGroupValidator(STGroup stg, Map<String, Set<String>> expectedChunks){
 		if(stg==null){
-			this.errors.add("stg is null");
+			this.errors.addError("stg is null");
 		}
 		if(expectedChunks==null){
-			this.errors.add("expectedChunks is null");
+			this.errors.addError("expectedChunks is null");
 		}
 
-		if(this.getValidationErrors().size()==0){
+		if(!this.getValidationErrors().hasErrors()){
 			this.validate(stg, expectedChunks);
 			if(this.isValid()){
 				this.info = stg;
@@ -72,10 +72,10 @@ public class STGroupValidator extends AbstractValidator {
 			if(s!=null && !"".equals(s)){
 				if(stg.isDefined(s)){
 					STValidator stv = new STValidator(stg.getInstanceOf(s), expectedChunks.get(s));
-					this.errors.add(stv.getValidationErrors());
+					this.errors.addAllErrors(stv.getValidationErrors());
 				}
 				else{
-					this.errors.add("STGroup <{}> does not define mandatory template <{}>", GET_STG_NAME(stg), s);
+					this.errors.addError("STGroup <{}> does not define mandatory template <{}>", GET_STG_NAME(stg), s);
 				}
 			}
 		}

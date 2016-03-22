@@ -25,11 +25,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import de.vandermeer.skb.interfaces.MessageConsole;
+import de.vandermeer.skb.interfaces.categories.has.HasPrompt;
+
 /**
  * A non-blocking buffered reader.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.5
  */
 public abstract class NonBlockingReader {
@@ -84,12 +87,12 @@ public abstract class NonBlockingReader {
 	 * @return new reader with parameterized readline() method
 	 */
 	public static BufferedReader getNbReader(String logID, int tries, int timeout, HasPrompt emptyPrint){
-		return NonBlockingReader.getNbReader(Skb_Console.getStdIn(logID), tries, timeout, emptyPrint);
+		return NonBlockingReader.getNbReader(MessageConsole.getStdIn(logID), tries, timeout, emptyPrint);
 	}
 
 	/**
 	 * Returns a new BufferedReader that uses tries and timeout for readline().
-	 * @param reader original reader to extend, use in combination with {@link Skb_Console#getStdIn(String)} for standard in
+	 * @param reader original reader to extend, use in combination with {@link MessageConsole#getStdIn(String)} for standard in
 	 * @param tries number of tries for read calls, use one as default
 	 * @param timeout milliseconds for read timeout
 	 * @param emptyPrint a printout to realize on an empty readline string, for prompts, set null if not required

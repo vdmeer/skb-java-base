@@ -15,13 +15,13 @@
 
 package de.vandermeer.skb.base.info;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
 
 /**
  * A source of information.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public interface InfoSource {
@@ -45,7 +45,7 @@ public interface InfoSource {
 	 * Returns any error that happened during initialization (and relate validation) of the source.
 	 * @return a null string if the source is initialized successfully (and thus valid), a string with an error message otherwise
 	 */
-	CC_Error getInitError();
+	IsErrorSetFT getInitError();
 
 	/**
 	 * Returns the valid flag of the source.
@@ -54,7 +54,7 @@ public interface InfoSource {
 	 * 		If the source is valid, then {@link #getSource()} must return a non-null source object, otherwise it must return null.
 	 */
 	default boolean isValid(){
-		return this.getInitError().size()==0;
+		return !this.getInitError().hasErrors();
 	}
 
 //	/**

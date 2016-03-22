@@ -22,13 +22,13 @@ import java.net.URL;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
 
 /**
  * An abstract directory info implementation that can be configured for use as source or target.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.8
  */
 public abstract class AbstractDirectoryInfo {
@@ -46,7 +46,7 @@ public abstract class AbstractDirectoryInfo {
 	private String setRootPath;
 
 	/** Local list of errors collected during process, cleared for every new validation call. */
-	protected final CC_Error errors = new CC_Error();
+	protected final IsErrorSetFT errors = IsErrorSetFT.create();
 
 	/**
 	 * Options for an asString method
@@ -81,13 +81,13 @@ public abstract class AbstractDirectoryInfo {
 	 */
 	public AbstractDirectoryInfo(String directory, InfoLocationOptions option){
 		if(directory==null){
-			this.errors.add("constructor(directory) - directory cannot be null");
+			this.errors.addError("constructor(directory) - directory cannot be null");
 		}
 		else if(StringUtils.isBlank(directory)){
-			this.errors.add("constructor(directory) - directory cannot be blank");
+			this.errors.addError("constructor(directory) - directory cannot be blank");
 		}
 		else if(option==null){
-			this.errors.add("constructor(directory) - option cannot be blank");
+			this.errors.addError("constructor(directory) - option cannot be blank");
 		}
 		else{
 			this.init(directory, option);
@@ -111,7 +111,7 @@ public abstract class AbstractDirectoryInfo {
 	 */
 	protected void init(String directory, InfoLocationOptions option){
 		if(this.valOption()==null){
-			this.errors.add("constructor(init) - no validation option set");
+			this.errors.addError("constructor(init) - no validation option set");
 			return;
 		}
 
@@ -121,40 +121,40 @@ public abstract class AbstractDirectoryInfo {
 					case FILESYSTEM_ONLY:
 						if(this.tryFS(directory)==false){
 							if(this.tryCP(directory)==false){
-								this.errors.add("constructor(init) - could not find directory <" + directory + ">, tried file system");
+								this.errors.addError("constructor(init) - could not find directory <" + directory + ">, tried file system");
 							}
 						}
 						break;
 					case CLASSPATH_ONLY:
 						if(this.tryCP(directory)==false){
 							if(this.tryCP(directory)==false){
-								this.errors.add("constructor(init) - could not find directory <" + directory + ">>, tried using class path");
+								this.errors.addError("constructor(init) - could not find directory <" + directory + ">>, tried using class path");
 							}
 						}
 						break;
 					case TRY_FS_THEN_CLASSPATH:
 						if(this.tryFS(directory)==false){
-							this.errors.clear();
+							this.errors.clearErrorMessages();;
 							if(this.tryCP(directory)==false){
-								this.errors.add("constructor(init) - could not find directory <" + directory + ">, tried file system then using class path");
+								this.errors.addError("constructor(init) - could not find directory <" + directory + ">, tried file system then using class path");
 							}
 						}
 						break;
 					case TRY_CLASSPATH_THEN_FS:
 						if(this.tryCP(directory)==false){
-							this.errors.clear();
+							this.errors.clearErrorMessages();;
 							if(this.tryFS(directory)==false){
-								this.errors.add("constructor(init) - could not find directory <" + directory + ">, tried using class path then file system");
+								this.errors.addError("constructor(init) - could not find directory <" + directory + ">, tried using class path then file system");
 							}
 						}
 						break;
 					default:
-						this.errors.add("constructor(init) - unknown location option <" + option + "> for directories");
+						this.errors.addError("constructor(init) - unknown location option <" + option + "> for directories");
 				}
 			}
 		}
 		catch(Exception ex){
-			this.errors.add("init() - catched unpredicted exception: " + ex.getMessage());
+			this.errors.addError("init() - catched unpredicted exception: " + ex.getMessage());
 		}
 	}
 
@@ -176,7 +176,7 @@ public abstract class AbstractDirectoryInfo {
 				return true;
 			}
 			catch (MalformedURLException e) {
-				this.errors.add("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
+				this.errors.addError("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
 			}
 		}
 		return false;
@@ -204,7 +204,7 @@ public abstract class AbstractDirectoryInfo {
 						return true;
 					}
 					catch (MalformedURLException e) {
-						this.errors.add("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
+						this.errors.addError("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
 					}
 				}
 			}
@@ -219,8 +219,8 @@ public abstract class AbstractDirectoryInfo {
 	 */
 	protected final boolean testDirectory(File directory){
 		DirectoryValidator dv = new DirectoryValidator(directory, this.valOption());
-		this.errors.add(dv.getValidationErrors());
-		return (dv.getValidationErrors().size()==0)?true:false;
+		this.errors.addAllErrors(dv.getValidationErrors());
+		return !dv.getValidationErrors().hasErrors();
 	}
 
 	/**
@@ -263,7 +263,7 @@ public abstract class AbstractDirectoryInfo {
 	 * @return true if the validation was successful (error list is of size 0), false otherwise (error list is of size greater than 0)
 	 */
 	public boolean isValid(){
-		return (this.errors.size()==0)?true:false;
+		return !this.errors.hasErrors();
 	}
 
 	/**

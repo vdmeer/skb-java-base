@@ -34,7 +34,7 @@ import de.vandermeer.skb.base.info.STValidator;
  * Tests for {@link STValidator}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_STValidator {
@@ -86,15 +86,15 @@ public class Test_STValidator {
 
 		stv = new STValidator(null, new HashSet<String>());
 		assertFalse(stv.isValid());
-		assertEquals(1, stv.getValidationErrors().size());
+		assertEquals(1, stv.getValidationErrors().getErrorMessages().size());
 
 		stv = new STValidator(new ST(""), null);
 		assertFalse(stv.isValid());
-		assertEquals(1, stv.getValidationErrors().size());
+		assertEquals(1, stv.getValidationErrors().getErrorMessages().size());
 
 		stv = new STValidator(null, null);
 		assertFalse(stv.isValid());
-		assertEquals(2, stv.getValidationErrors().size());
+		assertEquals(2, stv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class Test_STValidator {
 
 		stv = new STValidator(new ST(""), new HashSet<String>());
 		assertTrue(stv.isValid());
-		assertEquals(0, stv.getValidationErrors().size());
+		assertEquals(0, stv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -118,14 +118,14 @@ public class Test_STValidator {
 		st = stg.getInstanceOf("noArg");
 		assertNotNull(st);
 		stv = new STValidator(st, chunks);
-		assertEquals(0, stv.getValidationErrors().size());
+		assertEquals(0, stv.getValidationErrors().getErrorMessages().size());
 
 		chunks.add("one");
 		stv = new STValidator(st, chunks);
-		assertEquals(1, stv.getValidationErrors().size());
+		assertEquals(1, stv.getValidationErrors().getErrorMessages().size());
 		chunks.add("two");
 		stv = new STValidator(st, chunks);
-		assertEquals(2, stv.getValidationErrors().size());
+		assertEquals(2, stv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -140,15 +140,15 @@ public class Test_STValidator {
 		st = stg.getInstanceOf("oneArg");
 		assertNotNull(st);
 		stv = new STValidator(st, chunks);
-		assertEquals(0, stv.getValidationErrors().size());
+		assertEquals(0, stv.getValidationErrors().getErrorMessages().size());
 
 		chunks.add("one");
 		stv = new STValidator(st, chunks);
-		assertEquals(0, stv.getValidationErrors().size());
+		assertEquals(0, stv.getValidationErrors().getErrorMessages().size());
 
 		chunks.add("two");
 		stv = new STValidator(st, chunks);
-		assertEquals(1, stv.getValidationErrors().size());
+		assertEquals(1, stv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -163,27 +163,27 @@ public class Test_STValidator {
 		st = stg.getInstanceOf("twoArgs");
 		assertNotNull(st);
 		stv = new STValidator(st, chunks);
-		assertEquals(0, stv.getValidationErrors().size());
+		assertEquals(0, stv.getValidationErrors().getErrorMessages().size());
 
 		chunks.add("one");
 		stv = new STValidator(st, chunks);
-		assertEquals(0, stv.getValidationErrors().size());
+		assertEquals(0, stv.getValidationErrors().getErrorMessages().size());
 
 		chunks.add("two");
 		stv = new STValidator(st, chunks);
-		assertEquals(0, stv.getValidationErrors().size());
+		assertEquals(0, stv.getValidationErrors().getErrorMessages().size());
 
 		chunks.add("three");
 		stv = new STValidator(st, chunks);
-		assertEquals(1, stv.getValidationErrors().size());
+		assertEquals(1, stv.getValidationErrors().getErrorMessages().size());
 
 		chunks.add("four");
 		stv = new STValidator(st, chunks);
-		assertEquals(2, stv.getValidationErrors().size());
+		assertEquals(2, stv.getValidationErrors().getErrorMessages().size());
 
 		chunks.add("five");
 		stv = new STValidator(st, chunks);
-		assertEquals(3, stv.getValidationErrors().size());
+		assertEquals(3, stv.getValidationErrors().getErrorMessages().size());
 	}
 
 }

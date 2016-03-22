@@ -21,21 +21,20 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
-import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.message.E_MessageType;
+import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
 
 /**
  * Builds a {@link MessageMgr} object with all settings.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160306 (06-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
  * @since      v0.0.13
  */
 public class MessageMgrBuilder {
 
 	/** Errors of the builder. */
-	protected final CC_Error buildErrors;
+	protected final IsErrorSetFT buildErrors;
 
 	/** Maps of message handlers for message types. */
 	protected final Map<E_MessageType, MessageTypeHandler> messageHandlers;
@@ -61,19 +60,19 @@ public class MessageMgrBuilder {
 
 		this.appID = appID;
 		this.messageHandlers = new HashMap<>();
-		this.buildErrors = new CC_Error();
+		this.buildErrors = IsErrorSetFT.create();
 	}
 
 	/**
 	 * Returns errors the builder collected.
 	 * @return builder's errors
 	 */
-	public CC_Error getBuildErrors(){
+	public IsErrorSetFT getBuildErrors(){
 		return this.buildErrors;
 	}
 
 	/**
-	 * Activate a message type and sets a type handler with max count set to 100 using {@link Skb_Console}.
+	 * Activate a message type and sets a type handler with max count set to 100.
 	 * An existing handler will be overwritten.
 	 * @param type message type to be activated, nothing will be set if null
 	 * @return self to allow for chaining
@@ -83,13 +82,13 @@ public class MessageMgrBuilder {
 			this.messageHandlers.put(type, new MessageTypeHandler(type));
 		}
 		else{
-			this.buildErrors.add("{}: cannot add handler for empty type", this.getClass().getSimpleName());
+			this.buildErrors.addError("{}: cannot add handler for empty type", this.getClass().getSimpleName());
 		}
 		return this;
 	}
 
 	/**
-	 * Activate a message type and sets a type handler with max count using {@link Skb_Console}.
+	 * Activate a message type and sets a type handler with max count.
 	 * An existing handler will be overwritten.
 	 * @param type message type to be activated, nothing will be set if null
 	 * @param maxCount max count for the handler, -1 to ignore or greater than 0 to be used
@@ -100,7 +99,7 @@ public class MessageMgrBuilder {
 			this.messageHandlers.put(type, new MessageTypeHandler(type, maxCount));
 		}
 		else{
-			this.buildErrors.add("{}: cannot add handler for empty type", this.getClass().getSimpleName());
+			this.buildErrors.addError("{}: cannot add handler for empty type", this.getClass().getSimpleName());
 		}
 		return this;
 	}
@@ -109,15 +108,16 @@ public class MessageMgrBuilder {
 	 * Activate a message type and sets a type handler with max count set to 100 using specific logger.
 	 * An existing handler will be overwritten.
 	 * @param type message type to be activated, nothing will be set if null
-	 * @param logger the logger to be used for the handler, if null {@link Skb_Console} will be used
+	 * @param logger the logger to be used for the handler, if null the message will be added to the local list
 	 * @return self to allow for chaining
 	 */
 	public MessageMgrBuilder setHandler(E_MessageType type, Logger logger){
 		if(type!=null){
 			this.messageHandlers.put(type, new MessageTypeHandler(type, logger));
+			//TODO need to use MessageConsole
 		}
 		else{
-			this.buildErrors.add("{}: cannot add handler for empty type", this.getClass().getSimpleName());
+			this.buildErrors.addError("{}: cannot add handler for empty type", this.getClass().getSimpleName());
 		}
 		return this;
 	}
@@ -127,15 +127,16 @@ public class MessageMgrBuilder {
 	 * An existing handler will be overwritten.
 	 * @param type message type to be activated, nothing will be set if null
 	 * @param maxCount max count for the handler, -1 to ignore or greater than 0 to be used
-	 * @param logger the logger to be used for the handler, if null {@link Skb_Console} will be used
+	 * @param logger the logger to be used for the handler, if null the message will be added to the local list
 	 * @return self to allow for chaining
 	 */
 	public MessageMgrBuilder setHandler(E_MessageType type, int maxCount, Logger logger){
 		if(type!=null){
 			this.messageHandlers.put(type, new MessageTypeHandler(type, maxCount, logger));
+			//TODO need to use MessageConsole
 		}
 		else{
-			this.buildErrors.add("{}: cannot add handler for empty type", this.getClass().getSimpleName());
+			this.buildErrors.addError("{}: cannot add handler for empty type", this.getClass().getSimpleName());
 		}
 		return this;
 	}
@@ -155,7 +156,7 @@ public class MessageMgrBuilder {
 	 */
 	public MessageMgr build(){
 		if(this.messageHandlers.size()==0){
-			this.buildErrors.add("no message handlers set");
+			this.buildErrors.addError("no message handlers set");
 			return null;
 		}
 		return new MessageMgr(this.appID, this.messageHandlers, this.doCollectMessages);
