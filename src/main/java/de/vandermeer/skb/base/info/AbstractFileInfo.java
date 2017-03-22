@@ -24,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * An abstract file info implementation that can be configured for use as source or target.

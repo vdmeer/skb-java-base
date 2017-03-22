@@ -18,7 +18,7 @@ package de.vandermeer.skb.base.info;
 import java.io.File;
 import java.io.FileFilter;
 
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * A source object for a directory.

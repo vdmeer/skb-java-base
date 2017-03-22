@@ -18,8 +18,8 @@ package de.vandermeer.skb.base.message;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import de.vandermeer.skb.interfaces.categories.does.DoesRender;
 import de.vandermeer.skb.interfaces.categories.has.HasToStringStyle;
+import de.vandermeer.skb.interfaces.render.DoesRender;
 
 /**
  * Standard SKB message.

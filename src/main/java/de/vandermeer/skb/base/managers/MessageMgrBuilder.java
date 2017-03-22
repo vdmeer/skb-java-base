@@ -22,7 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import de.vandermeer.skb.base.message.E_MessageType;
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * Builds a {@link MessageMgr} object with all settings.

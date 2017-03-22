@@ -20,7 +20,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import de.vandermeer.skb.interfaces.categories.is.IsAntlrRuntimeObject;
+import de.vandermeer.skb.interfaces.antlr.IsAntlrRuntimeObject;
 
 /**
  * Builder for a {@link Message5WH} object.

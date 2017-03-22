@@ -15,7 +15,7 @@
 
 package de.vandermeer.skb.base.info;
 
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * Abstract implementation of a validator as base class for validators.

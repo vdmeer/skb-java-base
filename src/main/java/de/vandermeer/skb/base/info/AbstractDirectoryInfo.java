@@ -22,7 +22,7 @@ import java.net.URL;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * An abstract directory info implementation that can be configured for use as source or target.

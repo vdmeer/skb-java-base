@@ -31,15 +31,15 @@ import de.vandermeer.skb.base.message.E_MessageType;
 import de.vandermeer.skb.base.message.Message5WH;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
 import de.vandermeer.skb.interfaces.FormattingTupleWrapper;
-import de.vandermeer.skb.interfaces.categories.does.DoesRender;
 import de.vandermeer.skb.interfaces.categories.has.HasToStringStyle;
-import de.vandermeer.skb.interfaces.categories.has.messagesets.HasErrorSet;
-import de.vandermeer.skb.interfaces.categories.has.messagesets.HasInfoSet;
-import de.vandermeer.skb.interfaces.categories.has.messagesets.HasWarningSet;
-import de.vandermeer.skb.interfaces.categories.is.IsMessageSet;
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSet;
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsInfoSet;
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsWarningSet;
+import de.vandermeer.skb.interfaces.messagesets.HasErrorSet;
+import de.vandermeer.skb.interfaces.messagesets.HasInfoSet;
+import de.vandermeer.skb.interfaces.messagesets.HasWarningSet;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSet;
+import de.vandermeer.skb.interfaces.messagesets.IsInfoSet;
+import de.vandermeer.skb.interfaces.messagesets.IsMessageSet;
+import de.vandermeer.skb.interfaces.messagesets.IsWarningSet;
+import de.vandermeer.skb.interfaces.render.DoesRender;
 
 /**
  * Manages Info, Warning and Error messages supporting {@link Message5WH}, {@link IsInfoSet}, {@link IsWarningSet}, {@link IsErrorSet}, and {@link DoesRender} objects as well as arrays and collections of them.

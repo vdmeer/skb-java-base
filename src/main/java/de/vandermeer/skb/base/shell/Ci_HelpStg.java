@@ -23,7 +23,7 @@ import org.apache.commons.lang3.text.StrBuilder;
 
 import de.vandermeer.skb.base.managers.MessageMgr;
 import de.vandermeer.skb.interfaces.MessageConsole;
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsInfoSetFT;
+import de.vandermeer.skb.interfaces.messagesets.IsInfoSetFT;
 
 /**
  * An interpreter for the 'help' shell command using an STG for output.

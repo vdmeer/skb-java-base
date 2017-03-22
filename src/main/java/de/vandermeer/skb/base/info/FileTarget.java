@@ -18,7 +18,7 @@ package de.vandermeer.skb.base.info;
 import java.io.File;
 import java.io.IOException;
 
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * File target for an information target.

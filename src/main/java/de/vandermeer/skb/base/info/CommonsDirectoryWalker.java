@@ -24,7 +24,7 @@ import java.util.List;
 import org.apache.commons.io.DirectoryWalker;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
-import de.vandermeer.skb.interfaces.categories.is.messagesets.IsErrorSetFT;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * Walks a directory and loads files.
