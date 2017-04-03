@@ -34,7 +34,7 @@ import de.vandermeer.skb.base.message.Message5WH;
  * Renderer for a {@link Message5WH} object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170331 (31-Mar-17) for Java 1.8
  * @since      v0.1.2
  */
 public class MessageRenderer {
@@ -127,7 +127,6 @@ public class MessageRenderer {
 	public String render(Message5WH msg) {
 		if(msg!=null){
 			ST ret = this.stg.getInstanceOf("message5wh");
-
 			if(msg.getWhereLocation()!=null){
 				ST where = this.stg.getInstanceOf("where");
 				where.add("location", msg.getWhereLocation());

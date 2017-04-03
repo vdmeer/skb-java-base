@@ -23,7 +23,7 @@ import de.vandermeer.skb.interfaces.FormattingTupleWrapper;
  * An abstract, default implementation of a shell argument, use the {@link SkbShellFactory} to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170331 (31-Mar-17) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractShellArgument implements SkbShellArgument {
@@ -103,11 +103,11 @@ public class AbstractShellArgument implements SkbShellArgument {
 	public String toString(){
 		if(this.valueSet==null){
 			FormattingTupleWrapper ftw = FormattingTupleWrapper.create("{}:{}", new Object[]{this.getKey(), this.getType().name()});
-			return ftw.toString();
+			return ftw.getMessage();
 		}
 		else{
 			FormattingTupleWrapper ftw = FormattingTupleWrapper.create("{}:{}:{}", new Object[]{this.getKey(), this.getType().name(), ArrayUtils.toString(this.valueSet())});
-			return ftw.toString();
+			return ftw.getMessage();
 		}
 	}
 

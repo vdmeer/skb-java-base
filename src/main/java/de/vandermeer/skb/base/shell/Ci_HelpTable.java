@@ -21,12 +21,12 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import de.vandermeer.asciitable.v2.RenderedTable;
-import de.vandermeer.asciitable.v2.V2_AsciiTable;
-import de.vandermeer.asciitable.v2.render.V2_AsciiTableRenderer;
-import de.vandermeer.asciitable.v2.render.V2_Width;
-import de.vandermeer.asciitable.v2.render.WidthFixedColumns;
-import de.vandermeer.asciitable.v2.themes.V2_E_TableThemes;
+import de.vandermeer.asciitable.AT_ColumnWidthCalculator;
+import de.vandermeer.asciitable.AT_Renderer;
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.asciitable.CWC_FixedWidth;
+import de.vandermeer.asciithemes.TA_Grid;
+import de.vandermeer.asciithemes.a7.A7_Grids;
 import de.vandermeer.skb.base.managers.MessageMgr;
 import de.vandermeer.skb.interfaces.FormattingTupleWrapper;
 import de.vandermeer.skb.interfaces.MessageConsole;
@@ -35,16 +35,16 @@ import de.vandermeer.skb.interfaces.MessageConsole;
  * An interpreter for the 'help' shell command using an ASCII table for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 160319 (19-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170331 (31-Mar-17) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_HelpTable extends Ci_Help {
 
-	/** The theme for the table. */
-	protected V2_E_TableThemes theme;
+	/** The grid for the table. */
+	protected TA_Grid grid;
 
 	/** Table width calculated. */
-	protected V2_Width width;
+	protected AT_ColumnWidthCalculator cwc;
 
 	/**
 	 * Returns an new 'help' command interpreter for table output with default theme {@link V2_E_TableThemes#UTF_DOUBLE_LIGHT} and 76 character width.
@@ -57,24 +57,24 @@ public class Ci_HelpTable extends Ci_Help {
 	/**
 	 * Returns an new 'help' command interpreter for table output.
 	 * @param skbShell the calling shell
-	 * @param theme a theme for the table
+	 * @param grid a grid for the table
 	 */
-	public Ci_HelpTable(SkbShell skbShell, V2_E_TableThemes theme){
+	public Ci_HelpTable(SkbShell skbShell, TA_Grid grid){
 		super(skbShell);
 
-		this.theme = (theme==null)?V2_E_TableThemes.PLAIN_7BIT_STRONG:theme;
-		this.width = new WidthFixedColumns().add(15).add(70);
+		this.grid = (grid==null)?A7_Grids.minusBarPlus():grid;
+		this.cwc = new CWC_FixedWidth().add(15).add(70);
 //		this.width = new V2_WidthAbsoluteEven().setWidth(76);
 	}
 
 	/**
 	 * Sets the table with.
-	 * @param width table width to be used
+	 * @param cwc table width calculator to be used
 	 * @return self to allow for chaining
 	 */
-	public Ci_HelpTable setWidth(V2_Width width){
-		if(width!=null){
-			this.width = width;
+	public Ci_HelpTable setWidth(AT_ColumnWidthCalculator cwc){
+		if(cwc!=null){
+			this.cwc = cwc;
 		}
 		return this;
 	}
@@ -86,7 +86,8 @@ public class Ci_HelpTable extends Ci_Help {
 			return ret;
 		}
 
-		V2_AsciiTable at = new V2_AsciiTable();
+		AsciiTable at = new AsciiTable();
+		at.getContext().setGrid(this.grid);
 		at.addStrongRule();
 
 		String toHelp = lp.getArgs();
@@ -96,15 +97,14 @@ public class Ci_HelpTable extends Ci_Help {
 		else{
 			this.specificHelp(at, toHelp);
 		}
-		at.addRule();
+		at.addStrongRule();
 
 		MessageConsole.conInfo("");
-		V2_AsciiTableRenderer rend = new V2_AsciiTableRenderer()
-			.setTheme(this.theme.get())
-			.setWidth(this.width)
+		AT_Renderer rend = AT_Renderer.create()
+			.setCWC(this.cwc)
 		;
-		RenderedTable rat = rend.render(at);
-		MessageConsole.conInfo(rat.toString());
+		at.setRenderer(rend);
+		MessageConsole.conInfo(at.render());
 		return 0;
 	}
 
@@ -113,7 +113,7 @@ public class Ci_HelpTable extends Ci_Help {
 	 * @param at table to add help information to
 	 * @param toHelp the command to help with
 	 */
-	protected void specificHelp(V2_AsciiTable at, String toHelp){
+	protected void specificHelp(AsciiTable at, String toHelp){
 		if(this.skbShell.getCommandMap().containsKey(toHelp)){
 			//we have a command to show help for, collect all information and present help
 			SkbShellCommand ssc = this.skbShell.getCommandMap().get(toHelp).getCommands().get(toHelp);
@@ -160,7 +160,7 @@ public class Ci_HelpTable extends Ci_Help {
 	 * Processes general help with no specific command requested.
 	 * @param at table to add help information to
 	 */
-	protected void generalHelp(V2_AsciiTable at){
+	protected void generalHelp(AsciiTable at){
 		//collect all commands belonging to a particular category
 		String defKey = "__standard";
 		Map<String, TreeMap<String, SkbShellCommand>> cat2Cmd = new TreeMap<>();
