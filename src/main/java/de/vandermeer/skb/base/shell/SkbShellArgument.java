@@ -21,7 +21,7 @@ import de.vandermeer.skb.interfaces.categories.has.HasDescription;
  * An argument for a command for the {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
+ * @version    v0.1.10 build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.8
  */
 public interface SkbShellArgument extends HasDescription {
