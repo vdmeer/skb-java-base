@@ -18,6 +18,7 @@ package de.vandermeer.skb.base.managers;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -26,24 +27,28 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
-import de.vandermeer.asciitable.commons.ObjectToStringStyle;
-import de.vandermeer.skb.base.composite.coin.Abstract_CC;
-import de.vandermeer.skb.base.composite.coin.CC_Error;
-import de.vandermeer.skb.base.composite.coin.CC_Info;
-import de.vandermeer.skb.base.composite.coin.CC_Warning;
 import de.vandermeer.skb.base.message.E_MessageType;
-import de.vandermeer.skb.base.message.FormattingTupleWrapper;
 import de.vandermeer.skb.base.message.Message5WH;
 import de.vandermeer.skb.base.message.Message5WH_Builder;
+import de.vandermeer.skb.interfaces.FormattingTupleWrapper;
+import de.vandermeer.skb.interfaces.categories.has.HasToStringStyle;
+import de.vandermeer.skb.interfaces.messagesets.HasErrorSet;
+import de.vandermeer.skb.interfaces.messagesets.HasInfoSet;
+import de.vandermeer.skb.interfaces.messagesets.HasWarningSet;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSet;
+import de.vandermeer.skb.interfaces.messagesets.IsInfoSet;
+import de.vandermeer.skb.interfaces.messagesets.IsMessageSet;
+import de.vandermeer.skb.interfaces.messagesets.IsWarningSet;
+import de.vandermeer.skb.interfaces.render.DoesRender;
 
 /**
- * Manages Info, Warning and Error messages supporting {@link Message5WH}, {@link CC_Info}, {@link CC_Warning}, and {@link CC_Error} objects as well as arrays and collections of them.
+ * Manages Info, Warning and Error messages supporting {@link Message5WH}, {@link IsInfoSet}, {@link IsWarningSet}, {@link IsErrorSet}, and {@link DoesRender} objects as well as arrays and collections of them.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.6 (was in skb-commons before)
  */
-public class MessageMgr {
+public class MessageMgr implements HasToStringStyle {
 
 	/**
 	 * Returns a map set with all expected template names and their expected arguments.
@@ -95,7 +100,7 @@ public class MessageMgr {
 	 * @return new information message
 	 */
 	public static Message5WH createInfoMessage(String what, Object ... obj){
-		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(E_MessageType.INFO).build();
+		return new Message5WH_Builder().addWhat(FormattingTupleWrapper.create(what, obj)).setType(E_MessageType.INFO).build();
 	}
 
 	/**
@@ -105,7 +110,7 @@ public class MessageMgr {
 	 * @return new information message
 	 */
 	public static Message5WH createWarningMessage(String what, Object ... obj){
-		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(E_MessageType.WARNING).build();
+		return new Message5WH_Builder().addWhat(FormattingTupleWrapper.create(what, obj)).setType(E_MessageType.WARNING).build();
 	}
 
 	/**
@@ -115,7 +120,7 @@ public class MessageMgr {
 	 * @return new information message
 	 */
 	public static Message5WH createErrorMessage(String what, Object ... obj){
-		return new Message5WH_Builder().addWhat(new FormattingTupleWrapper(what, obj)).setType(E_MessageType.ERROR).build();
+		return new Message5WH_Builder().addWhat(FormattingTupleWrapper.create(what, obj)).setType(E_MessageType.ERROR).build();
 	}
 
 	/**
@@ -222,22 +227,17 @@ public class MessageMgr {
 
 	/**
 	 * Reports a message.
-	 * The report will use the logger associated with the type of the message. Most members of the message will be used
-	 * as is, i.e. their toString method will be used for reporting. The exception is the 'where' member, which is processed
-	 * specifically. If 'where' contains line/column numbers, they will be used. If its object is an ANTLR Recognition Exception
-	 * or an ANTLR Token or an ANTLR Tree, the line/column numbers from this object will be used. For the actual where part, the obj
-	 * member will be used first, next the class (clazz) and finally the file name (filename). 
 	 * @param message to be reported
 	 * @return true if the message was reported, false otherwise
 	 */
 	protected boolean report(Message5WH message) {
 		if(message==null){
-			return false; // no message to handle
+			return false;
 		}
 
 		E_MessageType type = message.getType();
 		if(!this.messageHandlers.containsKey(message.getType())){
-			return false; // no handler means message type not managed
+			return false;
 		}
 		MessageTypeHandler handler = this.messageHandlers.get(message.getType());
 
@@ -249,47 +249,97 @@ public class MessageMgr {
 
 	/**
 	 * Reports a message.
-	 * 
-	 * <p>The report will use the logger associated with the type of the message. Most members of the message will be used
-	 * as is, i.e. their toString method will be used for reporting. The exception is the 'where' member, which is processed
-	 * specifically. If 'where' contains line/column numbers, they will be used. If its object is an ANTLR Recognition Exception
-	 * or an ANTLR Token or an ANTLR Tree, the line/column numbers from this object will be used. For the actual where part, the obj
-	 * member will be used first, next the class (clazz) and finally the file name (filename).</p>
-	 * 
-	 * <p> This method does understand any object that is an instance of {@link Message5WH} plus any array or Iterable that contains
-	 * instances of {@link Message5WH}. Additionally, it can report on {@link CC_Error} and {@link CC_Warning} instances.
-	 * All other objects will be silently ignored.</p>
-	 * 
-	 * @param message to be reported
-	 * @return true if one or all message (for arrays, Iterable) have been reported, false otherwise
+	 * @param messageSet message to be reported
+	 * @return true if the message was reported, false otherwise
 	 */
-	public boolean report(Object message){
-		if(message==null){
+	protected boolean report(IsMessageSet messageSet){
+		if(messageSet==null){
 			return false;
 		}
-		else if(message instanceof Message5WH){
-			return this.report((Message5WH)message);
+
+		E_MessageType type = null;
+		if(messageSet.isErrorSet()){
+			type = E_MessageType.ERROR;
+		}
+		else if(messageSet.isWarningSet()){
+			type = E_MessageType.WARNING;
+		}
+		else if(messageSet.isInfoSet()){
+			type = E_MessageType.INFO;
+		}
+		else{
+			return false;
+		}
+		if(!this.messageHandlers.containsKey(type)){
+			return false;
+		}
+		MessageTypeHandler handler = this.messageHandlers.get(type);
+
+		String template = messageSet.render();
+		handler.handleMessage(template, type, this.max100stg.getInstanceOf("max"), this.appID);
+		this.messages.put(template, type);
+		return true;
+	}
+
+	/**
+	 * Reports a message trying all known classes (message formats).
+	 * @param message message to be reported
+	 * @return true if the message was reported, false otherwise
+	 */
+	protected boolean reportKnownClasses(Object message){
+		boolean ret = true;
+		if(message instanceof Message5WH){
+			ret = ret & this.report((Message5WH)message);
+		}
+		else if(message instanceof IsMessageSet){
+			ret = ret & this.report((IsMessageSet)message);
+		}
+		else if(message instanceof HasErrorSet){
+			ret = ret & this.report(((HasErrorSet<?>)message).getErrorSet());
+		}
+		else if(message instanceof HasWarningSet){
+			ret = ret & this.report(((HasWarningSet<?>)message).getWarningSet());
+		}
+		else if(message instanceof HasInfoSet){
+			ret = ret & this.report(((HasInfoSet<?>)message).getInfoSet());
+		}
+		return ret;
+	}
+
+	/**
+	 * Reports a message.
+	 * 
+	 * This methods understands the message formats {@link Message5WH}, {@link IsMessageSet}, {@link HasErrorSet}, {@link HasWarningSet}, and {@link HasInfoSet}.
+	 * It also does process iterators, iterables, and arrays of any type to process the message formats mentioned above.
+	 * 
+	 * All objects not understood will be silently ignored.
+	 * 
+	 * @param obj message object or object containing messages for reporting
+	 * @return true if one or all message have been reported, false otherwise
+	 */
+	public boolean report(Object obj){
+		if(obj==null){
+			return false;
 		}
 
-		boolean ret=true;	//default is true, set to false in case of problems
-		if(message instanceof Abstract_CC){
-			for(Message5WH w : ((Abstract_CC)message).getList()){
-				ret = ret & this.report(w);
+		boolean ret = true;
+		if(obj instanceof Iterable){
+			for(Object o : (Iterable<?>)obj){
+				ret = ret & this.reportKnownClasses(o);
 			}
 		}
-		else if(message instanceof Object[]){
-			for(Object o : (Object[])message){
-				if(o instanceof Message5WH){
-					ret = ret & this.report((Message5WH)o);
-				}
+		else if(obj instanceof Iterator){
+			while(((Iterator<?>)obj).hasNext()){
+				ret = ret & this.reportKnownClasses(((Iterator<?>)obj).next());
 			}
 		}
-		else if(message instanceof Iterable){
-			for(Object o : (Iterable<?>)message){
-				if(o instanceof Message5WH){
-					ret = ret & this.report((Message5WH)o);
-				}
+		else if(obj instanceof Object[]){
+			for(Object o : (Object[])obj){
+				ret = ret & this.reportKnownClasses(o);
 			}
+		}
+		else{
+			ret = ret & this.reportKnownClasses(obj);
 		}
 		return ret;
 	}
@@ -308,7 +358,7 @@ public class MessageMgr {
 
 	@Override
 	public String toString() {
-		ToStringBuilder ret = new ToStringBuilder(this, ObjectToStringStyle.getStyle())
+		ToStringBuilder ret = new ToStringBuilder(this, this.getStyle())
 //			.append("types       ", this.messageTypes)
 //			.append("counters    ", this.counters)
 //			.append("max errs    ", this.maxErrors)

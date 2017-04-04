@@ -18,14 +18,14 @@ package de.vandermeer.skb.base.managers;
 import org.slf4j.Logger;
 import org.stringtemplate.v4.ST;
 
-import de.vandermeer.skb.base.console.Skb_Console;
 import de.vandermeer.skb.base.message.E_MessageType;
+import de.vandermeer.skb.interfaces.MessageConsole;
 
 /**
  * Handles a message type for the message manager.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.13
  */
 class MessageTypeHandler {
@@ -102,7 +102,7 @@ class MessageTypeHandler {
 
 	public boolean isEnabled(){
 		if(this.useSkbConsole==true){
-			return Skb_Console.USE_CONSOLE;
+			return MessageConsole.PRINT_MESSAGES;
 		}
 		switch(this.type){
 			case INFO:
@@ -134,21 +134,21 @@ class MessageTypeHandler {
 		if(this.useSkbConsole==true){
 			switch(type){
 				case ERROR:
-					Skb_Console.conError(message);
+					MessageConsole.conError(message);
 					if(doMax==true){
-						Skb_Console.conError(max100.render());
+						MessageConsole.conError(max100.render());
 					}
 					break;
 				case INFO:
-					Skb_Console.conInfo(message);
+					MessageConsole.conInfo(message);
 					if(doMax==true){
-						Skb_Console.conError(max100.render());
+						MessageConsole.conError(max100.render());
 					}
 					break;
 				case WARNING:
-					Skb_Console.conWarn(message);
+					MessageConsole.conWarn(message);
 					if(doMax==true){
-						Skb_Console.conError(max100.render());
+						MessageConsole.conError(max100.render());
 					}
 					break;
 			}

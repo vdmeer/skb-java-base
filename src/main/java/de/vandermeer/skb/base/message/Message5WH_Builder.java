@@ -20,13 +20,13 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import de.vandermeer.skb.base.utils.Skb_Antlr4Utils;
+import de.vandermeer.skb.interfaces.antlr.IsAntlrRuntimeObject;
 
 /**
  * Builder for a {@link Message5WH} object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class Message5WH_Builder {
@@ -174,7 +174,8 @@ public class Message5WH_Builder {
 	 */
 	public Message5WH_Builder setWhere(Object where, RecognitionException lineAndColumn){
 		if(where!=null && lineAndColumn!=null){
-			this.setWhere(where, Skb_Antlr4Utils.antlr2line(lineAndColumn), Skb_Antlr4Utils.antlr2column(lineAndColumn));
+			IsAntlrRuntimeObject iaro = IsAntlrRuntimeObject.create(lineAndColumn);
+			this.setWhere(where, iaro.getLine(), iaro.getColumn());
 		}
 		return this;
 	}
@@ -199,7 +200,8 @@ public class Message5WH_Builder {
 	 */
 	public Message5WH_Builder setWhere(Object where, Token lineAndColumn){
 		if(where!=null && lineAndColumn!=null){
-			this.setWhere(where, Skb_Antlr4Utils.antlr2line(lineAndColumn), Skb_Antlr4Utils.antlr2column(lineAndColumn));
+			IsAntlrRuntimeObject iaro = IsAntlrRuntimeObject.create(lineAndColumn);
+			this.setWhere(where, iaro.getLine(), iaro.getColumn());
 		}
 		return this;
 	}
@@ -214,7 +216,8 @@ public class Message5WH_Builder {
 	 */
 	public Message5WH_Builder setWhere(Object where, ParserRuleContext lineAndColumn){
 		if(where!=null && lineAndColumn!=null){
-			this.setWhere(where, Skb_Antlr4Utils.antlr2line(lineAndColumn), Skb_Antlr4Utils.antlr2column(lineAndColumn));
+			IsAntlrRuntimeObject iaro = IsAntlrRuntimeObject.create(lineAndColumn);
+			this.setWhere(where, iaro.getLine(), iaro.getColumn());
 		}
 		return this;
 	}

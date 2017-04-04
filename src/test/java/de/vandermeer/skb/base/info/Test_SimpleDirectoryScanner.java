@@ -33,7 +33,7 @@ import de.vandermeer.skb.base.info.SimpleDirectoryScanner;
  * Tests for {@link CommonsDirectoryWalker}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_SimpleDirectoryScanner {
@@ -42,7 +42,7 @@ public class Test_SimpleDirectoryScanner {
 	public void testScanJavaSource(){
 		SimpleDirectoryScanner scanner = new SimpleDirectoryScanner(new DirectorySource("src/main/java"));
 		FileSourceList files = scanner.load();
-		int checkSize = 171;//TODO update this if java files in src/main are have been removed or added
+		int checkSize = 80;//TODO update this if java files in src/main are have been removed or added
 
 		assertTrue(files.isValid());
 		assertEquals(checkSize, files.getSource().size());
@@ -65,19 +65,19 @@ public class Test_SimpleDirectoryScanner {
 		SimpleDirectoryScanner scanner = new SimpleDirectoryScanner(null);
 		assertEquals(0, scanner.lastWarnings().size());
 		assertEquals(0, scanner.lastInfos().size());
-		assertEquals(1, scanner.getLoadErrors().size()) ;
+		assertEquals(1, scanner.getLoadErrors().getErrorMessages().size()) ;
 
 		scanner = new SimpleDirectoryScanner(new DirectorySource(" "));
-		assertEquals(1, scanner.getLoadErrors().size()) ;
+		assertEquals(1, scanner.getLoadErrors().getErrorMessages().size()) ;
 
 		scanner = new SimpleDirectoryScanner(new DirectorySource("test/resources/for-scanner-tests"));
- 		assertEquals(1, scanner.getLoadErrors().size());
+ 		assertEquals(1, scanner.getLoadErrors().getErrorMessages().size());
 		assertEquals(0, scanner.lastWarnings().size());
 		assertEquals(0, scanner.lastInfos().size());
 
 		scanner = new SimpleDirectoryScanner(new DirectorySource("src/test/resources/for-scanner-tests"));
 		scanner.load();
-		assertEquals(0, scanner.getLoadErrors().size());
+		assertEquals(0, scanner.getLoadErrors().getErrorMessages().size());
 		assertEquals(0, scanner.lastWarnings().size());
 		assertEquals(4, scanner.lastInfos().size());
 	}

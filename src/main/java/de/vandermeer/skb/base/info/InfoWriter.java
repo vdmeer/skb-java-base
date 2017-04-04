@@ -15,13 +15,13 @@
 
 package de.vandermeer.skb.base.info;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * An information writer.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public interface InfoWriter {
@@ -45,7 +45,7 @@ public interface InfoWriter {
 	 * Returns collected errors from the last invocation of write or other methods.
 	 * @return collected errors, should not be null but can be empty (meaning no errors).
 	 */
-	CC_Error getWriteErrors();
+	IsErrorSetFT getWriteErrors();
 
 	/**
 	 * Validates the writers target.
@@ -53,11 +53,11 @@ public interface InfoWriter {
 	 */
 	default boolean validateTarget(){
 		if(this.getTarget()==null){
-			this.getWriteErrors().add("{} - target is null", "writer");
+			this.getWriteErrors().addError("{} - target is null", "writer");
 			return false;
 		}
 		if(!this.getTarget().isValid()){
-			this.getWriteErrors().add("{} - invalid target <{}> - {}", new Object[]{"writer", this.getTarget().getTarget(), this.getTarget().getInitError().render()});
+			this.getWriteErrors().addError("{} - invalid target <{}> - {}", new Object[]{"writer", this.getTarget().getTarget(), this.getTarget().getInitError().render()});
 			return false;
 		}
 		return true;

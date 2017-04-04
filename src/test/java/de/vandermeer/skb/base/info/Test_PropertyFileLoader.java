@@ -28,7 +28,7 @@ import de.vandermeer.skb.base.info.PropertyFileLoader;
  * Tests for {@link PropertyFileLoader}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_PropertyFileLoader {
@@ -38,7 +38,7 @@ public class Test_PropertyFileLoader {
 		String fn = "src/test/resources/de/vandermeer/skb/base/info/loaders/test.properties";
 		PropertyFileLoader pfl = new PropertyFileLoader(fn);
 		Properties p = pfl.load();
-		assertEquals(0, pfl.getLoadErrors().size());
+		assertEquals(0, pfl.getLoadErrors().getErrorMessages().size());
 		this.assertProperties(p);
 	}
 
@@ -47,7 +47,7 @@ public class Test_PropertyFileLoader {
 		String fn = "de/vandermeer/skb/base/info/loaders/test.properties";
 		PropertyFileLoader pfl = new PropertyFileLoader(fn);
 		Properties p = pfl.load();
-		assertEquals(0, pfl.getLoadErrors().size());
+		assertEquals(0, pfl.getLoadErrors().getErrorMessages().size());
 		this.assertProperties(p);
 	}
 

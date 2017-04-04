@@ -17,13 +17,13 @@ package de.vandermeer.skb.base.shell;
 
 import org.junit.Test;
 
-import de.vandermeer.asciitable.v2.render.WidthFixedColumns;
+import de.vandermeer.asciitable.CWC_FixedWidth;
 
 /**
  * Tests for Tests for {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.8
  */
 public class Test_EclRun_Shell {
@@ -34,7 +34,7 @@ public class Test_EclRun_Shell {
 		if("true".equals(System.getProperty("EclRun"))){
 			SkbShell skbsh = SkbShellFactory.newShell();
 			skbsh.addCommandInterpreter(new Ci_Exit());
-			skbsh.addCommandInterpreter(new Ci_HelpTable(skbsh).setWidth(new WidthFixedColumns().add(10).add(66)));
+			skbsh.addCommandInterpreter(new Ci_HelpTable(skbsh).setWidth(new CWC_FixedWidth().add(10).add(66)));
 //			skbsh.addCommandInterpreter(new Ci_HelpStg(skbsh));
 			skbsh.addCommandInterpreter(new Ci_Wait());
 			skbsh.addCommandInterpreter(new Ci_ScRun(skbsh));

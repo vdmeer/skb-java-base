@@ -15,17 +15,22 @@
 
 package de.vandermeer.skb.base.shell;
 
-import de.vandermeer.skb.base.categories.HasDescription;
-import de.vandermeer.skb.base.categories.kvt.IsKey;
+import de.vandermeer.skb.interfaces.categories.has.HasDescription;
 
 /**
  * An argument for a command for the {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.8
  */
-public interface SkbShellArgument extends IsKey<String>, HasDescription {
+public interface SkbShellArgument extends HasDescription {
+
+	/**
+	 * Returns the key of a shell argument.
+	 * @return shell argument key
+	 */
+	String getKey();
 
 	/**
 	 * Returns the type of a shell argument.

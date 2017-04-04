@@ -24,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
  * Class handling a string as a combination of an identifier, a version and a value part.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.8
  */
 public class IdVersionValueString {

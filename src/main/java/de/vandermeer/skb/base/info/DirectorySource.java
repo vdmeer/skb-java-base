@@ -18,13 +18,13 @@ package de.vandermeer.skb.base.info;
 import java.io.File;
 import java.io.FileFilter;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * A source object for a directory.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class DirectorySource extends AbstractDirectoryInfo implements InfoSource {
@@ -55,7 +55,7 @@ public class DirectorySource extends AbstractDirectoryInfo implements InfoSource
 	}
 
 	@Override
-	public CC_Error getInitError() {
+	public IsErrorSetFT getInitError() {
 		return this.errors;
 	}
 

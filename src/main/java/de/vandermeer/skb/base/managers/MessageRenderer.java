@@ -27,9 +27,6 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
-import de.vandermeer.skb.base.composite.coin.CC_Info;
-import de.vandermeer.skb.base.composite.coin.CC_Warning;
 import de.vandermeer.skb.base.info.STGroupValidator;
 import de.vandermeer.skb.base.message.Message5WH;
 
@@ -37,7 +34,7 @@ import de.vandermeer.skb.base.message.Message5WH;
  * Renderer for a {@link Message5WH} object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.1.2
  */
 public class MessageRenderer {
@@ -117,7 +114,7 @@ public class MessageRenderer {
 		}
 
 		STGroupValidator stgv = new STGroupValidator(this.stg, MessageRenderer.STG_CHUNKS);
-		if(stgv.getValidationErrors().size()>0){
+		if(stgv.getValidationErrors().hasErrors()){
 			throw new IllegalArgumentException(stgv.getValidationErrors().render());
 		}
 	}
@@ -130,7 +127,6 @@ public class MessageRenderer {
 	public String render(Message5WH msg) {
 		if(msg!=null){
 			ST ret = this.stg.getInstanceOf("message5wh");
-
 			if(msg.getWhereLocation()!=null){
 				ST where = this.stg.getInstanceOf("where");
 				where.add("location", msg.getWhereLocation());
@@ -177,41 +173,5 @@ public class MessageRenderer {
 			ret.appendln(this.render(msg));
 		}
 		return ret.toString();
-	}
-
-	/**
-	 * Renders messages in an {@link CC_Error} object.
-	 * @param errors the error object with messages
-	 * @return rendered messages, null if the input was null
-	 */
-	public String render(CC_Error errors){
-		if(errors!=null){
-			return this.render(errors.getList());
-		}
-		return null;
-	}
-
-	/**
-	 * Renders messages in an {@link CC_Info} object.
-	 * @param infos the info object with messages
-	 * @return rendered messages, null if the input was null
-	 */
-	public String render(CC_Info infos){
-		if(infos!=null){
-			return this.render(infos.getList());
-		}
-		return null;
-	}
-
-	/**
-	 * Renders messages in an {@link CC_Warning} object.
-	 * @param warnings the warning object with messages
-	 * @return rendered messages, null if the input was null
-	 */
-	public String render(CC_Warning warnings){
-		if(warnings!=null){
-			return this.render(warnings.getList());
-		}
-		return null;
 	}
 }

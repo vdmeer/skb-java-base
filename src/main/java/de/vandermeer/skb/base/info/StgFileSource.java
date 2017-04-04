@@ -21,7 +21,7 @@ import java.io.File;
  * File source for an STG file, the same as {@link FileSource} plus extension check for "stg" extension.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class StgFileSource extends FileSource {
@@ -98,9 +98,9 @@ public class StgFileSource extends FileSource {
 	 */
 	protected void init(File file, String directory, String fileName, InfoLocationOptions option){
 		super.init(file, directory, fileName, option);
-		if(this.errors.size()==0){
+		if(!this.errors.hasErrors()){
 			if(!"stg".equals(this.getFileExtension())){
-				this.errors.add("file name must have '.stg' extension");
+				this.errors.addError("file name must have '.stg' extension");
 				this.reset();
 			}
 			else{

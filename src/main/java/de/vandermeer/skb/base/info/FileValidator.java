@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
  * An validator for a file.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class FileValidator extends AbstractValidator {
@@ -41,7 +41,7 @@ public class FileValidator extends AbstractValidator {
 	 */
 	public FileValidator(String file, ValidationOptions option){
 		if(StringUtils.isBlank(file)){
-			this.errors.add("file is null or blank");
+			this.errors.addError("file is null or blank");
 		}
 		else{
 			File f = new File(file);
@@ -60,7 +60,7 @@ public class FileValidator extends AbstractValidator {
 	 */
 	public FileValidator(File file, ValidationOptions option){
 		if(file==null){
-			this.errors.add("file is null");
+			this.errors.addError("file is null");
 		}
 		else{
 			this.validate(file, option);
@@ -78,32 +78,32 @@ public class FileValidator extends AbstractValidator {
 	 */
 	protected void validate(File file, ValidationOptions option){
 		if(!file.exists()){
-			this.errors.add("file <{}> does not exist in file system", file.getAbsolutePath());
+			this.errors.addError("file <{}> does not exist in file system", file.getAbsolutePath());
 		}
 		else if(!file.isFile()){
-			this.errors.add("file <{}> is not a file", file.getAbsolutePath());
+			this.errors.addError("file <{}> is not a file", file.getAbsolutePath());
 		}
 		if(file.isHidden()){
-			this.errors.add("file <{}> is a hidden file", file.getAbsolutePath());
+			this.errors.addError("file <{}> is a hidden file", file.getAbsolutePath());
 		}
 		else{
 			switch(option){
 				case AS_SOURCE:
 					if(!file.canRead()){
-						this.errors.add("file <{}> is not readable", file.getAbsolutePath());
+						this.errors.addError("file <{}> is not readable", file.getAbsolutePath());
 					}
 					break;
 				case AS_SOURCE_AND_TARGET:
 					if(!file.canRead()){
-						this.errors.add("file <{}> is not readable", file.getAbsolutePath());
+						this.errors.addError("file <{}> is not readable", file.getAbsolutePath());
 					}
 					if(!file.canWrite()){
-						this.errors.add("file <{}> is not writable", file.getAbsolutePath());
+						this.errors.addError("file <{}> is not writable", file.getAbsolutePath());
 					}
 					break;
 				case AS_TARGET:
 					if(!file.canWrite()){
-						this.errors.add("file <{}> is not writable", file.getAbsolutePath());
+						this.errors.addError("file <{}> is not writable", file.getAbsolutePath());
 					}
 					break;
 			}

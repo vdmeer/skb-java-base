@@ -22,7 +22,7 @@ import java.util.Properties;
  * An file loader for Java property files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class PropertyFileLoader extends AbstractLoader implements FileLoader {
@@ -37,7 +37,7 @@ public class PropertyFileLoader extends AbstractLoader implements FileLoader {
 	public PropertyFileLoader(FileSource source){
 		this.source = source;
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"property file loader", this.source.getInitError().render()});
+			this.errors.addError("{}: problems creating file source - {}", new Object[]{"property file loader", this.source.getInitError().render()});
 		}
 	}
 
@@ -49,13 +49,13 @@ public class PropertyFileLoader extends AbstractLoader implements FileLoader {
 	public PropertyFileLoader(String fileName){
 		this.source = new FileSource(fileName);
 		if(!source.isValid()){
-			this.errors.add("{}: problems creating file source - {}", new Object[]{"property file loader", this.source.getInitError().render()});
+			this.errors.addError("{}: problems creating file source - {}", new Object[]{"property file loader", this.source.getInitError().render()});
 		}
 	}
 
 	@Override
 	public Properties load() {
-		this.errors.clear();
+		this.errors.clearErrorMessages();;
 		if(this.validateSource()==false){
 			//no valid source
 			return null;
@@ -66,11 +66,11 @@ public class PropertyFileLoader extends AbstractLoader implements FileLoader {
 			ret.load(source.asURL().openStream());
 		}
 		catch (IOException e){
-			this.errors.add("{}: cannot load property file {}, IO exception\n-->{}", new Object[]{"pfl", this.source.getSource(), e.getMessage()});
+			this.errors.addError("{}: cannot load property file {}, IO exception\n-->{}", new Object[]{"pfl", this.source.getSource(), e.getMessage()});
 			return null;
 		}
 		catch (Exception e){
-			this.errors.add("{}: cannot load property file {}, general exception\n-->{}", new Object[]{"pfl", this.source.getSource(), e.getMessage()});
+			this.errors.addError("{}: cannot load property file {}, general exception\n-->{}", new Object[]{"pfl", this.source.getSource(), e.getMessage()});
 			return null;
 		}
 		return ret;

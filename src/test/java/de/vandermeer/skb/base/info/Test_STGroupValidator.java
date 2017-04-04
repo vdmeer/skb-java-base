@@ -35,7 +35,7 @@ import de.vandermeer.skb.base.info.STGroupValidator;
  * Tests for {@link STGroupValidator}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_STGroupValidator {
@@ -86,7 +86,7 @@ public class Test_STGroupValidator {
 
 		stgv = new STGroupValidator(stg, map);
 		assertFalse(stgv.isValid());
-		assertEquals(1, stgv.getValidationErrors().size());
+		assertEquals(1, stgv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -109,7 +109,7 @@ public class Test_STGroupValidator {
 
 		stgv = new STGroupValidator(stg, map);
 		assertFalse(stgv.isValid());
-		assertEquals(2, stgv.getValidationErrors().size());
+		assertEquals(2, stgv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -118,15 +118,15 @@ public class Test_STGroupValidator {
 
 		stgv = new STGroupValidator(null, new HashMap<String, Set<String>>());
 		assertFalse(stgv.isValid());
-		assertEquals(1, stgv.getValidationErrors().size());
+		assertEquals(1, stgv.getValidationErrors().getErrorMessages().size());
 
 		stgv = new STGroupValidator(new STGroup(), null);
 		assertFalse(stgv.isValid());
-		assertEquals(1, stgv.getValidationErrors().size());
+		assertEquals(1, stgv.getValidationErrors().getErrorMessages().size());
 
 		stgv = new STGroupValidator(null, null);
 		assertFalse(stgv.isValid());
-		assertEquals(2, stgv.getValidationErrors().size());
+		assertEquals(2, stgv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -135,7 +135,7 @@ public class Test_STGroupValidator {
 
 		stgv = new STGroupValidator(new STGroup(), new HashMap<String, Set<String>>());
 		assertTrue(stgv.isValid());
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -146,27 +146,27 @@ public class Test_STGroupValidator {
 		STGroupValidator stgv;
 
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 
 		chunks.put(null, null);
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 
 		chunks.put("", null);
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 
 		chunks.put(null, new HashSet<String>());
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 
 		chunks.put("noArg", null);
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(1, stgv.getValidationErrors().size());
+		assertEquals(1, stgv.getValidationErrors().getErrorMessages().size());
 
 		chunks.put("noArg", new HashSet<String>());
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -179,20 +179,20 @@ public class Test_STGroupValidator {
 
 		chunks.put("oneArg", new HashSet<String>());
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 
 		ar.add("one");
 		chunks.put("oneArg", ar);
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 
 		ar.add("two");
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(1, stgv.getValidationErrors().size());
+		assertEquals(1, stgv.getValidationErrors().getErrorMessages().size());
 
 		ar.add("three");
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(2, stgv.getValidationErrors().size());
+		assertEquals(2, stgv.getValidationErrors().getErrorMessages().size());
 	}
 
 	@Test
@@ -218,7 +218,7 @@ public class Test_STGroupValidator {
 			}
 		};
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(0, stgv.getValidationErrors().size());
+		assertEquals(0, stgv.getValidationErrors().getErrorMessages().size());
 
 		chunks = new HashMap<String, Set<String>>(){
 			private static final long serialVersionUID = 1L;{
@@ -237,7 +237,7 @@ public class Test_STGroupValidator {
 		};
 		chunks.put("noArg", new HashSet<String>());
 		stgv = new STGroupValidator(stg, chunks);
-		assertEquals(3, stgv.getValidationErrors().size());
+		assertEquals(3, stgv.getValidationErrors().getErrorMessages().size());
 	}
 
 }

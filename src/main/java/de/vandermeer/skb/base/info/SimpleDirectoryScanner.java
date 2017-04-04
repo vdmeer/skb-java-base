@@ -25,7 +25,7 @@ import org.apache.commons.lang3.text.StrBuilder;
  * Scans a directory and returns a complete list of files found.
  * 
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.6
  */
 public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryLoader {
@@ -67,7 +67,7 @@ public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryL
 	 * Clears errors and warnings, automatically called for new scans.
 	 */
 	public void clear(){
-		this.errors.clear();
+		this.errors.clearErrorMessages();;
 
 		this.warnings.clear();
 		this.infos.clear();
@@ -175,7 +175,7 @@ public class SimpleDirectoryScanner extends AbstractLoader implements DirectoryL
 		ret.appendNewLine();
 
 		ret.append("errors: ").append(this.infos.size());
-		if(this.errors.size()>0){
+		if(this.errors.hasErrors()){
 			ret.appendNewLine().append("  - ");
 			ret.append(this.errors.render());
 			//TODO not nice format anymore

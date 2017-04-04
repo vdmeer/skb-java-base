@@ -26,7 +26,7 @@ import org.stringtemplate.v4.AttributeRenderer;
  * If any problem occurred, the returned string will be "###";
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.8
  */
 public class VersionStringRenderer implements AttributeRenderer {

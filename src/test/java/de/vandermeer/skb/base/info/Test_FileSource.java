@@ -31,7 +31,7 @@ import de.vandermeer.skb.base.info.ValidationOptions;
  * Tests for {@link FileSource}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class Test_FileSource {
@@ -47,11 +47,11 @@ public class Test_FileSource {
 		FileSource fsn;
 
 		fsn = new FileSource(new File("src/test/resources/de/vandermeer/skb/base/info/loaders/test.properties"));
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource(new File("src/test/resources/de/vandermeer/skb/base/info/loaders", "test.properties"));
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 	}
 
@@ -60,35 +60,35 @@ public class Test_FileSource {
 		FileSource fsn;
 
 		fsn = new FileSource("de/vandermeer/skb/base/info/loaders/", "test.properties");
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("de/vandermeer/skb/base/info/loaders/", "test.properties", InfoLocationOptions.RESOURCE_ONLY);
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("de/vandermeer/skb/base/info/loaders", "test.properties");
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("de/vandermeer/skb/base/info/loaders", "test.properties", InfoLocationOptions.RESOURCE_ONLY);
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("src/test/resources/de/vandermeer/skb/base/info/loaders/", "test.properties");
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("src/test/resources/de/vandermeer/skb/base/info/loaders/", "test.properties", InfoLocationOptions.FILESYSTEM_ONLY);
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("src/test/resources/de/vandermeer/skb/base/info/loaders", "test.properties");
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("src/test/resources/de/vandermeer/skb/base/info/loaders", "test.properties", InfoLocationOptions.FILESYSTEM_ONLY);
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 	}
 
@@ -97,19 +97,19 @@ public class Test_FileSource {
 		FileSource fsn;
 
 		fsn = new FileSource("de/vandermeer/skb/base/info/loaders/test.properties");
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("de/vandermeer/skb/base/info/loaders/test.properties", InfoLocationOptions.RESOURCE_ONLY);
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("src/test/resources/de/vandermeer/skb/base/info/loaders/test.properties");
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 
 		fsn = new FileSource("src/test/resources/de/vandermeer/skb/base/info/loaders/test.properties", InfoLocationOptions.FILESYSTEM_ONLY);
-		assertEquals(0, fsn.getInitError().size());
+		assertEquals(0, fsn.getInitError().getErrorMessages().size());
 		assertTrue(fsn.isValid());
 	}
 
@@ -119,37 +119,37 @@ public class Test_FileSource {
 
 		//fileName null means error
 		fsn = new FileSource((String)null);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//blank fileName means error
 		fsn = new FileSource("");
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//nothing on FS nor RES is error
 		fsn = new FileSource("src/main/test.test");
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//nothing on FS is error
 		fsn = new FileSource("src/main/test.test", InfoLocationOptions.FILESYSTEM_ONLY);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//nothing on RES is error
 		fsn = new FileSource("src/main/test.test", InfoLocationOptions.RESOURCE_ONLY);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//valid as RES only, but requested as FS
 		fsn = new FileSource("de/vandermeer/skb/base/info/loaders/test.properties", InfoLocationOptions.FILESYSTEM_ONLY);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//valid as FS only, but requested as RES
 		fsn = new FileSource("src/test/resources/de/vandermeer/skb/base/info/loaders/test.properties", InfoLocationOptions.RESOURCE_ONLY);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 	}
 
@@ -159,37 +159,37 @@ public class Test_FileSource {
 
 		//directory null means error
 		fsn = new FileSource((String)null, "test");
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//fileName null means error
 		fsn = new FileSource("test", (String)null);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//blank directory means error
 		fsn = new FileSource("", "test");
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//blank fileName means error
 		fsn = new FileSource("test", "");
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//nothing on FS nor RES is error
 		fsn = new FileSource("src/main/", "test.test");
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//nothing on FS is error
 		fsn = new FileSource("src/main/", "test.test", InfoLocationOptions.FILESYSTEM_ONLY);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//nothing on RES is error
 		fsn = new FileSource("src/main/", "test.test", InfoLocationOptions.RESOURCE_ONLY);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 	}
 
@@ -199,17 +199,17 @@ public class Test_FileSource {
 
 		//null file means error
 		fsn = new FileSource((File)null);
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//non accessible file means error
 		fsn = new FileSource(new File("src/main/test.test"));
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 
 		//non accessible file means error
 		fsn = new FileSource(new File("src/main/", "test.test"));
-		assertTrue(fsn.getInitError().size()!=0);
+		assertTrue(fsn.getInitError().getErrorMessages().size()!=0);
 		assertFalse(fsn.isValid());
 	}
 
@@ -218,7 +218,7 @@ public class Test_FileSource {
 //		FileSource fsn;
 //
 //		fsn = new FileSource("de/vandermeer/skb/base/info/loaders/test.properties");
-//		assertTrue(fsn.getInitError().size()==0);
+//		assertTrue(fsn.getInitError().getErrors().size()==0);
 //		System.err.println(fsn.getOriginalFilename());
 //	}
 

@@ -22,7 +22,7 @@ import java.util.Properties;
  * An file loader for a set of Java property files.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public class PropertyArrayLoader extends AbstractLoader implements FileSourceListLoader {
@@ -59,12 +59,12 @@ public class PropertyArrayLoader extends AbstractLoader implements FileSourceLis
 
 	@Override
 	public Properties[] load() {
-		this.errors.clear();
+		this.errors.clearErrorMessages();;
 
 		if(this.dl!=null){
 			if(this.dl.validateSource()==false){
 				//DirectoryLoader set but its source does not validate, error and return null
-				this.errors.add(this.dl.getLoadErrors());
+				this.errors.addAllErrors(this.dl.getLoadErrors());
 				return null;
 			}
 			else{

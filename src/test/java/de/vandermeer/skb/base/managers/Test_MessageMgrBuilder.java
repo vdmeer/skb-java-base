@@ -37,7 +37,7 @@ import de.vandermeer.skb.base.message.E_MessageType;
  * Tests for Tests for {@link MessageMgrBuilder}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.13
  */
 public class Test_MessageMgrBuilder {
@@ -82,7 +82,7 @@ public class Test_MessageMgrBuilder {
 
 		mmb = new MessageMgrBuilder("@test");
 		assertEquals("@test", mmb.appID);
-		assertTrue(mmb.buildErrors.size()==0);
+		assertTrue(mmb.buildErrors.hasErrors()==false);
 	}
 
 
@@ -93,22 +93,22 @@ public class Test_MessageMgrBuilder {
 		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(null);
 		assertEquals(0, mmb.messageHandlers.size());
-		assertTrue(mmb.buildErrors.size()>0);
+		assertTrue(mmb.buildErrors.hasErrors());
 
 		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(null, 0);
 		assertEquals(0, mmb.messageHandlers.size());
-		assertTrue(mmb.buildErrors.size()>0);
+		assertTrue(mmb.buildErrors.hasErrors());
 
 		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(null, null);
 		assertEquals(0, mmb.messageHandlers.size());
-		assertTrue(mmb.buildErrors.size()>0);
+		assertTrue(mmb.buildErrors.hasErrors());
 
 		mmb = new MessageMgrBuilder("@test");
 		mmb.setHandler(null, 0, null);
 		assertEquals(0, mmb.messageHandlers.size());
-		assertTrue(mmb.buildErrors.size()>0);
+		assertTrue(mmb.buildErrors.hasErrors());
 	}
 
 
@@ -126,7 +126,7 @@ public class Test_MessageMgrBuilder {
 		assertEquals(0, mmb.messageHandlers.get(E_MessageType.INFO).count);
 		assertEquals(E_MessageType.INFO, mmb.messageHandlers.get(E_MessageType.INFO).type);
 		assertTrue(mmb.messageHandlers.get(E_MessageType.INFO).logger==null);
-		assertTrue(mmb.buildErrors.size()==0);
+		assertTrue(mmb.buildErrors.hasErrors()==false);
 
 		//maxCount with SkbConsole for error, 2 handlers
 		mmb.setHandler(E_MessageType.ERROR, 49);
@@ -137,7 +137,7 @@ public class Test_MessageMgrBuilder {
 		assertEquals(0, mmb.messageHandlers.get(E_MessageType.ERROR).count);
 		assertEquals(E_MessageType.ERROR, mmb.messageHandlers.get(E_MessageType.ERROR).type);
 		assertTrue(mmb.messageHandlers.get(E_MessageType.ERROR).logger==null);
-		assertTrue(mmb.buildErrors.size()==0);
+		assertTrue(mmb.buildErrors.hasErrors()==false);
 
 		//null logger means all defaults for Warn, 3 handlers
 		mmb.setHandler(E_MessageType.WARNING, null);
@@ -148,7 +148,7 @@ public class Test_MessageMgrBuilder {
 		assertEquals(0, mmb.messageHandlers.get(E_MessageType.WARNING).count);
 		assertEquals(E_MessageType.WARNING, mmb.messageHandlers.get(E_MessageType.WARNING).type);
 		assertTrue(mmb.messageHandlers.get(E_MessageType.WARNING).logger==null);
-		assertTrue(mmb.buildErrors.size()==0);
+		assertTrue(mmb.buildErrors.hasErrors()==false);
 
 		//logger w/o max means max is -1 for INFO, 3 handlers and all INFO settings are for the new one
 		Logger logger = LoggerFactory.getLogger("test");
@@ -160,7 +160,7 @@ public class Test_MessageMgrBuilder {
 		assertEquals(0, mmb.messageHandlers.get(E_MessageType.INFO).count);
 		assertEquals(E_MessageType.INFO, mmb.messageHandlers.get(E_MessageType.INFO).type);
 		assertEquals(logger, mmb.messageHandlers.get(E_MessageType.INFO).logger);
-		assertTrue(mmb.buildErrors.size()==0);
+		assertTrue(mmb.buildErrors.hasErrors()==false);
 
 		//logger null w/ max count means max and SkbConsole for WARN, 3 handlers and all WARN settings are for the new one
 		mmb.setHandler(E_MessageType.WARNING, 20, null);
@@ -171,7 +171,7 @@ public class Test_MessageMgrBuilder {
 		assertEquals(0, mmb.messageHandlers.get(E_MessageType.WARNING).count);
 		assertEquals(E_MessageType.WARNING, mmb.messageHandlers.get(E_MessageType.WARNING).type);
 		assertTrue(mmb.messageHandlers.get(E_MessageType.WARNING).logger==null);
-		assertTrue(mmb.buildErrors.size()==0);
+		assertTrue(mmb.buildErrors.hasErrors()==false);
 
 		//logger with max count means all set for ERROR, 3 handlers and all ERROR settings for the new onemmb.setHandler(EMessageType.WARNING, 20, null);
 		mmb.setHandler(E_MessageType.ERROR, 71, logger);
@@ -182,7 +182,7 @@ public class Test_MessageMgrBuilder {
 		assertEquals(0, mmb.messageHandlers.get(E_MessageType.ERROR).count);
 		assertEquals(E_MessageType.ERROR, mmb.messageHandlers.get(E_MessageType.ERROR).type);
 		assertEquals(logger, mmb.messageHandlers.get(E_MessageType.ERROR).logger);
-		assertTrue(mmb.buildErrors.size()==0);
+		assertTrue(mmb.buildErrors.hasErrors()==false);
 	}
 
 
@@ -194,7 +194,7 @@ public class Test_MessageMgrBuilder {
 		//no stg set
 		mmb = new MessageMgrBuilder("@test");
 		mm = mmb.build();
-		assertTrue(mmb.buildErrors.size()>0);
+		assertTrue(mmb.buildErrors.hasErrors());
 		assertEquals(null, mm);
 	}
 
@@ -209,7 +209,7 @@ public class Test_MessageMgrBuilder {
 		mmb.setHandler(E_MessageType.INFO);
 		mm = mmb.build();
 		assertEquals(1, mm.messageHandlers.size());
-		assertTrue(mmb.buildErrors.size()==0);
+		assertTrue(!mmb.buildErrors.hasErrors());
 		assertTrue(mm!=null);
 	}
 

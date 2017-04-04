@@ -24,13 +24,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 
-import de.vandermeer.skb.base.composite.coin.CC_Error;
+import de.vandermeer.skb.interfaces.messagesets.IsErrorSetFT;
 
 /**
  * An abstract file info implementation that can be configured for use as source or target.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.9 build 160301 (01-Mar-16) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.7
  */
 public abstract class AbstractFileInfo {
@@ -48,7 +48,7 @@ public abstract class AbstractFileInfo {
 	private String setRootPath;
 
 	/** Local list of errors collected during process, cleared for every new validation call. */
-	protected final CC_Error errors = new CC_Error();
+	protected final IsErrorSetFT errors = IsErrorSetFT.create();
 
 	/**
 	 * Options for an asString method
@@ -101,11 +101,11 @@ public abstract class AbstractFileInfo {
 				this.fullFileName = FilenameUtils.getName(file.getAbsolutePath());
 			}
 			catch (MalformedURLException e) {
-				this.errors.add("constructor(file, boolean) - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
+				this.errors.addError("constructor(file, boolean) - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
 			}
 		}
 		else{
-			this.errors.add("constructor(file, boolean) - file cannot be null");
+			this.errors.addError("constructor(file, boolean) - file cannot be null");
 		}
 	}
 
@@ -117,10 +117,10 @@ public abstract class AbstractFileInfo {
 	 */
 	public AbstractFileInfo(File file, String setRoot){
 		if(file==null){
-			this.errors.add("constructor(file, setRoot) - file cannot be null");
+			this.errors.addError("constructor(file, setRoot) - file cannot be null");
 		}
 		else if(setRoot==null){
-			this.errors.add("constructor(file, setRoot) - setRoot cannot be null");
+			this.errors.addError("constructor(file, setRoot) - setRoot cannot be null");
 		}
 		else{
 			try{
@@ -130,7 +130,7 @@ public abstract class AbstractFileInfo {
 				this.setRootPath = setRoot;
 			}
 			catch (MalformedURLException e) {
-				this.errors.add("constructor(file, boolean) - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
+				this.errors.addError("constructor(file, boolean) - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
 			}
 		}
 	}
@@ -141,7 +141,7 @@ public abstract class AbstractFileInfo {
 	 */
 	public AbstractFileInfo(File file){
 		if(file==null){
-			this.errors.add("constructor(file) - file cannot be null");
+			this.errors.addError("constructor(file) - file cannot be null");
 		}
 		else{
 			this.init(file, null, null, null);
@@ -170,13 +170,13 @@ public abstract class AbstractFileInfo {
 	 */
 	public AbstractFileInfo(String fileName, InfoLocationOptions option){
 		if(fileName==null){
-			this.errors.add("constructor(fileName) - fileName cannot be null");
+			this.errors.addError("constructor(fileName) - fileName cannot be null");
 		}
 		else if(StringUtils.isBlank(fileName)){
-			this.errors.add("constructor(fileName) - fileName cannot be blank");
+			this.errors.addError("constructor(fileName) - fileName cannot be blank");
 		}
 		else if(option==null){
-			this.errors.add("constructor(fileName) - option cannot be blank");
+			this.errors.addError("constructor(fileName) - option cannot be blank");
 		}
 		else{
 			this.init(null, null, fileName, option);
@@ -201,19 +201,19 @@ public abstract class AbstractFileInfo {
 	 */
 	public AbstractFileInfo(String directory, String fileName, InfoLocationOptions option){
 		if(directory==null){
-			this.errors.add("constructor(directory, fileName) - directory cannot be null");
+			this.errors.addError("constructor(directory, fileName) - directory cannot be null");
 		}
 		else if(StringUtils.isBlank(directory)){
-			this.errors.add("constructor(directory, fileName) - directory cannot be blank");
+			this.errors.addError("constructor(directory, fileName) - directory cannot be blank");
 		}
 		else if(fileName==null){
-			this.errors.add("constructor(directory, fileName) - fileName cannot be null");
+			this.errors.addError("constructor(directory, fileName) - fileName cannot be null");
 		}
 		else if(StringUtils.isBlank(fileName)){
-			this.errors.add("constructor(directory, fileName) - fileName cannot be blank");
+			this.errors.addError("constructor(directory, fileName) - fileName cannot be blank");
 		}
 		else if(option==null){
-			this.errors.add("constructor(directory, fileName) - option cannot be blank");
+			this.errors.addError("constructor(directory, fileName) - option cannot be blank");
 		}
 		else{
 			this.init(null, directory, fileName, option);
@@ -238,7 +238,7 @@ public abstract class AbstractFileInfo {
 	 */
 	protected void init(File file, String directory, String fileName, InfoLocationOptions option){
 		if(this.valOption()==null){
-			this.errors.add("constructor(init) - no validation option set");
+			this.errors.addError("constructor(init) - no validation option set");
 			return;
 		}
 
@@ -256,10 +256,10 @@ public abstract class AbstractFileInfo {
 						if(this.tryFS(directory, fileName)==false){
 							if(this.tryResource(directory, fileName)==false){
 								if(directory!=null){
-									this.errors.add("constructor(init) - could not find anything for directory <" + directory + "> and fileName <" + fileName + ">, tried file system");
+									this.errors.addError("constructor(init) - could not find anything for directory <" + directory + "> and fileName <" + fileName + ">, tried file system");
 								}
 								else{
-									this.errors.add("constructor(init) - could not find anything for fileName <" + fileName + ">, tried file system");
+									this.errors.addError("constructor(init) - could not find anything for fileName <" + fileName + ">, tried file system");
 								}
 							}
 						}
@@ -268,53 +268,53 @@ public abstract class AbstractFileInfo {
 						if(this.tryResource(directory, fileName)==false){
 							if(this.tryResource(directory, fileName)==false){
 								if(directory!=null){
-									this.errors.add("constructor(init) - could not find anything for directory <" + directory + "> and fileName <" + fileName + ">, tried as resource");
+									this.errors.addError("constructor(init) - could not find anything for directory <" + directory + "> and fileName <" + fileName + ">, tried as resource");
 								}
 								else{
-									this.errors.add("constructor(init) - could not find anything for fileName <" + fileName + ">, tried as resource");
+									this.errors.addError("constructor(init) - could not find anything for fileName <" + fileName + ">, tried as resource");
 								}
 							}
 						}
 						break;
 					case TRY_FS_THEN_RESOURCE:
 						if(this.tryFS(directory, fileName)==false){
-							this.errors.clear();
+							this.errors.clearErrorMessages();;
 							if(this.tryResource(directory, fileName)==false){
 								if(directory!=null){
-									this.errors.add("constructor(init) - could not find anything for directory <" + directory + "> and fileName <" + fileName + ">, tried file system then as resource");
+									this.errors.addError("constructor(init) - could not find anything for directory <" + directory + "> and fileName <" + fileName + ">, tried file system then as resource");
 								}
 								else{
-									this.errors.add("constructor(init) - could not find anything for fileName <" + fileName + ">, tried file system then as resource");
+									this.errors.addError("constructor(init) - could not find anything for fileName <" + fileName + ">, tried file system then as resource");
 								}
 							}
 						}
 						break;
 					case TRY_RESOURCE_THEN_FS:
 						if(this.tryResource(directory, fileName)==false){
-							this.errors.clear();
+							this.errors.clearErrorMessages();;
 							if(this.tryFS(directory, fileName)==false){
 								if(directory!=null){
-									this.errors.add("constructor(init) - could not find anything for directory <" + directory + "> and fileName <" + fileName + ">, tried as resource then file system");
+									this.errors.addError("constructor(init) - could not find anything for directory <" + directory + "> and fileName <" + fileName + ">, tried as resource then file system");
 								}
 								else{
-									this.errors.add("constructor(init) - could not find anything for fileName <" + fileName + ">, tried as resource then file system");
+									this.errors.addError("constructor(init) - could not find anything for fileName <" + fileName + ">, tried as resource then file system");
 								}
 							}
 						}
 						break;
 					default:
-						this.errors.add("constructor(init) - unknown location option <" + option + "> for files");
+						this.errors.addError("constructor(init) - unknown location option <" + option + "> for files");
 				}
 			}
 			else{
-				this.errors.add("init() - unresolvable problems with input paramters, implementation problem(!)");
+				this.errors.addError("init() - unresolvable problems with input paramters, implementation problem(!)");
 			}
 		}
 //		catch (MalformedURLException e) {
-//			this.errors.add("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
+//			this.errors.addError("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
 //		}
 		catch(Exception ex){
-			this.errors.add("init() - catched unpredicted exception: " + ex.getMessage());
+			this.errors.addError("init() - catched unpredicted exception: " + ex.getMessage());
 		}
 	}
 
@@ -342,7 +342,7 @@ public abstract class AbstractFileInfo {
 				return true;
 			}
 			catch (MalformedURLException e) {
-				this.errors.add("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
+				this.errors.addError("init() - malformed URL for file with name " + this.file.getAbsolutePath() + " and message: " + e.getMessage());
 			}
 		}
 		return false;
@@ -368,7 +368,7 @@ public abstract class AbstractFileInfo {
 			url = loader.getResource(path);
 		}
 		if(url==null){
-			this.errors.add("could not get Resource URL");
+			this.errors.addError("could not get Resource URL");
 			return false;
 		}
 
@@ -389,8 +389,8 @@ public abstract class AbstractFileInfo {
 	 */
 	protected final boolean testFile(File file){
 		FileValidator fv = new FileValidator(file, this.valOption());
-		this.errors.add(fv.getValidationErrors());
-		return (fv.getValidationErrors().size()==0)?true:false;
+		this.errors.addAllErrors(fv.getValidationErrors());
+		return !fv.getValidationErrors().hasErrors();
 	}
 
 	/**
@@ -520,7 +520,7 @@ public abstract class AbstractFileInfo {
 	 * @return true if the validation was successful (error list is of size 0), false otherwise (error list is of size greater than 0)
 	 */
 	public boolean isValid(){
-		return this.errors.size()==0;
+		return !this.errors.hasErrors();
 	}
 
 	/**
