@@ -45,7 +45,7 @@ import de.vandermeer.skb.interfaces.render.DoesRender;
  * Manages Info, Warning and Error messages supporting {@link Message5WH}, {@link IsInfoSet}, {@link IsWarningSet}, {@link IsErrorSet}, and {@link DoesRender} objects as well as arrays and collections of them.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 170331 (31-Mar-17) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.6 (was in skb-commons before)
  */
 public class MessageMgr implements HasToStringStyle {

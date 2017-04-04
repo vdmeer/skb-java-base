@@ -37,7 +37,7 @@ import de.vandermeer.skb.interfaces.MessageConsole;
  * An abstract shell implementation with all basic features, use the {@link SkbShellFactory} or a sub-class to create a new object.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 170331 (31-Mar-17) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.10
  */
 public class AbstractShell implements SkbShell {

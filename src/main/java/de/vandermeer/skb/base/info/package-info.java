@@ -20,6 +20,6 @@
  * The provided implementations from this package can then be extended for application specific requirements.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10-SNAPSHOT build 170331 (31-Mar-17) for Java 1.8
+ * @version    v0.1.10-SNAPSHOT build 170404 (04-Apr-17) for Java 1.8
  */
 package de.vandermeer.skb.base.info;
