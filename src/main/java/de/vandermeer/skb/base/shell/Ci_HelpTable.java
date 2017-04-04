@@ -35,7 +35,7 @@ import de.vandermeer.skb.interfaces.MessageConsole;
  * An interpreter for the 'help' shell command using an ASCII table for output.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10 build 170404 (04-Apr-17) for Java 1.8
+ * @version    v0.2.0 build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.10
  */
 public class Ci_HelpTable extends Ci_Help {
@@ -47,7 +47,7 @@ public class Ci_HelpTable extends Ci_Help {
 	protected AT_ColumnWidthCalculator cwc;
 
 	/**
-	 * Returns an new 'help' command interpreter for table output with default theme {@link V2_E_TableThemes#UTF_DOUBLE_LIGHT} and 76 character width.
+	 * Returns an new 'help' command interpreter for table output with default grid and columns set to width of 15 and 70.
 	 * @param skbShell the calling shell
 	 */
 	public Ci_HelpTable(SkbShell skbShell){

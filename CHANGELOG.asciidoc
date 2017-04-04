@@ -1,5 +1,5 @@
-v0.1.10 - major rewrite and refactoring (using code will break) - 2017-04-04
-----------------------------------------------------------------------------
+v0.2.0 - major rewrite and refactoring (using code will break) - 2017-04-04
+---------------------------------------------------------------------------
 * moved SKB_Transformer to skb-interfaces (now Transformer)
 * moved the ToStringStyle class to skb-interfaces
 * removed SKB_Renderable (now in `skb-interfaces` DoesRender with the transformer)

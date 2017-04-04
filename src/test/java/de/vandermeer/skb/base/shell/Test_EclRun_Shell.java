@@ -23,7 +23,7 @@ import de.vandermeer.asciitable.CWC_FixedWidth;
  * Tests for Tests for {@link SkbShell}.
  *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.1.10 build 170404 (04-Apr-17) for Java 1.8
+ * @version    v0.2.0 build 170404 (04-Apr-17) for Java 1.8
  * @since      v0.0.8
  */
 public class Test_EclRun_Shell {
